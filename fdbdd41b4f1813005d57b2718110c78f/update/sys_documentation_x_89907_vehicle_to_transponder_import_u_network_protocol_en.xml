@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="u_network_protocol" label="Network_Protocol" language="en" table="x_89907_vehicle_to_transponder_import">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>u_network_protocol</element>
+            <help/>
+            <hint/>
+            <label>Network_Protocol</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_transponder_import</name>
+            <plural>Network_Protocols</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-30 20:36:01</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>1c508c581bfb3300dcab7596cc4bcb77</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Network_Protocol</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_documentation_x_89907_vehicle_to_transponder_import_u_network_protocol_en</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-30 20:36:01</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

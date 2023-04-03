@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function tspUserOverviewClient($scope, $location, $rootScope, spUtil, $interpolate) {
+	var c = this;
+	// for(var property in c.data){
+	// 		console.log('c.data.' + property + ": " + c.data[property]);
+	// 	}
+	this.data.filterText = "";
+	this.showFilter = false;
+
+	this.onClick = function onClick($event, item, url, action) {
+		$event.stopPropagation();
+		$event.preventDefault();
+		if (typeof url == "string") {
+			var urlExp = $interpolate(url);
+			var expandedUrl = urlExp(item);
+			$location.url(expandedUrl);
+		} else if (url && typeof url == "object") {
+			$location.search(url);
+		} else {
+			var evt = {};
+			evt.url = url;
+			evt.table = item.className;
+			evt.sys_id = item.sys_id;
+			evt.record = item;
+			evt.rectangle_id = c.options.sys_id;
+			evt.action = action;
+			// put out the selection with simple list "sl_" prefix
+			$location.search("sl_sys_id", evt.sys_id);
+			$location.search("sl_table", evt.table);
+			$location.search("spa", 1); // spa means "I've got this"
+			$rootScope.$broadcast("$sp.list.click", evt);
+		}
+	};
+
+	if (c.options.table) {
+		spUtil.recordWatch($scope, c.options.table, c.options.filter);
+	}
+
+	this.getMaxShownLabel = function getMaxShownLabel(maxEntries, totalCount) {
+		if (totalCount == c.data.maxCount) {
+			return "${First [0] of more than [1]}"
+				.replace("[0]", maxEntries)
+				.replace("[1]", totalCount);
+		}
+
+		return "${First [0] of [1]}"
+			.replace("[0]", maxEntries)
+			.replace("[1]", totalCount);
+	};
+
+	this.seeAllPage = c.options.list_page_dv || "list";
+	this.targetPageID = c.options.sp_page
+		? "&target_page_id=" + c.options.sp_page
+		: "";
+
+	c.getMaxHeight = function getMaxHeight() {
+		return c.options.panel_body_height || "none";
+	};
+
+	c.getActionColor = function getActionColor(action) {
+		return "text-" + action.color;
+	};
+
+	c.update = function update() {
+		c.server.update();
+	};
+
+	c.toggleFilter = function toggleFilter() {
+		c.showFilter = !c.showFilter;
+	};
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data>{"data":
+    {		"isValid":true,
+        "list": [
+            {
+                "index": 1,
+                "status": "submit",
+                "category":"userStatements",
+                "label": "Statements to review",
+                "type": "Tolls",
+                "typeLabel": "Statement type",
+                "count": "5",
+                "amount": "102.23",
+                "glyph": "fa-pencil",
+                "glyphStatus": "danger"
+            },
+            {
+                "index": 2,
+                "status": "pay",
+                "category":"userStatements",
+                "label": "Statements to pay",
+                "type": "Tolls",
+                "typeLabel": "Statements type",
+                "count": "3",
+                "amount": "42.23",
+                "glyph": "fa-dollar",
+                "glyphStatus": "danger"
+            },
+            {
+                "index": 3,
+                "status": "active",
+                "category":"inventory",
+                "label":"Active devices",
+                "type": "Toll Transponders",
+                "typeLabel": "Device Type",
+                "count": "3",
+                "glyph": "fa-flash",
+                "glyphStatus": "info"
+            }
+        ]
+    }
+    }</demo_data>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>tsp-user-overview</id>
+        <internal>false</internal>
+        <link/>
+        <name>TSP User Overview</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[/* global data, options, gs, GlideRecord, GlideAggregate */
+(function tspUserOverview() {
+	if (gs.nil(options.hide_footer)) {
+		options.hide_footer = false;
+	}
+	options.hide_footer =
+		options.hide_footer == "true" || options.hide_footer == true;
+	options.title = options.title || "Overview";
+
+	// assume true and override below if needed
+	data.isValid = true;
+
+	// Get User Statements to pay
+	data.actions = [];
+	data.list = [];
+	data.list.push(getToReviewSummary());
+	data.list.push(getPendingApprovalSummary());
+	data.list.push(getToPaySummary());
+	data.list.push(getInventorySummary());
+
+	if (!data.isValid) {
+		delete data.list;
+	}
+
+	function getToReviewSummary() {
+		var reviewGAgg = new GlideAggregate(
+			"x_89907_vehicle_to_toll_user_statement"
+		);
+		if (!reviewGAgg.isValid()) {
+			data.isValid = false;
+			return null;
+		}
+		reviewGAgg.addQuery("user", gs.getUserID());
+		reviewGAgg.addQuery("status", "1"); // open
+		reviewGAgg.addQuery("progress_phase", "1"); // pending
+		reviewGAgg.setGroup(false); // force one group so we don't have to loop to get total amount
+		reviewGAgg.addAggregate("COUNT");
+		reviewGAgg.addAggregate("SUM", "total_amount");
+
+		// Set ID of sp_page from option schema
+		if (options.list_page) {
+			var spPageGR = GlideRecord("sp_page");
+			if (spPageGR.get(options.list_page)) {
+				options.list_page_dv = spPageGR.getDisplayValue("id");
+			}
+		}
+
+		// redo query with limit
+		reviewGAgg.query();
+		var summaryObject = {
+			index: 1,
+			status: "submit",
+			category: "userStatements",
+			label: "Statements to review",
+			type: "Tolls",
+			typeLabel: "Statement type",
+			//			"count": "5",
+			//			"amount": "102.23",
+			glyph: "fa-pencil",
+			glyphStatus: "danger"
+		};
+		if (reviewGAgg.next()) {
+			summaryObject.count = reviewGAgg.getAggregate("COUNT");
+			var total = reviewGAgg.getAggregate("SUM", "total_amount");
+			summaryObject.amount = convertAndFormatCurrencyValue(
+				total,
+				"x_89907_vehicle_to_toll_user_statement",
+				"total_amount"
+			);
+		} else {
+			summaryObject.count = 0;
+		}
+		return summaryObject;
+	}
+
+	function getInventorySummary() {
+		var inventoryGAgg = new GlideAggregate(
+			"x_89907_vehicle_to_u_cmdb_ci_transponder"
+		);
+		if (!inventoryGAgg.isValid()) {
+			data.isValid = false;
+			return null;
+		}
+		// assigned_toDYNAMIC90d1921e5f510100a9ad2572f2b477fe^install_status=1
+		inventoryGAgg.addQuery("assigned_to", gs.getUserID());
+		inventoryGAgg.addQuery("install_status", 1); // installed
+		inventoryGAgg.addAggregate("COUNT");
+
+		// Set ID of sp_page from option schema
+		if (options.list_page) {
+			var spPageGR = GlideRecord("sp_page");
+			if (spPageGR.get(options.list_page)) {
+				options.list_page_dv = spPageGR.getDisplayValue("id");
+			}
+		}
+
+		// redo query with limit
+		inventoryGAgg.query();
+		var summaryObject = {
+			index: 4,
+			status: "active",
+			category: "inventory",
+			label: "Active devices",
+			type: "Toll Transponders",
+			typeLabel: "Device Type",
+			//			"count": "3",
+			glyph: "fa-flash",
+			glyphStatus: "info"
+		};
+		if (inventoryGAgg.next()) {
+			summaryObject.count = inventoryGAgg.getAggregate("COUNT");
+		} else {
+			summaryObject.count = 0;
+		}
+		return summaryObject;
+	}
+
+	function getToPaySummary() {
+		var payGAgg = new GlideAggregate("x_89907_vehicle_to_toll_user_statement");
+		if (!payGAgg.isValid()) {
+			data.isValid = false;
+			return null;
+		}
+		payGAgg.addQuery("user", gs.getUserID());
+		payGAgg.addQuery("status", "1"); // open
+		payGAgg.addQuery("progress_phase", "2"); // paymentOwed
+		payGAgg.addQuery("approval","IN", "approved,not_required"); // paymentOwed
+		payGAgg.setGroup(false); // force one group so we don't have to loop to get total amount
+		payGAgg.addAggregate("COUNT");
+		payGAgg.addAggregate("SUM", "personal_amount");
+
+		// Set ID of sp_page from option schema
+		if (options.list_page) {
+			var spPageGR = GlideRecord("sp_page");
+			if (spPageGR.get(options.list_page)) {
+				options.list_page_dv = spPageGR.getDisplayValue("id");
+			}
+		}
+
+		// redo query with limit
+		payGAgg.query();
+		var summaryObject = {
+			index: 3,
+			status: "pay",
+			category: "userStatements",
+			label: "Statements to pay",
+			type: "Tolls",
+			typeLabel: "Statement type",
+			//		"count": "3",
+			//		"amount": "42.23",
+			glyph: "fa-dollar",
+			glyphStatus: "danger"
+		};
+		if (payGAgg.next()) {
+			summaryObject.count = payGAgg.getAggregate("COUNT");
+			var total = payGAgg.getAggregate("SUM", "personal_amount");
+			summaryObject.amount = convertAndFormatCurrencyValue(
+				total,
+				"x_89907_vehicle_to_toll_user_statement",
+				"total_amount"
+			);
+		} else {
+			summaryObject.count = 0;
+		}
+		return summaryObject;
+	}
+
+	function getPendingApprovalSummary() {
+		var pendingGAgg = new GlideAggregate(
+			"x_89907_vehicle_to_toll_user_statement"
+		);
+		if (!pendingGAgg.isValid()) {
+			data.isValid = false;
+			return null;
+		}
+		pendingGAgg.addQuery("user", gs.getUserID());
+		pendingGAgg.addQuery("status", "1"); // open
+		pendingGAgg.addQuery("progress_phase", "2"); // paymentowed
+		pendingGAgg.addQuery("approval", "requested");
+		pendingGAgg.setGroup(false); // force one group so we don't have to loop to get total amount
+		pendingGAgg.addAggregate("COUNT");
+		pendingGAgg.addAggregate("SUM", "total_amount");
+
+		// Set ID of sp_page from option schema
+		if (options.list_page) {
+			var spPageGR = GlideRecord("sp_page");
+			if (spPageGR.get(options.list_page)) {
+				options.list_page_dv = spPageGR.getDisplayValue("id");
+			}
+		}
+
+		// redo query with limit
+		pendingGAgg.query();
+		var summaryObject = {
+			index: 2,
+			status: "submit",
+			category: "userStatements",
+			label: "Statements pending approval",
+			type: "Tolls",
+			typeLabel: "Statement type",
+			//			"count": "5",
+			//			"amount": "102.23",
+			glyph: "fa-thumbs-up",
+			glyphStatus: "danger"
+		};
+		if (pendingGAgg.next()) {
+			summaryObject.count = pendingGAgg.getAggregate("COUNT");
+			var total = pendingGAgg.getAggregate("SUM", "total_amount");
+			summaryObject.amount = convertAndFormatCurrencyValue(
+				total,
+				"x_89907_vehicle_to_toll_user_statement",
+				"total_amount"
+			);
+		} else {
+			summaryObject.count = 0;
+		}
+		return summaryObject;
+	}
+
+	function convertAndFormatCurrencyValue(referenceValue, table, fieldName) {
+		// get the user statements
+		// get the currency-type element to access the currency code
+		var grRef = new GlideRecord(table);
+		var ge = grRef.getElement(fieldName);
+		var ccRef = ge.getReferenceCurrencyCode();
+		var ccSes = ge.getSessionCurrencyCode();
+
+		// get the ref-EUR exchange rate
+		var fxToEURRate;
+		var fx = new GlideRecord("fx_rate");
+		fx.addQuery("currency", ccRef);
+		fx.orderByDesc("sys_created_on");
+		fx.query();
+		if (fx.next()) {
+			fxToEURRate = fx.rate;
+		}
+
+		// get the EUR-ses exchange rate
+		var fxFromEURRate;
+		var fx2 = new GlideRecord("fx_rate");
+		fx2.addQuery("currency", ccSes);
+		fx2.orderByDesc("sys_created_on");
+		fx2.query();
+		if (fx2.next()) {
+			fxFromEURRate = fx2.rate;
+		}
+
+		var fnResult;
+		if (fxToEURRate && fxFromEURRate) {
+			var eurTotal = referenceValue / fxToEURRate;
+			var sesTotal = eurTotal * fxFromEURRate;
+
+			var grx = new GlideRecord(table);
+			var gex = grx.getElement(fieldName);
+			gex.setValue(sesTotal);
+			fnResult = gex.getDisplayValue();
+		} else {
+			fnResult = NaN;
+		}
+		return fnResult;
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-12-22 20:14:22</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2c9be429dbee2300f898fbefbf9619cf</sys_id>
+        <sys_mod_count>48</sys_mod_count>
+        <sys_name>TSP User Overview</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_2c9be429dbee2300f898fbefbf9619cf</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-01-08 05:08:44</sys_updated_on>
+        <template><![CDATA[<!--
+<pre>{{data|json}}</pre>
+-->
+<div class="panel panel-default b">
+  <div class="panel-heading" ng-if="::!c.options.hide_header">
+    <h4 class="panel-title">
+      <span ng-if="c.options.glyph">
+        <fa name="{{::c.options.glyph}}" />
+      </span>{{::c.options.title}}
+    </h4>
+  </div>
+  <ul class="list-group hide-x-overflow" style="overflow-y: auto; max-height: 300px;">
+    <li ng-if="c.data.list.length > 0" ng-repeat="item in c.data.list track by item.index" class="list-group-item">
+      <div class="row">
+        <div class="col-2 col-sm-2">
+          <span class="fa fa-stack fa-lg text-info">
+            <i class="fa fa-square-o fa-stack-2x"></i>
+            <i class="fa fa-stack-1x {{item.glyph || 'fa-question'}}"></i>
+          </span>
+        </div>
+        <div class="col-10 col-sm-10">
+          <span class="tsp-list-item-main">{{item.label}}</span>
+          <div class="col-xs-offset-1">
+            <ul class="list-unstyled">
+              <li>
+                <span title="{{item.typeLabel}}">
+                  <strong>{{item.type}}</strong>
+                </span>
+                &nbsp;
+                <span class="text-muted">
+                  <span title="Total count">{{item.count}}</span>
+                  <span ng-if="item.amount">
+                    &nbsp;for&nbsp;
+                    <span title="Total amount">{{item.amount}}</span>
+                  </span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>]]></template>
+    </sp_widget>
+</record_update>

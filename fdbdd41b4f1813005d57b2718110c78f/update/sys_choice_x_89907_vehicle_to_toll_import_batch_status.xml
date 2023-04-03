@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="status" table="x_89907_vehicle_to_toll_import_batch" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>status</element>
+            <name>x_89907_vehicle_to_toll_import_batch</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-09 15:21:45</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>ef2f90711b439050195fed7dee4bcb1e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>status</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_choice_x_89907_vehicle_to_toll_import_batch_status</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-09 15:21:45</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Initial</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_batch</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-09 15:21:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>3ce9580adb7f1700f898fbefbf96194f</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-09 15:21:53</sys_updated_on>
+            <value>1</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Staged</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_batch</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-09 15:22:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>75f99c0adb7f1700f898fbefbf96193a</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-09 15:22:09</sys_updated_on>
+            <value>2</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Validating</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_batch</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-09 15:22:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>4e0a104adb7f1700f898fbefbf9619ce</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-09 15:22:24</sys_updated_on>
+            <value>3</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Validated</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_batch</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-09 15:22:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>fd1a5c86db7f1700f898fbefbf9619f4</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-09 15:22:37</sys_updated_on>
+            <value>4</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Importing</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_batch</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-09 15:22:44</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c52adc0adb7f1700f898fbefbf9619a6</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-09 15:22:51</sys_updated_on>
+            <value>5</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Imported</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_batch</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-09 15:22:58</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ac3a98c6db7f1700f898fbefbf96196e</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-09 15:23:06</sys_updated_on>
+            <value>6</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Creating user statements</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_batch</name>
+            <sequence>7</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-14 20:08:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>6609c767db371300f898fbefbf9619a7</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-04 19:49:00</sys_updated_on>
+            <value>7</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>User statements created</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_batch</name>
+            <sequence>8</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-14 20:08:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>218b8f67db371300f898fbefbf961971</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-04 19:49:09</sys_updated_on>
+            <value>8</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

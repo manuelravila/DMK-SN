@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_macro">
+    <sys_ui_macro action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>general</category>
+        <description>Creates a text input field&#13;
+&#13;
+Attributes: &#13;
+type=the type for the input field, defaults to text&#13;
+name= name of the input field, REQUIRED&#13;
+label=the label of the field, REQUIRED&#13;
+id=the id of the field, REQUIRED&#13;
+value= initial value of the field&#13;
+onchange=the javascript to call onchange (default: onChange('${jvar_name}')&#13;
+mandatory=whether or not this field is madatory, defaults to false&#13;
+style=the style of the input field&#13;
+readonly=make the input field readonly, defaults to false&#13;
+&#13;
+Usage:&#13;
+		&lt;g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_currency_field" name="check_amount" label="Check Amount" id="x_89907_vehicle_to_payment_wizard_page2_checkamount"  /&gt;</description>
+        <media_type/>
+        <name>payment_wizard_currency_field</name>
+        <scoped_name>x_89907_vehicle_to_payment_wizard_currency_field</scoped_name>
+        <sys_class_name>sys_ui_macro</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-08 15:15:13</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>4dbf1ed6db7600107cf5a455ca961905</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>payment_wizard_currency_field</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_macro_4dbf1ed6db7600107cf5a455ca961905</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-08 15:26:59</sys_updated_on>
+        <xml><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="true" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:macro type="text" name="REQUIRED" label="REQUIRED" id="REQUIRED" value="" onchange="onChange('${jvar_name}');"  mandatory="false"  style="" readonly="false" maxlength=""/>
+	<g:set_if var="jvar_is_required" test="${jvar_mandatory == 'true'}" true="is-required" false="" />
+	<j:if test="${jvar_readonly == 'false'}">
+		<div id="element.${jvar_id}" class="form-group ${jvar_is_required} ">
+			<div id="label.${jvar_id}" class="col-xs-12 col-md-3 col-lg-4 text-right">
+				<label for="${jvar_id}" dir="ltr" class="control-label">
+					<span id="status.${jvar_id}" mandatory="" oclass="" class="required-marker"></span>
+					<span class="label-text" data-html="false">${jvar_label}</span>
+				</label>
+			</div>
+			<div class="col-xs-12 col-md-9 col-lg-8 form-field input_controls">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span style="position: relative; display: inline-block;">
+							<label class="" for="${jvar_id}.currency_type">$</label>
+						</span>
+					</span>
+					<input type="${jvar_type}" id="${jvar_id}"   name="${jvar_name}" class="decimal form-control" maxlength="14" value="${jvar_value}" onclick="select();" onchange="${jvar_onchange}"/>
+				</div>
+			</div>
+		</div>
+	</j:if>
+	<j:if test="${jvar_readonly == 'true'}">
+		<div id="element.${jvar_id}" class="form-group">
+			<div id="label.${jvar_id}" class="col-xs-12 col-md-3 col-lg-4 text-right">
+				<label for="${jvar_id}" dir="ltr" class="control-label">
+					<span class="label-text" data-html="false">${jvar_label}</span>
+				</label>
+			</div>
+			<div class="col-xs-12 col-md-9 col-lg-8 form-field input_controls ">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span style="position: relative; display: inline-block;">
+							<label class="" for="${jvar_id}.currency_type">$</label>
+						</span>
+					</span>
+					<input type="${jvar_type}" id="${jvar_id}" name="${jvar_name}" class="decimal form-control" value="${jvar_value}" onclick="select();" readonly="readonly"/>
+				</div>
+			</div>
+		</div>
+	</j:if>
+</j:jelly>
+]]></xml>
+    </sys_ui_macro>
+</record_update>

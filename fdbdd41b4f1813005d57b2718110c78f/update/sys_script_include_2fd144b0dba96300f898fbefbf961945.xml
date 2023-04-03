@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.EditableDataTableUtil</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>EditableDataTableUtil</name>
+        <script><![CDATA[var EditableDataTableUtil = Class.create();
+
+/*
+Returns details similar to the Form widget for each column so we can
+know which type of fields to render when editing
+pass in a table string, and string array of fields
+ */
+EditableDataTableUtil.getFields = function getFields(table, fields) {
+	var ret = {};
+	// start by getting the dictionary data for the fields
+	var refNames = {};
+	var grDic = new GlideRecord("sys_dictionary");
+	grDic.addQuery("name", new GlideTableHierarchy(table).getHierarchy());
+	grDic.addQuery("element", "IN", fields.join(","));
+	grDic.query();
+	while (grDic._next()) {
+		var name = grDic.getValue("element");
+		ret[name] = {
+			choice: grDic.choice.nil() ? 0 : parseInt(grDic.getValue("choice"), 10),
+			choices: [],
+			attributes: {},
+			ed: {
+				name: name
+			},
+			dbType: grDic.getValue("internal_type"),
+			dependentField: grDic.getValue("dependent_field"),
+			mandatory: grDic.getValue("mandatory") == "true",
+			refTable: grDic.reference.name.toString(),
+			max_length: grDic.max_length.nil()
+				? null
+				: parseInt(grDic.getValue("max_length"), 10),
+			name: name,
+			readonly: grDic.getValue("read_only") == "true",
+			reference_key: grDic.getValue("reference_key"),
+			reference_qual: grDic.getValue("reference_qual"),
+			reference_type: grDic.getValue("reference_type"),
+			type: grDic.internal_type.name.toString()
+		};
+		// fill in the ed object, required for reference fields to work in editable
+		// fields
+		if (ret[name].refTable != "") {
+			ret[name].ed.reference = ret[name].refTable;
+			ret[name].ed.qualifier = ret[name].reference_qual;
+			ret[name].ed.defaultOperator = "STARTSWITH";
+			var hier = new GlideTableHierarchy(ret[name].refTable).getHierarchy();
+			if (!refNames[ret[name].refTable]) {
+				// if we have already looked up this table, no need to do it again.
+				var grRef = new GlideRecord("sys_dictionary");
+				grRef.addQuery("name", hier);
+				grRef.addQuery("display", true);
+				grRef.query();
+				while (grRef.next()) {
+					refNames[grRef.getValue("name")] = grRef.getValue("element");
+				}
+			}
+			// get the display field starting with the current table and working down
+			// through the hierarchy until we find it.
+			for (var t = 0; t < hier.length; t++) {
+				if (refNames[hier[t]]) {
+					ret[name].ed.searchField = refNames[hier[t]];
+					break;
+				}
+			}
+		}
+		var attr = grDic.getValue("attributes");
+		if (attr) {
+			var attrs = attr.split(",");
+			for (var a = 0; a < attrs.length; a++) {
+				var att = attrs[a].split("=");
+				ret[name].attributes[att[0]] = true;
+				if (att.length > 1) {
+					ret[name].attributes[att[0]] = att[1];
+				}
+			}
+		}
+		ret[name].sys_mandatory = ret[name].mandatory;
+		ret[name].sys_readonly = ret[name].readonly;
+		ret[name].visible = true;
+	}
+	var grForDetails = new GlideRecord(table);
+	for (var i = 0; i < fields.length; i++) {
+		var ge = grForDetails.getElement(fields[i]);
+		if (ge != null) {
+			ret[fields[i]].label = ge.getLabel();
+
+			// gs.info("call getChoicesForField: " + table + " " + JSON.stringify(fields[i]));
+			var chc = EditableDataTableUtil.getChoicesForField(table, fields[i]);
+			// eslint-disable-next-line no-restricted-syntax, guard-for-in
+			for (var ch in chc) {
+				ret[fields[i]].choices.push({
+					value: ch,
+					id: "-1",
+					label: chc[ch]
+				});
+			}
+			// ret[fields[i]].choices = ge.getChoices().toArray();
+			var ed = ge.getED();
+			if (ed.isChoiceTable() && ret[fields[i]].choices.length > 0) {
+				ret[fields[i]].type = "choice";
+			}
+		}
+	}
+	return ret;
+};
+
+EditableDataTableUtil.getChoicesForField = function getChoicesForField(tbl, fieldName) {
+	// this method try to find the field through the parent hierarchy stating from current
+	// table until the base table.
+	var table = new GlideTableHierarchy(tbl);
+	// gs.info("table: " + table);
+	var hierarchy = table.getTables();
+	// gs.info("hierarchy: " + (hierarchy instanceof Array));
+	var choices = {};
+
+	for (var i = 0; i < hierarchy.length; i++) {
+		var choiceGR = new GlideRecord("sys_choice");
+		choiceGR.addQuery("name", hierarchy[i]);
+		choiceGR.addQuery("element", fieldName);
+		choiceGR.query();
+		if (choiceGR.next()) {
+			choices[choiceGR.getValue("value")] = choiceGR.getValue("label");
+			while (choiceGR.next()) {
+				choices[choiceGR.getValue("value")] = choiceGR.getValue("label");
+			}
+			// break when we found the field values
+			break;
+		}
+	}
+
+	return choices;
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-10-31 16:14:29</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2fd144b0dba96300f898fbefbf961945</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>EditableDataTableUtil</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_2fd144b0dba96300f898fbefbf961945</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-15 14:29:55</sys_updated_on>
+    </sys_script_include>
+</record_update>

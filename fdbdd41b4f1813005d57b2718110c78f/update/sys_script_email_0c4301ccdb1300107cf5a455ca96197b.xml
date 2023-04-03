@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_email">
+    <sys_script_email action="INSERT_OR_UPDATE">
+        <name>userStatement.approval.requested</name>
+        <new_lines_to_html>false</new_lines_to_html>
+        <script><![CDATA[(function runMailScript(/* GlideRecord */ current, /* TemplatePrinter */ template,
+          /* Optional EmailOutbound */ email, /* Optional GlideRecord */ email_action,
+          /* Optional GlideRecord */ event) {
+
+	var base = gs.getProperty('glide.servlet.uri');
+	var resource = 'toll_service_portal';
+	var baseUrl = base + resource;
+	var label = 'Toll Service Portal';
+	
+	var approvalUrl = baseUrl + '?id=tsp_approval&table=sysapproval_approver&sys_id=' + current.sys_id;
+	
+	
+	var statementGR = new GlideRecord(current.source_table);
+	if (statementGR.get(current.document_id)) {
+		var subject = 'Toll user statement for ' + statementGR.user.getDisplayValue();
+		subject += ' (vehicle ';
+		subject += statementGR.vehicle_number;
+		subject += ') requires your approval';
+		email.setSubject(subject);
+		template.print('<h3>Toll statement ' + statementGR.getDisplayValue() + ' has been submitted and requires your approval.</h3>');
+		template.print('<p>Please log in to the <a href="' + baseUrl + '">' + label + '</a> to approve/reject ');
+		template.print('<a href="' + approvalUrl + '">this statement</a>.</p>');
+		template.print('<h3>Statement Details</h3>');
+		template.print('<ul>');
+		template.print('<li>Total amount for this statement: ' + statementGR.total_amount.getDisplayValue() + '</li>');
+		template.print('<li>Payment due for this statement: ' + statementGR.personal_amount.getDisplayValue() + '</li>');
+		template.print('<li>Vehicle number: ' + statementGR.vehicle_number + '</li>');
+		template.print('<li>Pool Vehicle: ' + statementGR.transponder.u_pool_device + '</li>');
+		template.print('<li>Transponder number: ' + statementGR.transponder_number + '</li>');
+		template.print('<li>Transponder type: ' + statementGR.transponder_type + '</li>');
+		template.print('<li>Plate number: ' + statementGR.plate_number + '</li>');
+		template.print('<li>Period begin date: ' + statementGR.period_begin_date.getDisplayValue() + '</li>');
+		template.print('<li>Period end date: ' + statementGR.period_end_date.getDisplayValue() + '</li>');
+		template.print('</ul>');
+	} else {
+		template.print('<p><strong>Error retrieving statement.</strong></p>');
+		template.print('<p>The record may have been deleted or you are not authorized to access it.</p>');
+		template.print('<p>Please contact an administrator for assistance.</p>');
+	}
+
+})(current, template, email, email_action, event);
+]]></script>
+        <sys_class_name>sys_script_email</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-26 05:16:20</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>0c4301ccdb1300107cf5a455ca96197b</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>userStatement.approval.requested</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_email_0c4301ccdb1300107cf5a455ca96197b</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-26 05:55:06</sys_updated_on>
+    </sys_script_email>
+</record_update>

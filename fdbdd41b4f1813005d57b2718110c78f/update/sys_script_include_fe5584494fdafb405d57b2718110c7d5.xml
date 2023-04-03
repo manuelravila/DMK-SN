@@ -1,0 +1,1529 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TollStatementImporter</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>fe5584494fdafb405d57b2718110c7d5</description>
+        <name>TollStatementImporter</name>
+        <script><![CDATA[gs.include("moment-timezone-with-data-2012-2022.js");
+
+var TollStatementImporter = Class.create();
+TollStatementImporter.prototype = {
+	initialize: function initialize(importStatementGR, initiatorUserID) {
+		this.initiatorUserID = initiatorUserID;
+		this.importStatementGR = importStatementGR;
+		this.importLabel = this.importStatementGR.name;
+		this.importType = this.importStatementGR.import_type;
+		this.defaultTimeZoneID = this.importType.default_time_zone.toString();
+		this.transponderUsageExceptionRules = {};
+		this.configUsageExceptionRules = this.loadCompanyUsageExceptionRules();
+		this.initializeParser(this.importType);
+
+		this.toll_charge_count = 0;
+		this.toll_charge_amount = 0.0;
+
+		this.logArray = [];
+	},
+
+	initializeParser: function initializeParser(importType) {
+		var parseKey = importType.parser.toString();
+		if (parseKey === "ny_ezpass_v1") {
+			this.parser = new TollStatementParser_EZPassNY_v1(this.importLabel);
+		} else if (parseKey === "ny_ezpass_v2") {
+			this.parser = new TollStatementParser_EZPassNY_v2(this.importLabel);
+		} else {
+			// todo issue error
+		}
+	},
+
+	log: function log(message) {
+		this.logArray.push(message);
+	},
+	jsonLog: function jsonLog(label, obj) {
+		this.log(label + ": " + JSON.stringify(obj));
+	},
+	printLog: function printLog() {
+		gs.info(this.logArray.join("\n"));
+	},
+
+	importStatement: function importStatement() {
+		// If not "Importing" something is not synced up
+		if (this.importStatementGR.status != 5) {
+			gs.error(
+				"Statement {0} not in correct state to process.",
+				this.importLabel
+			);
+			this.log("importStatement: exit false - not in correct state");
+			return false;
+		}
+
+		var importResult = this.primImportStatement();
+
+		this.importStatementGR.status = "6"; // "Imported"
+		this.importStatementGR.update();
+		gs.info("Import complete for statement {0}.", this.importLabel);
+		this.log("importStatement: exit true - import complete");
+
+		return importResult;
+	},
+
+	primImportStatement: function primImportStatement() {
+		var tutil = new TollImportUtil();
+		this.log("importStatement: enter");
+		// todo: need some sort of fatal exception type that has to be cleared on validate stage before moving on to import
+		// so we don't have to do all the validation here and can create records without worrying about how to recover
+		// from them easily
+
+		// todo: need to add exception handling so if an error occurs we revert back to previous state or an error state
+
+		if (!this.importType) {
+			this.log("importStatement: exit false - no import type");
+			tutil.createMissingImportTypeError(this.importStatementGR);
+			return false;
+		}
+
+		if (!this.importType.getRefRecord().isValidRecord()) {
+			gs.error("Fatal error detected: Import type not valid", this.importLabel);
+			tutil.createMissingReferenceDataError(
+				this.importStatementGR,
+				0,
+				0,
+				"Import Type",
+				"",
+				"Toll Import Type"
+			);
+			this.log("importStatement: exit false - invalid import type");
+			return false;
+		}
+
+		// set up some globals
+		this.statementVendorObj = new GlideRecord("core_company");
+		this.statementVendorObj.get(this.importType.vendor);
+
+		this.statementObj = new GlideRecord("x_89907_vehicle_to_toll_statement");
+		this.statementObj.newRecord();
+		this.statementObj.vendor = this.statementVendorObj.getUniqueValue();
+		this.statementObj.setValue("toll_charge_count", 0);
+		this.statementObj.setValue("toll_charge_amount", 0);
+		this.calculatedFields = {
+			tmpTollsAndFees: 0,
+			tmpCredit: 0,
+			tmpDebit: 0,
+			tmpToll: 0
+		};
+
+		var attachmentGR = this.getAttachment();
+		if (!attachmentGR) {
+			tutil.createMissingAttachmentError(this.importStatementGR);
+			this.log("importStatement: exit false - missing attachment");
+			return false;
+		}
+		if (attachmentGR.getRowCount() > 1) {
+			tutil.createMultipleAttachmentError(this.importStatementGR);
+			this.log("importStatement: exit false - multiple attachments");
+			return false;
+		}
+
+		this.defaultChargeType = this.getDefaultChargeType();
+		if (!this.defaultChargeType) {
+			gs.error(
+				"Fatal error detected: No default charge type",
+				this.importLabel
+			);
+			tutil.createMissingReferenceDataError(
+				this.importStatementGR,
+				0,
+				0,
+				"Default Charge Type",
+				"",
+				"Default Charge Type"
+			);
+			this.log("importStatement: exit false - no default charge type");
+			return false;
+		}
+
+		// Import the summary data into new summary record
+		// If anything is not valid, bail and stop processing
+		if (!this.importSummaryInfoFromAttachment(attachmentGR.getUniqueValue())) {
+			gs.error(
+				"Fatal error detected importing summary data for {0}",
+				this.importLabel
+			);
+			this.log("importStatement: exit false - failed summary import");
+			return false;
+		}
+		var statementSID = this.statementObj.insert();
+		if (!statementSID) {
+			gs.error(
+				"Fatal error detected importing summary data for {0}",
+				this.importLabel
+			);
+			return false;
+		}
+		this.importStatementGR.statement = statementSID;
+		gs.info(
+			"Successfully imported summary data for {0}: {1}",
+			this.importLabel,
+			statementSID
+		);
+
+		// Move on to import the charges
+		// Once we get past the headers, we'll go through all the charges even if we find exceptions for some
+		// Unless it is a fatal error - like unexpected end of file
+		if (!this.importChargesFromAttachment(attachmentGR.getUniqueValue())) {
+			gs.error(
+				"Fatal error detected importing charge data for {0}",
+				this.importLabel
+			);
+			this.log("importStatement: exit false - failed charges import");
+			return false;
+		}
+		gs.info("Successfully imported charge data for {0}", this.importLabel);
+		this.validateStatementBalance();
+
+		this.statementObj.setValue("toll_charge_count", this.toll_charge_count);
+		this.statementObj.setValue(
+			"toll_charge_amount",
+			parseFloat(this.toll_charge_amount.toFixed(2))
+		);
+		this.statementObj.update();
+		return statementSID;
+	},
+
+	importSummaryInfoFromAttachment: function importSummaryInfoFromAttachment(
+		attachmentSysID
+	) {
+		this.log("importSummaryInfoFromAttachment enter");
+		var tutil = new TollImportUtil();
+
+		var summaryFieldsObj = this.parser.readSummaryFields(attachmentSysID);
+		if (summaryFieldsObj.type === this.parser.fileParseErrorType()) {
+			tutil.createFileParseError(
+				this.importStatementGR,
+				summaryFieldsObj.lnnum,
+				summaryFieldsObj.ln,
+				summaryFieldsObj.fieldName, // expected
+				summaryFieldsObj.message // found
+			);
+			this.jsonLog("summaryFieldsObj", summaryFieldsObj);
+			this.log("importSummaryInfoFromAttachment exit false");
+			return false;
+		}
+		if (summaryFieldsObj.type === this.parser.invalidContentErrorType()) {
+			tutil.createInvalidFileContentError(
+				this.importStatementGR,
+				summaryFieldsObj.lnnum,
+				summaryFieldsObj.ln,
+				summaryFieldsObj.message
+			);
+			this.jsonLog("summaryFieldsObj", summaryFieldsObj);
+			this.log("importSummaryInfoFromAttachment exit false");
+			return false;
+		}
+
+		this.statementObj.account_person_name =
+			summaryFieldsObj.account_person_name.value;
+		for (var i = 0; i < summaryFieldsObj.address.value.length; i++) {
+			this.statementObj.setValue(
+				"address_" + (i + 1),
+				summaryFieldsObj.address.value[i]
+			);
+		}
+		var statementDate = summaryFieldsObj.statement_date;
+		if (statementDate.type === this.parser.dataFormatErrorType()) {
+			tutil.createDataFormatError(
+				this.importStatementGR,
+				statementDate.lnnum,
+				statementDate.ln,
+				statementDate.fieldName,
+				statementDate.fieldValue,
+				"Date",
+				statementDate.message
+			);
+			return false;
+		}
+		this.statementObj.statement_date = summaryFieldsObj.statement_date.value;
+
+		var billBeginDate = summaryFieldsObj.bill_begin_date;
+		if (billBeginDate.type === this.parser.dataFormatErrorType()) {
+			tutil.createDataFormatError(
+				this.importStatementGR,
+				billBeginDate.lnnum,
+				billBeginDate.ln,
+				billBeginDate.fieldName,
+				billBeginDate.fieldValue,
+				"Date",
+				billBeginDate.message
+			);
+			return false;
+		}
+		if (billBeginDate.type === this.parser.invalidContentErrorType()) {
+			tutil.createInvalidFileContentError(
+				this.importStatementGR,
+				billBeginDate.lnnum,
+				billBeginDate.ln,
+				billBeginDate.message
+			);
+			return false;
+		}
+
+		this.statementObj.bill_begin_date = summaryFieldsObj.bill_begin_date.value;
+		var billEndDate = summaryFieldsObj.bill_end_date;
+		if (billEndDate.type === this.parser.dataFormatErrorType()) {
+			tutil.createDataFormatError(
+				this.importStatementGR,
+				billEndDate.lnnum,
+				billEndDate.ln,
+				billEndDate.fieldName,
+				billEndDate.fieldValue,
+				"Date",
+				billEndDate.message
+			);
+			return false;
+		}
+		if (billEndDate.type === this.parser.invalidContentErrorType()) {
+			tutil.createInvalidFileContentError(
+				this.importStatementGR,
+				billEndDate.lnnum,
+				billEndDate.ln,
+				billEndDate.message
+			);
+			return false;
+		}
+		this.statementObj.bill_end_date = summaryFieldsObj.bill_end_date.value;
+		this.statementObj.replenish_amount =
+			summaryFieldsObj.replenish_amount.value;
+		this.statementObj.payment_method = summaryFieldsObj.payment_method.value;
+		this.statementObj.threshold = summaryFieldsObj.threshold.value;
+		this.statementObj.transponder_deposits =
+			summaryFieldsObj.transponder_deposits.value;
+		this.statementObj.beginning_balance =
+			summaryFieldsObj.beginning_balance.value;
+		this.statementObj.tolls_and_fees = summaryFieldsObj.tolls_and_fees.value;
+		this.statementObj.replenish_payments =
+			summaryFieldsObj.replenish_payments.value;
+		this.statementObj.ending_balance = summaryFieldsObj.ending_balance.value;
+		this.statementObj.replenish_threshold =
+			summaryFieldsObj.replenish_threshold.value;
+
+		// First line should be the account person name (freeform)
+		// After the name up until STATEMENT DATE is the address
+		// ACCOUNT is next
+		var accountNumber = summaryFieldsObj.account_number;
+		var statementAccountObj = this.getAccount(accountNumber.value);
+		if (statementAccountObj) {
+			this.statementObj.account = statementAccountObj.getUniqueValue();
+		} else {
+			tutil.createMissingReferenceDataError(
+				this.importStatementGR,
+				accountNumber.lnnum,
+				accountNumber.ln,
+				"ACCOUNT",
+				accountNumber.value,
+				"Toll Account"
+			);
+			return false;
+		}
+
+		if (!this.validateUniqueStatement()) {
+			tutil.createStatementValidationError(
+				this.importStatementGR,
+				"",
+				"",
+				"Statement",
+				"Statement already exists for vendor, account number and bill period"
+			);
+			this.log("importSummaryInfoFromAttachment exit false");
+			return false;
+		}
+		this.log("importSummaryInfoFromAttachment exit true");
+		return true;
+	},
+	validateStatementBalance: function validateStatementBalance() {
+		var stmtBeginningBalance = parseFloat(
+			this.statementObj.getValue("beginning_balance")
+		);
+		var stmtEndingBalance = parseFloat(
+			this.statementObj.getValue("ending_balance")
+		);
+		var calcTollsAndFees = this.calculatedFields.tmpTollsAndFees;
+		var calcEndingBalance = stmtBeginningBalance - calcTollsAndFees;
+
+		// todo convert amounts to cents so we can deal with ints and not worry about float issues
+		// until then, use toFixed to do the compare
+		if (calcEndingBalance.toFixed(2) !== stmtEndingBalance.toFixed(2)) {
+			gs.info(
+				"Statement {0}\n From statement\n Beginning balance: {1}\n Replenish amount: {3}\n Tolls and fees: {4}\n Ending balance: {2}",
+				this.importLabel,
+				stmtBeginningBalance,
+				stmtEndingBalance,
+				this.statementObj.replenish_amount,
+				this.statementObj.tolls_and_fees
+			);
+			gs.info(
+				"Statement {0}\n Calculated\n Tolls and fees: {1}\n Ending balance: {2}",
+				this.importLabel,
+				calcTollsAndFees,
+				calcEndingBalance
+			);
+			gs.info(
+				"Statement {0}\n Calculated\n Misc credits: {1}\n Misc debits: {2}\n Toll charges: {3}",
+				this.importLabel,
+				this.calculatedFields.tmpCredit,
+				this.calculatedFields.tmpDebit,
+				this.calculatedFields.tmpToll
+			);
+			var tutil = new TollImportUtil();
+			tutil.createStatementValidationWarning(
+				this.importStatementGR,
+				"Ending Balance",
+				calcEndingBalance,
+				"Statement",
+				"Calculated balance does not match ending balance in statement"
+			);
+		}
+	},
+
+	importChargesFromAttachment: function importChargesFromAttachment(
+		attachmentSysID
+	) {
+		this.log("importChargesFromAttachment enter");
+		var chargesResult = this.parser.readCharges(
+			attachmentSysID,
+			this.importChargeDetailLine,
+			this
+		);
+		if (!chargesResult) {
+			// error in charge detail line, exception handled at that level
+			this.log("importChargesFromAttachment exit false");
+			return false;
+		}
+		if (chargesResult.type !== this.parser.chargesResultType()) {
+			// parse error not at individual charge level
+			this.log("importChargesFromAttachment exit false");
+			this.log(JSON.stringify(chargesResult));
+			var tutil = new TollImportUtil();
+			tutil.createFileParseErrorCore(
+				this.importStatementGR,
+				chargesResult.lnnum,
+				chargesResult.ln,
+				chargesResult.fieldName,
+				chargesResult.message
+			);
+			return false;
+		}
+		this.log("importChargesFromAttachment exit true");
+		return true;
+	},
+
+	importChargeDetailLine: function importChargeDetailLine(
+		lnnum,
+		ln,
+		chargeNum
+	) {
+		this.log("importChargeDetailLine enter");
+		var tutil = new TollImportUtil();
+
+		var chargeDetail = this.parser.readChargeDetail(lnnum, ln);
+		if (chargeDetail.type !== this.parser.chargeDetailType()) {
+			this.log(
+				"importChargeDetailLine readChargeDetail createInvalidFileContentError"
+			);
+			tutil.createInvalidFileContentError(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				chargeDetail.message
+			);
+			return false;
+		}
+
+		var chargeObj = new GlideRecord("x_89907_vehicle_to_toll_charge");
+		chargeObj.newRecord();
+
+		// go on and set each field
+		var postDate = this.parser.getDateFieldValue(
+			lnnum,
+			ln,
+			"POSTING-DATE",
+			chargeDetail.postDate
+		);
+		if (postDate.type === this.parser.dataFormatErrorType()) {
+			tutil.createDataFormatError(
+				this.importStatementGR,
+				postDate.lnnum,
+				postDate.ln,
+				postDate.fieldName,
+				postDate.fieldValue,
+				"Date",
+				postDate.message
+			);
+			return false;
+		}
+		chargeObj.posting_date = postDate.value.getDate();
+
+		var trxnDate = this.parser.getDateFieldValue(
+			lnnum,
+			ln,
+			"TRANSACTION-DATE",
+			chargeDetail.trxnDate
+		);
+		if (trxnDate.type === this.parser.dataFormatErrorType()) {
+			tutil.createDataFormatError(
+				this.importStatementGR,
+				trxnDate.lnnum,
+				trxnDate.ln,
+				trxnDate.fieldName,
+				trxnDate.fieldValue,
+				"Date",
+				trxnDate.message
+			);
+			return false;
+		}
+		chargeObj.transaction_date = trxnDate.value.getDate();
+		chargeDetail.trxnDateGDT = trxnDate.value;
+
+		var chargeType;
+		this.jsonLog("charge", {
+			entry: chargeDetail.entryPlaza,
+			exit: chargeDetail.exitPlaza
+		});
+		if (!chargeDetail.entryPlaza && !chargeDetail.exitPlaza) {
+			// 			this.log("getMiscChargeType " + chargeDetail.tagOrPlate);
+			chargeType = this.getMiscChargeType(
+				lnnum,
+				ln,
+				"Charge Type",
+				chargeDetail.tagOrPlate
+			);
+			if (!chargeType) {
+				return false;
+			}
+		} else {
+			chargeType = this.defaultChargeType;
+		}
+		this.log(
+			"importChargeDetailLine charge_type " + chargeType.getDisplayValue()
+		);
+		chargeObj.charge_type = chargeType.getUniqueValue();
+
+		this.log("importChargeDetailLine category " + chargeType.category);
+		if (chargeType && chargeType.category == "toll") {
+			// eslint-disable-next-line one-var
+			var tmpAgency, tmpPlaza, tmpExPlaza, tmpPlazaDateTime, tmpExPlazaDateTime;
+
+			this.log("importChargeDetailLine getAgency");
+			tmpAgency = this.validateAgency(
+				lnnum,
+				ln,
+				chargeDetail,
+				"AGENCY-NAME",
+				chargeDetail.agency
+			);
+			//			tmpAgency = this.getAgency(chargeDetail.agency);
+			if (tmpAgency) {
+				chargeObj.toll_provider = tmpAgency.getUniqueValue();
+			}
+
+			// "TAG or PLATE" might actually be a misc charge/credit - entry/exit details, agency, plan and class do not apply to them
+			// entry details generally only used for turnpike style tolls, not single point tolls
+			// entry details not specified for misc charge/credit
+			var transponderLookupResult = this.getTransponder(
+				chargeDetail.tagOrPlate,
+				this.statementVendorObj,
+				this.statementObj
+			);
+			var tmpTransponder = transponderLookupResult.transponderGR;
+			if (tmpTransponder) {
+				chargeObj.transponder_number = tmpTransponder.u_transponder_number;
+				chargeObj.transponder = tmpTransponder.getUniqueValue();
+				chargeObj.cost_center = tmpTransponder.u_cost_center;
+				chargeObj.vehicle_number = tmpTransponder.u_vehicle_number;
+				chargeObj.plate_number = tmpTransponder.license_plate.getDisplayValue();
+				chargeObj.plate_captured = transponderLookupResult.plateCaptured;
+				chargeObj.user = tmpTransponder.assigned_to;
+			} else {
+				chargeObj.transponder_number = chargeDetail.tagOrPlate;
+			}
+
+			if (chargeDetail.entryPlaza) {
+				tmpPlaza = this.validatePlaza(
+					lnnum,
+					ln,
+					chargeObj,
+					"ENTRY-PLAZA",
+					chargeDetail.entryPlaza
+				);
+				//				tmpPlaza = this.getPlaza(chargeDetail.entryPlaza, tmpAgency);
+				if (tmpPlaza) {
+					chargeObj.entry_plaza = tmpPlaza.getUniqueValue();
+				}
+			}
+			if (chargeDetail.entryTime) {
+				if (
+					!this.validatePlazaTime(
+						lnnum,
+						ln,
+						chargeDetail,
+						"ENTRY-TIME",
+						chargeDetail.entryTime
+					)
+				) {
+					return false;
+				}
+			}
+			if (chargeDetail.entryDate) {
+				if (
+					!this.validatePlazaDate(
+						lnnum,
+						ln,
+						chargeDetail,
+						"ENTRY-DATE",
+						chargeDetail.entryDate
+					)
+				) {
+					return false;
+				}
+			}
+			if (chargeDetail.entryDate) {
+				var entryDTValid = this.validatePlazaDateTime(
+					lnnum,
+					ln,
+					chargeObj,
+					"Entry Date/Time",
+					[chargeDetail.entryDate, chargeDetail.entryTime]
+				);
+				if (!entryDTValid) {
+					return false;
+				}
+
+				tmpPlazaDateTime = this.getPlazaDateTime(
+					chargeDetail.entryDate,
+					chargeDetail.entryTime,
+					chargeDetail.trxnDateGDT,
+					lnnum,
+					[0,0]
+				);
+				if (tmpPlazaDateTime) {
+					chargeObj.entry_date_time = tmpPlazaDateTime;
+				}
+			}
+			// exit details generally used for single point tolls, in addition to turnpike style tolls
+			// exit details not specified for misc charge/credit
+			if (chargeDetail.exitPlaza) {
+				tmpExPlaza = this.validatePlaza(
+					lnnum,
+					ln,
+					chargeObj,
+					"EXIT-PLAZA",
+					chargeDetail.exitPlaza
+				);
+				//				tmpExPlaza = this.getPlaza(chargeDetail.exitPlaza, tmpAgency);
+				if (tmpExPlaza) {
+					chargeObj.exit_plaza = tmpExPlaza.getUniqueValue();
+				}
+			}
+			if (chargeDetail.exitTime) {
+				if (
+					!this.validatePlazaTime(
+						lnnum,
+						ln,
+						chargeDetail,
+						"EXIT-TIME",
+						chargeDetail.exitTime
+					)
+				) {
+					return false;
+				}
+			}
+			if (chargeDetail.exitDate) {
+				if (
+					!this.validatePlazaDate(
+						lnnum,
+						ln,
+						chargeDetail,
+						"EXIT-DATE",
+						chargeDetail.exitDate
+					)
+				) {
+					return false;
+				}
+			}
+			if (chargeDetail.exitDate) {
+				var exitDTValid = this.validatePlazaDateTime(
+					lnnum,
+					ln,
+					chargeObj,
+					"Exit Date/Time",
+					[chargeDetail.exitDate, chargeDetail.exitTime]
+				);
+				if (!exitDTValid) {
+					return false;
+				}
+
+				tmpExPlazaDateTime = this.getPlazaDateTime(
+					chargeDetail.exitDate,
+					chargeDetail.exitTime,
+					chargeDetail.trxnDateGDT,
+					lnnum,
+					[23,59]
+				);
+				if (tmpExPlazaDateTime) {
+					chargeObj.exit_date_time = tmpExPlazaDateTime;
+				}
+			}
+
+			if (chargeDetail.plan) {
+				var tmpPlan = this.validatePlan(
+					lnnum,
+					ln,
+					chargeObj,
+					"PLAN",
+					chargeDetail.plan
+				);
+				if (tmpPlan) {
+					chargeObj.plan = tmpPlan.getUniqueValue();
+				}
+			}
+
+			if (chargeDetail.chargeClass) {
+				var tmpChargeClass = this.getChargeClass(
+					chargeDetail.chargeClass,
+					tmpAgency
+				);
+				if (tmpChargeClass) {
+					chargeObj.vehicle_class = tmpChargeClass;
+				}
+			}
+
+			// todo : fix exception processing
+			if (
+				tmpTransponder &&
+				(tmpPlaza || tmpExPlaza) &&
+				(tmpPlazaDateTime || tmpExPlazaDateTime)
+			) {
+				var usageExceptions = this.usageExceptionsForCharge(chargeObj);
+				if (usageExceptions) {
+					chargeObj.usage_exceptions = usageExceptions.join(",");
+				}
+			}
+		}
+		var amountField = this.parser.getCurrencyFieldValue(
+			lnnum,
+			ln,
+			"AMOUNT",
+			chargeDetail.amount
+		);
+		// todo: push simple data validation to parser
+		if (amountField.type === this.parser.invalidContentErrorType()) {
+			tutil.createInvalidFileContentError(
+				this.importStatementGR,
+				amountField.lnnum,
+				amountField.ln,
+				amountField.message
+			);
+			return false;
+		}
+		if (amountField.type === this.parser.dataFormatErrorType()) {
+			tutil.createDataFormatError(
+				this.importStatementGR,
+				amountField.lnnum,
+				amountField.ln,
+				amountField.fieldName,
+				amountField.fieldValue,
+				"Currency",
+				amountField.message
+			);
+			return false;
+		}
+		chargeObj.amount = amountField.value;
+		if (chargeType && chargeType.category == "toll") {
+			this.toll_charge_count++;
+			this.toll_charge_amount += amountField.value;
+		}
+		if (chargeType) {
+			if (chargeType.category == "toll") {
+				this.calculatedFields.tmpToll += amountField.value;
+				this.calculatedFields.tmpTollsAndFees += amountField.value;
+			} else if (chargeType.credit) {
+				this.calculatedFields.tmpTollsAndFees -= amountField.value;
+				this.calculatedFields.tmpCredit += amountField.value;
+			} else {
+				this.calculatedFields.tmpTollsAndFees += amountField.value;
+				this.calculatedFields.tmpDebit += amountField.value;
+			}
+		}
+
+		/*  
+			Balance is broken in NY E-ZPass statements - amounts over $1M are rounded to 0.10;
+			  Some amounts show as all ******
+
+			var tmpBalance;
+			tmpBalance = parseFloat(chargeDetail.balance.replace(/[\$,]/g, ""));
+			chargeObj.balance = tmpBalance;
+		*/
+
+		chargeObj.file_sequence_number = chargeNum;
+		chargeObj.statement = this.statementObj.sys_id;
+		var detailSid = chargeObj.insert();
+		if (!detailSid) {
+			gs.error("Error inserting detail object line: {0}\n{1}", lnnum, ln);
+		}
+		this.log("importChargeDetailLine exit true");
+
+		return true;
+	},
+
+	getTransponder: function getTransponder(
+		tagOrPlate,
+		statementVendorObj,
+		statementObj
+	) {
+		// tag can be a charge type like "REFUND FEE", a license plate, or a tag id
+		// isnumeric, look up tag; if found, it's a transponder id
+		// if no exit plaza/date/time it's probably a misc charge -- look up charge type in ref table
+		// Charge types: 'PREPAID TOLL PAY', 'REFUND FEE', 'TOLL DISPUTE CR', 'TRUCK VOL. DISCO', 'PREPAID TOLL TRF', 'PREPAID ADJ CR', 'PREPAID REFUND',
+		//               'LOST TAG FEE', 'STOLEN TAG FEE', 'REFUND SWAP FEE', 'RETAINED TAG FEE', 'DISPUTE DB', 'PREPAID TRF DB', 'DAMAGED TAG FEE',
+		//               'LEASE TAG FEE-IN', 'LEASE TAG FEE-EX', 'VNB COMMERCIAL D', 'VIOLATION PAYMEN', 'SWAP NO RET FEE'
+		// if no hits on transponder table id column or charge table, it's probably a plate number -- look up with or on tag or plate number
+		// else create exception
+		// if it is a transponder and no entry/exit details, create exception
+		// look up plaza in ref table using plaza and agency
+		//		gs.info("get transponder {0} {1} {2} {3} {4}",tagOrPlate,statementVendorObj,statementObj.account,this.importStatementGR);
+		var lookupUtil = new TransponderLookup(
+			tagOrPlate,
+			tagOrPlate.slice(2),
+			statementVendorObj,
+			statementObj.account.getRefRecord(),
+			this.importStatementGR.bill_period_begin_date,
+			this.importStatementGR.bill_period_end_date
+		);
+		var lookupResult = { plateCaptured: false, transponderGR: null };
+		var tran;
+		if (this.statementObj.account) {
+			tran = lookupUtil.lookupActive();
+			if (!tran) {
+				tran = lookupUtil.lookupDroppedInPeriod();
+			}
+			if (!tran) {
+				tran = lookupUtil.lookupActivePlate();
+				if (tran) {
+					lookupResult.plateCaptured = true;
+				}
+			}
+			if (!tran) {
+				tran = lookupUtil.lookupDroppedInPeriodPlate();
+				if (tran) {
+					lookupResult.plateCaptured = true;
+				}
+			}
+		}
+		if (!tran) {
+			// todo how do we handle account mismatch here
+			lookupUtil.setAccountStrict(false);
+			tran = lookupUtil.lookupActive();
+			if (!tran) {
+				tran = lookupUtil.lookupDroppedInPeriod();
+			}
+			if (!tran) {
+				tran = lookupUtil.lookupActivePlate();
+				if (tran) {
+					lookupResult.plateCaptured = true;
+				}
+			}
+			if (!tran) {
+				tran = lookupUtil.lookupDroppedInPeriodPlate();
+				if (tran) {
+					lookupResult.plateCaptured = true;
+				}
+			}
+			if (!tran) {
+				lookupResult.plateCaptured = false;
+			}
+		}
+
+		var tutil = new TollImportUtil();
+		if (tran) {
+			if (tran.getRowCount() > 1) {
+				// todo duplicate found
+			}
+			if (
+				tran.u_account.account_number != statementObj.account.account_number
+			) {
+				var tmpTrans1 = new GlideRecord(
+					"x_89907_vehicle_to_u_cmdb_ci_transponder"
+				);
+				tutil.createIncorrectReferenceDataWarning(
+					this.importStatementGR,
+					null,
+					null,
+					"TAG or PLATE",
+					tagOrPlate,
+					tmpTrans1.getClassDisplayValue(),
+					"Incorrect account for transponder"
+				);
+			}
+			lookupResult.transponderGR = tran;
+		} else {
+			var tmpTrans = new GlideRecord(
+				"x_89907_vehicle_to_u_cmdb_ci_transponder"
+			);
+			tutil.createMissingReferenceDataWarning(
+				this.importStatementGR,
+				null,
+				null,
+				"TAG or PLATE",
+				tagOrPlate,
+				tmpTrans.getClassDisplayValue()
+			);
+		}
+
+		return lookupResult;
+	},
+
+	loadCompanyUsageExceptionRules: function loadCompanyUsageExceptionRules() {
+		var ruleSets = {};
+		var configGR = new GlideRecord("x_89907_vehicle_to_toll_configuration");
+		configGR.addNotNullQuery("company");
+		configGR.addQuery("active", true);
+		configGR.query();
+		while (configGR.next()) {
+			var ruleSet = new CompanyUsageExceptionRuleSet(configGR);
+			ruleSets[configGR.company] = ruleSet;
+			// 		ruleSet.debugPrint();
+		}
+		return ruleSets;
+	},
+
+	usageExceptionsForCharge: function usageExceptionsForCharge(chargeObject) {
+		var transponderGR = chargeObject.transponder.getRefRecord();
+		var rules = this.getTransponderUsageExceptionRules(transponderGR);
+		if (rules === null || rules === undefined) {
+			return [];
+		}
+		var usageExceptions = [];
+
+		if (chargeObject.entry_plaza) {
+			var plazaGR = chargeObject.entry_plaza.getRefRecord();
+			if (
+				rules.isPlazaException(
+					plazaGR.plaza_id.toString(),
+					plazaGR.agency.agency_id.toString()
+				)
+			) {
+				// 			gs.info("plazaGR Exception:" + JSON.stringify({plaza_id:plazaGR.plaza_id.toString(), agency_id:plazaGR.agency.agency_id.toString()}));
+				usageExceptions.push("area");
+			}
+		}
+
+		if (chargeObject.exit_plaza) {
+			var exitPlazaGR = chargeObject.exit_plaza.getRefRecord();
+			if (
+				rules.isPlazaException(
+					exitPlazaGR.plaza_id.toString(),
+					exitPlazaGR.agency.agency_id.toString()
+				)
+			) {
+				// 			gs.info("exitPlazaGR Exception:" + JSON.stringify({plaza_id:exitPlazaGR.plaza_id.toString(), agency_id:exitPlazaGR.agency.agency_id.toString()}));
+				usageExceptions.push("area");
+			}
+		}
+		var mtTollLocal;
+		var strTimeTollLocal;
+		var tollTimeZoneStr = this.defaultTimeZoneID;
+
+		if (chargeObject.entry_date_time) {
+			var plazaGDT = new GlideDateTime(chargeObject.entry_date_time);
+			mtTollLocal = moment.utc(plazaGDT.toString()).tz(tollTimeZoneStr);
+			strTimeTollLocal = mtTollLocal.format("HH:mm:ss");
+
+			if (rules.isTimeException(strTimeTollLocal)) {
+				usageExceptions.push("shift");
+			}
+			// day of the week, with Sunday as 0 and Saturday as 6
+			if (rules.isDayOfWeekException(plazaGDT.getDayOfWeekLocalTime())) {
+				usageExceptions.push("weekend");
+			}
+		}
+
+		if (chargeObject.exit_date_time) {
+			var plazaExitGDT = new GlideDateTime(chargeObject.exit_date_time);
+			mtTollLocal = moment.utc(plazaExitGDT.toString()).tz(tollTimeZoneStr);
+			strTimeTollLocal = mtTollLocal.format("HH:mm:ss");
+
+			if (rules.isTimeException(strTimeTollLocal)) {
+				usageExceptions.push("shift");
+			}
+			// day of the week, with Sunday as 0 and Saturday as 6
+			if (rules.isDayOfWeekException(mtTollLocal.day())) {
+				usageExceptions.push("weekend");
+			}
+		}
+
+		var arrayUtil = new global.ArrayUtil();
+		return arrayUtil.unique(usageExceptions);
+	},
+
+	getTransponderUsageExceptionRules: function getTransponderUsageExceptionRules(
+		transponderGR
+	) {
+		var sid = transponderGR.getUniqueValue();
+		if (this.transponderUsageExceptionRules[sid]) {
+			return this.transponderUsageExceptionRules[sid];
+		}
+		var companyRuleSet = this.configUsageExceptionRules[transponderGR.company];
+		var ruleSet = new TransponderUsageExceptionRuleSet(
+			transponderGR,
+			companyRuleSet
+		);
+		this.transponderUsageExceptionRules[sid] = ruleSet;
+		return ruleSet;
+	},
+
+	validateAgency: function validateAgency(
+		lnnum,
+		ln,
+		chargeDetailLine,
+		fieldName,
+		fieldValue
+	) {
+		var agencyGR = this.getAgency(fieldValue);
+		if (!agencyGR) {
+			var tutil = new TollImportUtil();
+			tutil.createMissingReferenceDataWarning(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				"Toll Agency"
+			);
+			return null;
+		}
+		return agencyGR;
+	},
+
+	validatePlaza: function validatePlaza(
+		lnnum,
+		ln,
+		chargeObj,
+		fieldName,
+		fieldValue
+	) {
+		// look up plaza in ref table using plaza code and agency ref
+		// plaza code in statement maps to mnemonic in plaza, not the 3-digit ID
+		var plazaGR = this.getPlaza(fieldValue, chargeObj.toll_provider);
+		if (!plazaGR) {
+			var tutil = new TollImportUtil();
+			tutil.createMissingReferenceDataWarning(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				"Toll Plaza"
+			);
+		}
+
+		// return true even if we produce a warning; false only for fatal errors
+		return plazaGR;
+	},
+
+	validatePlazaDateTime: function validatePlazaDateTime(
+		lnnum,
+		ln,
+		chargeObj,
+		fieldName,
+		fieldValue
+	) {
+		var dateString = fieldValue[0];
+		var timeString = fieldValue[1];
+		var plazaGDT = this.getPlazaDateTime(
+			dateString,
+			timeString,
+			chargeObj.transaction_date,
+			lnnum,
+			(fieldName == "Entry Date/Time") ? [0,0] : [23,59]
+		);
+		var tutil;
+		if (!plazaGDT) {
+			tutil = new TollImportUtil();
+			tutil.createDataFormatError(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				fieldName,
+				"Date: " + dateString + " Time: " + timeString,
+				"Date/Time",
+				"Invalid date/time"
+			);
+			return true;
+		}
+		if (gs.nil(timeString)) {
+			tutil = new TollImportUtil();
+			tutil.createDataFormatWarning(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				fieldName,
+				"Date: " + dateString + " Time: " + timeString,
+				"Date/Time",
+				"Entry/Exit Date is provided without a time - contact vendor regarding data format error. Using default." + plazaGDT.getLocalTime().getByFormat('HH:mm:ss')
+			);
+		}
+		return true;
+	},
+
+	validatePlazaDate: function validatePlazaDate(
+		lnnum,
+		ln,
+		chargeDetailLine,
+		fieldName,
+		fieldValue
+	) {
+		// time is in local time zone
+		var datePattern = this.parser.plazaDatePattern();
+		//		gs.info(JSON.stringify({pattern: datePattern.toString(), value: fieldValue, match: datePattern.test(fieldValue)}));
+		if (!datePattern.test(fieldValue)) {
+			var tutil = new TollImportUtil();
+			tutil.createDataFormatError(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				"Date",
+				"Invalid date format"
+			);
+			return false;
+		}
+		return true;
+	},
+
+	validatePlazaTime: function validatePlazaTime(
+		lnnum,
+		ln,
+		chargeDetailLine,
+		fieldName,
+		fieldValue
+	) {
+		// time is in local time zone
+		var timePattern = this.parser.plazaTimePattern();
+		if (!timePattern.test(fieldValue)) {
+			var tutil = new TollImportUtil();
+			tutil.createDataFormatError(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				"Time",
+				"Invalid time format"
+			);
+			return false;
+		}
+		return true;
+	},
+
+	validatePlan: function validatePlan(
+		lnnum,
+		ln,
+		chargeObj,
+		fieldName,
+		fieldValue
+	) {
+		var planGR = this.getPlan(fieldValue, chargeObj.toll_provider);
+		if (!planGR) {
+			var tutil = new TollImportUtil();
+			tutil.createMissingReferenceDataWarning(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				"Toll Plan"
+			);
+		}
+		return planGR;
+	},
+
+	validateClass: function validateClass(
+		lnnum,
+		ln,
+		chargeObj,
+		fieldName,
+		fieldValue
+	) {
+		var chargeClass = this.getChargeClass(fieldValue, chargeObj.toll_provider);
+		if (!chargeClass) {
+			var tutil = new TollImportUtil();
+			tutil.createMissingReferenceDataWarning(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				"Toll Vehicle Class"
+			);
+		}
+		return true;
+	},
+
+	// PULL UP TO SUPER
+
+	getAttachment: function getAttachment() {
+		var attachmentGR = new GlideRecord("sys_attachment");
+		attachmentGR.addQuery("table_sys_id", this.importStatementGR.sys_id);
+		attachmentGR.addQuery("table_name", this.importStatementGR.getTableName());
+		attachmentGR.query();
+		return attachmentGR.next() ? attachmentGR : null;
+	},
+
+	getAgency: function getAgency(agencyCode) {
+		// look up agency in ref table
+		// the code in the NY E-Z Pass statement maps to the mnemonic code in agency, not the 3-digit agency ID
+		var agencyGR = new GlideRecord("x_89907_vehicle_to_toll_agency");
+		agencyGR.addQuery("code", agencyCode);
+		agencyGR.addQuery("active", true);
+		agencyGR.query();
+		if (agencyGR.next()) {
+			// save the agency ref in the detail for future lookups
+			return agencyGR;
+		}
+		return null;
+	},
+
+	getPlaza: function getPlaza(plazaCode, agency) {
+		// look up plaza in ref table using plaza code and agency ref
+		// plaza code in statement maps to mnemonic in plaza, not the 3-digit ID
+		if (!agency) {
+			return null;
+		}
+		var plazaGR = new GlideRecord("x_89907_vehicle_to_toll_plaza");
+		plazaGR.addQuery("code", plazaCode);
+		plazaGR.addQuery("agency", agency.sys_id);
+		plazaGR.addQuery("active", true);
+		plazaGR.query();
+		if (plazaGR.next()) {
+			return plazaGR;
+		}
+		return null;
+	},
+
+	getPlan: function getPlan(planCode, agency) {
+		// look up plan in ref table using agency
+		if (!agency) {
+			return null;
+		}
+		var planGR = new GlideRecord("x_89907_vehicle_to_toll_plan");
+		planGR.addQuery("code", planCode);
+		planGR.addQuery("agency", agency.sys_id);
+		planGR.addQuery("active", true);
+		planGR.query();
+		if (planGR.next()) {
+			return planGR;
+		}
+		return null;
+	},
+
+	// eslint-disable-next-line no-unused-vars
+	getChargeClass: function getChargeClass(classCode, agency) {
+		// look up charge/vehicle class in ref table using agency
+		// createMissingReferenceDataException(lnnum,ln,fieldName,fieldValue,"Missing");
+
+		// todo: create reference table and look up based on agency
+		if (!agency) {
+			return null;
+		}
+		return classCode;
+	},
+
+	getPlazaDateTime: function getPlazaDateTime(
+		dateString,
+		timeString,
+		transactionDT,
+		lnnum,
+		defaultTime
+	) {
+		// date is MM/dd in local time zone
+		// Entry/exit date does not include year so we need to calculate the year based of the transaction date
+		// and be careful about spanning year-end cutover
+
+		var tollTimeZoneStr = this.defaultTimeZoneID;
+		var transactionGDT = new GlideDateTime(transactionDT);
+
+		// create a moment for the transaction date in the toll time zone
+		// we don't care that transactionGDT is utc - we just want the raw date to build the charge date
+		var transactionDateMt = moment.tz(
+			transactionGDT.toString(),
+			tollTimeZoneStr
+		);
+		if (!transactionDateMt.isValid()) {
+			gs.info(
+				"transactionDateMt.invalidAt(): " + transactionDateMt.invalidAt()
+			);
+			gs.info(
+				"transactionDateMt.parsingFlags(): " +
+					JSON.stringify(transactionDateMt.parsingFlags())
+			);
+			gs.info(
+				"transactionGDT #{0}# lnnum #{1}#",
+				transactionGDT.toString(),
+				lnnum
+			);
+			gs.info("toll_time_zone_str #{0)#", tollTimeZoneStr);
+			return null;
+		}
+
+		// calculate the entry/exit date/time components
+		// moment month is 0-based; charge date string is 1-based
+		var trxnYear = transactionDateMt.year();
+		var trxnMonth = transactionDateMt.month() + 1;
+		var chgMonth = Number(dateString.substr(0, 2));
+		var chgDay = Number(dateString.substr(3, 2));
+		var chgYear;
+		// calculate year based on charge month
+		if (chgMonth < trxnMonth && chgMonth <= 2 && trxnMonth >= 10) {
+			// charge happened in new year
+			chgYear = trxnYear + 1;
+		} else if (chgMonth > trxnMonth && chgMonth >= 10 && trxnMonth <= 2) {
+			// charge happened in previous year
+			chgYear = trxnYear - 1;
+		} else {
+			// charge happened in same year
+			chgYear = trxnYear;
+		}
+		var chgHour = (timeString === null || timeString === undefined) ? defaultTime[0] : Number(timeString.substr(0, 2));
+		var chgMin = (timeString === null || timeString === undefined) ? defaultTime[1] : Number(timeString.substr(3, 2));
+
+		// create a moment for the entry/exit date/time in the toll time zone
+		var chargeDate = moment.tz(
+			[chgYear, chgMonth - 1, chgDay, chgHour, chgMin],
+			tollTimeZoneStr
+		);
+
+		if (!chargeDate.isValid()) {
+			gs.info("chargeDate.invalidAt(): " + chargeDate.invalidAt());
+			gs.info(
+				"chargeDate.parsingFlags(): " +
+					JSON.stringify(chargeDate.parsingFlags())
+			);
+			gs.info(
+				"dateString #{0}# timeString #{1}# transactionGDT #{2}# lnnum #{3}#",
+				dateString,
+				timeString,
+				transactionGDT,
+				lnnum
+			);
+			gs.info(
+				"chgYear #{0}# chgMonth-1 #{1}# chgDay #{2}# chgHour #{3}# chgMin #{4}#",
+				chgYear,
+				chgMonth - 1,
+				chgDay,
+				chgHour,
+				chgMin
+			);
+			gs.info("trxnYear #{0}# trxnMonth #{1}#", trxnYear, trxnMonth);
+			gs.info("toll_time_zone_str #{0)#", tollTimeZoneStr);
+			return null;
+		}
+		// convert the entry/exit date to UTC
+		var chargeDateFmtString = chargeDate.utc().format("YYYY-MM-DD HH:mm:ss");
+		// create a GDT from the utc date string
+		var chargeDateGDT = new GlideDateTime();
+		chargeDateGDT.setValueUTC(chargeDateFmtString, "yyyy-MM-dd HH:mm:ss");
+		// return the utc charge date GDT
+		return chargeDateGDT;
+	},
+
+	getDefaultChargeType: function getDefaultChargeType() {
+		var importChargeType = new GlideRecord(
+			"x_89907_vehicle_to_toll_import_charge_type"
+		);
+		importChargeType.addQuery("import_type", this.importType);
+		importChargeType.addQuery("default_type", true);
+		importChargeType.query();
+		if (!importChargeType.next()) {
+			return null;
+		}
+		var chargeType = new GlideRecord("x_89907_vehicle_to_toll_charge_type");
+		if (!chargeType.get(importChargeType.charge_type)) {
+			return null;
+		}
+
+		return chargeType;
+	},
+
+	getMiscChargeType: function getMiscChargeType(
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue
+	) {
+		var tutil = new TollImportUtil();
+
+		var importChargeType = new GlideRecord(
+			"x_89907_vehicle_to_toll_import_charge_type"
+		);
+		importChargeType.addQuery("import_type", this.importType);
+		importChargeType.addQuery("import_label", fieldValue);
+		importChargeType.query();
+		if (!importChargeType.next()) {
+			this.log("did not get import charge type misc");
+			tutil.createInvalidFileContentError(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				"Unexpected charge type " + fieldValue
+			);
+			return null;
+		}
+		// 		this.jsonLog("importChargeType",DMKUtil.glideRecordToObject(importChargeType));
+		var chargeType = new GlideRecord("x_89907_vehicle_to_toll_charge_type");
+		if (!chargeType.get(importChargeType.charge_type)) {
+			this.log("did not get charge type misc");
+			tutil.createMissingReferenceDataError(
+				this.importStatementGR,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				importChargeType.getClassDisplayValue()
+			);
+			return null;
+		}
+		// 		this.jsonLog("chargeType",DMKUtil.glideRecordToObject(chargeType));
+		return chargeType;
+	},
+
+	getAccount: function getAccount(accountNumber) {
+		var statementAccountObj = new GlideRecord(
+			"x_89907_vehicle_to_toll_account"
+		);
+		statementAccountObj.addQuery("vendor", this.statementVendorObj.sys_id);
+		statementAccountObj.addQuery("account_number", accountNumber);
+		statementAccountObj.addQuery("active", true);
+		statementAccountObj.query();
+		if (!statementAccountObj.next()) {
+			return null;
+		}
+		return statementAccountObj;
+	},
+
+	validateUniqueStatement: function validateUniqueStatement() {
+		// validate to make sure this statement (for account/period) hasn't already been loaded into a summary
+		var dupegr = new GlideRecord("x_89907_vehicle_to_toll_statement");
+		dupegr.addQuery("bill_begin_date", this.statementObj.bill_begin_date);
+		dupegr.addQuery("bill_end_date", this.statementObj.bill_end_date);
+		dupegr.addQuery("account", this.statementObj.account);
+		dupegr.addQuery("vendor", this.statementObj.vendor);
+		dupegr.query();
+		if (dupegr.next()) {
+			gs.error(
+				"Duplicate statement detected importing {0}\n Vendor: {1}\n Account: {2}\n Begin: {3}\n End: {4}",
+				this.importLabel,
+				this.statementObj.vendor.getDisplayValue(),
+				this.statementObj.account.getDisplayValue(),
+				this.statementObj.bill_begin_date,
+				this.statementObj.bill_end_date
+			);
+			return false;
+		}
+		return true;
+	},
+	
+	reprocessUsageExceptions: function reprocessUsageExceptions(options) {
+/*
+// Run this script as background script to reprocess exceptions, adjusting query/options as needed
+(function () {
+  var options = {
+    limit: 150,
+    logVerbose: true,
+    query: 'transponderISNOTEMPTY^exit_plazaISNOTEMPTY^toll_provider=ce655d88db6333007cf5a455ca96199e'
+  };
+
+  gs.info("Reprocess Usage Exceptions");
+  var importTypeGR = new GlideRecord("x_89907_vehicle_to_toll_import_type");
+  if (!importTypeGR.get("8073786e4fa6fb005d57b2718110c7a9")) {
+	gs.info("Usage Exception Conversion: Could not find import type");
+  } else {
+	var importer = new TollStatementImporter({
+		name: 'Usage Exception Conversion',
+		import_type: importTypeGR
+	}, 'SN_CHall');
+	importer.reprocessUsageExceptions(options);
+  }
+})()
+*/
+
+		// Get the charges
+		var chargeGR = new GlideRecord("x_89907_vehicle_to_toll_charge");
+		if (options && options.query) {
+			chargeGR.addEncodedQuery(options.query);
+		} else {
+			chargeGR.addNotNullQuery("transponder");
+			chargeGR.addNotNullQuery("exit_plaza");
+		}
+		if (options && options.limit) {
+		  chargeGR.setLimit(options.limit);
+		}
+		chargeGR.query();
+		gs.info("Usage Exception Conversion: Found {0} charges to process", chargeGR.getRowCount());
+		
+		// Set up
+		var reproLog = [];
+		var counter = 0;
+		while (chargeGR.next()) {
+			var providerDesc = (chargeGR.toll_provider ? chargeGR.toll_provider.getDisplayValue() + "-" : "");
+			var chargeDesc = "(" + chargeGR.getUniqueValue() + ")" +
+				"Tr: " + (chargeGR.transponder ? chargeGR.transponder.getDisplayValue() : "(empty)") + " " +
+				"En: " + (chargeGR.entry_plaza ? chargeGR.entry_plaza.getDisplayValue() : "") + " " +
+				chargeGR.entry_date_time +
+				"Ex: " + (chargeGR.exit_plaza ? providerDesc + chargeGR.exit_plaza.getDisplayValue() : "") + " " +
+				chargeGR.exit_date_time;
+			if (
+				!gs.nil(chargeGR.transponder) &&
+				(!gs.nil(chargeGR.entry_plaza) || !gs.nil(chargeGR.exit_plaza)) &&
+				(!gs.nil(chargeGR.entry_date_time) || !gs.nil(chargeGR.exit_date_time))
+			) {
+				var usageExceptions = this.usageExceptionsForCharge(chargeGR);
+				if (usageExceptions && usageExceptions.length > 0) {
+					reproLog.push("Updating " + chargeDesc + " Exc: " + usageExceptions.join(","));
+					chargeGR.setValue("usage_exceptions", usageExceptions.join(","));
+					chargeGR.update('repro usage exceptions');
+					counter++;
+				} else {
+					reproLog.push("Pass " + chargeDesc);	
+				}
+			} else {
+				reproLog.push("Skipped " + chargeDesc);
+			}
+		}
+		if (options && options.logVerbose) {
+			gs.info("Usage Exception Conversion Complete \nUpdated: " + counter + "\n" + reproLog.join("\n"));
+		} else {
+			gs.info("Usage Exception Conversion Complete \nUpdated: " + counter);
+		}
+	},
+
+	type: "TollStatementImporter"
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-06-25 14:06:51</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>fe5584494fdafb405d57b2718110c7d5</sys_id>
+        <sys_mod_count>150</sys_mod_count>
+        <sys_name>TollStatementImporter</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_fe5584494fdafb405d57b2718110c7d5</sys_update_name>
+        <sys_updated_by>SN_Mavila</sys_updated_by>
+        <sys_updated_on>2022-08-06 17:22:25</sys_updated_on>
+    </sys_script_include>
+</record_update>

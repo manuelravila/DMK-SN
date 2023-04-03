@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="u_tags" label="Tags" language="en" table="x_89907_vehicle_to_states">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>u_tags</element>
+            <help/>
+            <hint/>
+            <label>Tags</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_states</name>
+            <plural>Tags</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>SN_Mavila</sys_created_by>
+            <sys_created_on>2022-08-06 17:30:57</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>868519d7db41dd1455a683aa1396197a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Tags</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_documentation_x_89907_vehicle_to_states_u_tags_en</sys_update_name>
+            <sys_updated_by>SN_Mavila</sys_updated_by>
+            <sys_updated_on>2022-08-06 17:30:57</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

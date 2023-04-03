@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_policy">
+    <sys_ui_policy action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <conditions table="x_89907_vehicle_to_toll_user_statement">status=1^EQ<item display_value="Open" endquery="false" field="status" goto="false" newquery="false" operator="=" or="false" value="1"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description/>
+        <global>false</global>
+        <inherit>false</inherit>
+        <isolate_script>true</isolate_script>
+        <model_id/>
+        <model_table/>
+        <on_load>true</on_load>
+        <order>400</order>
+        <reverse_if_false>true</reverse_if_false>
+        <run_scripts>true</run_scripts>
+        <script_false><![CDATA[function onCondition() {
+	g_form.setSectionDisplay('payment',true);
+	g_form.setSectionDisplay('resolution',true);
+	g_form.setSectionDisplay('comments',false);
+// 	g_form.setDisabled('user',true);
+// 	g_form.setReadOnly('user',true);
+
+}]]></script_false>
+        <script_true><![CDATA[function onCondition() {
+	g_form.setSectionDisplay('payment',false);
+	g_form.setSectionDisplay('resolution',false);
+	g_form.setSectionDisplay('comments',false);
+// 	g_form.setDisabled('user',true);
+// 	g_form.setReadOnly('user',true);
+
+	//open pending/disputed only
+	g_form.setDisplay('vendor',false);
+	g_form.setDisplay('number',false);
+	g_form.setDisplay('status',false);
+	// g_form.setDisplay('progress_phase',false);
+	g_form.setDisplay('personal_amount',false);
+
+}]]></script_true>
+        <set_values/>
+        <short_description>User Statement (Portal - Open)</short_description>
+        <sys_class_name>sys_ui_policy</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-11-28 16:24:57</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b8fe0cb5db4a6300f898fbefbf961954</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>User Statement (Portal - Open)</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_policy_b8fe0cb5db4a6300f898fbefbf961954</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-23 18:06:57</sys_updated_on>
+        <table>x_89907_vehicle_to_toll_user_statement</table>
+        <ui_type>1</ui_type>
+        <view display_value="PortalUser" name="PortalUser">PortalUser</view>
+    </sys_ui_policy>
+</record_update>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.UsageExceptionRuleSet</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>UsageExceptionRuleSet</name>
+        <script><![CDATA[gs.include("moment");
+gs.include("moment-timezone-with-data-2012-2022.js");
+
+var UsageExceptionRuleSet = Class.create();
+UsageExceptionRuleSet.prototype = {
+	initialize: function initialize(configGR) {
+		// store values from the configGR so it's loop safe
+		this._timezoneIdentifier = "US/Eastern";
+		Object.defineProperty(this, "timezoneIdentifier", {
+			get: function() {
+				return this._timezoneIdentifier;
+			}
+		});
+		this._allowWeekends = !!configGR.allow_weekends;
+		this._shiftStart = this._getTimeValue(configGR.shift_start);
+		this._shiftEnd = this._getTimeValue(configGR.shift_end);
+		// todo: externalize timezone - needs to be same as tz used to convert toll charge entry/exit times
+		// todo change default to system timezone - or installation default?
+
+		Object.defineProperty(this, "allowWeekends", {
+			get: function() {
+				return this._allowWeekends;
+			}
+		});
+		Object.defineProperty(this, "shiftStart", {
+			get: function() {
+				return this._shiftStart;
+			}
+		});
+		Object.defineProperty(this, "shiftEnd", {
+			get: function() {
+				return this._shiftEnd;
+			}
+		});
+	},
+
+	isTimeException: function isTimeException(time) {
+		// time needs to be HH:mm:ss in local time
+		var timeSecs = this._timeToSeconds(time);
+		return !(this.shiftStart <= timeSecs && timeSecs <= this.shiftEnd);
+	},
+
+	isDayOfWeekException: function isDayOfWeekException(day) {
+		// day of the week, with Sunday as 0 and Saturday as 6.
+		return !this.allowWeekends && (day === 0 || day === 6);
+	},
+
+	_getTimeValue: function _getTimeValue(stringOrElement) {
+		if (gs.nil(stringOrElement)) {
+			return stringOrElement;
+		}
+		if (typeof stringOrElement == "string") {
+			return stringOrElement;
+		}
+		var v = stringOrElement.toString();
+
+		var tzi = this.timezoneIdentifier;
+		var mm = moment;
+		var uf = mm.utc;
+		var uu = moment.utc(v);
+		var mtl = uu.tz(tzi);
+		
+		
+		var mtTollLocal = moment.utc(v).tz(this.timezoneIdentifier);
+		var strTimeTollLocal = mtTollLocal.format("HH:mm:ss");
+		var tv = this._timeToSeconds(strTimeTollLocal);
+
+		return tv;
+	},
+
+	_timeToSeconds: function _timeToSeconds(/* String */ tm) {
+		var h = 0;
+		var m = 0;
+		var s = 0;
+		var parts = tm.split(":");
+		h = parseInt(parts[0], 10);
+		if (parts.length > 1) {
+			m = parseInt(parts[1], 10);
+		}
+
+		if (parts.length > 2) {
+			s = parseInt(parts[2], 10);
+		}
+
+		if (isNaN(h)) {
+			h = 0;
+		}
+		if (isNaN(m)) {
+			m = 0;
+		}
+
+		if (isNaN(s)) {
+			s = 0;
+		}
+
+		return h * 3600 + m * 60 + s;
+	},
+
+	_unmarshall: function _unmarshall(record) {
+		var obj = {};
+
+		// eslint-disable-next-line no-restricted-syntax
+		for (var prop in record) {
+			if (record[prop]) {
+				obj[prop] = record.getValue(prop);
+			}
+		}
+		return obj;
+	},
+
+	type: "UsageExceptionRuleSet"
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-06-03 17:25:16</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>37b79bf54fb17b005d57b2718110c7c5</sys_id>
+        <sys_mod_count>69</sys_mod_count>
+        <sys_name>UsageExceptionRuleSet</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_37b79bf54fb17b005d57b2718110c7c5</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-12-24 06:53:17</sys_updated_on>
+    </sys_script_include>
+</record_update>

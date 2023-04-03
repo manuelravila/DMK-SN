@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="90eaf7b74f9f23005d57b2718110c70c" sys_domain="global" table="x_89907_vehicle_to_toll_charge_type_import" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>0</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_id>68eaf7b74f9f23005d57b2718110c712</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_charge_type_import" sys_domain="global" view="Default view">90eaf7b74f9f23005d57b2718110c70c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_charge_type</element>
+            <position>1</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_id>60eaf7b74f9f23005d57b2718110c713</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_charge_type_import" sys_domain="global" view="Default view">90eaf7b74f9f23005d57b2718110c70c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_credit</element>
+            <position>2</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_id>e0eaf7b74f9f23005d57b2718110c713</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_charge_type_import" sys_domain="global" view="Default view">90eaf7b74f9f23005d57b2718110c70c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_default_type</element>
+            <position>3</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_id>64eaf7b74f9f23005d57b2718110c713</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_charge_type_import" sys_domain="global" view="Default view">90eaf7b74f9f23005d57b2718110c70c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>4</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_id>e4eaf7b74f9f23005d57b2718110c713</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_charge_type_import" sys_domain="global" view="Default view">90eaf7b74f9f23005d57b2718110c70c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_display_label</element>
+            <position>5</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_id>68eaf7b74f9f23005d57b2718110c713</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_charge_type_import" sys_domain="global" view="Default view">90eaf7b74f9f23005d57b2718110c70c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_import_label</element>
+            <position>6</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_id>e8eaf7b74f9f23005d57b2718110c713</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_charge_type_import" sys_domain="global" view="Default view">90eaf7b74f9f23005d57b2718110c70c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>u_import_type</element>
+            <position>7</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_id>6ceaf7b74f9f23005d57b2718110c713</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_charge_type_import" sys_domain="global" view="Default view">90eaf7b74f9f23005d57b2718110c70c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>8</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_id>eceaf7b74f9f23005d57b2718110c713</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_charge_type_import" sys_domain="global" view="Default view">90eaf7b74f9f23005d57b2718110c70c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_89907_vehicle_to_toll_charge_type_import</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-02-05 17:53:33</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>90eaf7b74f9f23005d57b2718110c70c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_toll_charge_type_import</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_section_90eaf7b74f9f23005d57b2718110c70c</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-02-05 17:53:33</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

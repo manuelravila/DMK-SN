@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>Provide Approval role to toll users</name>
+        <record_for_rollback>false</record_for_rollback>
+        <script><![CDATA[var gr = new GlideRecord('x_89907_vehicle_to_toll_approver');
+var query = 'active=true';
+gr.addEncodedQuery(query);
+gr.query();
+i=0;
+while (gr.next()){
+	var rec1 = new GlideRecord('sys_user_grmember');
+	rec1.addEncodedQuery('sys_id='+gr.manager);
+	rec1.query();
+	if(!rec1.next()){
+		rec1.initialize();
+		rec1.user = gr.manager.sys_id;
+		rec1.group='27db2672db3d8890ab92f6e9af9619bf';
+		rec1.insert();
+		gs.addInfoMessage('Toll approver record Inserted for'+gr.manager.sys_id);
+		
+	}
+	
+}
+
+]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>SN_dtseten</sys_created_by>
+        <sys_created_on>2020-09-08 15:27:14</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>baec57b61b431c50195fed7dee4bcb8c</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Provide Approval role to toll users</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_fix_baec57b61b431c50195fed7dee4bcb8c</sys_update_name>
+        <sys_updated_by>SN_dtseten</sys_updated_by>
+        <sys_updated_on>2020-09-08 15:27:59</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

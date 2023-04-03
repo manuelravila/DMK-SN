@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TSPRecordDetailAccessor</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>TSPRecordDetailAccessor</name>
+        <script><![CDATA[/* globals Class,GlideRecord,GlideDateTime */
+var TSPRecordDetailAccessor = Class.create();
+TSPRecordDetailAccessor.prototype = {
+	// Public functions
+	initialize: function initialize() {},
+
+	getDeviceDetails: function getDeviceDetails(sysID, fieldNames) {
+		var tableName = "x_89907_vehicle_to_u_cmdb_ci_transponder";
+		var templateName = "x_89907_vehicle_to_tsp-transponder-list-card";
+		var itemRecord = this._getDetailsDefault(
+			sysID,
+			fieldNames,
+			tableName,
+			templateName
+		);
+		return itemRecord;
+	},
+
+	getPaymentDetails: function getPaymentDetails(sysID, fieldNames) {
+		var tableName = "x_89907_vehicle_to_payment";
+		var templateName = "x_89907_vehicle_to_tsp-payment-list-card";
+		var itemRecord = this._getDetailsDefault(
+			sysID,
+			fieldNames,
+			tableName,
+			templateName
+		);
+		return itemRecord;
+	},
+
+	_getDetailsDefault: function _getDetailsDefault(sysID, fieldNames, tableName, templateName) {
+		var itemRecord = {};
+		var itemGR = new GlideRecord(tableName);
+		if (itemGR.get(sysID)) {
+			itemRecord.table_name = itemGR.getTableName();
+			itemRecord.sys_id = itemGR.getUniqueValue();
+			itemRecord.display_value = itemGR.getDisplayValue();
+			itemRecord.display_name = itemGR.getClassDisplayValue();
+			itemRecord.display_name_plural = itemGR.getED().getPlural();
+			var deviceFields = {};
+			for (var i = 0; i < fieldNames.length; i++) {
+				var fieldName = fieldNames[i];
+				var deviceFieldValid = itemGR.isValidField(fieldName);
+				if (deviceFieldValid) {
+					deviceFields[fieldName] = this._getField(
+						itemGR,
+						fieldName
+					);
+				}
+			}
+			itemRecord.fields = deviceFields;
+			itemRecord.template_name = templateName;
+		}
+		return itemRecord;
+	},
+
+	_getField: function _getField(anyGR, name) {
+		var f = {};
+		f.display_value = anyGR.getDisplayValue(name);
+		f.value = anyGR.getValue(name);
+		var ge = anyGR.getElement(name);
+		if (ge == null) {
+			return f;
+		}
+		f.type = ge.getED().getInternalType();
+		f.label = ge.getLabel();
+		if (f.type == "glide_date_time" && f.value) {
+			var tmpGDT = new GlideDateTime(f.value);
+			f.date_display_value = tmpGDT.getDate().getDisplayValue();
+		}
+		return f;
+	},
+	type: "TSPRecordDetailAccessor"
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-18 14:46:54</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>71789642db076b00f898fbefbf961916</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>TSPRecordDetailAccessor</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_71789642db076b00f898fbefbf961916</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-12-17 06:26:30</sys_updated_on>
+    </sys_script_include>
+</record_update>

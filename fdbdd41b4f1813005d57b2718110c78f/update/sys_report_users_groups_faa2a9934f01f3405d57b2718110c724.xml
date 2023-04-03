@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_report_users_groups">
+    <sys_report_users_groups action="INSERT_OR_UPDATE">
+        <group_id display_value="Toll Coordinators" name="Toll Coordinators">7b5cda594f5b67005d57b2718110c75f</group_id>
+        <report_id display_value="Transponders by type">cbb718994f70f3005d57b2718110c703</report_id>
+        <sys_class_name>sys_report_users_groups</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-05-01 17:21:26</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>faa2a9934f01f3405d57b2718110c724</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>cbb718994f70f3005d57b2718110c703</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_report_users_groups_faa2a9934f01f3405d57b2718110c724</sys_update_name>
+        <sys_updated_by>dan.lengyel</sys_updated_by>
+        <sys_updated_on>2019-05-01 17:21:26</sys_updated_on>
+        <user_id/>
+    </sys_report_users_groups>
+</record_update>

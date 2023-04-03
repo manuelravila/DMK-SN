@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_transform_script">
+    <sys_transform_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <map display_value="Transponder Import Transform">6efeb0844f0213005d57b2718110c74f</map>
+        <order>100</order>
+        <script><![CDATA[(function runTransformScript(source, map, log, target /*undefined onStart*/ ) {
+
+	log.info("ONCHOICECREATE action: " + action + "name: " + name + " value: " + value + "\n" + DMKUtil.glideRecordToJSON(source,false));
+
+})(source, map, log, target);]]></script>
+        <sys_class_name>sys_transform_script</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-31 13:02:48</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>96edc5a44f0ffb405d57b2718110c7e3</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>onForeignInsert</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_transform_script_96edc5a44f0ffb405d57b2718110c7e3</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-07-31 15:43:15</sys_updated_on>
+        <when>onForeignInsert</when>
+    </sys_transform_script>
+</record_update>

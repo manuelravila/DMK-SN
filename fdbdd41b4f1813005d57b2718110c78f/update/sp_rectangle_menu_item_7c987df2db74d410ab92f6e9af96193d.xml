@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rectangle_menu_item">
+    <sp_rectangle_menu_item action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <color>default</color>
+        <condition/>
+        <display_1/>
+        <display_2/>
+        <display_date/>
+        <filter/>
+        <glyph/>
+        <hint/>
+        <kb_article/>
+        <kb_category/>
+        <kb_topic/>
+        <label>FAQs</label>
+        <order>400</order>
+        <record_script/>
+        <sc_cat_item/>
+        <sc_category/>
+        <short_description/>
+        <sp_page/>
+        <sp_rectangle_menu/>
+        <sp_rectangle_menu_item display_value="Help">87541e924f69b7005d57b2718110c75d</sp_rectangle_menu_item>
+        <sys_class_name>sp_rectangle_menu_item</sys_class_name>
+        <sys_created_by>SN_CHall</sys_created_by>
+        <sys_created_on>2020-05-19 11:46:47</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>7c987df2db74d410ab92f6e9af96193d</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>FAQs</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_rectangle_menu_item_7c987df2db74d410ab92f6e9af96193d</sys_update_name>
+        <sys_updated_by>dtseten</sys_updated_by>
+        <sys_updated_on>2021-10-06 00:34:58</sys_updated_on>
+        <table/>
+        <type>url</type>
+        <url>/toll_service_portal/?id=toll_knowledge_article&amp;sysparm_article=KB0010455</url>
+        <url_target>_blank</url_target>
+    </sp_rectangle_menu_item>
+    <sys_translated_text action="delete_multiple" query="documentkey=7c987df2db74d410ab92f6e9af96193d"/>
+</record_update>

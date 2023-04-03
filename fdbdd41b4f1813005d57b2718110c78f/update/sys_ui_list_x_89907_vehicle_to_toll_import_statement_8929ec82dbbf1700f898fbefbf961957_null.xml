@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" table="x_89907_vehicle_to_toll_import_exception" version="2" view="">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>status</element>
+            <list_id display_value="x_89907_vehicle_to_toll_import_exception" element="NULL" name="x_89907_vehicle_to_toll_import_exception" parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" view="Default view">fc74b4824f8bff405d57b2718110c750</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_id>b474b4824f8bff405d57b2718110c751</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>error_class</element>
+            <list_id display_value="x_89907_vehicle_to_toll_import_exception" element="NULL" name="x_89907_vehicle_to_toll_import_exception" parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" view="Default view">fc74b4824f8bff405d57b2718110c750</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_id>3874b4824f8bff405d57b2718110c751</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>error_type</element>
+            <list_id display_value="x_89907_vehicle_to_toll_import_exception" element="NULL" name="x_89907_vehicle_to_toll_import_exception" parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" view="Default view">fc74b4824f8bff405d57b2718110c750</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_id>b874b4824f8bff405d57b2718110c751</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>field_name</element>
+            <list_id display_value="x_89907_vehicle_to_toll_import_exception" element="NULL" name="x_89907_vehicle_to_toll_import_exception" parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" view="Default view">fc74b4824f8bff405d57b2718110c750</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_id>3c74b4824f8bff405d57b2718110c751</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>field_type</element>
+            <list_id display_value="x_89907_vehicle_to_toll_import_exception" element="NULL" name="x_89907_vehicle_to_toll_import_exception" parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" view="Default view">fc74b4824f8bff405d57b2718110c750</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_id>bc74b4824f8bff405d57b2718110c751</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>field_value</element>
+            <list_id display_value="x_89907_vehicle_to_toll_import_exception" element="NULL" name="x_89907_vehicle_to_toll_import_exception" parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" view="Default view">fc74b4824f8bff405d57b2718110c750</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_id>3074b4824f8bff405d57b2718110c752</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>error_message</element>
+            <list_id display_value="x_89907_vehicle_to_toll_import_exception" element="NULL" name="x_89907_vehicle_to_toll_import_exception" parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" view="Default view">fc74b4824f8bff405d57b2718110c750</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_id>b074b4824f8bff405d57b2718110c752</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>occurred_count</element>
+            <list_id display_value="x_89907_vehicle_to_toll_import_exception" element="NULL" name="x_89907_vehicle_to_toll_import_exception" parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" view="Default view">fc74b4824f8bff405d57b2718110c750</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>7</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_id>3474b4824f8bff405d57b2718110c752</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>import_line_number</element>
+            <list_id display_value="x_89907_vehicle_to_toll_import_exception" element="NULL" name="x_89907_vehicle_to_toll_import_exception" parent="x_89907_vehicle_to_toll_import_statement" relationship="8929ec82dbbf1700f898fbefbf961957" sys_domain="global" view="Default view">fc74b4824f8bff405d57b2718110c750</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>8</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_id>b474b4824f8bff405d57b2718110c752</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_89907_vehicle_to_toll_import_exception</name>
+            <parent>x_89907_vehicle_to_toll_import_statement</parent>
+            <position/>
+            <relationship display_value="Import Exceptions - Statement">8929ec82dbbf1700f898fbefbf961957</relationship>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-05 02:52:40</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>fc74b4824f8bff405d57b2718110c750</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_toll_import_exception</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_list_x_89907_vehicle_to_toll_import_statement_8929ec82dbbf1700f898fbefbf961957_null</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-05 02:52:40</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

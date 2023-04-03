@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Transponder activity formatter fields</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>glide.ui.x_89907_vehicle_to_u_cmdb_ci_transponder_activity.fields</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-02-13 14:46:20</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>08ccd0ee4faba7005d57b2718110c724</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>glide.ui.x_89907_vehicle_to_u_cmdb_ci_transponder_activity.fields</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_properties_08ccd0ee4faba7005d57b2718110c724</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-22 03:11:00</sys_updated_on>
+        <type>string</type>
+        <value>name,install_status,u_vehicle_number,u_plate_number,u_account,assigned_to,comments,company,cost_center,u_create_invoice,short_description,u_initial_transponder,install_date,manufacturer,model_id,model_number,u_pool_device,u_previous_transponder,u_removed_date,u_replacement_transponder,u_transponder_number,u_transponder_type,vendor,allow_out_of_area,allow_weekends,alternate_shift,shift_end,shift_start,sys_created_on,sys_created_by,sys_updated_on,sys_updated_by,*Email*,*Attachments*,sys_tags,owned_by,delivery_date,operational_status</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=08ccd0ee4faba7005d57b2718110c724"/>
+</record_update>

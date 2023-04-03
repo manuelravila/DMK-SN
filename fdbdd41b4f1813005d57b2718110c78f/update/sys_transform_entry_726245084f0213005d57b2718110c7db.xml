@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_transform_entry">
+    <sys_transform_entry action="INSERT_OR_UPDATE">
+        <choice_action>reject</choice_action>
+        <coalesce>false</coalesce>
+        <coalesce_case_sensitive>false</coalesce_case_sensitive>
+        <coalesce_empty_fields>false</coalesce_empty_fields>
+        <date_format>yyyy-MM-dd HH:mm:ss</date_format>
+        <map display_value="Transponder Import Transform">6efeb0844f0213005d57b2718110c74f</map>
+        <reference_value_field>sys_id</reference_value_field>
+        <source_field>[Script]</source_field>
+        <source_script><![CDATA[answer = (function transformEntry(source, log) {
+
+	// Initialize the Vehicle Tolls Data Migration Util class for various lookups
+	var migrationUtil = new TollDataMigrationUtil();
+
+	/**
+	* Whether to create a user record if it is "ACTIVE" in the source and not found in the target
+	*/
+	var CREATE_ACTIVE_USERS = false;
+	/**
+	* Whether to create a user record if it is "DROPPED" in the source and not found in the target
+	*/
+	var CREATE_DROPPED_USERS = true;
+	/**
+	* Sys ID of company record to use when finding/creating users; set to null to find company based on 
+	* source data
+	*/
+	var COMPANY_SYS_ID;
+
+	/**
+	* Find the user to assign to the transponder
+	*	Set the foundUserSysID variable
+	*	     a sys_user record sys ID - the transponder assigned_to field will be set to this user sys ID
+	*	     null - the transponder will be un-assigned
+	* @returns {string} The sys ID of the user to assign
+	*/
+	function findUser(companySysID, emailAddress, iWiseLogonID, lastName, firstName, middleName, status) {
+
+		var foundUserSysID = null;
+
+		// START: Update code between these comments to handle locating user records
+
+		foundUserSysID = migrationUtil.findUser(companySysID, emailAddress, null, lastName, firstName, middleName, status);
+		
+		// END: Update code between these comments to handle locating user records
+
+		return foundUserSysID || null;
+	}
+
+	/**
+	* Create a new user record to assign to the transponder
+	* IMPORTANT: You are responsible for preventing duplicates with a proper implementation of findUser above
+	*	Set the foundUserSysID variable
+	*	     a sys_user record sys ID - the transponder assigned_to field will be set to this user sys ID
+	*	     null - the transponder will be un-assigned
+	* @returns {string} The sys ID of the user to assign
+	*/
+	function createUser(companyID, emailAddress, iWiseLogonID, lastName, firstName, middleName, status) {
+
+		var createdUserSysID = null;
+
+		// START: Update code between these comments to handle creating user records
+		// IMPORTANT: You are responsible for preventing duplicates with a proper implementation of findUser above
+
+		createdUserSysID = migrationUtil.createUser(companyID, emailAddress, iWiseLogonID, lastName, firstName, middleName, status);
+		if (createdUserSysID) {
+			log.info("Created user " + [emailAddress, iWiseLogonID, lastName, firstName, middleName].join(""));
+		} else {
+			log.error("Error creating user " + [emailAddress, iWiseLogonID, lastName, firstName, middleName].join(""));
+		}
+		// END: Update code between these comments to handle creating user records
+
+		return createdUserSysID || null;
+	}
+
+	/**
+	* Determine whether we should create a new user if a matching one is not found
+	* IMPORTANT: You are responsible for preventing duplicates with a proper implementation of findUser above
+	*	Set the shouldCreate variable
+	*	     true - a new user record will be created
+	*	     false - no new user record will be created and the transponder will be un-assigned
+	* @returns {boolean} Whether a new user record should be created if a matching one is not found
+	*/
+	function shouldCreateUser(companyID, emailAddress, iWiseLogonID, lastName, firstName, middleName, status) {
+		var shouldCreate = false;
+
+		// START: Update code between these comments to determine whether to create user records
+		// IMPORTANT: You are responsible for preventing duplicates with a proper implementation of findUser above
+
+		if (status && CREATE_ACTIVE_USERS && emailAddress && lastName && firstName) {
+			shouldCreate = true;
+		} else if (status && !CREATE_ACTIVE_USERS) {
+			log.warn("Skipping create of active user " + [emailAddress, iWiseLogonID, lastName, firstName, middleName, status].join(" "));
+		} else if (!status && CREATE_DROPPED_USERS && emailAddress && lastName && firstName) {
+			shouldCreate = true;
+		}
+
+		// END: Update code between these comments to determine whether to create user records
+
+		return shouldCreate;
+	}
+
+	/**
+	* If COMPANY_SYS_ID is not set, this function is used to determine the correct company for looking up the user
+	* Setting the company value to null is not supported and may lead to issues
+	* @returns {string} The sys ID of the company to use in the default search
+	*/
+	function findCompany(emailAddress, iWiseLogonID, lastName, firstName, middleName, status) {
+
+		var foundCompanySysID;
+
+		// START: Update code between these comments to handle locating the correct company record
+
+		foundCompanySysID = migrationUtil.findCompany(emailAddress, iWiseLogonID, lastName, firstName, middleName, status);
+
+		// END: Update code between these comments to handle locating the correct company record
+
+		return foundCompanySysID;
+
+	}
+
+	// If you need to massage the input data, here is the common place to do it
+	// so it will get used by your find/create fuctions
+	var srcLastName = source.u_hra_last_name;
+	var srcFirstName = source.u_hra_first_name;
+	var srcMiddleName = source.u_hra_middle_name;
+	var srcEmailAddress = source.u_hra_email_address;
+	var srcIWiseLogonID = source.u_hra_iwise_logon_id;
+	var srcEmployeeStatus = source.u_hra_employee_status;
+	var srcEmployeeIsActive = srcEmployeeStatus == "Active";
+
+	var companySysID = COMPANY_SYS_ID || source.u_sn_company_sysid || findCompany(srcEmailAddress, srcIWiseLogonID, srcLastName, srcFirstName, srcMiddleName, srcEmployeeIsActive);
+
+
+	var userSysID = findUser(companySysID, srcEmailAddress, srcIWiseLogonID, srcLastName, srcFirstName, srcMiddleName, srcEmployeeIsActive);
+	if (!userSysID && shouldCreateUser(companySysID, srcEmailAddress, srcIWiseLogonID, srcLastName, srcFirstName, srcMiddleName, srcEmployeeIsActive)) {
+		userSysID = createUser(companySysID, srcEmailAddress, srcIWiseLogonID, srcLastName, srcFirstName, srcMiddleName, srcEmployeeIsActive);
+	}
+
+
+	return userSysID ? userSysID : ""; // return the value to be put into the target field
+
+})(source, log);]]></source_script>
+        <source_table>x_89907_vehicle_to_transponder_import</source_table>
+        <sys_class_name>sys_transform_entry</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-05-08 13:20:45</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>726245084f0213005d57b2718110c7db</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>[Script]</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_transform_entry_726245084f0213005d57b2718110c7db</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-03-18 04:43:58</sys_updated_on>
+        <target_field>assigned_to</target_field>
+        <target_table>x_89907_vehicle_to_u_cmdb_ci_transponder</target_table>
+        <use_source_script>true</use_source_script>
+    </sys_transform_entry>
+</record_update>

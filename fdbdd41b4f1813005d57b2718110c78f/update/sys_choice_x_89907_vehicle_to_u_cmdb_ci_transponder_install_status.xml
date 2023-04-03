@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="install_status" table="x_89907_vehicle_to_u_cmdb_ci_transponder" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>install_status</element>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>2deae0931bdfa41079d6113fad4bcb8a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>install_status</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_choice_x_89907_vehicle_to_u_cmdb_ci_transponder_install_status</sys_update_name>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint>CIs are set to this state by Discovery when a previously present CI was discovered to be absent</hint>
+            <inactive>false</inactive>
+            <label>Absent</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>61eae0931bdfa41079d6113fad4bcb8a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+            <value>100</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>In Maintenance</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>edeaa8931bdfa41079d6113fad4bcb11</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+            <value>3</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>In Stock</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a5eaa8931bdfa41079d6113fad4bcb15</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+            <value>6</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Installed</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>6deaa8931bdfa41079d6113fad4bcb18</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+            <value>1</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>On Order</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>25eaa8931bdfa41079d6113fad4bcb1c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+            <value>2</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Pending Install</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e9eaa8931bdfa41079d6113fad4bcb1f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+            <value>4</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Pending Repair</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a1eaa8931bdfa41079d6113fad4bcb23</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+            <value>5</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Retired</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>7</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>69eaa8931bdfa41079d6113fad4bcb26</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+            <value>7</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Stolen</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>8</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>21eaa8931bdfa41079d6113fad4bcb2a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-04-08 22:12:30</sys_updated_on>
+            <value>8</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>install_status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Lost</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <sequence>9</sequence>
+            <synonyms/>
+            <sys_created_by>SN_dtseten</sys_created_by>
+            <sys_created_on>2021-04-08 22:12:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e5eaa8931bdfa41079d6113fad4bcb2d</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>SN_dtseten</sys_updated_by>
+            <sys_updated_on>2021-08-06 22:36:24</sys_updated_on>
+            <value>101</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

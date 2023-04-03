@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_macro">
+    <sys_ui_macro action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>general</category>
+        <description>Insert process flow tabs based on stage of process&#13;
+Parameters:&#13;
+stage - 1=Payment Details;2=User Statement Selection;3=Review and Confirm;4=Complete&#13;
+Usage:&#13;
+		&lt;g:macro_invoke macro="x_89907_vehicle_to_payment_process_flow" id="payment_process_flow" stage="2"   /&gt;</description>
+        <media_type/>
+        <name>payment_process_flow</name>
+        <scoped_name>x_89907_vehicle_to_payment_process_flow</scoped_name>
+        <sys_class_name>sys_ui_macro</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-12-12 16:10:51</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>4223d4dadb522300f898fbefbf961945</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>payment_process_flow</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_macro_4223d4dadb522300f898fbefbf961945</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-03-01 21:57:40</sys_updated_on>
+        <xml><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:evaluate var="jvar_active_class" object="true" jelly="true">
+		var activeClass = [];
+		var stage = jelly.jvar_stage;
+		stage == 1 ? activeClass.push("active") : activeClass.push("disabled");
+		stage == 2 ? activeClass.push("active") : activeClass.push("disabled");
+		stage == 3 ? activeClass.push("active") : activeClass.push("disabled");
+		activeClass;
+	</g:evaluate>
+	<g:evaluate var="jvar_completed_class" object="true" jelly="true">
+		var completedClass = [];
+		var stage = jelly.jvar_stage;
+		stage > 1 ? completedClass.push("completed") : completedClass.push("");
+		stage > 2 ? completedClass.push("completed") : completedClass.push("");
+		stage > 3 ? completedClass.push("completed") : completedClass.push("");
+		completedClass;
+	</g:evaluate>
+	<div class="navbar navbar-default" style="padding:0px" id="${jvar_id}">
+		<ol class="process-breadcrumb" style="margin-bottom: 0px" id="${jvar_id}.list">
+			<li class="${jvar_active_class[0]} ${jvar_completed_class[0]}" id="${jvar_id}.item1">
+				<a class="disabled">${gs.getMessage("Payment Details")}</a>
+			</li>
+			<li class="${jvar_active_class[1]} ${jvar_completed_class[1]}" id="${jvar_id}.item2">
+				<a class="disabled">${gs.getMessage("User Statement Selection")}</a>
+			</li>
+			<li class="${jvar_active_class[2]} ${jvar_completed_class[2]}" id="${jvar_id}.item3">
+				<a class="disabled">${gs.getMessage("Review and Confirm")}</a>
+			</li>
+		</ol>
+	</div>
+</j:jelly>]]></xml>
+    </sys_ui_macro>
+</record_update>

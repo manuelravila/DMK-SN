@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
+    <sp_page action="INSERT_OR_UPDATE">
+        <category>other</category>
+        <css>/*&#13;
+London doesn't give us a way to easily disable the tours menu item.&#13;
+Hide it here.&#13;
+*/&#13;
+#tour-dropdown {&#13;
+  display: none !important;&#13;
+}&#13;
+&#13;
+/*&#13;
+Force the background color to match the high level background&#13;
+so it's not so stripe-y. CUSTOMIZE the background color in the&#13;
+css_variables section (8d6c9d10db531300f898fbefbf961994)&#13;
+*/&#13;
+section.page {&#13;
+	background-color: $sp-homepage-bg;&#13;
+}&#13;
+&#13;
+section.page,&#13;
+main.body {&#13;
+	padding-top: 0px !important;&#13;
+}&#13;
+&#13;
+/*&#13;
+CUSTOMIZE the background color of the content panel to offset&#13;
+content area&#13;
+*/&#13;
+div.tsp-inner-content {&#13;
+	background-color: #e8e8e8;&#13;
+	margin-bottom: 10px;&#13;
+	padding-bottom: 10px;&#13;
+}&#13;
+&#13;
+/*&#13;
+Next 2 elements: CUSTOMIZE these depending on height/content&#13;
+of banner image to show more/less image and frame image content&#13;
+aesthetically&#13;
+*/&#13;
+div.tsp-banner-image {&#13;
+	height: 250px;&#13;
+	background-position: center -125px;&#13;
+}&#13;
+.bumpOverBackground {&#13;
+	margin-top: -160px;&#13;
+}&#13;
+&#13;
+/*&#13;
+Next 2 elements: (CUSTOMIZE) Add the "Toll Service Portal" label in the header/navbar&#13;
+*/&#13;
+.navbar-brand-logo {&#13;
+	display: flex;&#13;
+}&#13;
+.navbar-brand-logo:after {&#13;
+	content: "EZPass Service Portal";&#13;
+	align-self: center;&#13;
+	font-size: x-large;&#13;
+}&#13;
+</css>
+        <draft>false</draft>
+        <dynamic_title_structure/>
+        <id>toll_index</id>
+        <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
+        <public>false</public>
+        <roles/>
+        <seo_script/>
+        <short_description/>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-12-18 18:31:59</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>35cde704dbee2300f898fbefbf9619db</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>toll_index</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_page_35cde704dbee2300f898fbefbf9619db</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-03-11 19:40:50</sys_updated_on>
+        <title>Toll Index</title>
+        <use_seo_script>false</use_seo_script>
+    </sp_page>
+    <sys_translated_text action="delete_multiple" query="documentkey=35cde704dbee2300f898fbefbf9619db"/>
+</record_update>

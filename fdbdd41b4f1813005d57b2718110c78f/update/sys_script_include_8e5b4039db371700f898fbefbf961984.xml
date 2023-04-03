@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.Utilities</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>Utilities</name>
+        <script><![CDATA[var Utilities = Class.create();
+Utilities.prototype = {
+	initialize: function initialize() {
+	},
+
+	DuplicateCheck: function DuplicateCheck(current, column) {
+		var table = current.getTableName();
+		var value = current.getValue(column);
+		var operation = current.operation();
+		var sysid = current.sys_id;
+
+		var duplicateGR = new GlideRecord(table);
+		duplicateGR.addQuery(column, "=", value);
+		if (operation == "update") {
+			duplicateGR.addQuery("sys_id", "!=", sysid);
+		}
+		duplicateGR.query();
+
+		return duplicateGR.hasNext();
+	},
+	type: "Utilities"
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-08-08 19:39:53</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>8e5b4039db371700f898fbefbf961984</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Utilities</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_8e5b4039db371700f898fbefbf961984</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-15 14:35:49</sys_updated_on>
+    </sys_script_include>
+</record_update>

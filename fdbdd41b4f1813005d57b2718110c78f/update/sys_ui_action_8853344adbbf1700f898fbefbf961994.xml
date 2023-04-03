@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>Stage Toll Data Import</action_name>
+        <active>true</active>
+        <client>true</client>
+        <client_script_v2/>
+        <comments/>
+        <condition>current.status == "1"</condition>
+        <form_action>true</form_action>
+        <form_button>false</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>true</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint/>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Stage Import</name>
+        <onclick>runClientCode()</onclick>
+        <order>100</order>
+        <script><![CDATA[/* exported runClientCode */
+// Client-side 'onclick' function
+function runClientCode() {
+	// Perform any checks on the client before we proceed with server processing
+	// Return false to abort submission
+
+	// Call the UI Action and skip the 'onclick' function
+	gsftSubmit(null, g_form.getFormElement(), "Stage Toll Data Import"); // MUST call the 'Action name' set in this UI Action
+}
+
+// Code that runs without 'onclick'
+// Ensure call to server-side function with no browser errors
+if (typeof window == "undefined") {
+	runBusRuleCode();
+}
+
+// Server-side function
+function runBusRuleCode() {
+	if (!verifyAttachment()) {
+		current.setAbortAction(true);
+		return;
+	}
+	if (!generateStatements()) {
+		current.setAbortAction(true);
+		return;
+	}
+	// Create data source record (based on form import type selection record)
+	current.status = "2"; // "Staged"
+	current.update();
+	gs.addInfoMessage(
+		gs.getMessage("Stage Toll Data Import-Toll Import Batch-100-1")
+	);
+	action.setRedirectURL(current);
+}
+
+function generateStatements() {
+	// Get the glide record for the selected import type
+	var importTypeGR = new GlideRecord("x_89907_vehicle_to_toll_import_type");
+	var importTypeExists = importTypeGR.get(current.import_type);
+	if (!importTypeExists) {
+		gs.addErrorMessage(
+			gs.getMessage("Stage Toll Data Import-Toll Import Batch-100-2")
+		);
+		return false;
+	}
+	if (importTypeGR.parser.nil() || importTypeGR.vendor.nil()) {
+		gs.addErrorMessage(gs.getMessage("Import type is missing required field vendor or parser"));
+		return false;
+	}
+	
+	// Get list of attachments
+	var attGR = new GlideRecord("sys_attachment");
+	attGR.addQuery("table_sys_id", current.sys_id);
+	attGR.addQuery("table_name", current.getTableName());
+	attGR.query();
+
+	// Verify attachment is included and in correct format
+	if (attGR.getRowCount() === 0) {
+		gs.addErrorMessage(
+			gs.getMessage("Stage Toll Data Import-Toll Import Batch-100-3")
+		);
+		return false;
+	}
+
+	while (attGR.next()) {
+		// Create the statement record
+		var stmt = new GlideRecord("x_89907_vehicle_to_toll_import_statement");
+		stmt.initialize();
+		stmt.newRecord();
+		stmt.import_type = current.import_type;
+		stmt.toll_import_batch = current.sys_id;
+		stmt.name = current.name + " (" + attGR.file_name + ")";
+		stmt.status = "2"; // "Staged"
+		stmt.insert();
+
+		// Create the attachment on the statement record
+		var attSysID = attGR.getUniqueValue();
+		var attGSA = new GlideSysAttachment();
+		var attInStream = attGSA.getContentStream(attSysID);
+		var newAttachmentSysID = attGSA.writeContentStream(
+			stmt,
+			attGR.file_name.toString(),
+			attGR.content_type.toString(),
+			attInStream
+		);
+		if (!newAttachmentSysID) {
+			gs.error("Error creating attachment {0}", stmt.name);
+			gs.addErrorMessage("Error creating attachment {0}", stmt.name);
+			return false;
+		}
+	}
+	return true;
+}
+
+function verifyAttachment() {
+	// Get the glide record for the selected import type
+	var importTypeGR = new GlideRecord("x_89907_vehicle_to_toll_import_type");
+	var importTypeExists = importTypeGR.get(current.import_type);
+	if (!importTypeExists) {
+		gs.addErrorMessage(
+			gs.getMessage("Stage Toll Data Import-Toll Import Batch-100-4")
+		);
+		return false;
+	}
+
+	// Get list of attachments
+	var attGR = new GlideRecord("sys_attachment");
+	attGR.addQuery("table_sys_id", current.sys_id);
+	attGR.addQuery("table_name", current.getTableName());
+	attGR.query();
+
+	// Verify attachment is included and in correct format
+	if (attGR.getRowCount() === 0) {
+		gs.addErrorMessage(
+			gs.getMessage("Stage Toll Data Import-Toll Import Batch-100-5")
+		);
+		return false;
+	}
+
+	var passedFormatCheck = true;
+	while (attGR.next()) {
+		// check to make sure the file format is correct on the attachment
+		var excelCSVBypass = importTypeGR.content_type.toUpperCase() === "TEXT/CSV" && attGR.content_type.toUpperCase() === "APPLICATION/VND.MS-EXCEL" && /.*\.csv$/i.test(attGR.file_name.toString());
+		if (attGR.content_type.toUpperCase() !== importTypeGR.content_type.toUpperCase() && !excelCSVBypass) {
+			passedFormatCheck = false;
+			gs.addErrorMessage(
+				gs.getMessage(
+					"Stage Toll Data Import-Toll Import Batch-100-5",
+					[attGR.file_name,
+						importTypeGR.content_type]
+				)
+			);
+		}
+	}
+	if (!passedFormatCheck) {
+		gs.addErrorMessage(
+			gs.getMessage("Stage Toll Data Import-Toll Import Batch-100-7")
+		);
+		return false;
+	}
+
+	return true;
+}
+]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-08-09 17:13:40</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>8853344adbbf1700f898fbefbf961994</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Stage Import</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_action_8853344adbbf1700f898fbefbf961994</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-01-23 05:18:15</sys_updated_on>
+        <table>x_89907_vehicle_to_toll_import_batch</table>
+        <ui11_compatible>false</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

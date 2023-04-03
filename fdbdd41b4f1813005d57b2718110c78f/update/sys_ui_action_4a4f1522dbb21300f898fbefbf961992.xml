@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>Reset user statement</action_name>
+        <active>true</active>
+        <client>true</client>
+        <client_script_v2/>
+        <comments/>
+        <condition> current.progress_phase != 6  &amp;&amp;  current.progress_phase != 1  &amp;&amp;  current.progress_phase != 7 </condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style>destructive</form_style>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint>Reset the user statement back to the original state</hint>
+        <isolate_script>false</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style>destructive</list_style>
+        <messages/>
+        <name>Reset</name>
+        <onclick>setUserStatementReset()</onclick>
+        <order>200</order>
+        <script><![CDATA[/* exported setUserStatementReset */
+// Client-side 'onclick' function
+function setUserStatementReset() {
+	// Perform any checks on the client before we proceed with server processing
+	g_form.hideAllFieldMsgs();
+
+	// Can't undo this, so confirm with the user to proceed
+	var answer = confirm(getMessage("Reset-Toll User Statement-200-1"));
+	if (answer === false) {
+		return false;
+	}
+
+	// Call the UI Action and skip the 'onclick' function
+	gsftSubmit(null, g_form.getFormElement(), "Reset user statement"); // MUST call the 'Action name' set in this UI Action
+	return true;
+}
+
+// Code that runs without 'onclick'
+// Ensure call to server-side function with no browser errors
+if (typeof window == "undefined") {
+	runBusRuleCode();
+}
+
+// Server-side function
+function runBusRuleCode() {
+	// Cancel any approval workflows for this statement
+	var wf = new global.Workflow();
+	wf.cancel(current);
+	var awf = new global.WorkflowApprovalUtils();
+	awf.cancelAll(
+		current,
+		"Approval workflow canceled by " + gs.getUserDisplayName()
+	);
+	current.approval = "not requested"; // Not requested
+	current.approval_set = "";
+
+	// Reset the status/phase and all the values that aren't
+	// relevant any more
+	current.status = "1"; // Open
+	current.progress_phase = "1"; // Pending
+	current.personal_amount = 0;
+	current.check_number = "";
+	current.check_amount = "";
+	current.check_date = "";
+	current.closed_by = "";
+	current.closed_on = "";
+	current.payment = "";
+	current.status_notes =
+		"This user statement was reset by " + gs.getUserDisplayName();
+
+	// Queue a message for the user who initiated
+	var msgArray = [];
+	msgArray.push(current.number);
+	msgArray.push(current.user.getDisplayValue());
+	gs.addInfoMessage(gs.getMessage("Reset-Toll User Statement-200-2", msgArray));
+
+	// Save the current record with all the field updates
+	current.update();
+
+	// Restart the approval workflow
+	var sgr = new GlideRecord("wf_workflow");
+	sgr.addQuery("name", "User Statement Manager Approval");
+	sgr.query();
+	if (sgr.next()) {
+		//      new global.WorkflowApprovalUtils().setUserApprovalsByTask(
+		//	    current.sys_id,'not requested','Statement reset by ' + gs.getUserDisplayName(),null);
+		var w = new global.Workflow();
+		w.startFlow(
+			sgr.getUniqueValue(),
+			current,
+			current.operation(),
+			null
+		);
+	}
+}
+]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-06-22 16:38:46</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>4a4f1522dbb21300f898fbefbf961992</sys_id>
+        <sys_mod_count>56</sys_mod_count>
+        <sys_name>Reset</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_action_4a4f1522dbb21300f898fbefbf961992</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-16 12:23:40</sys_updated_on>
+        <table>x_89907_vehicle_to_toll_user_statement</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

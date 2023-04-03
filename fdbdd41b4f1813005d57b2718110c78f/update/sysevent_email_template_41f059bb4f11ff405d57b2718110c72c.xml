@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysevent_email_template">
+    <sysevent_email_template action="INSERT_OR_UPDATE">
+        <collection/>
+        <email_layout display_value="Toll Email Layout">546312004f2933005d57b2718110c7b0</email_layout>
+        <message/>
+        <message_html><![CDATA[<div>${mail_script:manager.snapshot}</div>
+<div>&nbsp;</div>
+<div>${mail_script:toll.portal.link}</div>
+<p>&nbsp;</p>]]></message_html>
+        <message_list/>
+        <message_text/>
+        <name>Manager Snapshot</name>
+        <sms_alternate/>
+        <subject>Performance snapshot for the people you manage</subject>
+        <sys_class_name>sysevent_email_template</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-05-15 15:37:11</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>41f059bb4f11ff405d57b2718110c72c</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Manager Snapshot</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysevent_email_template_41f059bb4f11ff405d57b2718110c72c</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 04:06:16</sys_updated_on>
+        <sys_version>2</sys_version>
+    </sysevent_email_template>
+</record_update>

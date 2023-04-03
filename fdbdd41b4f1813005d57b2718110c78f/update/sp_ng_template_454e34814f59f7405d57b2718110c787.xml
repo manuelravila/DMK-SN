@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_ng_template">
+    <sp_ng_template action="INSERT_OR_UPDATE">
+        <id>detail-content</id>
+        <sp_widget display_value="TSP Approvals">4348ef614fa4b3005d57b2718110c7aa</sp_widget>
+        <sys_class_name>sp_ng_template</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-05-07 01:14:36</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>454e34814f59f7405d57b2718110c787</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>detail-content</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_ng_template_454e34814f59f7405d57b2718110c787</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-05-07 01:56:25</sys_updated_on>
+        <template><![CDATA[<div class="panel-body">
+  <div class="col-sm-6">
+    <form  class="form-horizontal tsp-compact">
+      <div class="form-group" ng-repeat="field in [
+                                         {label: 'Total amount', name: 'total_amount'},
+                                         {label: 'Personal amount', name: 'personal_amount'},
+                                         {label: 'Has exceptions', name: 'has_usage_exceptions'},
+                                         {label: 'Vehicle number', name: 'vehicle_number'},
+                                         {label: 'Plate number', name: 'plate_number'},
+                                         {label: 'Transponder', name: 'transponder'},
+                                         {label: 'Transponder type', name: 'transponder_type'}]">
+        <label for="{{::field.name}}" class="col-sm-4 control-label"><strong>{{::field.label}}</strong></label>
+        <div class="col-sm-8">
+          <p class="form-control-static" id="{{::field.name}}">
+            {{::approval.variables[field.name].display_value}}
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-sm-6">
+    <form  class="form-horizontal tsp-compact">
+      <div class="form-group" ng-repeat="field in [
+                                         {label: 'Period begin', name: 'period_begin_date'},
+                                         {label: 'Period end', name: 'period_end_date'},
+                                         {label: 'Statement', name: 'statement'},
+                                         {label: 'Account', name: 'account'},
+                                         {label: 'Cost center', name: 'cost_center'}]">
+        <label for="{{::field.name}}" class="col-sm-4 control-label"><strong>{{::field.label}}</strong></label>
+        <div class="col-sm-8">
+          <p class="form-control-static" id="{{::field.name}}">
+            {{::approval.variables[field.name].display_value}}
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+]]></template>
+    </sp_ng_template>
+</record_update>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>u_account</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Transponder OnSubmit</name>
+        <order/>
+        <script><![CDATA[/* exported onSubmit */
+/**
+ * @namespace Transponder
+ * @alias transponderOnSubmit
+ * @private
+ * @description Perform validation when the user is saving the record
+ *   Verify the shift start and end are chronological
+ * @returns {boolean} Proceed with submit
+ */
+function onSubmit() {
+	var allowSubmit = true;
+	var alternateShift = g_form.getBooleanValue("alternate_shift");
+
+	// If alternate shift, both shift fields are required
+	if (alternateShift) {
+
+		// get the values
+		var shiftStartTimeStr = g_form.getValue("shift_start");
+		var shiftEndTimeStr = g_form.getValue("shift_end");
+
+		// we're revalidating everything so hide all the messages
+		g_form.hideFieldMsg("shift_start", true);
+		g_form.hideFieldMsg("shift_end", true);
+
+		var shiftStart;
+		if (shiftStartTimeStr) {
+			// get the object
+			shiftStart = getDateObjectForTimeString(shiftStartTimeStr);
+			// if it's invalid put up a message
+			if (shiftStart === 0) {
+				g_form.showFieldMsg(
+					"shift_start",
+					"Invalid time",
+					"error"
+				);
+				allowSubmit = false;
+			}
+		} else {
+			g_form.showFieldMsg(
+				"shift_start",
+				"Shift start time is required when alternate shift is enabled",
+				"error"
+			);
+			allowSubmit = false;
+
+		}
+
+		var shiftEnd;
+		if (shiftEndTimeStr) {
+			// get the object
+			shiftEnd = getDateObjectForTimeString(shiftEndTimeStr);
+			// if it's invalid put up a message
+			if (shiftEnd === 0) {
+				g_form.showFieldMsg(
+					"shift_end",
+					"Invalid time",
+					"error"
+				);
+				allowSubmit = false;
+			}
+		} else {
+			g_form.showFieldMsg(
+				"shift_end",
+				"Shift end time is required when alternate shift is enabled",
+				"error"
+			);
+			allowSubmit = false;
+
+		}
+		if (shiftStart && shiftStart !== 0 && shiftEnd && shiftEnd !== 0) {
+			if (shiftStart > shiftEnd) {
+				// warn for overnight shift
+				g_form.showFieldMsg(
+					"shift_end",
+					getMessage("Transponder Submit-Transponder-1"),
+					"warning"
+				);
+
+			} else if (shiftStart == shiftEnd) {
+				// error for equal shifts
+				g_form.showFieldMsg(
+					"shift_end",
+					getMessage("Transponder Submit-Transponder-2"),
+					"error"
+				);
+				allowSubmit = false;
+			}
+		}
+	}
+	return allowSubmit;
+
+	function getDateObjectForTimeString(timeString) {
+		// Get the epoch base in the user date format
+		// We are only concerned about relative times so the actual date doesn't matter
+		var userDateFormat = g_user_date_format;
+		var baseDateStr = formatDate(new Date(1970,0,1), userDateFormat);
+
+		// Create a date/time string in user date time format
+		// var userTimeFormat = g_user_date_time_format.substring(g_user_date_format.length + 1);
+		var fieldDateTimeStr = baseDateStr + " " + timeString;
+
+		// Return a date object or 0
+		return getDateFromFormat(fieldDateTimeStr, g_user_date_time_format);
+	}
+
+}
+]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-04-10 21:44:24</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>350456ec4f3473005d57b2718110c7d3</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>Transponder OnSubmit</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_client_350456ec4f3473005d57b2718110c7d3</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-23 04:28:13</sys_updated_on>
+        <table>x_89907_vehicle_to_u_cmdb_ci_transponder</table>
+        <type>onSubmit</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

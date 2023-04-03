@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function wClient($uibModal, $scope, $location, spModal, $timeout) {
+	var c = this;
+
+	c.disabled = !!c.data.disabled;
+	
+	if (!c.disputeComments) {
+		c.disputeComments = c.data.disputeComments || "";
+	}
+	
+	c.openCommentsDialog = function() {
+		c.okDisabled = false;
+		c.cancelDisabled = false;
+		c.disputeCommentsDisabled = false;
+		c.modalInstance = $uibModal.open({
+			templateUrl: 'textAreaModalTemplate.html',
+			scope: $scope
+		});
+	};
+ 
+	c.closeModal = function closeModal() {
+		c.modalInstance.close();
+	};
+ 
+	c.okDisabled = function okDisabled() {
+		return c.disputeComments == "";
+	};
+	
+	c.okModal = function okModal() {
+		c.okDisabled = true;
+		c.cancelDisabled = true;
+		c.disputeCommentsDisabled = true;
+		c.data.confirmedDispute = true;
+		c.data.disputeComments = "User dispute comments: " + c.disputeComments;
+		c.data.action = "dispute";
+		c.server.update().then(function onUpdateComplete() {
+			c.data.action = undefined;
+			c.closeModal();
+			$timeout(function onExpired() {
+				location.href = "/toll_service_portal?id=toll_index";
+			}, 2000);
+		});
+	};
+	
+	c.cancelModal = function cancelModal() {
+		c.okDisabled = true;
+		c.cancelDisabled = true;
+		c.disputeCommentsDisabled = true;
+		c.data.confirmedDispute = false;
+		c.data.disputeComments = c.disputeComments;
+		c.closeModal();
+	};
+	
+	c.uiAction = function uiAction() {
+		spModal
+			.open({
+				title: "Confirm Dispute",
+				message: c.data.prompterText,
+				buttons: [
+					{ label: "✘ ${Cancel}", cancel: true },
+					{ label: "✔ ${Confirm}", primary: true }
+				],
+				input: true,
+				value: c.data.disputeComments
+			})
+			.then(
+				function onResolve(disputeComments) {
+					c.data.confirmedDispute = true;
+					c.data.disputeComments = "User dispute comments: " + disputeComments;
+					c.data.action = "dispute";
+					c.server.update().then(function onUpdateComplete() {
+						c.data.action = undefined;
+						$timeout(function onExpired() {
+							location.href = "/toll_service_portal?id=toll_index";
+						}, 2000);
+					});
+				},
+				function onReject(disputeComments) {
+					c.data.confirmedDispute = false;
+					c.data.disputeComments = disputeComments;
+				}
+			);
+	};
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>user_statement_dispute_button</id>
+        <internal>false</internal>
+        <link/>
+        <name>User Statement Dispute Button</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function disputeButton() {
+
+	// Get table & sys_id
+
+	if (input) {
+		data.table = input.table;
+		data.sys_id = input.sys_id;
+	}
+	data.table = data.table || $sp.getParameter("table");
+	data.sys_id = data.sys_id || $sp.getParameter("sys_id");
+
+	if (!data.table || !data.sys_id) {
+		return;
+	}
+
+	// Valid GlideRecord
+	var statementGR = new GlideRecord(data.table);
+	if (!statementGR.isValid()) {
+		return;
+	}
+
+	// Valid sys_id
+	if (!statementGR.get(data.sys_id)) {
+		return;
+	}
+
+	data.disabled = statementGR.getValue("progress_phase") != 1;
+
+	if (!input) {
+		data.prompterText = getPrompterText();
+		return;
+	}
+	
+	if (input && input.action == "dispute" && input.confirmedDispute) {
+		statementGR.status_notes = input.disputeComments;
+		statementGR.setValue("progress_phase", 5);
+		statementGR.setValue("internal_info_message", "User Statement disputed");
+		statementGR.update();
+	}
+
+	function getPrompterText() {
+		// return the prompter text from the config record or default text
+
+		var defaultText =
+			"Explain why you are not responsible for these charges and click Confirm to dispute the statement.";
+
+		var grTollCfg = new GlideRecord("x_89907_vehicle_to_toll_configuration");
+		if (!grTollCfg.isValid()) {
+			gs.info(
+				"Error reading toll configuration record. Record type is invalid."
+			);
+			return defaultText;
+		}
+
+		var company = gs.getUser().getCompanyID();
+		grTollCfg.addQuery("company", company);
+		grTollCfg.addQuery("active", true);
+		grTollCfg.query();
+		if (!grTollCfg.next()) {
+			gs.info(
+				"Error reading toll configuration record. No configuration record found for company {0}.",
+				company
+			);
+			return defaultText;
+		}
+		var configTextEl = grTollCfg.getElement(
+			"user_statement_dispute_prompt_text"
+		);
+		return configTextEl.nil() ? defaultText : configTextEl.toString();
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-02-12 14:33:36</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>73305b024faf67005d57b2718110c7cd</sys_id>
+        <sys_mod_count>52</sys_mod_count>
+        <sys_name>User Statement Dispute Button</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_73305b024faf67005d57b2718110c7cd</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-23 17:34:00</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-default">
+  <div class="panel-body">
+    <button type="button" class="btn btn-warning btn-block" ng-disabled="c.disabled" ng-click="c.openCommentsDialog()">Dispute</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<script type="text/ng-template" id="textAreaModalTemplate.html">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modalTitle">Confirm Dispute</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <form>
+                <div class="form-group">
+                  <label for="disputeComments">{{::c.data.prompterText}}</label>
+                  <textarea class="form-control col-xs-12" rows="3" name="disputeComments" ng-model="c.disputeComments" ng-disabled="c.disputeCommentsDisabled" maxlength="3900"></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="c.cancelModal()" ng-disabled="c.cancelDisabled">✘ ${Cancel}</button>
+          <button type="button" class="btn btn-danger"  ng-click="c.okModal()" ng-disabled="c.disputeComments.length === 0">✔ ${Confirm}</button>
+        </div>
+</script>
+]]></template>
+    </sp_widget>
+</record_update>

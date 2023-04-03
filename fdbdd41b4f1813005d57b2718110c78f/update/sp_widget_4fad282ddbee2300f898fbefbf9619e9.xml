@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function tspUserStatementsClient($uibModal, $scope, spUtil) {
+	var c = this;
+
+	c.openReimbursementForm = function openReimbursementForm() {
+		spUtil.get("tsp-print-reimbursement-form").then(function onResolve(response) {
+			c.reimbursementFormWidget = response;
+		});
+		c.modalInstance = $uibModal.open({
+			templateUrl: "modalTemplate",
+			scope: $scope,
+			size: "lg"
+		});
+	};
+
+	c.closeReimbursementForm = function closeReimbursementForm() {
+		c.modalInstance.close();
+	};
+
+	c.onPrint = function onPrint() {
+		$(".printable-reimbursement").print();
+	};
+
+	spUtil.recordWatch(
+		$scope,
+		c.data.reviewOptions.table,
+		c.data.reviewOptions.filter,
+		function onWatchPopped(name, data) {
+			// Returns information about the event that has occurred
+			console.log(name);
+
+			// Returns the data inserted or updated on the table
+			console.log(data);
+		}
+	);
+
+	spUtil.recordWatch(
+		$scope,
+		c.data.rejectedOptions.table,
+		c.data.rejectedOptions.filter,
+		function onWatchPopped(name, data) {
+			c.data.action = "updateRejectedCount";
+			spUtil.update($scope);
+		}
+	);
+
+	$rootScope.$on("dmk.list.updated", function handleListUpdateEvent(event, obj) {
+		if (obj && obj.callbackData) {
+			if (obj.callbackData.list_id === "simpleListUserStatementReview") {
+				c.countUserStatementsToReview = obj.count;
+			}
+			if (obj.callbackData.list_id === "simpleListUserStatementPay") {
+				c.countUserStatementsToPay = obj.count;
+			}
+			if (obj.callbackData.list_id === "simpleListUserStatementPending") {
+				c.countUserStatementsPendingApproval = obj.count;
+			}
+		}
+	});
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.panel {
+  position: relative;
+}
+
+.disabled-filter {
+  color: #A0A0A0;
+}
+
+.list-group-item.ng-enter {
+  transition: all 1s;
+  -webkit-transition: all 1s;
+  background-color: #c0dcfa;
+}
+
+.list-group-item.ng-enter-active {
+  background-color: #fff;
+}
+
+h4.active {
+  border-bottom: 2px solid;
+  padding-bottom: 3px;
+}
+
+h4 {
+  font-size: 125%;
+}
+
+.hide-x-overflow {
+  overflow-x: hidden;
+}
+
+.translated-html&gt;p {
+  margin: 0px;
+  padding: 0px;
+}
+
+IMG {
+  max-width: 320px;
+  max-height: 240px;
+}
+
+IMG.img-sm {
+  max-height: 40px;
+  max-width: 40px;
+}
+
+.filter-box {
+  margin-top: 10px;
+}
+
+.panel-footer .number-shown-label {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.panel-footer a {
+  color: inherit;
+}
+
+.nav-tabs &gt; .active &gt; a .badge {
+	color: #fff;
+	background-color: $brand-primary;
+}
+.nav-tabs &gt; :not(.active) &gt; a .badge {
+	color: #fff;
+	background-color: lighten($brand-primary, 20%);
+}
+
+.nav-tabs &gt; .active &gt; a .badge-primary {
+	color: #fff;
+	background-color: $brand-primary;
+}
+.nav-tabs &gt; :not(.active) &gt; a .badge-primary {
+	color: #fff;
+	background-color: lighten($brand-primary, 20%);
+}
+
+.nav-tabs &gt; .active &gt; a .badge-success {
+	color: #fff;
+	background-color: $brand-success;
+}
+.nav-tabs &gt; :not(.active) &gt; a .badge-success {
+	color: #fff;
+	background-color: lighten($brand-success, 20%);
+}
+
+.nav-tabs &gt; .active &gt; a .badge-info {
+	color: #fff;
+	background-color: $brand-info;
+}
+.nav-tabs &gt; :not(.active) &gt; a .badge-info {
+	color: #fff;
+	background-color: lighten($brand-info, 20%);
+}
+
+.nav-tabs &gt; .active &gt; a .badge-warning {
+	color: #fff;
+	background-color: $brand-warning;
+}
+.nav-tabs &gt; :not(.active) &gt; a .badge-warning {
+	color: #fff;
+	background-color: lighten($brand-warning, 20%);
+}
+
+.nav-tabs &gt; .active &gt; a .badge-danger {
+	color: #fff;
+	background-color: $brand-danger;
+}
+
+.nav-tabs &gt; :not(.active) &gt; a .badge-danger {
+	color: #fff;
+	background-color: lighten($brand-danger, 20%);
+}
+
+.badge {
+  min-width: 2em;
+  vertical-align: top;
+}
+
+.badge-holder {
+  position: absolute;
+  left: 30px;
+  top: -5px;
+}
+
+.tab-icon-holder {
+  position: relative;
+  display: inline-block;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>tsp-user-statements</id>
+        <internal>false</internal>
+        <link/>
+        <name>TSP User Statements</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[/* eslint-disable servicenow/no-hardcoded-sysids */
+/* global gs, data, $sp */
+(function TSPUserStatements() {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+
+	if (input && input.action) {
+		if (input.action == "updateRejectedCount") {
+			data.countRejectedStatementsToReview = getRejectedCount(
+				getRejectedOptions()
+			);
+			data.action = "";
+			return;
+		}
+	}
+
+	var rejectedOptions = getRejectedOptions();
+	data.rejectedOptions = rejectedOptions;
+	data.countRejectedStatementsToReview = getRejectedCount(rejectedOptions);
+
+	var reviewOptions = {
+		table: "x_89907_vehicle_to_toll_user_statement",
+		filter: "user=" + gs.getUserID() + "^status=1^progress_phase=5^ORprogress_phase=1",
+		display_field: "number",
+		secondary_fields:
+			"progress_phase,period_end_date,total_amount,vehicle_number,plate_number",
+		always_show: "true",
+		hide_header: "true",
+		hide_footer: "false",
+		panel_body_height: 300,
+		color: "default",
+		sp_page: "user_statement",
+		view: "be9d5425db35a300f898fbefbf96191b", // PortalUser
+		seeAllView: "PortalUser",
+		list_update_callback_data: { list_id: "simpleListUserStatementReview" },
+		nested: true
+	};
+	data.reviewOptions = reviewOptions;
+	data.simpleListUserStatementReview = $sp.getWidget(
+		"dmk-enhanced-list",
+		reviewOptions
+	);
+
+	var pendingOptions = {
+		table: "x_89907_vehicle_to_toll_user_statement",
+		filter:
+			"user=" +
+			gs.getUserID() +
+			"^status=1^progress_phase=2^approval=requested",
+		display_field: "number",
+		secondary_fields:
+			"progress_phase,period_end_date,total_amount,vehicle_number,plate_number",
+		always_show: "true",
+		hide_header: "true",
+		hide_footer: "false",
+		panel_body_height: 300,
+		color: "default",
+		sp_page: "user_statement",
+		view: "be9d5425db35a300f898fbefbf96191b", // PortalUser
+		list_update_callback_data: { list_id: "simpleListUserStatementPending" },
+		nested: true
+	};
+	data.reviewOptions = pendingOptions;
+	data.simpleListUserStatementPending = $sp.getWidget(
+		"dmk-enhanced-list",
+		pendingOptions
+	);
+
+	var payOptions = {
+		table: "x_89907_vehicle_to_toll_user_statement",
+		filter:
+			"user=" + gs.getUserID() + "^status=1^progress_phase=2^approval=approved^ORapproval=not_required",
+		display_field: "number",
+		secondary_fields:
+			"progress_phase,period_end_date,personal_amount,vehicle_number,plate_number",
+		always_show: "true",
+		hide_header: "true",
+		hide_footer: "false",
+		panel_body_height: 300,
+		color: "default",
+		sp_page: "user_statement_readonly",
+		view: "be9d5425db35a300f898fbefbf96191b", // PortalUser
+		list_update_callback_data: { list_id: "simpleListUserStatementPay" },
+		nested: true
+	};
+	data.payOptions = payOptions;
+	data.simpleListUserStatementPay = $sp.getWidget(
+		"dmk-enhanced-list",
+		payOptions
+	);
+
+	var recentOptions = {
+		table: "x_89907_vehicle_to_toll_user_statement",
+		filter:
+			"user=" +
+			gs.getUserID() +
+			"^sys_updated_onRELATIVEGE@dayofweek@ago@90^status!=1",
+		display_field: "number",
+		secondary_fields:
+			"status,progress_phase,closed_on,personal_amount,total_amount,vehicle_number,plate_number",
+		always_show: "true",
+		hide_header: "true",
+		hide_footer: "false",
+		panel_body_height: 300,
+		color: "default",
+		sp_page: "user_statement_readonly",
+		view: "be9d5425db35a300f898fbefbf96191b", // PortalUser
+		list_update_callback_data: { list_id: "simpleListUserStatementRecent" },
+		nested: true
+	};
+	data.recentOptions = recentOptions;
+	data.simpleListUserStatementRecent = $sp.getWidget(
+		"dmk-enhanced-list",
+		recentOptions
+	);
+
+	function getRejectedCount(options) {
+		var rejectedGR = new GlideRecordSecure(options.table); // does ACL checking for us
+		rejectedGR.addEncodedQuery(options.filter);
+		rejectedGR.query();
+		return rejectedGR.getRowCount();
+	}
+
+	function getRejectedOptions() {
+		return {
+			table: "x_89907_vehicle_to_toll_user_statement",
+			filter:
+				"user=" +
+				gs.getUserID() +
+				"^status=1^progress_phase=1^approval=rejected"
+		};
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-12-22 20:23:33</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>4fad282ddbee2300f898fbefbf9619e9</sys_id>
+        <sys_mod_count>148</sys_mod_count>
+        <sys_name>TSP User Statements</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_4fad282ddbee2300f898fbefbf9619e9</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-04 05:41:38</sys_updated_on>
+        <template><![CDATA[<!--
+<pre>{{data|json}}</pre>
+-->
+<div class="panel panel-default b">
+  <div class="panel-heading">
+    <h2 class="h4 panel-title">My Statements</h2>
+  </div>
+  <div ng-if="data.countRejectedStatementsToReview == 1" class="alert alert-danger" role="alert">
+    A statement was rejected by your supervisor. Click 'To Review' to see rejected statement.
+  </div>
+  <div ng-if="data.countRejectedStatementsToReview > 1" class="alert alert-danger" role="alert">
+    {{data.countRejectedStatementsToReview}} statements were rejected by your supervisor. Click 'To Review' to see rejected statements.
+  </div>
+  <uib-tabset active="0" justified="true">
+    <uib-tab index="0">
+      <uib-tab-heading>
+        <div class="text-center" style="display: inline-block;width: 100%;">
+          <div class="tab-icon-holder">
+            <span class="fa-stack" style="font-size:1.5em;">
+              <i class="fa fa-circle fa-stack-2x text-info"></i>
+              <i class="fa fa-pencil fa-stack fa-sm fa-inverse padder-b-xl"></i>
+            </span>
+            <div class="badge-holder">
+              <span class="badge-danger badge">{{c.countUserStatementsToReview}}</span>
+            </div>
+          </div>
+          <h4 class="m-t-sm text-center"><span>To<br/>Review</span></h4>
+        </div>
+      </uib-tab-heading>
+      <sp-widget widget="data.simpleListUserStatementReview"></sp-widget>
+    </uib-tab>
+
+    <uib-tab index="1">
+      <uib-tab-heading>
+        <div class="text-center" style="display: inline-block;width: 100%;">
+          <div class="tab-icon-holder">
+            <span class="fa-stack" style="font-size:1.5em;">
+              <i class="fa fa-circle fa-stack-2x text-info"></i>
+              <i class="fa fa-thumbs-up fa-stack fa-sm fa-inverse padder-b-xl"></i>
+            </span>
+            <div class="badge-holder">
+              <span class="badge-danger badge">{{c.countUserStatementsPendingApproval}}</span>
+            </div>
+          </div>
+          <h4 class="m-t-sm text-center"><span>Pending<br/>Approval</span></h4>
+        </div>
+      </uib-tab-heading>
+      <sp-widget widget="data.simpleListUserStatementPending"></sp-widget>
+    </uib-tab>
+
+    
+    
+    <uib-tab index="2">
+      <uib-tab-heading>
+        <div class="text-center" style="display: inline-block;width: 100%;">
+          <div class="tab-icon-holder">
+            <span class="fa-stack" style="font-size:1.5em;">
+              <i class="fa fa-circle fa-stack-2x text-info"></i>
+              <i class="fa fa-dollar fa-stack fa-sm fa-inverse padder-b-xl"></i>
+            </span>
+            <div class="badge-holder">
+              <span class="badge-danger badge">{{c.countUserStatementsToPay}}</span>
+            </div>
+          </div>
+          <h4 class="m-t-sm text-center"><span>To<br/>Pay</span></h4>
+        </div>
+      </uib-tab-heading>
+      <div class="wrapper">
+        
+        
+        <button class="btn btn-primary" type="button" ng-click="c.openReimbursementForm()">Pay by check</button>
+
+        <script type="text/ng-template" id="modalTemplate">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">Reimbursement Form</h4>
+	          </div>
+						<div class="panel-body">
+							<div class="printable-reimbursement">
+								<sp-widget widget="c.reimbursementFormWidget"/>
+	  	        </div>
+	          </div>
+						<div class="panel-footer text-right">
+							<button class="btn btn-primary" ng-click="c.onPrint()">Print</button>
+              <button class="btn btn-primary" ng-click="c.closeReimbursementForm()">Close</button>
+	          </div>
+            
+          </div>
+        </script>
+        
+        
+      </div>
+      <sp-widget widget="data.simpleListUserStatementPay"></sp-widget>
+    </uib-tab>
+    <uib-tab index="3">
+      <uib-tab-heading>
+        <div class="text-center" style="display: inline-block;width: 100%;">
+          <div class="tab-icon-holder">
+            <span class="fa-stack" style="font-size:1.5em;">
+              <i class="fa fa-circle fa-stack-2x text-info"></i>
+              <i class="fa fa-calendar fa-stack fa-sm fa-inverse padder-b-xl"></i>
+            </span>
+          </div>
+          <h4 class="m-t-sm text-center"><span>List<br/>Recent</span></h4>
+        </div>
+      </uib-tab-heading>
+      <sp-widget widget="data.simpleListUserStatementRecent"></sp-widget>
+    </uib-tab>
+  </uib-tabset>
+</div>]]></template>
+    </sp_widget>
+</record_update>

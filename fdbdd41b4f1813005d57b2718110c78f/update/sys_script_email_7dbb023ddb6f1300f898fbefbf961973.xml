@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_email">
+    <sys_script_email action="INSERT_OR_UPDATE">
+        <name>userStatement.payment.owed</name>
+        <new_lines_to_html>false</new_lines_to_html>
+        <script><![CDATA[(function runMailScript(/* GlideRecord */ current, /* TemplatePrinter */ template,
+          /* Optional EmailOutbound */ email, /* Optional GlideRecord */ email_action,
+          /* Optional GlideRecord */ event) {
+
+    template.print('<p><font size="5" color="#808080" face="helvetica"><strong>');
+	template.print(gs.getMessage('You are receiving this email because your payment for toll statement is due'));
+	template.print('</strong></font></p>');
+
+	template.print(gs.getMessage('<p>The following is a list of your statements now due:</p>'));
+	template.print(gs.getMessage('<ul>'));
+
+	var gr = new GlideRecord("x_89907_vehicle_to_toll_user_statement");
+	gr.addQuery('status','1');
+	gr.addQuery('progress_phase','2');
+	gr.addQuery('user',current.user);
+    gr.query();
+    while(gr.next()) 
+	 {
+      template.print('<li>' + gr.transponder_number + "-" + gr.period_begin_date + "-" + gr.period_end_date + "-" + gr.personal_amount + "</li>");
+     }
+	template.print(gs.getMessage('</ul>'));
+	
+
+})(current, template, email, email_action, event);]]></script>
+        <sys_class_name>sys_script_email</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-07-27 18:45:02</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>7dbb023ddb6f1300f898fbefbf961973</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>userStatement.payment.owed</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_email_7dbb023ddb6f1300f898fbefbf961973</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-03-07 18:16:06</sys_updated_on>
+    </sys_script_email>
+</record_update>

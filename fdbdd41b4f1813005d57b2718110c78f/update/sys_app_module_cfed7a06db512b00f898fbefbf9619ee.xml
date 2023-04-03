@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module">
+    <sys_app_module action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <application display_value="Tolls">a2bd501f4f1813005d57b2718110c70b</application>
+        <assessment/>
+        <content_page/>
+        <device_type/>
+        <filter table="x_89907_vehicle_to_payment">status=1^phase=1^EQ<item display_value="Open" endquery="false" field="status" goto="false" newquery="false" operator="=" or="false" value="1"/>
+            <item display_value="Payment Owed" endquery="false" field="phase" goto="false" newquery="false" operator="=" or="false" value="1"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter>
+        <hint/>
+        <homepage/>
+        <image/>
+        <link_type>LIST</link_type>
+        <map_page/>
+        <mobile_title>Payments</mobile_title>
+        <mobile_view_name>Mobile</mobile_view_name>
+        <name>x_89907_vehicle_to_payment</name>
+        <order>3050</order>
+        <override_menu_roles>false</override_menu_roles>
+        <query/>
+        <report/>
+        <roles>x_89907_vehicle_to.admin,x_89907_vehicle_to.financial</roles>
+        <survey/>
+        <survey_overwrite>false</survey_overwrite>
+        <sys_class_name>sys_app_module</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2018-10-23 16:52:16</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>cfed7a06db512b00f898fbefbf9619ee</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Pending</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_app_module_cfed7a06db512b00f898fbefbf9619ee</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-02-19 16:45:26</sys_updated_on>
+        <timeline_page/>
+        <title>Pending</title>
+        <uncancelable>false</uncancelable>
+        <view_name/>
+        <window_name/>
+    </sys_app_module>
+</record_update>

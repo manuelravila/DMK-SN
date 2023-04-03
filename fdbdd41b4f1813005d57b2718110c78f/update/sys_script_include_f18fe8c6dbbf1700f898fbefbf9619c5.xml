@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TollImportUtil</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>f18fe8c6dbbf1700f898fbefbf9619c5</description>
+        <name>TollImportUtil</name>
+        <script><![CDATA[var TollImportUtil = Class.create();
+TollImportUtil.prototype = {
+	initialize: function initialize() {
+		this.logExceptions = true;
+	},
+
+	// API
+	// importStatement, lnnum, ln, fieldName, fieldValue, fieldType [, errorString]
+
+	// API
+	createMissingReferenceDataWarning: function createMissingReferenceDataWarning(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType
+	) {
+		// Create missing reference data exception
+		// if there is an existing exception for this same value, just up the occurrence count
+		// otherwise create a new one
+		// the ln, lnnum will be the line of the first occurrence
+		var exGr = new GlideRecord("x_89907_vehicle_to_toll_import_exception");
+		exGr.addQuery("import_batch", importStatement.toll_import_batch);
+		exGr.addQuery("import_statement", importStatement.sys_id);
+		exGr.addQuery("field_name", fieldName);
+		exGr.addQuery("field_value", fieldValue);
+		exGr.addQuery("field_type", fieldType);
+		exGr.addQuery("error_type", "Reference");
+		exGr.addQuery("error_class", "1");
+		exGr.addQuery("status", "1");
+		exGr.query();
+		if (exGr.next()) {
+			exGr.occurred_count = exGr.occurred_count + 1;
+			exGr.update();
+		} else {
+			if (this.logExceptions) {
+				gs.info(
+					"Missing Reference exception validating {0} line {1}; field {2}; value {3}",
+					importStatement.name,
+					lnnum,
+					fieldName,
+					fieldValue
+				);
+			}
+			var newExGr = this.newReferenceWarning(
+				importStatement,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				fieldType
+			);
+			newExGr.insert();
+		}
+	},
+
+	// API
+	createIncorrectReferenceDataWarning: function createIncorrectReferenceDataWarning(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType,
+		message
+	) {
+		// Create missing reference data exception
+		// if there is an existing exception for this same value, just up the occurrence count
+		// otherwise create a new one
+		// the ln, lnnum will be the line of the first occurrence
+		var exGr = new GlideRecord("x_89907_vehicle_to_toll_import_exception");
+		exGr.addQuery("import_batch", importStatement.toll_import_batch);
+		exGr.addQuery("import_statement", importStatement.sys_id);
+		exGr.addQuery("field_name", fieldName);
+		exGr.addQuery("field_value", fieldValue);
+		exGr.addQuery("field_type", fieldType);
+		exGr.addQuery("error_type", "Reference");
+		exGr.addQuery("error_class", "1");
+		exGr.addQuery("status", "1");
+		exGr.addQuery("error_message", message);
+		exGr.query();
+		if (exGr.next()) {
+			exGr.occurred_count = exGr.occurred_count + 1;
+			exGr.update();
+		} else {
+			if (this.logExceptions) {
+				gs.info(
+					"Incorrect Reference exception validating {0} line {1}; field {2}; value {3}",
+					importStatement.name,
+					lnnum,
+					fieldName,
+					fieldValue
+				);
+			}
+			var newExGr = this.newReferenceWarning(
+				importStatement,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				fieldType
+			);
+			newExGr.error_message = message;
+			newExGr.insert();
+		}
+	},
+
+	// API
+	createMissingReferenceDataError: function createMissingReferenceDataError(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType
+	) {
+		// Create missing reference data exception
+		// if there is an existing exception for this same value, just up the occurrence count
+		// otherwise create a new one
+		// the ln, lnnum will be the line of the first occurrence
+		var exGr = new GlideRecord("x_89907_vehicle_to_toll_import_exception");
+		exGr.addQuery("import_batch", importStatement.toll_import_batch);
+		exGr.addQuery("import_statement", importStatement.sys_id);
+		exGr.addQuery("field_name", fieldName);
+		exGr.addQuery("field_value", fieldValue);
+		exGr.addQuery("field_type", fieldType);
+		exGr.addQuery("error_type", "Reference");
+		exGr.addQuery("error_class", "2");
+		exGr.addQuery("status", "1");
+		exGr.query();
+		if (exGr.next()) {
+			exGr.occurred_count = exGr.occurred_count + 1;
+			exGr.update();
+		} else {
+			if (this.logExceptions) {
+				gs.info(
+					"Missing Reference exception validating {0} line {1}; field {2}; value {3}",
+					importStatement.name,
+					lnnum,
+					fieldName,
+					fieldValue
+				);
+			}
+			var newExGr = this.newReferenceError(
+				importStatement,
+				lnnum,
+				ln,
+				fieldName,
+				fieldValue,
+				fieldType
+			);
+			newExGr.insert();
+		}
+	},
+
+	// API
+	createMissingImportTypeError: function createMissingImportTypeError(importStatement) {
+		// Create multiple attachment exception
+		// Usage: TollImportUtil.createMultipleAttachmentError(this.importStatementGR.name);
+		gs.error(
+			"Fatal error: No Import Type specified for {0}",
+			importStatement.name
+		);
+		var ex = this.newError(
+			importStatement,
+			0,
+			0,
+			"Import Type",
+			null,
+			"No Import Type specified"
+		);
+		ex.field_type = "Toll Import Type";
+		ex.error_type = "Configuration";
+		ex.insert();
+	},
+
+	// API
+	createMultipleAttachmentError: function createMultipleAttachmentError(importStatement) {
+		// Create multiple attachment exception
+		// Usage: TollImportUtil.createMultipleAttachmentError(this.importStatementGR.name);
+		gs.error(
+			"Multiple Attachments exception validating {0}",
+			importStatement.name
+		);
+		var ex = this.newError(
+			importStatement,
+			"",
+			"",
+			"",
+			"",
+			"More than one attachment located"
+		);
+		ex.error_type = "Attachment";
+		ex.insert();
+	},
+
+	// API
+	createMissingAttachmentError: function createMissingAttachmentError(importStatement) {
+		// Create missing attachment exception
+		// Usage: TollImportUtil.createMissingAttachmentError(this.importStatementGR.name);
+		gs.error(
+			"Missing Attachment exception validating {0}",
+			importStatement.name
+		);
+		var ex = this.newError(
+			importStatement,
+			"",
+			"",
+			"",
+			"",
+			"No attachment located"
+		);
+		ex.error_type = "Attachment";
+		ex.insert();
+	},
+
+	// API
+	createStatementValidationWarning: function createStatementValidationWarning(
+		importStatement,
+		fieldName,
+		fieldValue,
+		errorType,
+		errorString
+	) {
+		// Create data format exception
+		// Usage: createStatementValidationWarning(this.importStatementGR.name, "Ending Balance", calcBalance, "Statement", "Calculated balance does not match ending balance in statement");
+		gs.error(
+			"Statement validation exception validating {0}\n Field: {1}\n Value: {2}\n Error: {3}",
+			importStatement.name,
+			fieldName,
+			fieldValue,
+			errorString
+		);
+		var ex = this.newStatementWarning(
+			importStatement,
+			"",
+			"",
+			fieldName,
+			fieldValue,
+			"Statement",
+			errorString
+		);
+		ex.insert();
+	},
+
+	// API
+	createStatementValidationError: function createStatementValidationError(
+		importStatement,
+		fieldName,
+		fieldValue,
+		errorType,
+		errorString
+	) {
+		// Create data format exception
+		// Usage: createStatementValidationError(this.importStatementGR.name, "Ending Balance", calcBalance, "Statement", "Calculated balance does not match ending balance in statement");
+		gs.error(
+			"Statement validation exception validating {0}\n Field: {1}\n Value: {2}\n Error: {3}",
+			importStatement.name,
+			fieldName,
+			fieldValue,
+			errorString
+		);
+		var ex = this.newStatementError(
+			importStatement,
+			"",
+			"",
+			fieldName,
+			fieldValue,
+			"Statement",
+			errorString
+		);
+		ex.insert();
+	},
+
+	// API
+	createFileParseError: function createFileParseError(importStatement, lnnum, ln, expected, found) {
+		// Create file content exception
+		// Usage: createFileParseError(this.importStatementGR.name, lnnum, ln, "Expected 'POSTING-DATE' but found end of file");
+		gs.error(
+			"Import parse error {0}: Expected {1} but found {2}\n{3}: {4}",
+			importStatement.name,
+			expected,
+			found,
+			lnnum,
+			ln
+		);
+		var errorString = "Expected " + expected + " but found " + found;
+		var ex = this.newError(importStatement, lnnum, ln, "", "", errorString);
+		ex.error_type = "Parse";
+		ex.insert();
+	},
+
+	// API
+	createFileParseErrorCore: function createFileParseErrorCore(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		errorString
+	) {
+		// Create file content exception
+		// Usage: createFileParseError(this.importStatementGR.name, lnnum, ln, "Expected 'POSTING-DATE' but found end of file");
+		gs.error(
+			"Import parse error {0}: File format error {1} | {4}\n{2}: {3}",
+			importStatement.name,
+			errorString,
+			lnnum,
+			ln,
+			fieldName
+		);
+		var ex = this.newError(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			"",
+			errorString
+		);
+		ex.error_type = "Parse";
+		ex.insert();
+	},
+
+	// API
+	createInvalidFileContentError: function createInvalidFileContentError(
+		importStatement,
+		lnnum,
+		ln,
+		errorString
+	) {
+		// Create file content exception
+		gs.error(
+			"Invalid File Content exception validating {0}. {1}\n{2}: {3}",
+			importStatement.name,
+			errorString,
+			lnnum,
+			ln
+		);
+		var ex = this.newError(importStatement, lnnum, ln, "", "", errorString);
+		ex.error_type = "File content";
+		ex.insert();
+	},
+
+	// API
+	createInvalidFieldContentError: function createInvalidFieldContentError(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		errorString
+	) {
+		// Create file content exception
+		gs.error(
+			"Invalid File Content exception validating {0}. {1}\n{2}: {3}",
+			importStatement.name,
+			errorString,
+			lnnum,
+			ln
+		);
+		var ex = this.newError(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			errorString
+		);
+		ex.error_type = "File content";
+		ex.insert();
+	},
+
+	// API
+	createDataFormatError: function createDataFormatError(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType,
+		errorString
+	) {
+		// Create data format exception
+		gs.error(
+			"Data Format exception validating {0} line {1}\n {2}\n Field: {3}\n Value: {4}\n" +
+				fieldType +
+				"\n" +
+				errorString,
+			importStatement.name,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue
+		);
+		var exGr = this.newDataError(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			fieldType,
+			errorString
+		);
+		exGr.insert();
+	},
+
+	// API
+	createDataFormatWarning: function createDataFormatWarning(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType,
+		errorString
+	) {
+		// Create data format exception
+		gs.error(
+			"Data Format exception validating {0} line {1}\n {2}\n Field: {3}\n Value: {4}\n" +
+				fieldType +
+				"\n" +
+				errorString,
+			importStatement.name,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue
+		);
+		var exGr = this.newDataWarning(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			fieldType,
+			errorString
+		);
+		exGr.insert();
+	},
+
+	newDataError: function newDataError(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType,
+		errorString
+	) {
+		var ex = this.newError(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			errorString
+		);
+		ex.error_type = "Data";
+		ex.field_type = fieldType;
+		return ex;
+	},
+	newDataWarning: function newDataWarning(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType,
+		errorString
+	) {
+		var ex = this.newWarning(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			errorString
+		);
+		ex.error_type = "Data";
+		ex.field_type = fieldType;
+		return ex;
+	},
+	newReferenceError: function newReferenceError(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType
+	) {
+		var ex = this.newError(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			"Missing reference data"
+		);
+		ex.error_type = "Reference";
+		ex.field_type = fieldType;
+		return ex;
+	},
+	newReferenceWarning: function newReferenceWarning(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType
+	) {
+		var ex = this.newWarning(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			"Missing reference data"
+		);
+		ex.error_type = "Reference";
+		ex.field_type = fieldType;
+		return ex;
+	},
+	newStatementError: function newStatementError(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType,
+		errorString
+	) {
+		var ex = this.newError(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			errorString
+		);
+		ex.error_type = "Statement";
+		ex.field_type = fieldType;
+		return ex;
+	},
+	newStatementWarning: function newStatementWarning(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		fieldType,
+		errorString
+	) {
+		var ex = this.newWarning(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			errorString
+		);
+		ex.error_type = "Statement";
+		ex.field_type = fieldType;
+		return ex;
+	},
+
+	newError: function newError(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		errorString
+	) {
+		var ex = this.newException(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			errorString
+		);
+		ex.error_class = "2";
+		return ex;
+	},
+	newWarning: function newWarning(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		errorString
+	) {
+		var ex = this.newException(
+			importStatement,
+			lnnum,
+			ln,
+			fieldName,
+			fieldValue,
+			errorString
+		);
+		ex.error_class = "1";
+		return ex;
+	},
+
+	newException: function newException(
+		importStatement,
+		lnnum,
+		ln,
+		fieldName,
+		fieldValue,
+		errorString
+	) {
+		var exGr = new GlideRecord("x_89907_vehicle_to_toll_import_exception");
+		exGr.initialize();
+		exGr.newRecord();
+		exGr.import_batch = importStatement.toll_import_batch;
+		exGr.import_statement = importStatement.sys_id;
+		exGr.import_line = ln;
+		exGr.import_line_number = lnnum;
+		exGr.field_name = fieldName;
+		exGr.field_value = fieldValue;
+		exGr.error_message = errorString;
+		exGr.status = "1";
+		return exGr;
+	},
+	type: "TollImportUtil"
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-08-09 16:56:43</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f18fe8c6dbbf1700f898fbefbf9619c5</sys_id>
+        <sys_mod_count>45</sys_mod_count>
+        <sys_name>TollImportUtil</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_f18fe8c6dbbf1700f898fbefbf9619c5</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-15 14:32:06</sys_updated_on>
+    </sys_script_include>
+</record_update>

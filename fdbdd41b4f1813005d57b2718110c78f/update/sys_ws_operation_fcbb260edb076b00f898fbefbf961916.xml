@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri>/api/x_89907_vehicle_to/tsp_api/devicedetails</default_operation_uri>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>device_details</name>
+        <operation_script><![CDATA[(function process(/* RESTAPIRequest */ request, /* RESTAPIResponse */ response) {
+
+	// Pull out the parameters, get the device details, format and return them as JSON
+	var params = request.body.data;
+	var sysID = params.sys_id;
+	var fieldNames = params.field_names;
+	var si = new x_89907_vehicle_to.TSPRecordDetailAccessor();
+	var siResult = si.getDeviceDetails(sysID, fieldNames);
+	var responseObj = JSON.stringify(siResult);
+	return responseObj;
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_89907_vehicle_to/v1/tsp_api/devicedetails</operation_uri>
+        <produces>application/json</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/devicedetails</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-18 15:28:24</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>fcbb260edb076b00f898fbefbf961916</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>device_details</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ws_operation_fcbb260edb076b00f898fbefbf961916</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-15 19:37:47</sys_updated_on>
+        <web_service_definition display_value="TollServicePortalAPI">3088a68adb076b00f898fbefbf96194c</web_service_definition>
+        <web_service_version display_value="v1">579fa20edb076b00f898fbefbf9619d0</web_service_version>
+    </sys_ws_operation>
+</record_update>

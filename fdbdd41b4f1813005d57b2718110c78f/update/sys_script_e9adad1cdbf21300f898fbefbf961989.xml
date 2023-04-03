@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>false</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_89907_vehicle_to_u_cmdb_ci_transponder</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition table="x_89907_vehicle_to_u_cmdb_ci_transponder">u_replacement_transponderISNOTEMPTY^install_status=1^EQ<item endquery="false" field="u_replacement_transponder" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item display_value="Installed" endquery="false" field="install_status" goto="false" newquery="false" operator="=" or="false" value="1"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Transponder Replace</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /* null when async */) {
+	/**
+	 * @description Create a CI record for the new transponder with
+	 * a reference to the one it is replacing and retire the replaced transponder.
+	 */
+
+	var transponderTableName = "x_89907_vehicle_to_u_cmdb_ci_transponder";
+
+	// Get a common timestamp to use in all the updates
+	var nowGDT = new GlideDateTime();
+
+	// Get the relevant IDs and tag numbers
+	var currentTagName = current.getValue("name");
+	var currentTagSysID = current.getUniqueValue();
+	var initialTagSysID = current.getValue("u_initial_transponder");
+	var initialPlate = current.getValue("license_plate");
+	
+	//var replacementGR = current.u_replacement_transponder.getRefRecord();
+	
+	var replacementGR = new GlideRecord(transponderTableName);
+	replacementGR.get('name', current.getDisplayValue("u_replacement_transponder"));
+	
+	var replacementTagName = replacementGR.getValue("name");
+	var replacementTagSysID = replacementGR.getUniqueValue();
+
+	gs.info('Replacement Transponder = ' + replacementGR.name, 'Vehicle Tolls');
+
+	// Check to see if replacement transponder already used as replacement
+	var dupeReplacedGR = new GlideRecord(transponderTableName);
+	dupeReplacedGR.addQuery("u_replacement_transponder", replacementTagSysID);
+	dupeReplacedGR.addQuery("sys_id", "!=", currentTagSysID);
+	dupeReplacedGR.query();
+
+	// Found a duplicate, so exit with error message
+	if (dupeReplacedGR.hasNext()) {
+		gs.addErrorMessage(gs.getMessage("Transponder Replace-003", [ replacementTagName ]));
+		current.setAbortAction(true);
+		return;
+	}
+
+	// Check for In Stock
+	if (replacementGR.install_status != 6) { // InStock?
+		gs.addErrorMessage(gs.getMessage("Transponder Replace-004"));
+		current.setAbortAction(true);
+		gs.info('Replacement Transponder ' + replacementGR.name + ': Status is not valid: ' + replacementGR.install_status,'Vehicle Tolls');
+		return;
+	}
+
+
+	// Populate the replacement tag values from defaults
+	replacementGR.setValue("u_initial_transponder", initialTagSysID || currentTagSysID);
+	replacementGR.setValue("u_previous_transponder", currentTagSysID);
+	replacementGR.setValue("u_replacement_transponder", '');
+	replacementGR.setValue("install_status", 1);
+	replacementGR.setValue("install_date", nowGDT);
+	replacementGR.setValue("u_create_invoice", true); // todo - should get from current?
+	// Populate the replacement tag values from current tag - allow overrides from in stock
+	if (replacementGR.assigned_to.nil()) {
+		replacementGR.setValue("assigned_to", current.getValue("assigned_to"));
+	}
+	if (replacementGR.u_vehicle_number.nil()) {
+		replacementGR.setValue("u_vehicle_number", current.getValue("u_vehicle_number")
+		);
+	}
+	
+	gs.info('Replacement Transponder before updating current: ' + replacementGR.name);
+	
+	current.setValue("license_plate","");
+	current.update();
+	
+	gs.info('Replacement Transponder after updating current: ' + replacementGR.name);
+	
+	if (replacementGR.license_plate.nil()) {
+		replacementGR.setValue("license_plate", initialPlate
+		);
+	}
+	if (replacementGR.u_cost_center.nil()) {
+		replacementGR.setValue("u_cost_center", current.getValue("u_cost_center"));
+	}
+	// Populate the replacement tag values from current tag - no overrides
+	replacementGR.setValue("allow_out_of_area", current.getValue("allow_out_of_area"));
+	replacementGR.setValue("allow_weekends", current.getValue("allow_weekends"));
+	replacementGR.setValue("alternate_shift", current.getValue("alternate_shift"));
+	replacementGR.setValue("shift_start", current.getValue("shift_start"));
+	replacementGR.setValue("shift_end", current.getValue("shift_end"));
+	replacementGR.setValue("u_pool_device", current.getValue("u_pool_device"));
+	
+	gs.info('Replacement Transponder after updating additional details: ' + replacementGR.name);
+	
+	if (replacementGR.vendor.nil()) {
+		replacementGR.setValue("vendor", current.getValue("vendor"));
+	}
+	if (replacementGR.company.nil()) {
+		replacementGR.setValue("company", current.getValue("company"));
+	}
+	if (replacementGR.manufacturer.nil()) {
+		replacementGR.setValue("manufacturer", current.getValue("manufacturer"));
+	}
+
+	// Required fields in in stock so don't touch
+	// u_account
+	// u_transponder_type
+	// u_transponder_number
+
+	// Done with replacement tag, so save it
+	replacementGR.update();
+	
+	gs.info('Replacement Transponder after replacementGR update: ' + replacementGR.name);
+
+	// Update the current (replaced) tag
+	if (!initialTagSysID) {
+		current.setValue("u_initial_transponder", currentTagSysID);
+	}
+	current.setValue("u_removed_date", nowGDT);
+	current.setValue("install_status", 7); // Retired
+	gs.addInfoMessage(
+		gs.getMessage("Transponder Replace-002", [currentTagName, replacementTagName])
+	);
+})(current, previous);
+]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-06-15 17:56:48</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>e9adad1cdbf21300f898fbefbf961989</sys_id>
+        <sys_mod_count>79</sys_mod_count>
+        <sys_name>Transponder Replace</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_e9adad1cdbf21300f898fbefbf961989</sys_update_name>
+        <sys_updated_by>SN_Mavila</sys_updated_by>
+        <sys_updated_on>2022-10-22 23:00:24</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=e9adad1cdbf21300f898fbefbf961989"/>
+</record_update>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">f6a16deadb1f1300f898fbefbf9619ef</sp_column>
+        <sp_widget display_value="DMK KB Floating Viewport">89ea57f14f04f3005d57b2718110c762</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-03-08 20:49:32</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>347c040a4f84f3005d57b2718110c7df</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_instance_347c040a4f84f3005d57b2718110c7df</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-08-05 23:47:52</sys_updated_on>
+        <title/>
+        <url/>
+        <widget_parameters><![CDATA[{
+	"button_color": {
+		"value": "",
+		"displayValue": ""
+	},
+	"embedded_page": {
+		"value": "",
+		"displayValue": ""
+	},
+	"aria_button_label": {
+		"value": "What is considered 'Personal Use'?",
+		"displayValue": "What is considered 'Personal Use'?"
+	},
+	"url_system_parameters": {
+		"value": "",
+		"displayValue": ""
+	},
+	"is_sp_page": {
+		"value": "false",
+		"displayValue": "false"
+	},
+	"retina_icon": {
+		"value": "",
+		"displayValue": ""
+	},
+	"fa_icon": {
+		"value": "fa-info",
+		"displayValue": "fa-info"
+	},
+	"use_retina_icon": {
+		"value": "false",
+		"displayValue": "false"
+	},
+	"kb_article_sysid": {
+		"value": "71b11409db6100107cf5a455ca961964",
+		"displayValue": "KBVT10001"
+	}
+}]]></widget_parameters>
+    </sp_instance>
+    <sys_translated_text action="delete_multiple" query="documentkey=347c040a4f84f3005d57b2718110c7df"/>
+</record_update>

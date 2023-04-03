@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_ng_template">
+    <sp_ng_template action="INSERT_OR_UPDATE">
+        <id>tsp-user-device-pop</id>
+        <sp_widget display_value="TSP User Devices">c5371a2bdb726300f898fbefbf961937</sp_widget>
+        <sys_class_name>sp_ng_template</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-14 19:21:45</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>71cb36f0db0ba700f898fbefbf961925</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>tsp-user-device-pop</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_ng_template_71cb36f0db0ba700f898fbefbf961925</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-12-17 04:53:59</sys_updated_on>
+        <template><![CDATA[<div class="modal-header">
+  <h3 class="modal-title" id="modal-title-{{mc.data.name.display_value}}">{{mc.data._display_value}}</h3>
+</div>
+<div class="modal-body" id="modal-body-{{mc.data.name.display_value}}">
+  <div>Name: {{mc.data.name.display_value}}</div>
+  <div>Status: {{mc.data.install_status.display_value}}</div>
+  <div>Install date: {{mc.data.install_date.display_value}}</div>
+  <div>Vehicle number: {{mc.data.u_vehicle_number.display_value}}</div>
+  <div>Plate number: {{mc.data.u_plate_number.display_value}}</div>
+  <div>Cost center: {{mc.data.u_cost_center.display_value}}</div>
+  <div>Account: {{mc.data.u_account.display_value}}</div>
+  <div>Transponder type: {{mc.data.u_transponder_type.display_value}}</div>
+  <div>Pool Vehicle: {{mc.data.u_pool_device.display_value}}</div>
+  <div>Description: {{mc.data.short_description.display_value}}</div>
+</div>
+
+]]></template>
+    </sp_ng_template>
+</record_update>

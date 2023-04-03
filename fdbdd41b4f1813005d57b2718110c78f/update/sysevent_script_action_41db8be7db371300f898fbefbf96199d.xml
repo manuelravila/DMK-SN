@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sysevent_script_action">
+    <sysevent_script_action action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition_script/>
+        <description/>
+        <event_name>x_89907_vehicle_to.import.genUserStmts</event_name>
+        <name>Create User Statements</name>
+        <order>100</order>
+        <script><![CDATA[// event.current: statement
+// event.parm1: user
+// event.parm2: parm2
+
+gs.info("Create User Statements Script action: {0} Parm1: {1} Parm2: {2} User: {3}", current.name, event.parm1, event.parm2, event.user_id);
+
+// todo: need some sort of fatal exception type that has to be cleared on validate stage before moving on to import
+// so we don't have to do all the validation here and can create records without worrying about how to recover
+// from them easily
+
+// todo: need to add exception handling so if an error occurs we revert back to previous state or an error state
+// todo: also need to produce some sort of errors that the toll admin will see without looking at the logs
+// If not "Creating User Statements" something is not synced up
+
+if (current.status != 7) {
+	gs.error("Statement {0} not in correct state ({1}) to process.",current.name,current.status);
+}
+else {
+	createUserStatementsForStatement(current.statement);
+	gs.info("User Statement generation complete for statement {0}.", current.name);
+	current.status = "8"; // "User Statements created"
+	current.update();
+}
+
+function createUserStatementsForStatement(statement) {
+	// set up some globals
+	var activeUserStatementCompanies = [];
+	var arrayUtil = new global.ArrayUtil();
+	var cntChgSkippedUnLinked = 0;
+	var sumChgSkippedUnLinked = 0;
+	var cntChgSkippedCompany = 0;
+	var sumChgSkippedCompany = 0;
+	var cntChgSkippedZero = 0;
+	var sumChgSkippedZero = 0;
+	var cntChgSkippedNoUser = 0;
+	var sumChgSkippedNoUser = 0;
+	var cntChgSkippedDupe = 0;
+	var sumChgSkippedDupe = 0;
+	var cntChgCreated = 0;
+	var sumChgCreated = 0;
+	var cntChgTotal = 0;
+	var sumChgTotal = 0;
+	
+	var cntStatementsSkipped = 0;
+	var cntStatementsCreated = 0;
+
+	// Save the list of companies that want to create user statements
+	var grCfg = new GlideRecord("x_89907_vehicle_to_toll_configuration");
+	grCfg.addNotNullQuery('company');
+	grCfg.addQuery("active",true);
+	grCfg.addQuery("create_user_statements",true);
+	grCfg.query();
+	while (grCfg.next())
+	 {
+	  activeUserStatementCompanies.push(grCfg.company.getRefRecord().getUniqueValue());
+	 }
+
+	// Get the groups
+	var gr = new GlideAggregate('x_89907_vehicle_to_toll_charge');
+	//	gr.addQuery("statement", current.statement);
+	gr.addQuery("statement", statement);
+	gr.groupBy("user");
+	gr.groupBy("transponder");
+	gr.groupBy("transponder_number");
+	gr.addAggregate("SUM", "amount");
+	gr.addAggregate("COUNT");
+	gr.query();
+// todo limits for testing
+// LIMITING NUMBER OF USER STATEMENTS CREATED FOR TESTING	
+// LIMITING NUMBER OF USER STATEMENTS CREATED FOR TESTING	
+// LIMITING NUMBER OF USER STATEMENTS CREATED FOR TESTING	
+// LIMITING NUMBER OF USER STATEMENTS CREATED FOR TESTING	
+// LIMITING NUMBER OF USER STATEMENTS CREATED FOR TESTING	
+// LIMITING NUMBER OF USER STATEMENTS CREATED FOR TESTING	
+// LIMITING NUMBER OF USER STATEMENTS CREATED FOR TESTING	
+//	while (gr.next() && (cntStatementsCreated < 10)) {
+	while (gr.next()) {
+		var cntGrCharges = Number(gr.getAggregate("COUNT"));
+		var sumGrCharges = Number(gr.getAggregate("SUM", "amount"));
+		var skip = false;
+		if (!gr.transponder) {
+			cntChgSkippedUnLinked += cntGrCharges;
+			sumChgSkippedUnLinked += sumGrCharges;
+			skip = true;
+			gs.info("Skipped user statement for un-assigned transponder "  + gr.transponder_number);
+		}
+		else {
+			var companyFlag = (arrayUtil.indexOf(activeUserStatementCompanies, gr.transponder.company.getRefRecord().getUniqueValue()) >= 0);
+			if (!companyFlag) {
+				// if the company doesn't generate invoices, skip this transponder
+				cntChgSkippedCompany += cntGrCharges;
+				sumChgSkippedCompany += sumGrCharges;
+				skip = true;
+				gs.debug("Skipping user statement \n{0}\n{1}",
+						 (function() {var i;var s = "";var a= activeUserStatementCompanies;for (i = 0; i < a.length; i++) {s += ('\n' + a[i]);}return s;})(),
+						 gr.transponder.company.getRefRecord().getUniqueValue()
+						);
+				gs.info("Skipping user statement for company {0} user {1} transponder {2}" ,
+						gr.transponder.company.getDisplayValue() ,
+						gr.user.getDisplayValue() ,
+						gr.transponder.getDisplayValue());
+			}
+			else if (!gr.user) {
+				// Don't generate invoices if transponder is not linked to user
+				cntChgSkippedNoUser += cntGrCharges;
+				sumChgSkippedNoUser += sumGrCharges;
+				skip = true;
+				gs.info("Skipped user statement for un-assigned transponder "  + gr.transponder.u_transponder_number);
+			}
+			else if (sumGrCharges == 0) {
+				// Don't generate invoices with total amount = 0
+				cntChgSkippedZero += cntGrCharges;
+				sumChgSkippedZero += sumGrCharges;
+				skip = true;
+			}
+		}
+		// Collect some stats
+		cntChgTotal += cntGrCharges;
+		sumChgTotal += sumGrCharges;
+		
+		// Check duplicate invoice
+		var grDup = new GlideRecord("x_89907_vehicle_to_toll_user_statement");
+		grDup.addQuery("transponder", gr.transponder);
+		grDup.addQuery("period_begin_date", statement.bill_begin_date);
+		grDup.addQuery("period_end_date", statement.bill_end_date);
+		grDup.addQuery("user", gr.user);
+		grDup.query();
+		if (grDup.next())
+		{
+			gs.info("Duplicate user statement located for transponder "  + gr.transponder.u_transponder_number + " (" + grDup.number + ")" );
+			skip = true;
+			cntChgSkippedDupe += cntGrCharges;
+			sumChgSkippedDupe += sumGrCharges;
+		}
+			
+		if (skip) {
+			cntStatementsSkipped++;
+		}
+		else {
+			// Create user statement
+			var gi = new GlideRecord("x_89907_vehicle_to_toll_user_statement");
+			gi.newRecord(); 
+			gi.statement = statement;
+			gi.user = gr.user;
+			gi.total_amount = sumGrCharges;
+			gi.status = "1"; // Open
+			gi.progress_phase = "1";  // Pending
+			gi.short_description = "Personal user statement for " + gr.user.getDisplayValue();
+			gi.period_begin_date = statement.bill_begin_date;
+			gi.period_end_date = statement.bill_end_date;
+			gi.account = statement.account;
+			gi.vendor = statement.vendor;
+			gi.transponder =  gr.transponder;
+			gi.transponder_number = gr.transponder.u_transponder_number; 
+			gi.transponder_type = gr.transponder.u_transponder_type;
+			gi.vehicle_number = gr.transponder.u_vehicle_number;
+			gi.plate_number = gr.transponder.license_plate.license_number;
+			gi.cost_center = gr.transponder.u_cost_center;
+			var userStatementSID = gi.insert();
+			if (userStatementSID) {
+				gs.info('User statement created for ' + gr.user.getDisplayValue()  + ' - ' + gi.transponder_number + ' (' + gi.period_begin_date + ' - ' + gi.period_end_date + ')');
+				cntChgCreated += cntGrCharges;
+				sumChgCreated += sumGrCharges;
+				cntStatementsCreated++;
+				linkChargesToUserStatement(gi);
+			}
+			else {
+				gs.info('Error creating user statement for ' + gr.user.getDisplayValue()  + ' - ' + gr.transponder.u_transponder_number + ' (' + statement.period_begin_date + ' - ' + statement.period_end_date + ')');
+			}
+		}
+	}
+
+	var stmtGr = new GlideRecord("x_89907_vehicle_to_toll_statement");
+	stmtGr.get(statement);
+
+	stmtGr.alloc_charge_total_amount = sumChgCreated;
+	stmtGr.alloc_charge_amt_skip_company = sumChgSkippedCompany;
+	stmtGr.alloc_charge_amt_skip_dupe = sumChgSkippedDupe;
+	stmtGr.alloc_charge_amt_skip_trans = sumChgSkippedUnLinked;
+	stmtGr.alloc_charge_amt_skip_user = sumChgSkippedNoUser;
+	stmtGr.alloc_charge_total_count = cntChgCreated;
+	stmtGr.alloc_charge_cnt_skip_company = cntChgSkippedCompany;
+	stmtGr.alloc_charge_cnt_skip_dupe = cntChgSkippedDupe;
+	stmtGr.alloc_charge_cnt_skip_nocost = cntChgSkippedZero;
+	stmtGr.alloc_charge_cnt_skip_trans = cntChgSkippedUnLinked;
+	stmtGr.alloc_charge_cnt_skip_user = cntChgSkippedNoUser;
+	stmtGr.user_statements_created = cntStatementsCreated;
+	stmtGr.user_statements_skipped = cntStatementsSkipped;
+	stmtGr.alloc_charge_cnt_skip_total = (cntChgSkippedCompany+ cntChgSkippedUnLinked+ cntChgSkippedNoUser+ cntChgSkippedZero+ cntChgSkippedDupe);
+	stmtGr.alloc_charge_amt_skip_total = (sumChgSkippedCompany+ sumChgSkippedUnLinked+ sumChgSkippedNoUser+ sumChgSkippedZero+ sumChgSkippedDupe);
+	stmtGr.toll_charge_count = cntChgTotal;
+	stmtGr.toll_charge_amount = sumChgTotal;
+	stmtGr.update();
+
+}
+
+function linkChargesToUserStatement(userStatement) {
+	// find all the charges for the invoice and add the reference
+	var gr = new GlideRecord('x_89907_vehicle_to_toll_charge');
+	gr.addQuery("statement", userStatement.statement);
+	gr.addQuery("user", userStatement.user);
+	gr.addQuery("transponder", userStatement.transponder);
+	gr.query();
+	if (gr.hasNext()) {
+		gr.setValue("user_statement",  userStatement.sys_id);
+		gr.updateMultiple();
+	}
+}]]></script>
+        <synchronous>false</synchronous>
+        <sys_class_name>sysevent_script_action</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-08-14 20:14:43</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>41db8be7db371300f898fbefbf96199d</sys_id>
+        <sys_mod_count>54</sys_mod_count>
+        <sys_name>Create User Statements</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysevent_script_action_41db8be7db371300f898fbefbf96199d</sys_update_name>
+        <sys_updated_by>SN_Mavila</sys_updated_by>
+        <sys_updated_on>2022-08-09 23:47:49</sys_updated_on>
+    </sysevent_script_action>
+</record_update>

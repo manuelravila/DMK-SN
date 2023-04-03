@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">359cebe4db5300107cf5a455ca961981</sp_column>
+        <sp_widget display_value="TSP VC List Presenter">fbef13a8db1300107cf5a455ca961913</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-28 06:53:19</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>88ac2fe4db5300107cf5a455ca961932</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_instance_88ac2fe4db5300107cf5a455ca961932</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-28 06:53:19</sys_updated_on>
+        <title/>
+        <url/>
+        <widget_parameters/>
+    </sp_instance>
+    <sys_translated_text action="delete_multiple" query="documentkey=88ac2fe4db5300107cf5a455ca961932"/>
+</record_update>

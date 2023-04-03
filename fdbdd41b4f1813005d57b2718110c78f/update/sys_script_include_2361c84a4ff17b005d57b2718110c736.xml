@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.CompanyUsageExceptionRuleSet</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>CompanyUsageExceptionRuleSet</name>
+        <script><![CDATA[gs.include("UsageExceptionRuleSet");
+
+var CompanyUsageExceptionRuleSet = Class.create();
+CompanyUsageExceptionRuleSet.prototype = Object.extendsObject(
+	UsageExceptionRuleSet,
+	{
+		/**
+		 * @description
+		 * @param {*} configGR
+		 * @param {*} timezoneName
+		 */
+		initialize: function initialize(configGR) {
+			UsageExceptionRuleSet.prototype.initialize.call(this, configGR);
+
+			this._validPlazas = {};
+			if (configGR.isValid && configGR.isValid()) {
+				var m2mGR = new GlideRecord(
+					"x_89907_vehicle_to_m2m_default_toll_plazas"
+				);
+				m2mGR.addQuery("toll_configuration", configGR.getUniqueValue());
+				m2mGR.query();
+				while (m2mGR.next()) {
+					var plazaGR = m2mGR.toll_plaza.getRefRecord();
+					var plaza = {
+						agency_id: plazaGR.agency.agency_id.toString(),
+						agency_code: plazaGR.agency.code.toString(),
+						code: plazaGR.code.toString(),
+						description: plazaGR.description.toString(),
+						plaza_id: plazaGR.plaza_id.toString(),
+						sys_id: plazaGR.getUniqueValue()
+					};
+					var agencyList = this._validPlazas[plaza.plaza_id.toString()];
+					if (!agencyList) {
+						agencyList = [];
+						this._validPlazas[plaza.plaza_id.toString()] = agencyList;
+					}
+					agencyList.push(plaza.agency_id);
+				}
+				Object.defineProperty(this, "validPlazas", {
+					get: function() {
+						return this._validPlazas;
+					}
+				});
+			}
+		},
+
+		isPlazaException: function isPlazaException(plazaID, plazaAgencyID) {
+			if (this.validPlazas.length === 0) {
+				return false;
+			}
+			var agencyList = this.validPlazas[plazaID.toString()];
+			if (!agencyList) {
+				return true;
+			}
+			var arrayUtil = new global.ArrayUtil();
+			return !arrayUtil.contains(agencyList, plazaAgencyID);
+		},
+
+		debugPrint: function debugPrint() {
+			gs.info(
+				"DEBUGPRINT" +
+					JSON.stringify({
+						allowWeekends: this.allowWeekends,
+						shiftStart: this.shiftStart,
+						shiftEnd: this.shiftEnd
+					})
+			);
+		},
+		type: "CompanyUsageExceptionRuleSet"
+	}
+);
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-06-03 20:09:46</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2361c84a4ff17b005d57b2718110c736</sys_id>
+        <sys_mod_count>33</sys_mod_count>
+        <sys_name>CompanyUsageExceptionRuleSet</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_2361c84a4ff17b005d57b2718110c736</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-12-24 07:33:28</sys_updated_on>
+    </sys_script_include>
+</record_update>

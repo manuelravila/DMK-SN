@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>primary</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">0bce4f3e4f6477005d57b2718110c705</sp_column>
+        <sp_widget display_value="TSP Approval Info">9698ca334f24b3005d57b2718110c739</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-04-05 15:25:30</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>c3ce4f3e4f6477005d57b2718110c707</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Approval Info</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_instance_c3ce4f3e4f6477005d57b2718110c707</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-04-11 21:08:52</sys_updated_on>
+        <title>Approval Info</title>
+        <url/>
+        <widget_parameters/>
+    </sp_instance>
+    <sys_translated_text action="delete_multiple" query="documentkey=c3ce4f3e4f6477005d57b2718110c707"/>
+</record_update>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TransponderLookup</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>eeb0f8c6dbbf1700f898fbefbf9619c8</description>
+        <name>TransponderLookup</name>
+        <script><![CDATA[/*
+lookupActive
+lookupDroppedInPeriod
+lookupActivePlate
+lookupDroppedInPeriodPlate
+
+install_status codes
+1 Installed
+2 On Order
+3 In Maintenance
+4 Pending Install
+5 Pending Repair
+6 In Stock
+7 Retired
+8 Stolen
+100 Absent
+
+by transponder number
+active transponder
+dropped transponder drop date >= period begin date
+replaced transponder replace date >= period begin date
+
+by plate number
+active transponder where plate matched during period
+dropped transponder drop date >= period begin date
+replaced transponder replace date >= period begin date
+*/
+
+var TransponderLookup = Class.create();
+TransponderLookup.prototype = {
+    initialize: function initialize(trnsNbr, plateNbr, vendor, account, periodStart, periodEnd) {
+		this.transponder_number = trnsNbr;
+		this.plate_number = plateNbr;
+		this.vendor = vendor;
+		this.account = account;
+		this.period_start_date = periodStart;
+		this.period_end_date = periodEnd;
+		this.account_strict = true;
+
+    },
+	
+	
+
+	setAccountStrict: function setAccountStrict(bool){
+		this.account_strict = bool;
+	},
+	
+	lookupActive: function lookupActive(){
+		var transponderGR = this._getBaseIDQuery();
+		transponderGR.addQuery("install_status", 1);
+		transponderGR.query();
+		if (transponderGR.next()) {
+			return transponderGR;
+		}
+		return null;
+	},
+	
+	lookupDroppedInPeriod: function lookupDroppedInPeriod(){
+		// todo change lookups to be removed after start of bill period and installed before end of bill period
+		var transponderGR = this._getBaseIDQuery();
+		transponderGR.addQuery("install_status", 7);
+		// Code added to allow for transponders dropped in the last 3 months to be eligible for statements.  ---------------------------------------------
+			var threeMonthsAgo = new GlideDateTime(this.period_start_date);
+			threeMonthsAgo.subtract(7776000000);
+		// -----------------------------------------------------------------------------------------------------------------------------------------------		
+		transponderGR.addQuery("u_removed_date", ">=", threeMonthsAgo);
+		transponderGR.addQuery("install_date", "<=", this.period_end_date);
+		transponderGR.query();
+		if (transponderGR.next()) {
+			return transponderGR;
+		}
+		return null;
+	},
+	
+	lookupActivePlate: function lookupActivePlate(){
+		var transponderGR = this._getBasePlateQuery();
+		transponderGR.addQuery("install_status", 1);
+		transponderGR.query();
+		if (transponderGR.next()) {
+			return transponderGR;
+		}
+		return null;
+	},
+	
+	lookupDroppedInPeriodPlate: function lookupDroppedInPeriodPlate(){
+		var transponderGR = this._getBasePlateQuery();
+		transponderGR.addQuery("install_status", 7);
+		// Code added to allow for transponders dropped in the last 3 months to be eligible for statements.  ---------------------------------------------
+			var threeMonthsAgo = new GlideDateTime(this.period_start_date);
+			threeMonthsAgo.subtract(7776000000);
+		// -----------------------------------------------------------------------------------------------------------------------------------------------
+		
+		//gs.info("Threshold date: " + threeMonthsAgo , "x_89907_vehicle_to");
+		transponderGR.addQuery("u_removed_date", ">=", threeMonthsAgo);
+		transponderGR.addQuery("install_date", "<=", this.period_end_date);
+		transponderGR.query();
+		if (transponderGR.next()) {
+			return transponderGR;
+		}
+		return null;
+	},
+	
+	_getBaseIDQuery: function _getBaseIDQuery(){
+		var transponderGR = this._getBaseQuery();
+		transponderGR.addQuery("u_transponder_number", this.transponder_number);
+		return transponderGR;
+	},
+	
+	_getBasePlateQuery: function _getBasePlateQuery(){
+		var transponderGR = this._getBaseQuery();
+
+		transponderGR.addQuery("u_plate_number", this.plate_number).addOrCondition("license_plate.license_number",this.plate_number);
+		//gs.info("Plate: " + this.plate_number + ". Transponder number: " + this.transponder_number +  " Transponder found: " +  transponderGR, "x_89907_vehicle_to");
+		return transponderGR;
+	},
+	
+	_getBaseQuery: function _getBaseQuery(){
+		var transponderGR = new GlideRecord("x_89907_vehicle_to_u_cmdb_ci_transponder");
+		if (this.account_strict) {
+			transponderGR.addQuery("u_account", this.account.getUniqueValue());
+		}
+		transponderGR.addQuery("vendor", this.vendor.getUniqueValue());
+		return transponderGR;
+	},
+    type: 'TransponderLookup'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-08-09 17:01:39</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>eeb0f8c6dbbf1700f898fbefbf9619c8</sys_id>
+        <sys_mod_count>24</sys_mod_count>
+        <sys_name>TransponderLookup</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_eeb0f8c6dbbf1700f898fbefbf9619c8</sys_update_name>
+        <sys_updated_by>SN_Mavila</sys_updated_by>
+        <sys_updated_on>2022-08-09 13:59:17</sys_updated_on>
+    </sys_script_include>
+</record_update>

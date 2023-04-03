@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_package_dependency_m2m">
+    <sys_package_dependency_m2m action="INSERT_OR_UPDATE">
+        <dependency display_value="System Import Sets" source="com.glide.system_import_set">8ddde752db1022006de6fafc0f9619ba</dependency>
+        <min_version>1.0.0</min_version>
+        <sys_created_by>SN_Chall</sys_created_by>
+        <sys_created_on>2020-09-04 23:02:02</sys_created_on>
+        <sys_id>c9de94fd1b039050195fed7dee4bcb0d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_updated_by>SN_Chall</sys_updated_by>
+        <sys_updated_on>2020-09-04 23:02:02</sys_updated_on>
+    </sys_package_dependency_m2m>
+</record_update>

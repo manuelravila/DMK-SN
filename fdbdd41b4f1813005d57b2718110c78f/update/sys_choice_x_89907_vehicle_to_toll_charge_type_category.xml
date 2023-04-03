@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="category" table="x_89907_vehicle_to_toll_charge_type" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>category</element>
+            <name>x_89907_vehicle_to_toll_charge_type</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-13 18:16:33</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>eb2f50711b439050195fed7dee4bcbf8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>category</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_choice_x_89907_vehicle_to_toll_charge_type_category</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-13 18:16:33</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>category</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Toll Charge</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_charge_type</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-13 18:16:33</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>15382d9fdb7bd700f898fbefbf961922</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-13 18:16:47</sys_updated_on>
+            <value>toll</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>category</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Misc Charge/Credit</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_charge_type</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-13 18:16:58</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>6d582d9fdb7bd700f898fbefbf961922</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-13 18:20:39</sys_updated_on>
+            <value>misc</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

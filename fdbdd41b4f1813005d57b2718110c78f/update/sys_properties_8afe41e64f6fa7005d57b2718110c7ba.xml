@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Payment activity formatter fields</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>glide.ui.x_89907_vehicle_to_payment_activity.fields</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-02-13 18:25:45</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>8afe41e64f6fa7005d57b2718110c7ba</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>glide.ui.x_89907_vehicle_to_payment_activity.fields</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_properties_8afe41e64f6fa7005d57b2718110c7ba</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-20 15:11:26</sys_updated_on>
+        <type>string</type>
+        <value>number,user,company,amount,status,phase,closed,check_number,check_amount,closed_by,comments,date_of_check,date_received,payee_information,resolution_comments,override_amount_validation,total_user_statements,sys_created_on,sys_created_by,sys_updated_on,sys_updated_by,*Email*,*Attachments*,sys_tags</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=8afe41e64f6fa7005d57b2718110c7ba"/>
+</record_update>

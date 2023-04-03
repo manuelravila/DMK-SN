@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function wClient($scope, $sce, $animate, $rootScope) {
+	var c = this;
+	$scope.$watch("data.userStatementList", function() {
+		$scope.userStatementList = $scope.data.userStatementList; // copy for shortcuts above
+	});
+
+	c.payeeHtml = $sce.trustAsHtml(c.data.payeeHtml);
+	$scope.$watch("$scope.data.payeeHtml", function() {
+		c.payeeHtml = $sce.trustAsHtml(c.data.payeeHtml);
+	});
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.reimbForm-main {
+  background: #ffffff none repeat scroll 0 0;
+  position: relative;
+  color: #333333;
+}
+.reimbForm-footer h1 {
+  font-size: 15px;
+  font-weight: 400 !important;
+  margin: 0 !important;
+}
+
+.reimbForm-main thead {
+  background: #414143 none repeat scroll 0 0;
+}
+.reimbForm-main thead th {
+  color:#fff;
+}
+.reimbForm-right h5 {
+  font-size: 16px;
+  font-weight: bold;
+}
+.reimbForm-right p {
+  font-size: 12px;
+  margin: 0px;
+}
+.reimbForm-right p i {
+  text-align: center;
+  width: 18px;
+}
+.reimbForm-main td {
+  padding: 9px 20px !important;
+}
+.reimbForm-main th {
+  padding: 13px 20px !important;
+}
+.reimbForm-main td {
+  font-size: 13px;
+  font-weight: initial !important;
+}
+.reimbForm-main td p:last-child {
+  margin: 0;
+  padding: 0;
+}	
+.reimbForm-main td h2 {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0;
+  text-transform: uppercase;
+}
+.reimbForm-header-mid {
+  margin: 12px 0;
+  overflow: hidden;
+}
+.reimbForm-header-mid .panel-body, .reimbForm-header-mid .panel-heading {
+  padding: 10px;
+
+}
+.reimbForm-header-mid .panel-body&gt;*:last-child {
+  margin-bottom: 0px;
+
+}
+.reimbForm-footer {
+  margin: 12px 0;
+  overflow: hidden;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>tsp-print-reimbursement-form</id>
+        <internal>false</internal>
+        <link/>
+        <name>TSP Print Reimbursement Form</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[/* globals gs, data, $sp, GlideRecord, GlideRecordSecure */
+(function TSPPrintReimbursementForm() {
+	// initialize data vars
+	data.isValid = true; // assume true and override if we find an error
+
+	// validate required input data
+
+	// load up the data
+	getUserStatements();
+	getUserInformation();
+	getPayeeInformation();
+	data.date = new GlideDate().getDisplayValue();
+	function getUserStatements() {
+		// get the users statements
+		var grUserStatement = new GlideRecordSecure(
+			"x_89907_vehicle_to_toll_user_statement"
+		);
+		if (!grUserStatement.isValid()) {
+			data.isValid = false;
+			data.errorMessage = "cant read user statement";
+			return;
+		}
+		grUserStatement.addQuery("user", gs.getUserID());
+		grUserStatement.addQuery("status", "1"); // open
+		grUserStatement.addQuery("progress_phase", "2"); // paymentOwed
+		grUserStatement.query();
+		if (!grUserStatement.hasNext()) {
+			data.noData = true;
+			data.errorMessage = "No user statements";
+			return;
+		}
+
+		var results = [];
+		var sumPersonalAmount = 0.0;
+		var sumTotalAmount = 0.0;
+		while (grUserStatement.next()) {
+			if ($sp.canReadRecord(grUserStatement)) {
+				var item = {};
+				$sp.getRecordDisplayValues(
+					item,
+					grUserStatement,
+					"transponder_number,vehicle_number,plate_number,vendor,period_end_date,total_amount,personal_amount"
+				);
+				var pa = grUserStatement.getValue("personal_amount");
+				if (pa && parseFloat(pa) > 0) {
+					sumPersonalAmount += parseFloat(pa);
+				}
+				var ta = grUserStatement.getValue("total_amount");
+				if (ta && parseFloat(ta) > 0) {
+					sumTotalAmount += parseFloat(ta);
+				}
+
+				results.push(item);
+			}
+		}
+		data.userStatementList = results;
+		data.sumPersonalAmount = formatCurrency(
+			sumPersonalAmount,
+			"x_89907_vehicle_to_toll_user_statement",
+			"personal_amount"
+		);
+		data.sumTotalAmount = formatCurrency(
+			sumTotalAmount,
+			"x_89907_vehicle_to_toll_user_statement",
+			"total_amount"
+		);
+	}
+
+	function getPayeeInformation() {
+		// get the payee information
+		var grTollCfg = new GlideRecord("x_89907_vehicle_to_toll_configuration");
+		if (!grTollCfg.isValid()) {
+			data.isValid = false;
+			data.errorMessage = "Cant read config";
+			return;
+		}
+		grTollCfg.addQuery("company", gs.getUser().getCompanyID());
+		grTollCfg.addQuery("active", true);
+		grTollCfg.query();
+		if (!grTollCfg.next()) {
+			data.isValid = false;
+			data.errorMessage = "No config found";
+			return;
+		}
+
+		var item = {};
+		$sp.getRecordValues(item, grTollCfg, "payee_information");
+		data.payeeInfo = item;
+		data.payeeHtml = grTollCfg.getValue("payee_information") + "";
+	}
+
+	function getUserInformation() {
+		// get the users information
+		var grUser = new GlideRecordSecure("sys_user");
+		if (!grUser.isValid() || !grUser.canRead()) {
+			data.isValid = false;
+			data.errorMessage = "cant read user";
+			return;
+		}
+		if (!grUser.get(gs.getUserID()) || !$sp.canReadRecord(grUser)) {
+			data.isValid = false;
+			data.errorMessage = "No user";
+			return;
+		}
+
+		var item = {};
+		$sp.getRecordDisplayValues(
+			item,
+			grUser,
+			"company,email,phone,mobile_phone,department"
+		);
+		item.name = grUser.getDisplayValue();
+		data.userInfo = item;
+	}
+
+	function formatCurrency(userValue, table, fieldName) {
+		var grx = new GlideRecord(table);
+		var gex = grx.getElement(fieldName);
+		gex.setValue(userValue);
+		var fnResult = gex.getDisplayValue();
+		return fnResult;
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-09 14:48:28</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>469d40d7db722300f898fbefbf9619cd</sys_id>
+        <sys_mod_count>65</sys_mod_count>
+        <sys_name>TSP Print Reimbursement Form</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_469d40d7db722300f898fbefbf9619cd</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-01-20 04:55:34</sys_updated_on>
+        <template><![CDATA[<div ng-if="!data.isValid || data.noData">
+  ${Record not found}. {{data.errorMessage}}
+</div>
+<div ng-if="data.isValid">
+  <div class="container">
+    <div class="reimbForm-main col-xs-12 col-sm-12 col-md-8">
+      <div class="row">
+        <div class="reimbForm-header">
+          <div class="col-xs-6 col-sm-6 col-md-6">
+            <div class="reimbForm-left">
+              <span class="fa fa-4x fa-bank"></span>
+              <img class="img-responsive" alt="" src="" style="width: 71px; border-radius: 43px;">
+              <h2>Toll Reimbursement</h2>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+            <div class="reimbForm-right">
+              <h5>{{data.userInfo.name}}</h5>
+              <p><b>Agency :</b> {{data.userInfo.company}}</p>
+              <p><b>Email :</b> {{data.userInfo.email}}</p>
+              <p><b>Phone :</b> {{data.userInfo.phone ? data.userInfo.phone : data.userInfo.mobile_phone }}</p>
+              <p><b>Division :</b> {{data.userInfo.department}}</p>                                                                                    
+            </div>
+          </div>
+        </div>
+      </div> <!-- header -->
+      <div class="row">
+        <div class="reimbForm-header reimbForm-header-mid">
+					<div ng-bind-html="c.payeeHtml"></div>
+        </div>
+      </div> <!-- instructions -->
+      <div class="row">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Vendor</th>
+              <th>Period Ending</th>
+              <th>Total amount</th>
+              <th>Personal amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <div ng-if="data.userStatementList.length > 0">
+              <tr ng-repeat="item in data.userStatementList">
+                <td>Toll transponder {{item.transponder_number}}<br />
+                  <small>Veh no. {{::item.vehicle_number}} | Plate {{::item.plate_number}}</small>
+                </td>
+                <td>{{::item.vendor}}</td>
+                <td>{{::item.period_end_date}}</td>
+                <td class="text-right">{{::item.total_amount}}</td>
+                <td class="text-right">{{::item.personal_amount}}</td>
+              </tr>
+              <tr>
+                <td colspan="4" class="text-right">
+                  <h4>Total Personal Use Amount:</h4>
+                </td>
+                <td style="border: red solid 3px" class="text-right">
+                  <h4>{{data.sumPersonalAmount}}</h4>
+                </td>
+              </tr>
+            </div> <!-- end if -->
+          </tbody>
+        </table>
+      </div> <!-- table -->
+      <div class="row">
+        <div class="reimbForm-footer">
+          <div class="col-xs-8 col-sm-8 col-md-8">
+            <div class="reimbForm-left" style="padding-left: 15px">
+              <p><b>Date :</b> {{data.date}}</p>
+              <h1>Signature</h1>
+              <div style="height: 50px !important;width: 75%;border-bottom:black solid 1px">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 text-left">
+            <div class="reimbForm-right">
+            </div>
+          </div>
+        </div>
+      </div> <!-- footer -->
+    </div>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function($scope, spUtil, $timeout) {
+	/* widget controller */
+	var c = this;
+
+	function setNotLoading() {
+		c.loading = false;
+	}
+	c.setNotLoading = setNotLoading;
+	
+	function setLoading() {
+		c.loading = false;
+	}
+	c.setLoading = setLoading;
+
+	$scope.onApplyFilter = function onApplyFilter() {
+		setLoading();
+		getData();
+	}
+
+	$scope.onAgeChange = function onAgeChange() {};
+	$scope.onPhaseChange = function onPhaseChange() {};
+
+	function getData() {
+		var f = $scope.data;
+		spUtil.update($scope).then(function(data) {
+				$scope.data.dataTableWidget = null;
+				$timeout(function(){
+					$scope.data.dataTableWidget = data.dataTableWidget;
+				});
+		});
+	}
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.top-buffer { margin-top:20px; }</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>tsp-vehicle-coordinator-aging</id>
+        <internal>false</internal>
+        <link/>
+        <name>TSP Vehicle Coordinator Aging</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+
+
+	var ageOptions = { 
+		'30' : '>= 30 Days',
+		'60' : '>= 60 Days',
+		'90' : '>= 90 Days'
+	};
+
+	var phaseOptions = {
+		'1' : 'Pending',
+		'2' : 'Payment Owed',
+		'5' : 'Disputed'
+	};
+
+	data.ageOptions = mapItems(ageOptions);
+	data.phaseOptions = mapItems(phaseOptions);
+
+	if (!input) {
+		return;
+	}
+	
+	var tableName = "x_89907_vehicle_to_toll_user_statement";
+	var field_list = "user,vehicle_number,short_description,period_end_date,sys_created_on,progress_phase,total_amount,personal_amount";
+	var order = "sys_created_on";
+	var direction = "asc";
+
+	var age = input.age || "30";
+	var phase = input.phase || "1"
+	data.age = age;
+	data.phase = phase;
+
+	var filter = "cost_center.vehicle_coordinatorsDYNAMIC90d1921e5f510100a9ad2572f2b477fe^status=1";
+	filter += "^progress_phase="
+	filter += phase;
+	filter += "^sys_created_onRELATIVELE@dayofweek@ago@"
+	filter += age;
+	var title = phaseOptions[phase] + " User Statements " + ageOptions[age] + " old";
+		
+	var widgetParams = {
+		table: tableName,
+		fields: field_list,
+		o: order,
+		d: direction,
+		filter: filter,
+		window_size: 25,
+		view: 'sp',
+		headerTitle: title,
+		show_breadcrumbs: false,
+		enable_filter: false,
+		show_new: false
+	};
+
+	data.dataTableWidget = $sp.getWidget('widget-data-table', widgetParams);
+
+	function mapItems(itemList) {
+		var props = Object.getOwnPropertyNames(itemList);
+		return props.reduce(function(accumulator, currentValue) {
+			accumulator.push(mapItem(currentValue,itemList));
+			return accumulator
+		}, []);
+	}
+
+	function mapItem(e, itemList) {
+		return { id: e, name: itemList[e] };
+	}
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-16 05:50:37</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f15529b0db0300107cf5a455ca9619a3</sys_id>
+        <sys_mod_count>49</sys_mod_count>
+        <sys_name>TSP Vehicle Coordinator Aging</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_f15529b0db0300107cf5a455ca9619a3</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-17 06:19:39</sys_updated_on>
+        <template><![CDATA[<div>
+  <div>
+    <h2>
+      User Statement Aging
+    </h2>
+    <p>
+      Select criteria and click Search to view results. To modify criteria, select new criteria and click Apply.
+    </p>
+  </div>
+  <div class="container-fluid panel panel-default">
+    <div class="row top-buffer">
+      <form name="filterForm" class="form-inline">
+        <div class="form-group col-sm-3">
+          <label for="ageSelect">
+            <span id="status.age" mandatory="true" ng-class="data.age ? 'mandatory-filled' : 'mandatory'">
+              <i class="fa fa-asterisk" aria-hidden="true"></i></span>
+            <span>Age:</span>
+          </label>
+          <select name="ageSelect" id="ageSelect" class="form-control" ng-model="data.age" ng-change="onAgeChange()" required>
+            <option ng-repeat="option in data.ageOptions" value="{{option.id}}">{{option.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="phaseSelect">
+            <span id="status.phase" mandatory="true" ng-class="data.phase ? 'mandatory-filled' : 'mandatory'">
+              <i class="fa fa-asterisk" aria-hidden="true"></i></span>
+            <span>Phase:</span>
+          </label>
+          <select name="phaseSelect" id="phaseSelect" class="form-control" ng-model="data.phase" ng-change="onPhaseChange()"  required="required">
+            <option ng-repeat="option in data.phaseOptions" value="{{option.id}}">{{option.name}}</option>
+          </select>
+        </div>
+        <div class=" col-sm-3">
+          <button type="button" class="btn btn-default" ng-click="onApplyFilter()" ng-disabled="!data.phase || !data.age">
+            {{(data.dataTableWidget && !data.invalid_table) ? "Apply" : "Search"}}</button>
+        </div>
+      </form>
+    </div>
+    <div class="row top-buffer">
+      <div ng-if="data.dataTableWidget && !data.invalid_table">
+        <sp-widget widget="data.dataTableWidget"></sp-widget>
+      </div>
+    </div>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

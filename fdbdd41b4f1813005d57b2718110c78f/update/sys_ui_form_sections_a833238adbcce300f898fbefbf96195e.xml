@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="a833238adbcce300f898fbefbf96195e" sys_domain="global" table="x_89907_vehicle_to_toll_import_exception" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-22 16:16:39</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>6c33238adbcce300f898fbefbf961960</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_89907_vehicle_to_toll_import_exception" name="x_89907_vehicle_to_toll_import_exception" sys_domain="global" view="Default view">a833238adbcce300f898fbefbf96195e</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_import_exception" sys_domain="global" view="Default view">950b68c2dbbf1700f898fbefbf96193e</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-22 16:16:39</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-02-13 17:11:41</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>950eb06a4f2fa7005d57b2718110c746</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_89907_vehicle_to_toll_import_exception" name="x_89907_vehicle_to_toll_import_exception" sys_domain="global" view="Default view">a833238adbcce300f898fbefbf96195e</sys_ui_form>
+            <sys_ui_section caption="Activities" display_value="Activities" name="x_89907_vehicle_to_toll_import_exception" sys_domain="global" view="Default view">510eb06a4f2fa7005d57b2718110c745</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-02-13 17:11:41</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_89907_vehicle_to_toll_import_exception</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-22 16:16:39</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a833238adbcce300f898fbefbf96195e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_toll_import_exception</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_form_sections_a833238adbcce300f898fbefbf96195e</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-22 16:16:39</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

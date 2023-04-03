@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_89907_vehicle_to_toll_notification_control" version="2" view="">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>process</element>
+            <list_id display_value="x_89907_vehicle_to_toll_notification_control" element="NULL" name="x_89907_vehicle_to_toll_notification_control" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">ea12204d4f8433005d57b2718110c7a9</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-05 19:50:13</sys_created_on>
+            <sys_id>a612204d4f8433005d57b2718110c7aa</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-05 19:50:13</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>active</element>
+            <list_id display_value="x_89907_vehicle_to_toll_notification_control" element="NULL" name="x_89907_vehicle_to_toll_notification_control" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">ea12204d4f8433005d57b2718110c7a9</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-05 19:50:13</sys_created_on>
+            <sys_id>2e12204d4f8433005d57b2718110c7aa</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-05 19:50:13</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>company</element>
+            <list_id display_value="x_89907_vehicle_to_toll_notification_control" element="NULL" name="x_89907_vehicle_to_toll_notification_control" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">ea12204d4f8433005d57b2718110c7a9</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-05 19:50:13</sys_created_on>
+            <sys_id>ae12204d4f8433005d57b2718110c7aa</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-05 19:50:13</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>user</element>
+            <list_id display_value="x_89907_vehicle_to_toll_notification_control" element="NULL" name="x_89907_vehicle_to_toll_notification_control" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">ea12204d4f8433005d57b2718110c7a9</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-05 19:50:13</sys_created_on>
+            <sys_id>2212204d4f8433005d57b2718110c7ab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-05 19:50:13</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>total_user_statements</element>
+            <list_id display_value="x_89907_vehicle_to_toll_notification_control" element="NULL" name="x_89907_vehicle_to_toll_notification_control" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">ea12204d4f8433005d57b2718110c7a9</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-05 19:50:13</sys_created_on>
+            <sys_id>a212204d4f8433005d57b2718110c7ab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-05 19:50:13</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>last_notification_date</element>
+            <list_id display_value="x_89907_vehicle_to_toll_notification_control" element="NULL" name="x_89907_vehicle_to_toll_notification_control" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">ea12204d4f8433005d57b2718110c7a9</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-05 19:50:13</sys_created_on>
+            <sys_id>2612204d4f8433005d57b2718110c7ab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-05 19:50:13</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>total_personal_amount</element>
+            <list_id display_value="x_89907_vehicle_to_toll_notification_control" element="NULL" name="x_89907_vehicle_to_toll_notification_control" parent="NULL" relationship="NULL" sys_domain="global" view="Default view">ea12204d4f8433005d57b2718110c7a9</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-05 19:50:13</sys_created_on>
+            <sys_id>a612204d4f8433005d57b2718110c7ab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-05 19:50:13</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_89907_vehicle_to_toll_notification_control</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-05 19:50:13</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ea12204d4f8433005d57b2718110c7a9</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_toll_notification_control</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_list_x_89907_vehicle_to_toll_notification_control_null</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-05 19:50:13</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

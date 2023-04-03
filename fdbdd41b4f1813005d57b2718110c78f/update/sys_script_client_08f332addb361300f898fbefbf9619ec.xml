@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>u_account</field>
+        <global>true</global>
+        <isolate_script>false</isolate_script>
+        <messages/>
+        <name>Transponder OnLoad</name>
+        <order/>
+        <script><![CDATA[/* exported onLoad */
+/**
+ * @description Set defaults on create; depends on receiving client data from
+ * the OnDisplay business rule
+ * @see {@link ..\sys_script\x_89907_vehicle_to_u_cmdb_ci_transponder-Transponder Set CI Model-script-89f09f84db831300f898fbefbf96197a.js}
+ */
+function onLoad() {
+	if (g_form.isNewRecord()) {
+		var tdayDate = formatDate(new Date(), g_user_date_time_format);
+		g_form.setValue("delivery_date", tdayDate);
+		g_form.setValue("install_status", 6);
+		g_form.setDisplay('name', false);
+		g_form.setDisplay('u_replacement_transponder', false);
+		g_form.setDisplay('u_previous_transponder', false);
+		g_form.setDisplay('u_initial_transponder', false);
+
+		var defaultsPayload = g_user.getClientData("defaultValues");
+		var defaultValues = defaultsPayload ? JSON.parse(defaultsPayload) : null;
+		
+		if (defaultValues) {
+			if (defaultValues.company) {
+				g_form.setValue("company", defaultValues.company.sysID, defaultValues.company.displayValue);
+			}
+			if (defaultValues.vendor) {
+				g_form.setValue("vendor", defaultValues.vendor.sysID, defaultValues.vendor.displayValue);
+			}
+			if (defaultValues.model) {
+				g_form.setValue("model_id", defaultValues.model.sysID, defaultValues.model.displayValue);
+			}
+			if (defaultValues.manufacturer) {
+				g_form.setValue("manufacturer", defaultValues.manufacturer.sysID, defaultValues.manufacturer.displayValue);
+			}
+		}
+		g_form.setReadOnly("u_transponder_number", false);
+	} else {
+		g_form.setReadOnly("u_transponder_number", true);
+		if (!g_user.hasRole("x_89907_vehicle_to.admin")) {
+			g_form.setReadonly("u_transponder_type", true);
+		}
+	}
+}
+]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-06-19 20:17:00</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>08f332addb361300f898fbefbf9619ec</sys_id>
+        <sys_mod_count>36</sys_mod_count>
+        <sys_name>Transponder OnLoad</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_client_08f332addb361300f898fbefbf9619ec</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-14 13:58:22</sys_updated_on>
+        <table>x_89907_vehicle_to_u_cmdb_ci_transponder</table>
+        <type>onLoad</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

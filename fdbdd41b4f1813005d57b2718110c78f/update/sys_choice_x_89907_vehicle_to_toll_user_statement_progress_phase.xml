@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="progress_phase" table="x_89907_vehicle_to_toll_user_statement" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>progress_phase</element>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 19:02:31</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>7f2f90711b439050195fed7dee4bcb63</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>progress_phase</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_choice_x_89907_vehicle_to_toll_user_statement_progress_phase</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-01 19:02:31</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>progress_phase</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Acknowledged</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 19:02:31</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>3ab0ffab4ff323005d57b2718110c7d4</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-01 19:02:45</sys_updated_on>
+            <value>0</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>progress_phase</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Pending</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 19:02:52</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>30d03feb4ff323005d57b2718110c752</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-01 19:02:59</sys_updated_on>
+            <value>1</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>progress_phase</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Payment Owed</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 19:03:09</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>cae0fbeb4ff323005d57b2718110c730</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-01 19:03:19</sys_updated_on>
+            <value>2</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>progress_phase</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Canceled</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 19:03:26</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>96f0ffeb4ff323005d57b2718110c7f9</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-01 19:03:33</sys_updated_on>
+            <value>3</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>progress_phase</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Waived</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 19:03:39</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>2601ffeb4ff323005d57b2718110c7fa</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-01 19:03:44</sys_updated_on>
+            <value>4</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>progress_phase</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Disputed</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 19:03:49</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e911ffeb4ff323005d57b2718110c7ad</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-01 19:03:54</sys_updated_on>
+            <value>5</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>progress_phase</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Summarized</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 19:04:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>3311732f4ff323005d57b2718110c7dc</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-01 19:04:06</sys_updated_on>
+            <value>6</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>progress_phase</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Paid</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <sequence>7</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 19:04:13</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>7221b32f4ff323005d57b2718110c7c8</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-03-01 19:04:21</sys_updated_on>
+            <value>7</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

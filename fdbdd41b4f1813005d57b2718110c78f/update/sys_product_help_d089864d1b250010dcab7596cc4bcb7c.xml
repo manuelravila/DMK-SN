@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_product_help">
+    <sys_product_help action="INSERT_OR_UPDATE">
+        <number>DOCVT10001</number>
+        <order>100</order>
+        <published>2019-12-04</published>
+        <section display_value="Administration">7869064d1b250010dcab7596cc4bcb0a</section>
+        <short_description>Configuration</short_description>
+        <sys_class_name>sys_product_help</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-12-04 13:10:13</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>d089864d1b250010dcab7596cc4bcb7c</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>DOCVT10001</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_product_help_d089864d1b250010dcab7596cc4bcb7c</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-12-04 13:16:36</sys_updated_on>
+        <text><![CDATA[<div style="margin: 0in 0in 8pt; line-height: 107%; font-size: 11pt; font-family: &#39;Calibri&#39;, sans-serif;">
+<p>Configuration records contain organization-specific rules and procedures used to run the toll management process.</p>
+<p>To set up a new configuration record:</p>
+<ol style="list-style-position: outside;"><li>Select <em>Tolls</em> from the left-hand navigation pane.</li><li>Under <em>Administration</em>, click <em>Toll Configuration</em>.</li><li>On the left-hand side of the search header, click the blue <strong>New</strong> button.</li><li>In the <em>Company</em> field, type the name of the company. As you enter the name, the system matches your entries to the company names in the database until the correct name displays in the list. Click to select the company name.</li><li>Complete the fields as desired:
+<ul style="list-style-type: disc; list-style-position: outside;"><li><strong>Active</strong> – Select this checkbox to make the configuration active.</li><li><strong>Nickname</strong> – Enter a nickname, if desired. This is usually an abbreviation or initialism of the company name.</li><li><strong>Create user statements</strong> – Select this checkbox to indicate that the system should generate systems when vendor files are loaded.</li><li><strong>Description</strong> – Description of the configuration.</li></ul>
+</li><li>Complete and review the desired text for the tabs:
+<ul style="list-style-type: disc; list-style-position: outside;"><li><em>Payee information</em> – This is the text that displays on the reimbursement form. It should consist of directions to the user on how to submit the form along with their payment, and the address to which to send them.</li><li><em>Text prompts</em> – Text to display in prompt when users submit or dispute their statements.
+<ul style="list-style-type: circle; list-style-position: outside;"><li><strong>User Statement Submit Prompt Text</strong> – Enter the text to display when users submit their statements.</li><li><strong>User Statement Dispute Prompt Text</strong> – Enter the text to display when users dispute their statements.</li></ul>
+</li><li><em>Notification defaults</em> – This allows you to set different types of thresholds when it comes to having your end-users <em>notified that they need to</em> reimburse your organization for personal tolls. You can also set the frequency of notifications sent to users telling them they have statements pending their review. For more information, please see Related Information below.
+<ul style="list-style-type: circle; list-style-position: outside;"><li><strong>Run payment owed notification</strong> – Indicates the system should process the notification.</li><li><strong>Run pending notification</strong> – Indicates the system should process the notification.</li><li><strong>Cost threshold</strong> – Identifies the <strong>total </strong>amount the user must owe in personal charges before the system sends the notification.</li><li><strong>Repeat pending notification</strong> – Identifies the frequency the system should repeat the notification once.</li><li><strong>Minimum cost threshold</strong> – Identifies the minimum amount the user must owe before the system sends the notification.</li><li><strong>Time threshold</strong>– Identifies the <strong>total </strong>time (in months of billing statements) that must pass before the system sends the notification.</li><li><strong>Repeat payment owed notification</strong> – Identifies the frequency the system should repeat the notification once the threshold is reached.</li></ul>
+</li><li><em>Exception defaults</em> – Exceptions are used for reporting purposes. The <em>Exceptions</em> report lists all times that transponders are used outside of normal business hours, which are by default 0600 (6 a.m.) to 1800 (6 p.m.) on weekdays. This tab allows you to identify exception defaults for this company. This can be overridden in individual transponder records.
+<ul style="list-style-type: circle; list-style-position: outside;"><li><strong>Allow weekends</strong> – Indicates the system should allow weekend usage to display on the report.</li><li><strong>Shift start</strong> – Indicates to the system the start time of the shift during which exceptions should not display on the report.</li><li><strong>Shift end</strong> – Indicates to the system the end time of the shift during which exceptions should not display on the report.</li></ul>
+</li><li><em>Comments</em> – Enter any comments concerning the configuration.</li></ul>
+</li><li>Click <strong>Submit</strong>.</li></ol>
+<div class="related-links role-embedded_help_admin">
+<div class="relinfo">
+<div class="reltitle">Related information <br />
+<div><a title="Payment Thresholds" href="kb_view.do?sysparm_article&#61;KB0010020" target="_blank" rel="noopener noreferrer nofollow">Payment Thresholds</a></div>
+<div><a title="Transponders" href="kb_view.do?sysparm_article&#61;KB0010009" target="_blank" rel="noopener noreferrer nofollow">Transponders</a></div>
+</div>
+</div>
+</div>
+</div>
+<p> </p>
+<p> </p>]]></text>
+        <workflow_state>published</workflow_state>
+    </sys_product_help>
+    <sys_translated_text action="delete_multiple" query="documentkey=d089864d1b250010dcab7596cc4bcb7c"/>
+</record_update>

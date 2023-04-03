@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.GlobalShims</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>GlobalShims</name>
+        <script><![CDATA[/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-new-wrappers */
+/* exported GlobalShims */
+// copied from global include
+var GlobalShims = (function() {
+	function getMyApprovals() {
+		var u = gs.getUserID();
+		var answer = [];
+		var i = 0;
+		answer[i++] = new String(u);
+		var g = new GlideRecord("sys_user_delegate");
+		g.addQuery("delegate", u);
+		g.addQuery("approvals", "true");
+		g.addQuery("starts", "<=", gs.daysAgo(0));
+		g.addQuery("ends", ">=", gs.daysAgo(0));
+		g.query();
+		while (g.next()) {
+			answer[i++] = new String(g.user);
+		}
+
+		return answer;
+	}
+
+	function getMyAssignments() {
+		var u = gs.getUserID();
+		var answer = [];
+		var i = 0;
+		answer[i++] = new String(u);
+		var g = new GlideRecord("sys_user_delegate");
+		g.addQuery("delegate", u);
+		g.addQuery("assignments", "true");
+		g.addQuery("starts", "<=", gs.daysAgo(0));
+		g.addQuery("ends", ">=", gs.daysAgo(0));
+		g.query();
+		while (g.next()) {
+			answer[i++] = new String(g.user);
+		}
+		return answer;
+	}
+
+	function isApprovalMine(approvalOrGroupGR) {
+		var approver = approvalOrGroupGR.approver + "";
+		// if this is the sysapproval_group table, gr.approver
+		// would evaluate to 'undefined'
+		if (!approvalOrGroupGR.isValidField("approver")) {
+			approver = "";
+		}
+		var approverSysId = approvalOrGroupGR.sys_id + "";
+		// Check if approver is nil due to being on a list
+		// of records that contain a related list of approvers
+		// or due to checking a group approval
+		if (gs.nil(approver) && !gs.nil(approverSysId)) {
+			// Look at the sysapprover_approval table
+			var app = new GlideRecord("sysapproval_approver");
+			if (approvalOrGroupGR.getTableName() == "sysapproval_group") {
+				app.addQuery("group", approverSysId);
+			} else {
+				app.addQuery("sysapproval", approverSysId);
+			}
+			app.query();
+			while (app.next()) {
+				approver = app.approver;
+				if (checkAllApprovers(approver)) {
+					return true;
+				}
+			}
+		}
+
+		return checkAllApprovers(approver);
+	}
+
+	function checkAllApprovers(approver) {
+		if (gs.nil(approver)) {
+			return false;
+		}
+
+		var apps = getMyApprovals();
+		for (var key in apps) {
+			if (apps[key] == approver) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	return {
+		getMyApprovals: getMyApprovals,
+		getMyAssignments: getMyAssignments,
+		isApprovalMine: isApprovalMine,
+		checkAllApprovers: checkAllApprovers
+	};
+})();
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-04-02 02:38:26</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>a452c9f94f68b3005d57b2718110c721</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>GlobalShims</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_a452c9f94f68b3005d57b2718110c721</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-01-31 05:55:30</sys_updated_on>
+    </sys_script_include>
+</record_update>

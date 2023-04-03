@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
+    <sp_page action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <css>.dash-row {
+  border-radius: 25px;
+  border: 2px solid #428bca;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.dash-detail-row {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.aging-reports-link {
+  background-color: #5bc0de;
+  color: white !important;
+}
+
+a.top_icon.aging-reports-link {
+  padding: 12.1px !important;
+}
+
+.aging-reports-link.fa-4x {
+  font-size: 2.75em;
+  color: ghostwhite !important;
+}
+
+.aging-reports-link h2, .aging-reports-link h2 {
+  font-size: 1.75rem
+}
+
+a.aging-reports-link.top_icon h2 {
+  font-size: 1.75rem
+}
+
+.aging-reports-link.m-b {
+  margin-bottom: 1px !important;
+}
+</css>
+        <draft>false</draft>
+        <dynamic_title_structure/>
+        <id>tsp_vehicle_coordinator_dashboard</id>
+        <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
+        <public>false</public>
+        <roles/>
+        <seo_script/>
+        <short_description/>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-09 07:08:52</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>a6f9f5e6db7e00107cf5a455ca9619cf</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>tsp_vehicle_coordinator_dashboard</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_page_a6f9f5e6db7e00107cf5a455ca9619cf</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-17 06:06:40</sys_updated_on>
+        <title>Vehicle Coordinator Dashboard</title>
+        <use_seo_script>false</use_seo_script>
+    </sp_page>
+    <sys_translated_text action="delete_multiple" query="documentkey=a6f9f5e6db7e00107cf5a455ca9619cf"/>
+</record_update>

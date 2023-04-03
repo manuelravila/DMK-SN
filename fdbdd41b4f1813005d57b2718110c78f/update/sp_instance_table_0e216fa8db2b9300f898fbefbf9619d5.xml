@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance_table">
+    <sp_instance_table action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <display_field>amount</display_field>
+        <field_list>personal_toll,exit_date_time,toll_provider,exit_plaza,amount,usage_exceptions</field_list>
+        <filter/>
+        <glyph/>
+        <id/>
+        <maximum_entries>15</maximum_entries>
+        <order>1</order>
+        <order_by>exit_date_time</order_by>
+        <order_direction>asc</order_direction>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">8921efa4db2b9300f898fbefbf96197b</sp_column>
+        <sp_page/>
+        <sp_widget display_value="DMK Inline Edit Table">be971600db252300f898fbefbf961964</sp_widget>
+        <sys_class_name>sp_instance_table</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-07-24 03:45:27</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>0e216fa8db2b9300f898fbefbf9619d5</sys_id>
+        <sys_mod_count>13</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_instance_table_0e216fa8db2b9300f898fbefbf9619d5</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-14 03:12:49</sys_updated_on>
+        <table>x_89907_vehicle_to_toll_charge</table>
+        <title/>
+        <url/>
+        <widget_parameters/>
+    </sp_instance_table>
+    <sys_translated_text action="delete_multiple" query="documentkey=0e216fa8db2b9300f898fbefbf9619d5"/>
+</record_update>

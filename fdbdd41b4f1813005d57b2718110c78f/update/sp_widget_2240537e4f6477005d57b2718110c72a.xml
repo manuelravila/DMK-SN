@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>other</category>
+        <client_script><![CDATA[function tspApprovalRecordClient($scope, $animate, $rootScope) {
+	$scope.$watch("data.task", function onWatchPopped() {
+		$scope.task = $scope.data.task; // copy for shortcuts above
+	});
+
+	// https://dev25072.service-now.com/toll_service_portal?id=tsp_approvals
+
+	var bc = [{ label: "All Toll Approvals", url: "?id=tsp_approvals" }];
+	bc.push({ label: "Toll Approval Form", url: "#" });
+	$rootScope.$broadcast("sp.update.breadcrumbs", bc);
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.tsp-compact .form-group {
+   margin-bottom: 0px!important;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>tsp-approval-record</id>
+        <internal>false</internal>
+        <link/>
+        <name>TSP Approval Record</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function tspApprovalRecord() {
+	// for how to require comments on rejection, start with
+	// https://community.servicenow.com/community?id=community_blog&sys_id=228da669dbd0dbc01dcaf3231f9619f3
+
+
+	// g_approval_form_request is for approval summarizer ACLs
+	// that let user read a record they need to approve. This global
+	// variable is then deleted at the bottom of the script
+
+	g_approval_form_request = true;
+
+	data.itemTableOptions = {
+		table: "x_89907_vehicle_to_toll_charge",
+		o: "file_sequence_number",
+		fields:
+			"toll_provider,exit_plaza,exit_date_time,amount,personal_toll,usage_exceptions",
+		window_size: 20,
+		filter: "user_statement=" + "notfound",
+		table_label: "Charges",
+		table_plural: "Charges"
+	};
+
+	var approvalGR = $sp.getRecord();
+	if (approvalGR == null) {
+		data.isValid = false;
+		data.notvalidreason = "Approval Record not found";
+		return;
+	}
+	if (!$sp.canReadRecord(approvalGR)) {
+		data.isValid = false;
+		data.notvalidreason = "Approval Record not readable";
+		return;
+	}
+	if (!approvalGR.isValid()) {
+		data.isValid = false;
+		data.notvalidreason = "Approval Record not valid";
+		return;
+	}
+	
+	if (approvalGR.getValue("approver") != gs.getUserID()) {
+		data.approver = approvalGR.approver.getDisplayValue();
+	}
+	data.isValid = true;
+	var userStatement = getRecordBeingApproved(approvalGR);
+	if (userStatement == null) {
+		data.isValid = false;
+		data.notvalidreason = "User Statement Record not found";
+		return;
+	}
+
+	var stmtProxy = {};
+	stmtProxy = $sp.getFieldsObject(
+		userStatement,
+		"number,short_description,user," +
+			"personal_amount,total_amount,vehicle_number,plate_number," +
+			"period_begin_date,period_end_date,transponder,transponder_type," +
+			"account,cost_center,statement"
+	);
+	stmtProxy.table = userStatement.getLabel();
+
+	var items = [];
+	var itemsGR = new GlideRecord("x_89907_vehicle_to_toll_charge");
+	itemsGR.addQuery("user_statement", userStatement.sys_id);
+	itemsGR.orderBy("file_sequence_number");
+	itemsGR.query();
+	if (itemsGR.getRowCount() > 0) {
+		stmtProxy.short_description += " (" + itemsGR.getRowCount() + " charges)";
+	}
+
+	var hasUsageExceptions = false;
+	while (itemsGR.next()) {
+		if (!itemsGR.usage_exceptions.nil()) {
+			hasUsageExceptions = true;
+		}
+		if (itemsGR.getValue("amount") != 0) {
+			var item = { variables: [] };
+			item.variables[0] = {
+				label: "Description",
+				display_value:
+					itemsGR.getDisplayValue("toll_provider") +
+					" - " +
+					itemsGR.getDisplayValue("exit_plaza") +
+					" - " +
+					itemsGR.getDisplayValue("exit_date_time")
+			};
+			item.variables[1] = {
+				label: "Amount",
+				display_value: itemsGR.getDisplayValue("amount")
+			};
+			item.variables[2] = {
+				label: "Personal",
+				display_value: itemsGR.getDisplayValue("personal_toll")
+			};
+			items.push(item);
+		}
+	}
+	data.items = items;
+
+	/*
+	 * data.table = the table
+	 * data.p = the current page starting at 1
+	 * data.o = the order by column
+	 * data.d = the order by direction
+	 * data.keywords = the keyword search term
+	 * data.list = the table data as an array
+	 * data.invalid_table = true if table is invalid or if data was not succesfully fetched
+	 * data.table_label = the table's display name. e.g. Incident
+	 * data.table_plural = the table's plural display name. e.g. Incidents
+	 * data.fields = a comma delimited list of field names to show in the data table
+	 * data.column_labels = a map of field name -> display name
+	 * data.window_size = the number of rows to show
+	 * data.filter = the encoded query
+	 */
+	data.itemTableOptions = {
+		table: "x_89907_vehicle_to_toll_charge",
+		o: "file_sequence_number",
+		fields:
+			"toll_provider,exit_plaza,exit_date_time,amount,personal_toll,usage_exceptions",
+		window_size: 20,
+		filter: "user_statement=" + userStatement.sys_id,
+		table_label: "Charges",
+		table_plural: "Charges"
+	};
+
+	stmtProxy.has_usage_exceptions = {
+		label: "Has exceptions",
+		name: "has_usage_exceptions",
+		display_value: hasUsageExceptions ? "Yes" : "No"
+	};
+
+	data.sys_id = approvalGR.getUniqueValue();
+	data.task = stmtProxy;
+	if (userStatement) {
+		data.variables = $sp.getRecordVariablesArray(userStatement);
+	}
+
+	function getRecordBeingApproved(approvalRequest) {
+		var approvalTarget;
+		if (!approvalRequest.sysapproval.nil()) {
+			approvalTarget = approvalRequest.sysapproval.getRefRecord();
+		} else {
+			approvalTarget = new GlideRecord(approvalRequest.source_table);
+			approvalTarget.get(approvalRequest.document_id);
+		}
+		return approvalTarget.canRead() ? approvalTarget : null;
+	}
+
+	var ticketConversationOptions = {
+		sys_id: userStatement.getUniqueValue(),
+		table: userStatement.getTableName(),
+		title: gs.getMessage("Activity Stream"),
+		placeholder: gs.getMessage("Type your message here..."),
+		placeholderNoEntries: gs.getMessage("Start a conversation..."),
+		btnLabel: gs.getMessage("Send")
+	};
+
+	data.ticketConversation = $sp.getWidget(
+		"tsp-approval-activity",
+		ticketConversationOptions
+	);
+
+	// eslint-disable-next-line no-delete-var
+	delete g_approval_form_request;
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-04-05 15:32:01</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2240537e4f6477005d57b2718110c72a</sys_id>
+        <sys_mod_count>61</sys_mod_count>
+        <sys_name>TSP Approval Record</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_2240537e4f6477005d57b2718110c72a</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-01-23 03:30:16</sys_updated_on>
+        <template><![CDATA[<div ng-if="!data.isValid">
+  <p>${Record not found}</p>
+  <p>Data not valid reason: {{data.notvalidreason}}</p>
+</div>
+<div ng-if="data.isValid">
+  <div class="panel panel-primary b">
+    <div class="panel-heading">
+      <h4 class="panel-title">${Approval request for {{::task.table}} {{::task.number.display_value}}}</h4>
+    </div>
+
+    <div class="panel-body">
+      <div ng-if="task.short_description">{{::task.short_description.display_value}}</div>
+      <div ng-if="::data.approver"><label>${Approver}</label> {{::data.approver}}</div>
+
+      <div class="col-sm-6">
+        <form  class="form-horizontal tsp-compact">
+          <div class="form-group" ng-repeat="field in [
+                                             {label: 'User', name: 'user'},
+                                             {label: 'Total amount', name: 'total_amount'},
+                                             {label: 'Personal amount', name: 'personal_amount'},
+                                             {label: 'Has exceptions', name: 'has_usage_exceptions'},
+                                             {label: 'Vehicle number', name: 'vehicle_number'},
+                                             {label: 'Plate number', name: 'plate_number'},
+                                             {label: 'Transponder', name: 'transponder'},
+                                             {label: 'Transponder type', name: 'transponder_type'}]">
+            <label for="{{::field.name}}" class="col-sm-4 control-label"><strong>{{::field.label}}</strong></label>
+            <div class="col-sm-8">
+              <p class="form-control-static" id="{{::field.name}}">
+                {{::task[field.name].display_value}}
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-sm-6">
+        <form  class="form-horizontal tsp-compact">
+          <div class="form-group" ng-repeat="field in [
+                                             {label: 'Period begin', name: 'period_begin_date'},
+                                             {label: 'Period end', name: 'period_end_date'},
+                                             {label: 'Statement', name: 'statement'},
+                                             {label: 'Account', name: 'account'},
+                                             {label: 'Cost center', name: 'cost_center'}]">
+            <label for="{{::field.name}}" class="col-sm-4 control-label"><strong>{{::field.label}}</strong></label>
+            <div class="col-sm-8">
+              <p class="form-control-static" id="{{::field.name}}">
+                {{::task[field.name].display_value}}
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div ng-if="data.variables.length > 0" ng-init="variable_toggle=true">
+        <h4 ng-click="variable_toggle = !variable_toggle" style="cursor: pointer;">
+          <span class="glyphicon" ng-class="{'glyphicon-chevron-down': !variable_toggle, 'glyphicon-chevron-up': variable_toggle}"></span>
+          ${Options}
+        </h4>
+        <div ng-repeat="variable in data.variables | filter:{visible_summary:true}" ng-if="variable_toggle">
+          <label>{{::variable.label}}</label>
+          <div>{{::variable.display_value}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="data.isValid && data.itemTableOptions && data.items && data.items.length > 0">
+    <widget id="widget-data-table" options="data.itemTableOptions"></widget>
+  </div>
+
+  <sp-widget widget="data.ticketConversation" />
+</div>]]></template>
+    </sp_widget>
+</record_update>

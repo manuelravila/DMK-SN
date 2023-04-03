@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update node_type="sys_portal_page" unload_date="2023-04-03 03:14:01">
+    <sys_portal_page action="INSERT_OR_UPDATE">
+        <layout/>
+        <order/>
+        <read_roles>x_89907_vehicle_to.admin,x_89907_vehicle_to.financial</read_roles>
+        <roles/>
+        <selectable>true</selectable>
+        <sys_class_name>sys_portal_page</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-05-01 17:05:34</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>1a0f91df4fcdb3405d57b2718110c7cd</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>User Statements</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_portal_page_1a0f91df4fcdb3405d57b2718110c7cd</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-01-03 19:36:58</sys_updated_on>
+        <title>User Statements</title>
+        <user/>
+        <view>pa_new_tab_13</view>
+        <related_items_node>
+            <sys_portal action="INSERT_OR_UPDATE">
+                <dropzone/>
+                <offset/>
+                <page display_value="User Statements">1a0f91df4fcdb3405d57b2718110c7cd</page>
+                <summary>Total paid</summary>
+                <sys_created_by>dan.lengyel</sys_created_by>
+                <sys_created_on>2019-05-01 17:07:01</sys_created_on>
+                <sys_id>a75f15df4fcdb3405d57b2718110c78b</sys_id>
+                <sys_mod_count>1</sys_mod_count>
+                <sys_updated_by>dan.lengyel</sys_updated_by>
+                <sys_updated_on>2019-05-01 17:07:01</sys_updated_on>
+                <related_items_node>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>title</name>
+                        <portal_section display_value="Created 2019-05-01 13:07:01">a75f15df4fcdb3405d57b2718110c78b</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:07:01</sys_created_on>
+                        <sys_id>235f19df4fcdb3405d57b2718110c757</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:07:01</sys_updated_on>
+                        <value>Total paid</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>help_text_window</name>
+                        <portal_section display_value="Created 2019-05-01 13:07:01">a75f15df4fcdb3405d57b2718110c78b</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:07:01</sys_created_on>
+                        <sys_id>275f19df4fcdb3405d57b2718110c756</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:07:01</sys_updated_on>
+                        <value>report_widget_description</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>renderer</name>
+                        <portal_section display_value="Created 2019-05-01 13:07:01">a75f15df4fcdb3405d57b2718110c78b</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:07:01</sys_created_on>
+                        <sys_id>635f19df4fcdb3405d57b2718110c756</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:07:01</sys_updated_on>
+                        <value>com.glide.ui.portal.RenderReport</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>report_type</name>
+                        <portal_section display_value="Created 2019-05-01 13:07:01">a75f15df4fcdb3405d57b2718110c78b</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:07:01</sys_created_on>
+                        <sys_id>6f5f19df4fcdb3405d57b2718110c756</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:07:01</sys_updated_on>
+                        <value>single_score</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>is_using_database_view</name>
+                        <portal_section display_value="Created 2019-05-01 13:07:01">a75f15df4fcdb3405d57b2718110c78b</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:07:01</sys_created_on>
+                        <sys_id>a75f19df4fcdb3405d57b2718110c757</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:07:01</sys_updated_on>
+                        <value>false</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>sys_id</name>
+                        <portal_section display_value="Created 2019-05-01 13:07:01">a75f15df4fcdb3405d57b2718110c78b</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:07:01</sys_created_on>
+                        <sys_id>ab5f15df4fcdb3405d57b2718110c78b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:07:01</sys_updated_on>
+                        <value>145d3f454f30f3005d57b2718110c7e5</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>can_subscribe</name>
+                        <portal_section display_value="Created 2019-05-01 13:07:01">a75f15df4fcdb3405d57b2718110c78b</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:07:01</sys_created_on>
+                        <sys_id>ab5f19df4fcdb3405d57b2718110c756</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:07:01</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>can_real_time</name>
+                        <portal_section display_value="Created 2019-05-01 13:07:01">a75f15df4fcdb3405d57b2718110c78b</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:07:01</sys_created_on>
+                        <sys_id>e75f19df4fcdb3405d57b2718110c756</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:07:01</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                </related_items_node>
+            </sys_portal>
+            <sys_portal action="INSERT_OR_UPDATE">
+                <dropzone/>
+                <offset/>
+                <page display_value="User Statements">1a0f91df4fcdb3405d57b2718110c7cd</page>
+                <summary>Statement phase by status</summary>
+                <sys_created_by>dan.lengyel</sys_created_by>
+                <sys_created_on>2019-05-01 17:05:46</sys_created_on>
+                <sys_id>c11fd1df4fcdb3405d57b2718110c719</sys_id>
+                <sys_mod_count>1</sys_mod_count>
+                <sys_updated_by>dan.lengyel</sys_updated_by>
+                <sys_updated_on>2019-05-01 17:05:46</sys_updated_on>
+                <related_items_node>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>title</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:46">c11fd1df4fcdb3405d57b2718110c719</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:46</sys_created_on>
+                        <sys_id>091fd1df4fcdb3405d57b2718110c71a</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:46</sys_updated_on>
+                        <value>Statement phase by status</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>renderer</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:46">c11fd1df4fcdb3405d57b2718110c719</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:46</sys_created_on>
+                        <sys_id>0d1fd1df4fcdb3405d57b2718110c719</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:46</sys_updated_on>
+                        <value>com.glide.ui.portal.RenderReport</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>report_type</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:46">c11fd1df4fcdb3405d57b2718110c719</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:46</sys_created_on>
+                        <sys_id>451fd1df4fcdb3405d57b2718110c71a</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:46</sys_updated_on>
+                        <value>pivot_v2</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>can_subscribe</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:46">c11fd1df4fcdb3405d57b2718110c719</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:46</sys_created_on>
+                        <sys_id>811fd1df4fcdb3405d57b2718110c71a</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:46</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>sys_id</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:46">c11fd1df4fcdb3405d57b2718110c719</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:46</sys_created_on>
+                        <sys_id>c51fd1df4fcdb3405d57b2718110c719</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:46</sys_updated_on>
+                        <value>2ffcd09d4f70f3005d57b2718110c74b</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>help_text_window</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:46">c11fd1df4fcdb3405d57b2718110c719</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:46</sys_created_on>
+                        <sys_id>cd1fd1df4fcdb3405d57b2718110c719</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:46</sys_updated_on>
+                        <value>report_widget_description</value>
+                    </sys_portal_preferences>
+                </related_items_node>
+            </sys_portal>
+            <sys_portal action="INSERT_OR_UPDATE">
+                <dropzone/>
+                <offset/>
+                <page display_value="User Statements">1a0f91df4fcdb3405d57b2718110c7cd</page>
+                <summary>Disputed statements</summary>
+                <sys_created_by>dan.lengyel</sys_created_by>
+                <sys_created_on>2019-05-01 17:06:26</sys_created_on>
+                <sys_id>c73fdd9f4fcdb3405d57b2718110c748</sys_id>
+                <sys_mod_count>1</sys_mod_count>
+                <sys_updated_by>dan.lengyel</sys_updated_by>
+                <sys_updated_on>2019-05-01 17:06:26</sys_updated_on>
+                <related_items_node>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>renderer</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:26">c73fdd9f4fcdb3405d57b2718110c748</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:26</sys_created_on>
+                        <sys_id>033fdd9f4fcdb3405d57b2718110c749</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:26</sys_updated_on>
+                        <value>com.glide.ui.portal.RenderReport</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>report_type</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:26">c73fdd9f4fcdb3405d57b2718110c748</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:26</sys_created_on>
+                        <sys_id>0f3fdd9f4fcdb3405d57b2718110c749</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:26</sys_updated_on>
+                        <value>single_score</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>is_using_database_view</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:26">c73fdd9f4fcdb3405d57b2718110c748</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:26</sys_created_on>
+                        <sys_id>473fdd9f4fcdb3405d57b2718110c74a</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:26</sys_updated_on>
+                        <value>false</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>can_subscribe</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:26">c73fdd9f4fcdb3405d57b2718110c748</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:26</sys_created_on>
+                        <sys_id>4b3fdd9f4fcdb3405d57b2718110c749</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:26</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>can_real_time</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:26">c73fdd9f4fcdb3405d57b2718110c748</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:26</sys_created_on>
+                        <sys_id>873fdd9f4fcdb3405d57b2718110c749</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:26</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>help_text_window</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:26">c73fdd9f4fcdb3405d57b2718110c748</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:26</sys_created_on>
+                        <sys_id>c33fdd9f4fcdb3405d57b2718110c749</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:26</sys_updated_on>
+                        <value>report_widget_description</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>sys_id</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:26">c73fdd9f4fcdb3405d57b2718110c748</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:26</sys_created_on>
+                        <sys_id>cb3fdd9f4fcdb3405d57b2718110c748</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:26</sys_updated_on>
+                        <value>bdd637014f30f3005d57b2718110c7a8</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>title</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:26">c73fdd9f4fcdb3405d57b2718110c748</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:26</sys_created_on>
+                        <sys_id>cf3fdd9f4fcdb3405d57b2718110c749</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:26</sys_updated_on>
+                        <value>Disputed statements</value>
+                    </sys_portal_preferences>
+                </related_items_node>
+            </sys_portal>
+            <sys_portal action="INSERT_OR_UPDATE">
+                <dropzone/>
+                <offset/>
+                <page display_value="User Statements">1a0f91df4fcdb3405d57b2718110c7cd</page>
+                <summary>Statement phase by date</summary>
+                <sys_created_by>dan.lengyel</sys_created_by>
+                <sys_created_on>2019-05-01 17:05:59</sys_created_on>
+                <sys_id>e42f51df4fcdb3405d57b2718110c72a</sys_id>
+                <sys_mod_count>1</sys_mod_count>
+                <sys_updated_by>dan.lengyel</sys_updated_by>
+                <sys_updated_on>2019-05-01 17:05:59</sys_updated_on>
+                <related_items_node>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>renderer</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:59">e42f51df4fcdb3405d57b2718110c72a</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:59</sys_created_on>
+                        <sys_id>202f51df4fcdb3405d57b2718110c72b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:59</sys_updated_on>
+                        <value>com.glide.ui.portal.RenderReport</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>title</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:59">e42f51df4fcdb3405d57b2718110c72a</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:59</sys_created_on>
+                        <sys_id>2c2f51df4fcdb3405d57b2718110c72b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:59</sys_updated_on>
+                        <value>Statement phase by date</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>report_type</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:59">e42f51df4fcdb3405d57b2718110c72a</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:59</sys_created_on>
+                        <sys_id>682f51df4fcdb3405d57b2718110c72b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:59</sys_updated_on>
+                        <value>pivot_v2</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>can_subscribe</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:59">e42f51df4fcdb3405d57b2718110c72a</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:59</sys_created_on>
+                        <sys_id>a42f51df4fcdb3405d57b2718110c72b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:59</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>help_text_window</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:59">e42f51df4fcdb3405d57b2718110c72a</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:59</sys_created_on>
+                        <sys_id>e02f51df4fcdb3405d57b2718110c72b</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:59</sys_updated_on>
+                        <value>report_widget_description</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>sys_id</name>
+                        <portal_section display_value="Created 2019-05-01 13:05:59">e42f51df4fcdb3405d57b2718110c72a</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:05:59</sys_created_on>
+                        <sys_id>e82f51df4fcdb3405d57b2718110c72a</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:05:59</sys_updated_on>
+                        <value>126294954f70f3005d57b2718110c777</value>
+                    </sys_portal_preferences>
+                </related_items_node>
+            </sys_portal>
+            <sys_portal action="INSERT_OR_UPDATE">
+                <dropzone/>
+                <offset/>
+                <page display_value="User Statements">1a0f91df4fcdb3405d57b2718110c7cd</page>
+                <summary>Total owed</summary>
+                <sys_created_by>dan.lengyel</sys_created_by>
+                <sys_created_on>2019-05-01 17:06:41</sys_created_on>
+                <sys_id>fa4f15df4fcdb3405d57b2718110c7dc</sys_id>
+                <sys_mod_count>1</sys_mod_count>
+                <sys_updated_by>dan.lengyel</sys_updated_by>
+                <sys_updated_on>2019-05-01 17:06:41</sys_updated_on>
+                <related_items_node>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>report_type</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:41">fa4f15df4fcdb3405d57b2718110c7dc</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:41</sys_created_on>
+                        <sys_id>324f15df4fcdb3405d57b2718110c7de</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:41</sys_updated_on>
+                        <value>single_score</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>renderer</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:41">fa4f15df4fcdb3405d57b2718110c7dc</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:41</sys_created_on>
+                        <sys_id>364f15df4fcdb3405d57b2718110c7dd</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:41</sys_updated_on>
+                        <value>com.glide.ui.portal.RenderReport</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>is_using_database_view</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:41">fa4f15df4fcdb3405d57b2718110c7dc</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:41</sys_created_on>
+                        <sys_id>7a4f15df4fcdb3405d57b2718110c7de</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:41</sys_updated_on>
+                        <value>false</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>can_subscribe</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:41">fa4f15df4fcdb3405d57b2718110c7dc</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:41</sys_created_on>
+                        <sys_id>7e4f15df4fcdb3405d57b2718110c7dd</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:41</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>can_real_time</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:41">fa4f15df4fcdb3405d57b2718110c7dc</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:41</sys_created_on>
+                        <sys_id>ba4f15df4fcdb3405d57b2718110c7dd</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:41</sys_updated_on>
+                        <value>true</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>title</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:41">fa4f15df4fcdb3405d57b2718110c7dc</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:41</sys_created_on>
+                        <sys_id>f24f15df4fcdb3405d57b2718110c7de</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:41</sys_updated_on>
+                        <value>Total owed</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>help_text_window</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:41">fa4f15df4fcdb3405d57b2718110c7dc</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:41</sys_created_on>
+                        <sys_id>f64f15df4fcdb3405d57b2718110c7dd</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:41</sys_updated_on>
+                        <value>report_widget_description</value>
+                    </sys_portal_preferences>
+                    <sys_portal_preferences action="INSERT_OR_UPDATE">
+                        <name>sys_id</name>
+                        <portal_section display_value="Created 2019-05-01 13:06:41">fa4f15df4fcdb3405d57b2718110c7dc</portal_section>
+                        <sys_created_by>dan.lengyel</sys_created_by>
+                        <sys_created_on>2019-05-01 17:06:41</sys_created_on>
+                        <sys_id>fe4f15df4fcdb3405d57b2718110c7dc</sys_id>
+                        <sys_mod_count>0</sys_mod_count>
+                        <sys_updated_by>dan.lengyel</sys_updated_by>
+                        <sys_updated_on>2019-05-01 17:06:41</sys_updated_on>
+                        <value>438db7854f30f3005d57b2718110c777</value>
+                    </sys_portal_preferences>
+                </related_items_node>
+            </sys_portal>
+        </related_items_node>
+    </sys_portal_page>
+</record_update>

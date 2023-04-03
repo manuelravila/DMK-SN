@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <condition><![CDATA[// Get the day of week. 1=Monday, 7=Sunday
+var now = new GlideDateTime();
+
+// Run only on weekdays
+now.getDayOfWeekLocalTime() < 6;]]></condition>
+        <conditional>true</conditional>
+        <entered_time/>
+        <name>User Statements Payment Owed</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as/>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2018-08-01 17:03:56</run_start>
+        <run_time>1970-01-01 11:00:00</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[gs.info("Starting User Statements Payment Owed scheduled job");
+
+var logDebugSummary = false;
+
+//-------------------------------------------------------------------------------------
+// Part 1 -- inactivate all the notification control records that do not have payment
+//           owed invoices anymore
+//-------------------------------------------------------------------------------------
+var zgr = new GlideRecord("x_89907_vehicle_to_toll_notification_control");
+zgr.addQuery("active", true);
+zgr.addQuery("process", "1");
+zgr.query();
+while (zgr.next()) {
+	var ygr = new GlideRecord("x_89907_vehicle_to_toll_user_statement");
+	ygr.addQuery("progress_phase", "=", "2");
+	ygr.addQuery("status", "=", "1");
+	ygr.addQuery("approval", "IN", "approved,not_required");
+	ygr.addQuery("user", "=", zgr.user);
+	ygr.query();
+	if (ygr.getRowCount() === 0) {
+		zgr.active = false;
+		zgr.amount_breached = false;
+		zgr.time_breached = false;
+		zgr.last_notification_date = null;
+		zgr.earliest_statement_date = null;
+		zgr.total_user_statements = 0;
+		zgr.total_personal_amount = 0;
+	}
+	zgr.send_notification = false;
+	zgr.update();
+}
+
+//-------------------------------------------------------------------------------------
+// Part 2 -- load all the PAYMENT OWED user statements into the stash
+// Find all user statements that are OPEN/PAYMENTOWED/APPROVED and group them
+//-------------------------------------------------------------------------------------
+var stmtGAgg = new GlideAggregate("x_89907_vehicle_to_toll_user_statement");
+stmtGAgg.addQuery("progress_phase", "=", "2");
+stmtGAgg.addQuery("status", "=", "1");
+stmtGAgg.addQuery("approval", "IN", "approved,not_required");
+stmtGAgg.addNotNullQuery("user");
+stmtGAgg.addNotNullQuery("transponder.company");
+
+stmtGAgg.addAggregate("SUM", "personal_amount");
+stmtGAgg.addAggregate("MIN", "sys_created_on");
+stmtGAgg.addAggregate("COUNT");
+
+stmtGAgg.groupBy("transponder.company");
+stmtGAgg.groupBy("user");
+
+stmtGAgg.query();
+//-------------------------------------------------------------------------------------
+// Get each user statement either insert if new or update if already there
+//-------------------------------------------------------------------------------------
+var totalPotential = stmtGAgg.getRowCount();
+var totalProcessed = 0;
+while (stmtGAgg.next()) {
+	var userSysID = stmtGAgg.user;
+	var companySysID = stmtGAgg.getValue("transponder.company");
+	var totalPersonalAmount = stmtGAgg.getAggregate("SUM", "personal_amount");
+	var totalUserStatements = stmtGAgg.getAggregate("COUNT");
+	var earliestUserStatementDate = stmtGAgg.getAggregate("MIN", "sys_created_on").substr(0,10);
+	// -------------------------------------------------------------------------------------
+	// Locate the current notification control record
+	// -------------------------------------------------------------------------------------
+	var sgr = new GlideRecord("x_89907_vehicle_to_toll_notification_control");
+	// sgr.addQuerys("transponder",transponderSySID);
+	sgr.addQuery("user", userSysID);
+	sgr.addQuery("company", companySysID);
+	sgr.addQuery("process", "1");
+	sgr.query();
+	// -------------------------------------------------------------------------------------
+	// If there read it else initialize to create a new one
+	// -------------------------------------------------------------------------------------
+	if (sgr.getRowCount() === 1) {
+		sgr.next();
+	} else {
+		sgr.initialize();
+		// sgr.transponder = transponderSySID;
+		sgr.company = companySysID;
+		sgr.user = userSysID;
+		sgr.process = "1";
+	}
+	sgr.total_personal_amount = totalPersonalAmount;
+	sgr.total_user_statements = totalUserStatements;
+	var gd = new GlideDate();
+	gd.setValue(earliestUserStatementDate);
+	sgr.earliest_statement_date = gd;
+	sgr.active = true;
+	// -------------------------------------------------------------------------------------
+	// Update or insert
+	//-------------------------------------------------------------------------------------
+	sgr.update();
+	totalProcessed++;
+}
+if (logDebugSummary) {
+	gs.info("Total processed: {0}\nTotal          : {1}",totalProcessed, totalPotential);
+}
+//-------------------------------------------------------------------------------------
+// Part 3 -- Read all the configurations and save the thresholds
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+// Part 4 -- Determine if they breached a threhold
+//-------------------------------------------------------------------------------------
+var lastCompanyConfiguration = null;
+var ngr = null;
+var cgr = null;
+var costBreached = false;
+var timeBreached = false;
+var dateDifference = null;
+var notifyDifference = null;
+var costDifference = 0;
+var numericDifference = 0;
+
+var notify = false;
+var lastNotificationDate = new GlideDate();
+var lastNotificationDateNumeric = null;
+
+var today = new GlideDate();
+var curDateNumeric = today.getNumericValue();
+
+var userEarliestUserStatementDate = new GlideDate();
+var earliestDateNumeric = null;
+//-------------------------------------------------------------------------------------
+// Find all the records that my need to be notified
+//-------------------------------------------------------------------------------------
+ngr = new GlideRecord("x_89907_vehicle_to_toll_notification_control");
+ngr.addQuery("process", "1");
+ngr.addQuery("active", true);
+ngr.query();
+//-------------------------------------------------------------------------------------
+// For each row see if we have the configuration loaded -- if not then load
+//-------------------------------------------------------------------------------------
+while (ngr.next()) {
+	// -------------------------------------------------------------------------------------
+	// Not saved the load
+	//-------------------------------------------------------------------------------------
+	if (lastCompanyConfiguration != ngr.company) {
+		cgr = new GlideRecord("x_89907_vehicle_to_toll_configuration");
+		cgr.addQuery("active", true);
+		cgr.addQuery("company", ngr.company);
+		cgr.addQuery("run_payment_owed_notification", true);
+		cgr.addNotNullQuery("cost_threshold");
+		cgr.query();
+		if (cgr.next()) {
+			lastCompanyConfiguration = cgr.company;
+			// gs.info('Saving configuration for ' + cgr.nickname);
+		} else {
+			lastCompanyConfiguration = null;
+			// eslint-disable-next-line no-continue
+			continue;
+		}
+	}
+	// -------------------------------------------------------------------------------------
+	// Get the earliest create date to absolute
+	//-------------------------------------------------------------------------------------
+	if (ngr.earliest_statement_date != null) {
+		userEarliestUserStatementDate.setValue(
+			ngr.getValue("earliest_statement_date")
+		);
+		earliestDateNumeric = userEarliestUserStatementDate.getNumericValue();
+	} else {
+		userEarliestUserStatementDate = null;
+	}
+	// -------------------------------------------------------------------------------------
+	// Calculate differences
+	//-------------------------------------------------------------------------------------
+	if (cgr.time_threshold > 0) {
+		numericDifference = curDateNumeric - earliestDateNumeric; // Difference in milliseconds
+		numericDifference = numericDifference / 1000; // Difference in seconds
+		numericDifference = numericDifference / 86400; // Difference in days
+		dateDifference = cgr.time_threshold - numericDifference;
+	} else {
+		dateDifference = 0;
+	}
+
+	costDifference = cgr.cost_threshold - ngr.total_personal_amount;
+	// -------------------------------------------------------------------------------------
+	// Test differences
+	//-------------------------------------------------------------------------------------
+	costBreached = false;
+	timeBreached = false;
+	if (costDifference < 0) {
+		costBreached = true;
+	}
+
+	if (dateDifference < 0) {
+		if (ngr.total_personal_amount > cgr.minimum_cost_threshold) {
+			timeBreached = true;
+		}
+	}
+	// -------------------------------------------------------------------------------------
+	// If breached then see if notify
+	//-------------------------------------------------------------------------------------
+	if (costBreached === true || timeBreached === true) {
+		notify = false;
+		if (ngr.last_notification_date == null) {
+			notify = true;
+		} else {
+			lastNotificationDate.setValue(ngr.getValue("last_notification_date"));
+			lastNotificationDateNumeric = lastNotificationDate.getNumericValue();
+			notifyDifference =
+				cgr.repeat_payment_owed_notification -
+				(curDateNumeric - lastNotificationDateNumeric) / 86400000;
+			if (notifyDifference < 0) {
+				notify = true;
+			}
+		}
+	}
+	// -------------------------------------------------------------------------------------
+	// Information
+	//-------------------------------------------------------------------------------------
+	var debuginfo = "PaymentOwedUser=" + ngr.user.getDisplayValue();
+	debuginfo = debuginfo + ",Total personal amount=" + ngr.total_personal_amount;
+	debuginfo = debuginfo + ",Cost threshold=" + cgr.cost_threshold;
+	debuginfo =
+		debuginfo + ",Minimum cost threshold=" + cgr.minimum_cost_threshold;
+	debuginfo = debuginfo + ",Difference=" + costDifference;
+	debuginfo =
+		debuginfo +
+		",Earliest date=" +
+		userEarliestUserStatementDate +
+		" (" +
+		earliestDateNumeric +
+		")";
+	debuginfo =
+		debuginfo + ",Current date=" + today + " (" + curDateNumeric + ")";
+	debuginfo =
+		debuginfo +
+		",Date threshold=" +
+		cgr.time_threshold +
+		" (" +
+		cgr.time_threshold.getDisplayValue() +
+		")";
+	debuginfo = debuginfo + ",Difference=" + dateDifference;
+	debuginfo = debuginfo + ",Cost Breached=" + costBreached;
+	debuginfo = debuginfo + ",Time Breached=" + timeBreached;
+	debuginfo = debuginfo + ",Last notify=" + ngr.last_notification_date;
+	debuginfo =
+		debuginfo + ",Repeat notification=" + cgr.repeat_payment_owed_notification;
+	debuginfo = debuginfo + ",Notify=" + notify;
+	gs.info(debuginfo);
+
+	/*
+  gs.info(ngr.user.getDisplayValue());
+  gs.info('  Cost                   :');
+  gs.info('    Total personal amount  :' + ngr.total_personal_amount);
+  gs.info('    Cost threshold         :' + cgr.cost_threshold);
+  gs.info('    Minimum cost threshold :' + cgr.minimum_cost_threshold);
+  gs.info('    Difference             :' + costDifference);
+  gs.info('  Time                     :');
+  gs.info('    Earliest date          :' + userEarliestUserStatementDate + ' (' + earliestDateNumeric + ')');
+  gs.info('    Current date           :' + today + ' (' + curDateNumeric + ')');
+  gs.info('    Date threshold         :' + cgr.time_threshold + ' (' + cgr.time_threshold.getDisplayValue() + ')');
+  gs.info('    Difference             :' + dateDifference);
+  gs.info('  Notification           :');
+  gs.info('    Cost Breached          :' + costBreached);
+  gs.info('    Time Breached          :' + timeBreached);
+  gs.info('    Last notify            :' + ngr.last_notification_date);
+  gs.info('    Repeat notification    :' + cgr.repeat_payment_owed_notification);
+  gs.info('    Notify                 :' + notify);
+  gs.info('-----------------------------------------------------------------------------------');
+*/
+	// -------------------------------------------------------------------------------------
+	// Update notification control
+	//-------------------------------------------------------------------------------------
+	
+	ngr.send_notification = (notify === true);
+	ngr.amount_breached = (costBreached === true);
+	ngr.time_breached = (timeBreached === true);
+
+	ngr.update();
+}
+]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-04-09 16:25:38</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>36e20c904ff033005d57b2718110c7e1</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>User Statements Payment Owed</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysauto_script_36e20c904ff033005d57b2718110c7e1</sys_update_name>
+        <sys_updated_by>SN_DLengyel</sys_updated_by>
+        <sys_updated_on>2020-02-10 13:58:03</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

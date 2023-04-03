@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <condition><![CDATA[// Get the day of week. 1=Monday, 7=Sunday
+var now = new GlideDateTime();
+
+// Run only on weekdays
+now.getDayOfWeekLocalTime() < 6;
+]]></condition>
+        <conditional>true</conditional>
+        <entered_time/>
+        <name>Manager Snapshot</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as/>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2019-05-15 16:24:42</run_start>
+        <run_time>1970-01-01 10:00:00</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[gs.info("Starting Vehicle Tolls Manager Snapshot scheduled job");
+
+// Get the relationship records from the M2M table grouped by toll approval group
+var approverUsersM2MGAgg = new GlideAggregate("x_89907_vehicle_to_m2m_users_toll_approvers");
+approverUsersM2MGAgg.orderBy("toll_approver");
+approverUsersM2MGAgg.groupBy("toll_approver");
+approverUsersM2MGAgg.query();
+
+// Iterate the approval groups and queue the snapshot notification event
+while (approverUsersM2MGAgg.next()) {
+	var approverGR = new GlideRecord("x_89907_vehicle_to_toll_approver");
+	if (approverGR.get(approverUsersM2MGAgg.toll_approver.sys_id)) {
+		gs.eventQueue("x_89907_vehicle_to.manager.snapshot", approverGR, approverGR.manager, "");
+	}
+}]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-05-15 16:25:27</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>90fbdd734f51ff405d57b2718110c720</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>Manager Snapshot</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysauto_script_90fbdd734f51ff405d57b2718110c720</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-09-05 00:48:36</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

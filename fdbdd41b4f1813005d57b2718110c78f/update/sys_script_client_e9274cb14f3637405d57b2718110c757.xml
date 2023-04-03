@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>install_status</field>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Transponder OnChange Status</name>
+        <order/>
+        <script><![CDATA[/* exported onChange */
+/**
+ * @description Clear values/apply defaults when the status changes to Retired
+ * @param {*} control
+ * @param {string} oldValue
+ * @param {string} newValue
+ * @param {boolean} isLoading
+ * @param {boolean} isTemplate
+ */
+function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+	if (isLoading || newValue === '') {
+		return;
+	}
+
+	var tdayDate = formatDate(new Date(),g_user_date_time_format);
+	switch (newValue) {
+		case "1":
+			// Changed to Installed
+			g_form.clearValue('u_removed_date');
+			g_form.setValue('install_date', tdayDate);
+			g_form.setValue('u_create_invoice', true);
+			break;
+		case "6":
+			// Changed to In Stock
+			g_form.clearValue('install_date');
+			g_form.clearValue('u_removed_date');
+			g_form.clearValue('assigned_to');
+			g_form.clearValue('u_vehicle_number');
+			g_form.clearValue('u_plate_number');
+			g_form.setValue('delivery_date', tdayDate);	
+			g_form.setValue('u_create_invoice', false);
+			break;
+		case "7":
+		case "8":
+			// Changed to Retired or Stolen
+			g_form.setValue('u_removed_date', tdayDate);
+			g_form.setValue('u_create_invoice', false);
+			break;
+		default:
+	}
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-22 18:41:53</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>e9274cb14f3637405d57b2718110c757</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Transponder OnChange Status</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_client_e9274cb14f3637405d57b2718110c757</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-14 14:09:22</sys_updated_on>
+        <table>x_89907_vehicle_to_u_cmdb_ci_transponder</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

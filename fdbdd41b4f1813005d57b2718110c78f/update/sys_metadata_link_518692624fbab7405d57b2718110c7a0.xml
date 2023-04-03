@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>update</directory>
+        <documentkey>6805bcee4fa6fb005d57b2718110c7aa</documentkey>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="x_89907_vehicle_to_toll_import_charge_type">
+    <x_89907_vehicle_to_toll_import_charge_type action="INSERT_OR_UPDATE">
+        <charge_type display_value="Prepaid Toll Trf">69f5619fdb7bd700f898fbefbf9619ef</charge_type>
+        <comments/>
+        <credit>true</credit>
+        <default_type>false</default_type>
+        <display_label>Prepaid Toll Trf</display_label>
+        <import_label>PREPAID TOLL TRF</import_label>
+        <import_type display_value="E-ZPass V2">8073786e4fa6fb005d57b2718110c7a9</import_type>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-12 19:40:41</sys_created_on>
+        <sys_id>6805bcee4fa6fb005d57b2718110c7aa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-07-12 19:40:41</sys_updated_on>
+    </x_89907_vehicle_to_toll_import_charge_type>
+</record_update>
+]]></payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-25 13:02:25</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>518692624fbab7405d57b2718110c7a0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_metadata_link_518692624fbab7405d57b2718110c7a0</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-07-25 13:02:25</sys_updated_on>
+        <tablename>x_89907_vehicle_to_toll_import_charge_ty</tablename>
+    </sys_metadata_link>
+</record_update>

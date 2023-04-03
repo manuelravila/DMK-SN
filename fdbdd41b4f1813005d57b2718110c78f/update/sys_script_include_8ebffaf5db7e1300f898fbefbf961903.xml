@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>false</active>
+        <api_name>x_89907_vehicle_to.ClientDateTimeUtils</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Date and time utilities</description>
+        <name>ClientDateTimeUtils</name>
+        <script><![CDATA[var ClientDateTimeUtils = Class.create();
+ClientDateTimeUtils.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+	// Returns the Date/Time of right now.
+	getNowDateTime: function getNowDateTime() {
+		var now = gs.nowDateTime(); // Now Date/Time
+		return now;
+	}
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-06-20 15:45:48</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>8ebffaf5db7e1300f898fbefbf961903</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>ClientDateTimeUtils</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_8ebffaf5db7e1300f898fbefbf961903</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-15 14:28:28</sys_updated_on>
+    </sys_script_include>
+</record_update>

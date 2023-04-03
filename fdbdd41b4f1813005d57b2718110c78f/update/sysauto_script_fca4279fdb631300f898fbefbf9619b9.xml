@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <condition><![CDATA[// Get the day of week. 1=Monday, 7=Sunday
+var now = new GlideDateTime();
+
+// Run only on weekdays
+now.getDayOfWeekLocalTime() < 6;]]></condition>
+        <conditional>true</conditional>
+        <entered_time/>
+        <name>User Statements Requiring Approval</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as/>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2018-08-01 17:03:56</run_start>
+        <run_time>1970-01-01 11:00:00</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[gs.info("Starting User Statements Requiring Approval scheduled job");
+
+//-------------------------------------------------------------------------------------
+// Part 1 -- Locate all the approvals for user statements in requested state
+//-------------------------------------------------------------------------------------
+var logTotals = false;
+var logEach = true;
+
+//-------------------------------------------------------------------------------------
+// Find all user statements that are OPEN/PAYMENTOWED/APPROVED and group them
+//-------------------------------------------------------------------------------------
+
+var approvalGAgg = new GlideAggregate("sysapproval_approver");
+approvalGAgg.addQuery("state", "=", "requested");
+approvalGAgg.addQuery(
+	"source_table",
+	"=",
+	"x_89907_vehicle_to_toll_user_statement"
+);
+approvalGAgg.addAggregate("COUNT");
+approvalGAgg.groupBy("approver");
+approvalGAgg.query();
+var totalPotential = approvalGAgg.getRowCount();
+//-------------------------------------------------------------------------------------
+// Get each approval and notify
+//-------------------------------------------------------------------------------------
+var totalProcessed = 0;
+while (approvalGAgg.next()) {
+	var approverSysID = approvalGAgg.approver;
+	var approverDisplayValue = approvalGAgg.approver.getDisplayValue();
+	var groupApprovalCount = approvalGAgg.getAggregate("COUNT");
+	if (logEach) {
+		gs.info("User={0} ,Count={1}", approverDisplayValue, groupApprovalCount);
+	}
+	totalProcessed++;
+	gs.eventQueue(
+		"x_89907_vehicle_to.statement.requires.ap",
+		current,
+		approverSysID,
+		groupApprovalCount
+	);
+}
+
+if (logTotals) {
+	gs.info('Total processed: {0}\nTotal          : {1}', totalProcessed, totalPotential);
+}
+]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-08-01 17:05:12</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>fca4279fdb631300f898fbefbf9619b9</sys_id>
+        <sys_mod_count>34</sys_mod_count>
+        <sys_name>User Statements Requiring Approval</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysauto_script_fca4279fdb631300f898fbefbf9619b9</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-02-18 06:09:45</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

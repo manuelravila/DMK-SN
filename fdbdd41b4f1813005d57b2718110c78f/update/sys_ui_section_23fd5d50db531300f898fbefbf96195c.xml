@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Product Details" section_id="23fd5d50db531300f898fbefbf96195c" sys_domain="global" table="x_89907_vehicle_to_u_cmdb_ci_transponder" version="3" view="Admin">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>company</element>
+            <position>0</position>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-10 13:18:13</sys_created_on>
+            <sys_id>f7fd9d50db531300f898fbefbf961907</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Product Details" display_value="Product Details" name="x_89907_vehicle_to_u_cmdb_ci_transponder" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">23fd5d50db531300f898fbefbf96195c</sys_ui_section>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-10 13:18:13</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>vendor</element>
+            <position>1</position>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-10 13:18:13</sys_created_on>
+            <sys_id>7bfd9d50db531300f898fbefbf961907</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Product Details" display_value="Product Details" name="x_89907_vehicle_to_u_cmdb_ci_transponder" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">23fd5d50db531300f898fbefbf96195c</sys_ui_section>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-10 13:18:13</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>manufacturer</element>
+            <position>2</position>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-10 13:18:13</sys_created_on>
+            <sys_id>fbfd9d50db531300f898fbefbf961907</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Product Details" display_value="Product Details" name="x_89907_vehicle_to_u_cmdb_ci_transponder" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">23fd5d50db531300f898fbefbf96195c</sys_ui_section>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-10 13:18:13</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>3</position>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-10 13:18:13</sys_created_on>
+            <sys_id>7ffd9d50db531300f898fbefbf961907</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Product Details" display_value="Product Details" name="x_89907_vehicle_to_u_cmdb_ci_transponder" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">23fd5d50db531300f898fbefbf96195c</sys_ui_section>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-10 13:18:13</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>category</element>
+            <position>4</position>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-10 13:18:13</sys_created_on>
+            <sys_id>fffd9d50db531300f898fbefbf961907</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Product Details" display_value="Product Details" name="x_89907_vehicle_to_u_cmdb_ci_transponder" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">23fd5d50db531300f898fbefbf96195c</sys_ui_section>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-10 13:18:13</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>model_id</element>
+            <position>5</position>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-10 13:18:13</sys_created_on>
+            <sys_id>73fd9d50db531300f898fbefbf961908</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Product Details" display_value="Product Details" name="x_89907_vehicle_to_u_cmdb_ci_transponder" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">23fd5d50db531300f898fbefbf96195c</sys_ui_section>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-10 13:18:13</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>model_number</element>
+            <position>6</position>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-10 13:18:13</sys_created_on>
+            <sys_id>f3fd9d50db531300f898fbefbf961908</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Product Details" display_value="Product Details" name="x_89907_vehicle_to_u_cmdb_ci_transponder" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">23fd5d50db531300f898fbefbf96195c</sys_ui_section>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-10 13:18:13</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Product Details</caption>
+            <header>false</header>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-10 13:18:12</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>23fd5d50db531300f898fbefbf96195c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_u_cmdb_ci_transponder</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_section_23fd5d50db531300f898fbefbf96195c</sys_update_name>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-10 13:18:12</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Admin" name="Admin">52eacb210fcca600b7fe85ace1050e92</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_portal">
+    <sp_portal action="INSERT_OR_UPDATE">
+        <css_variables>/*
+CUSTOMIZE the Toll Service Portal base background color
+*/
+$sp-homepage-bg: #405e76;</css_variables>
+        <default>false</default>
+        <enable_ais>false</enable_ais>
+        <enable_favorites>false</enable_favorites>
+        <hide_portal_name>false</hide_portal_name>
+        <homepage display_value="toll_index">35cde704dbee2300f898fbefbf9619db</homepage>
+        <icon/>
+        <kb_knowledge_base/>
+        <kb_knowledge_page/>
+        <login_page display_value="landing">36c61807cb31120000f8d856634c9ca9</login_page>
+        <logo>53198831db4a6300f898fbefbf96199a</logo>
+        <notfound_page/>
+        <quick_start_config>[
+	{
+		"tagline": {
+			"table": "sp_instance",
+			"sys_id": "4887f899db131300f898fbefbf961983",
+			"field": "title"
+		},
+		"hero_background": {
+			"table": "sp_container",
+			"sys_id": "be98a8d2cb20020000f8d856634c9c63",
+			"field": "background_image"
+		}
+	}
+]
+</quick_start_config>
+        <sc_catalog/>
+        <sc_catalog_page/>
+        <sc_category_page/>
+        <search_application/>
+        <search_results_configuration/>
+        <sp_chat_queue/>
+        <sp_rectangle_menu display_value="Toll Header Menu">8eb98871db4a6300f898fbefbf9619f9</sp_rectangle_menu>
+        <sqanda_knowledge_base/>
+        <sys_class_name>sp_portal</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-07-10 13:13:05</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>8d6c9d10db531300f898fbefbf961994</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>EZPass Service Portal</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_portal_8d6c9d10db531300f898fbefbf961994</sys_update_name>
+        <sys_updated_by>SN_dtseten</sys_updated_by>
+        <sys_updated_on>2020-09-08 23:08:33</sys_updated_on>
+        <theme display_value="NYCDOT">79315153cb33310000f8d856634c9c4b</theme>
+        <title>EZPass Service Portal</title>
+        <ts_index_group/>
+        <url_suffix>toll_service_portal</url_suffix>
+    </sp_portal>
+    <sys_translated_text action="delete_multiple" query="documentkey=8d6c9d10db531300f898fbefbf961994"/>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color>#ffffff</average_image_color>
+        <chunk_size_bytes>734003</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>image/png</content_type>
+        <encryption_context/>
+        <file_name>logo</file_name>
+        <hash/>
+        <image_height>79</image_height>
+        <image_width>100</image_width>
+        <size_bytes>953</size_bytes>
+        <size_compressed>895</size_compressed>
+        <state>available</state>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-11-28 15:50:54</sys_created_on>
+        <sys_id>53198831db4a6300f898fbefbf96199a</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2018-11-28 15:50:55</sys_updated_on>
+        <table_name>ZZ_YYsp_portal</table_name>
+        <table_sys_id>8d6c9d10db531300f898fbefbf961994</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>H4sIAAAAAAAAAA==</data>
+        <length>16</length>
+        <position>0</position>
+        <sys_attachment display_value="logo" sys_id="53198831db4a6300f898fbefbf96199a">53198831db4a6300f898fbefbf96199a</sys_attachment>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-11-28 15:50:54</sys_created_on>
+        <sys_id>93198831db4a6300f898fbefbf96199a</sys_id>
+    </sys_attachment_doc>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>6wzwc+flkuJiYGDg9fRwCQLSKUDsz8EEJCe9/v4NSDEWB7k7Maw7J/MSyGFJd/R1ZGDY2M/9J5EVyOcs8IgsZmDgOwzCjMfzVwC1M/t5ujiGVMS9nbU376qDQOvnHTYs/QeEA5YtfK66QJmX1YTjIktXR8eCP0ISR5VTajf627yO/O02a/F6y/Dd1pu/VdW/qS4pqYnSad0ncEGc6ZeTQzzHC27GWsUF+ixfWhvwCt6feX1+/fw5d2v2//lc3rpml2mS78KP7y6UP367ffXq3dXv8yatccwWa7Ryut8YLq9fF7deyivq2o5Whwt6F9I/Pzu99PvKzToCTs+d53f5at+b6nulVmzx+cdP2+PvdfKmOk50U/tSuSbm060UMNMz5w9D39WPiUv8nfhX+z/ffjZ2U1fYXelZQccPus5v1H0y78eUoGk/eZ18HOY37vjceVfg+mkhh4cyL8I/P/q7c/kfj5e1AuVHLzk8ZHkRnvyc//z3iZfm8xnu2CXT/CLcuHzTxvuBRq2+hy/qP77bn+2ftdFqbsVRh3mTVfvdpjnt5+GXDpzu6eI30SkjRfPL6RnSf4pfbbWxVVj20zP27t3FrUsv6D9+8uaYsn7w+t7zzEmz5of8nrs4/liaflzVitpvS+LbzorsnjP5+ulLefNtXz52eb4+dsrmyQv4hebuKZuytOvJ4QvuNz7a+sy+tm/vwn6B2M3l12/J8tS2nPSPNrPmuc+XI7e1VP3v5+tz2s4nHX6Sy+lzbslb6zWMvzjmHfKYpnRtVu61s8ez59w8+dpUT7jNrum4fOa76ivXu631LzpeszjE65PHFqjGVsvSby/E9ef4u+Llzy/OOjpD6nGrm1OjxBdBm38eGgbLHn49IPTy7Q5xKU7WpAvuH34on7VtY47TCOUwfHZB3nlj4Lb2o9xLvWya2+0OztZx7dF/3f/XaOavKt6HBSdddhRuNACZs1lol0Cz3aE06XM6b3dq1rotf+GYff7SF8Gyn/PPSK39289bO6HKVfhwsWWF4luxF48r9Nj1l9xlqpU5//RB65boBf2Pd3os9LKSc+MKjSKP8/mJ9uOd1/d15kxhrp2jzm9b+//E/wNulhfME1f63Iv+XdisbbrBlQ9fmi6Wmf+P2dfYS4N3UWYUMLsxeLr6uaxzSmgCAHOWl2C5AwAA</data>
+        <length>1180</length>
+        <position>1</position>
+        <sys_attachment display_value="logo" sys_id="53198831db4a6300f898fbefbf96199a">53198831db4a6300f898fbefbf96199a</sys_attachment>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-11-28 15:50:54</sys_created_on>
+        <sys_id>17198831db4a6300f898fbefbf96199a</sys_id>
+    </sys_attachment_doc>
+</record_update>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function tspUserPaymentsClient($scope, $rootScope, spUtil, $http, $uibModal, spAriaUtil) {
+	var c = this;
+	this.data.filterText = "";
+	this.showFilter = false;
+
+	if (c.options.table) {
+		spUtil.recordWatch($scope, c.options.table, c.options.filter);
+	}
+
+	this.getMaxShownLabel = function getMaxShownLabel(maxEntries, totalCount) {
+		if (totalCount == c.data.maxCount) {
+			return "${First [0] of more than [1]}"
+				.replace("[0]", maxEntries)
+				.replace("[1]", totalCount);
+		}
+
+		return "${First [0] of [1]}"
+			.replace("[0]", maxEntries)
+			.replace("[1]", totalCount);
+	};
+
+	this.seeAllPage = c.options.list_page_dv || "list";
+	this.targetPageID = c.options.sp_page
+		? "&target_page_id=" + c.options.sp_page
+		: "";
+
+	c.getMaxHeight = function getMaxHeight() {
+		return c.options.panel_body_height || "none";
+	};
+
+	c.getActionColor = function getActionColor(action) {
+		return "text-" + action.color;
+	};
+
+	c.update = function update() {
+		c.server.update();
+	};
+
+	c.toggleFilter = function toggleFilter() {
+		c.showFilter = !c.showFilter;
+	};
+
+	var unregister;
+	$scope.openReference = function openReference($event, item) {
+		$event.stopPropagation();
+		$event.preventDefault();
+		var data = { table: item.className, sys_id: item.sys_id };
+		data.sys_id = item.sys_id;
+		if (unregister) {
+			unregister();
+		}
+		unregister = $rootScope.$on("$sp.openReference", function handleOpenRefEvent(evt, refData) {
+			unregister();
+			unregister = null;
+			if (!evt.defaultPrevented && evt.targetScope === $scope) {
+				showForm(refData);
+			}
+		});
+		$scope.$emit("$sp.openReference", data);
+	};
+
+	$scope.$on("$destroy", function handleDestroyEvent() {
+		if (unregister) {
+			unregister();
+		}
+	});
+
+	function showForm(data) {
+		var url = spUtil.getWidgetURL("widget-form");
+		var req = {
+			method: "POST",
+			url: url,
+			headers: spUtil.getHeaders(),
+			data: data
+		};
+		$http(req).then(qs, qe);
+		function qs(response) {
+			var r = response.data.result;
+			showModal(r);
+		}
+		function qe(error) {
+			console.error("Error " + error.status + " " + error.statusText);
+		}
+	}
+	function showModal(form) {
+		var opts = {
+			size: "lg",
+			templateUrl: "sp_form_modal",
+			controller: ModalInstanceCtrl,
+			resolve: {}
+		};
+		opts.resolve.item = function item() {
+			return angular.copy({
+				form: form
+			});
+		};
+		var modalInstance = $uibModal.open(opts);
+		modalInstance.result.then(
+			function onResolve() {},
+			function onReject() {
+				spAriaUtil.sendLiveMessage($scope.exitMsg);
+			}
+		);
+		$scope.$on("$destroy", function handleModalDestroyEvent() {
+			modalInstance.close();
+		});
+		// eslint-disable-next-line no-shadow
+		var unregister = $scope.$on("sp.form.record.updated", function handleRecordUpdateEvent(
+			evt,
+			fields
+		) {
+			unregister();
+			unregister = null;
+			modalInstance.close();
+			if (evt.stopPropagation) {
+				evt.stopPropagation();
+			}
+			evt.preventDefault();
+		});
+	}
+	// eslint-disable-next-line no-shadow
+	function ModalInstanceCtrl($scope, $uibModalInstance, item) {
+		$scope.item = item;
+		$scope.ok = function handleOK() {
+			$uibModalInstance.close();
+		};
+		$scope.cancel = function handleCancel() {
+			$uibModalInstance.dismiss("cancel");
+		};
+	}
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data>{"data":
+{		"isValid":true,
+    "list": [
+        {
+            "sys_id":"3c145281db622300f898fbefbf9619e3",
+            "className": "x_89907_vehicle_to_payment",
+            "number": "PAY-0000001089",
+            "type": "Tolls",
+            "date_received": "2018-12-21 14:34:00",
+            "amount": "$28.80",
+            "status": "Paid"
+        },
+        {
+            "sys_id":"x 3c145281db622300f898fbefbf9619e3",
+            "className": "x_89907_vehicle_to_payment",
+            "number": "PAY-0000001090",
+            "type": "Tolls",
+            "date_received": "10/15/2018",
+            "amount": "$42.56",
+            "status": "Paid"
+        },
+        {
+            "sys_id":"xx 3c145281db622300f898fbefbf9619e3",
+            "className": "x_89907_vehicle_to_payment",
+            "number": "PAY-0000001091",
+            "type": "Tolls",
+            "date_received": "9/13/2018",
+            "amount": "$89.65",
+            "status": "Error",
+            "status_message": "Invalid check - missing signature. Contact your toll coordinator."
+        }
+    ]
+}
+}</demo_data>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>tsp-user-payments</id>
+        <internal>false</internal>
+        <link/>
+        <name>TSP User Payments</name>
+        <option_schema>[{"name":"always_show","section":"Behavior","label":"Show even when empty","type":"boolean"},
+ {"name":"panel_body_height","section":"Presentation","label":"List body height","type":"string"},
+ {"name":"image_field","section":"Presentation","label":"Image field","type":"field_name"},
+ {"name":"secondary_fields","section":"Data","label":"Secondary fields","type":"field_list"},
+ {"name":"rounded_images","section":"Presentation","label":"Rounded images","type":"boolean"},
+ {"displayValue":"Page","name":"list_page","section":"Data","label":"List page","type":"reference","value":"sp_page","ed":{"reference":"sp_page"}},
+ {"name":"hide_footer","section":"Presentation","label":"Hide Footer","type":"boolean"},
+ {"displayValue":"UI View","hint":"View to use when target page is a form",
+	"name":"view","section":"Behavior","label":"View","type":"reference",
+	"value":"sys_ui_view","ed":{"reference":"sys_ui_view"}}]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[/* global data, options, gs, GlideRecord, GlideRecordSecure */
+(function tspUserPayments() {
+	data.filterMsg = gs.getMessage("Filter...");
+	if (gs.nil(options.hide_footer)) {
+		options.hide_footer = false;
+	}
+	options.hide_footer =
+		options.hide_footer == "true" || options.hide_footer == true;
+	options.table = options.table || "x_89907_vehicle_to_payment";
+	options.display_field = options.display_field || "number";
+	options.secondary_fields = options.secondary_fields || "status,phase,amount";
+
+	var listItemGR = new GlideRecordSecure(options.table); // does ACL checking for us
+	if (!listItemGR.isValid()) {
+		data.isValid = false;
+		return;
+	}
+
+	data.isValid = true;
+	listItemGR.addQuery("user", gs.getUserID());
+
+	var ed = listItemGR.getED();
+	options.title = options.title || ed.getPlural();
+	options.secondary_fields = options.secondary_fields.split(",");
+
+	// Set ID of sp_page from option schema
+	if (options.list_page) {
+		var spPageGR = GlideRecord("sp_page");
+		if (spPageGR.get(options.list_page)) {
+			options.list_page_dv = spPageGR.getDisplayValue("id");
+		}
+	}
+
+	if (options.order_direction == "asc") {
+		listItemGR.orderBy("closed");
+		listItemGR.orderBy("created");
+	} else {
+		listItemGR.orderByDesc("closed");
+		listItemGR.orderByDesc("created");
+	}
+
+	// redo query with limit
+	data.maxCount = 30;
+	listItemGR.setLimit(data.maxCount);
+	listItemGR.query();
+	console.log(listItemGR.getEncodedQuery());
+	data.count = listItemGR.getRowCount();
+	//	data.actions = getActions();
+	data.actions = [];
+	data.list = [];
+	var recordIdx = 0;
+	while (listItemGR.next()) {
+		if (options.maximum_entries && recordIdx == options.maximum_entries) {
+			break;
+		}
+
+		var record = {};
+		if (data.actions.length > 0) {
+			var fields = listItemGR.getFields();
+			for (var i = 0; i < fields.size(); i++) {
+				var glideElement = fields.get(i);
+				var name = glideElement.getName();
+				if (name.indexOf("sys_") === -1) {
+					record[name] = listItemGR.getValue(name);
+				}
+			}
+		}
+
+		record.sys_id = listItemGR.getValue("sys_id");
+		record.className = listItemGR.getRecordClassName();
+
+		if (options.display_field) {
+			record.display_field = getField(listItemGR, options.display_field);
+		}
+
+		record.secondary_fields = [];
+		// eslint-disable-next-line no-loop-func
+		options.secondary_fields.forEach(function getSecondaryField(f) {
+			record.secondary_fields.push(getField(listItemGR, f));
+		});
+		record.closed = getField(listItemGR, "closed");
+		record.isClosed = listItemGR.getValue("status") == "2";
+
+		if (options.sp_page) {
+			var view = "sp";
+			if (options.view) {
+				var viewGR = new GlideRecord("sys_ui_view");
+				viewGR.get(options.view);
+				view = viewGR.getValue("name");
+			}
+			record.url = {
+				id: options.sp_page,
+				table: record.className,
+				sys_id: record.sys_id,
+				view: view
+			};
+		} else if (options.url != "") {
+			record.url = options.url;
+		} else {
+			record.url = null;
+		}
+
+		data.list.push(record);
+		recordIdx++;
+	}
+
+	function getField(anyGR, fieldName) {
+		var f = {};
+		f.display_value = anyGR.getDisplayValue(fieldName);
+		f.value = anyGR.getValue(fieldName);
+		var ge = anyGR.getElement(fieldName);
+		if (ge == null) {
+			return f;
+		}
+
+		f.type = ge.getED().getInternalType();
+		f.label = ge.getLabel();
+		if (f.type == "glide_date_time") {
+			var tmpGDT = new GlideDateTime(f.value);
+			f.date_display_value = tmpGDT.getDate().getDisplayValue();
+		}
+		return f;
+	}
+
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-12-22 20:19:39</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>4ecc2429dbee2300f898fbefbf961913</sys_id>
+        <sys_mod_count>55</sys_mod_count>
+        <sys_name>TSP User Payments</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_4ecc2429dbee2300f898fbefbf961913</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-16 12:18:51</sys_updated_on>
+        <template><![CDATA[<!--
+<pre>{{data|json}}</pre>
+-->
+<div class="panel panel-default b" ng-if="c.data.isValid">
+  <div class="panel-heading" ng-if="::!c.options.hide_header">
+    <h4 class="panel-title">
+      <span ng-if="c.options.glyph">
+        <fa name="{{::c.options.glyph}}" />
+      </span>{{::c.options.title}}
+    </h4>
+  </div>
+  <ul class="list-group hide-x-overflow" style="overflow-y: auto; max-height: 300px;">
+    <li ng-if="c.data.list.length > 0" ng-repeat="item in c.data.list track by item.sys_id" class="list-group-item">
+      <div class="row">
+        <div class="col-2 col-sm-2">
+          <span ng-switch="item.isClosed">
+            <span ng-switch-when="true" class="fa fa-check-square-o fa-2x" style="font-size:2.5em;"></span>
+          	<span ng-switch-default="" class="fa fa-square-o fa-2x" style="font-size:2.5em;"></span>
+          </span>
+        </div>
+        <div class="col-10 col-sm-10">
+          <a class="focus-inline-block" ng-click="openReference($event, item)" href="javascript:void(0)">
+            <div>
+              <div ng-switch on="item.display_field.type" ng-class="{'l-h-40': !item.secondary_fields.length}">
+                <span class="translated-html" ng-switch-when="translated_html" ng-bind-html="item.display_field.value"></span>
+                <div ng-switch-default>{{item.display_field.display_value}}</div>
+              </div>
+              <small class="text-muted" ng-repeat="f in item.secondary_fields">
+                <span ng-if="!$first"> • </span>
+                <span ng-switch="f.type" title="{{::f.label}}">
+                  <span ng-switch-when="glide_date"><sn-time-ago timestamp="::f.value" /></span>
+                  <span ng-switch-when="glide_date_time"><sn-time-ago timestamp="::f.value" /></span>
+                  <span ng-switch-default="">{{f.display_value}}</span>
+                </span>
+              </small>
+              <div ng-if="item.closed">
+                <small class="text-muted">
+                  Closed <sn-time-ago timestamp="::item.closed.value" />
+                </small>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </li>
+    <div ng-if="!c.data.list.length" class="list-group-item">
+      ${No records found} 
+    </div>
+  </ul>
+  <div class="panel-footer" ng-if="!c.options.hide_footer">
+    <div ng-if="c.options.maximum_entries && c.data.count > c.options.maximum_entries">
+	    <div class="h4 number-shown-label">{{c.getMaxShownLabel(c.options.maximum_entries, c.data.count)}}</div>
+	    <a class="pull-right" ng-href="?id={{c.seeAllPage}}&table={{c.options.table}}&view={{c.seeAllPage}}&filter={{c.options.filter}}{{c.targetPageID}}">${View
+	      all}</a>      
+    </div>
+    <div ng-if="!c.options.maximum_entries || c.data.count <= c.options.maximum_entries">
+	    <a class="pull-right" ng-href="?id={{c.seeAllPage}}&table={{c.options.table}}&view={{c.seeAllPage}}&filter={{c.options.filter}}{{c.targetPageID}}">${View
+	      list}</a>      
+    </div>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

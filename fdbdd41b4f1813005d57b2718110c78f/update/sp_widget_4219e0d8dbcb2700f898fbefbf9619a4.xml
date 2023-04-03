@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function DMKEnhancedList($scope, $parse, $http, $location, $rootScope, spUtil, $interpolate) {
+	var c = this;
+
+	$scope.g_user_date_format = g_user_date_format;
+	$scope.g_user_date_time_format = g_user_date_time_format;
+	
+	c.data.filterText = "";
+	c.showFilter = false;
+
+	if (c.options.table) {
+		spUtil.recordWatch($scope, c.options.table, c.options.filter);
+	}
+
+	c.getMaxShownLabel = function getMaxShownLabel(maxEntries, totalCount) {
+		if (totalCount == c.data.maxCount) {
+			return "${First [0] of more than [1]}"
+				.replace("[0]", maxEntries)
+				.replace("[1]", totalCount);
+		}
+
+		return "${First [0] of [1]}"
+			.replace("[0]", maxEntries)
+			.replace("[1]", totalCount);
+	};
+
+	c.seeAllPage = c.options.list_page_dv || "dmk_list";
+	c.targetPageID = c.options.sp_page
+		? "&target_page_id=" + c.options.sp_page
+		: "";
+
+	c.getMaxHeight = function getMaxHeight() {
+		return c.options.panel_body_height || "none";
+	};
+
+	c.isNested = function isNested() {
+		return c.options.nested;
+	};
+
+	c.getPanelColor = function getPanelColor() {
+		return "panel-" + (c.options.color || "default");
+	};
+
+	c.getActionColor = function getActionColor(action) {
+		return "text-" + action.color;
+	};
+
+	c.toggleFilter = function toggleFilter() {
+		c.showFilter = !c.showFilter;
+	};
+
+	c.onClick = function onClick($event, item, url, action) {
+		$event.stopPropagation();
+		$event.preventDefault();
+		if (typeof url == "string") {
+			var urlExp = $interpolate(url);
+			var expandedUrl = urlExp(item);
+			$location.url(expandedUrl);
+		} else if (url && typeof url == "object") {
+			$location.search(url);
+		} else {
+			var evt = {};
+			evt.url = url;
+			evt.table = item.className;
+			evt.sys_id = item.sys_id;
+			evt.record = item;
+			evt.rectangle_id = c.options.sys_id;
+			evt.action = action;
+			// put out the selection with simple list "sl_" prefix
+			$location.search("sl_sys_id", evt.sys_id);
+			$location.search("sl_table", evt.table);
+			$location.search("spa", 1); // spa means "I've got this"
+			$rootScope.$broadcast("$sp.list.click", evt);
+		}
+	};
+
+	c.expandAccordion = function expandAccordion(item) {
+		if (!item.details) {
+			/* load details here */
+			var config = getDAOPostConfig();
+			var params = buildDAOPostParams(item);
+			var url = getDAOPostURL();
+			$http.post(url, params, config).then(
+				function onResolve(response) {
+					if (response.data && response.data.result) {
+						var a = JSON.parse(response.data.result);
+						item.details = a;
+						item.loaded = true;
+						if (a.template_name) {
+							item.templateName = a.template_name;
+							item.templateURL = getTemplateURL(item.templateName);
+						} else {
+							item.templateName =
+								c.options.details_template || "dmk-enhanced-list-default";
+							item.templateURL = item.templateName;
+						}
+						// console.log(item);
+					}
+				},
+				function onReject(data) {
+					// TODO: handle AJAX failure gracefully
+					console.log(data);
+				}
+			);
+		}
+	};
+
+	c.update = function update() {
+		c.server.update();
+		triggerListUpdated();
+	};
+
+	c.getItemIcon = function getItemIcon(item) {
+		var expr = item.icon || c.options.item_icon;
+		return $scope.$eval(expr, { item: item });
+	};
+
+	// Listen for the loading indicator event to present a loading animation while waiting
+	// for results from AJAX call
+	$scope.$on("sp_loading_indicator", function handleLoadingEvent(e, value) {
+		$scope.loadingIndicator = value;
+	});
+
+	// Generate unique ID for this widget to control item detail template caching
+	if (!c.tspGuid) {
+		// eslint-disable-next-line servicenow/no-hardcoded-sysids
+		c.tspGuid = spUtil.createUid("xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx");
+	}
+
+	triggerListUpdated();
+
+	// Declare private functions
+
+	// Set up and broadcast event for when list is updated
+	// used to populate/refresh badges
+	function triggerListUpdated() {
+		var evt = createUpdateEvent();
+		$rootScope.$broadcast("dmk.list.updated", evt);
+	}
+
+	function getTemplateURL(templateName) {
+		// $templateCache uses query params as part of cache key so add
+		// guid for widget actual instance so it will cache templates for this instance
+		// but start clean on refresh
+		return getPartialURL() + templateName + "&tspguid=" + c.tspGuid;
+	}
+
+	function getPartialURL() {
+		return "angular.do?sysparm_type=get_partial&name=";
+	}
+
+	function createUpdateEvent() {
+		var evt = {};
+		evt.table = c.options.table;
+		evt.count = c.data.count;
+		evt.filter = c.options.filter;
+		evt.title = c.options.title;
+		evt.widget = c.widget;
+		evt.callbackData = c.options.list_update_callback_data;
+		return evt;
+	}
+
+	function getDAOPostURL() {
+		return c.options.details_api_url;
+	}
+	function getDAOPostConfig() {
+		var config = c.options.details_api_config;
+		return config;
+	}
+
+	function buildDAOPostParams(item) {
+		// TODO: enhance to substitute values from item if possible
+		var params = c.options.details_api_params;
+		params.sys_id = item.sys_id;
+		return params;
+	}
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.panel {
+  position: relative;
+  margin-bottom: 0px;
+}
+
+.tsp-no-border {
+  	border: 0px none !important;
+}
+
+
+.tsp-detail-accordion .panel-heading i {
+  cursor: pointer;
+}
+
+.panel-title {
+  font-size: $font-size-base;
+}
+
+.disabled-filter {
+  color: #A0A0A0;
+}
+
+ul.list-group {
+  margin-bottom: 0px;
+}
+
+.list-group-item:first-child {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.list-group-item.ng-enter {
+  transition: all 1s;
+  -webkit-transition: all 1s;
+
+  background-color: #c0dcfa;
+}
+
+.list-group-item.ng-enter-active {
+  background-color: #fff;
+}
+
+.hide-x-overflow {
+  overflow-x: hidden;
+}
+
+.translated-html&gt;p {
+  margin: 0px;
+  padding: 0px;
+}
+
+IMG {
+  max-width: 320px;
+  max-height: 240px;
+}
+
+IMG.img-sm {
+  max-height: 40px;
+  max-width: 40px;
+}
+
+.filter-box {
+  margin-top: 10px;
+}
+
+.panel-footer {
+   padding: 5px 15px;
+  
+  .number-shown-label {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-block;
+  }
+
+  a {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-block;
+    color: inherit;
+  }
+}
+
+.tsp-detail-attr-list.list-inline {
+  margin-top: 5px;
+  margin-bottom: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+  list-style: none;
+}
+
+.tsp-detail-attr-list.list-inline&gt;li {
+  display: inline-block;
+}
+
+.tsp-detail-attr-list.list-inline&gt;li:not(:first-child):before {
+  content: "\2022";
+  padding-right: .25rem;
+}
+
+.tsp-detail-attr-list.list-inline&gt;li:not(:last-child) {
+  padding-right: .25rem;
+}
+
+
+.tsp-detail-spec-data .groupedTable {
+  display: table
+}
+
+.tsp-detail-spec-data .tsp-detail-block {
+  padding-bottom: 20px
+}
+
+.tsp-detail-spec-data .tsp-detail-block .tsp-detail-header {
+  border-bottom: 1px solid #626262
+}
+
+.tsp-detail-spec-data .tsp-detail-block .tsp-detail-header span.tsp-detail-header-text {
+  font-weight: bold;
+  height: 35px;
+  line-height: 35px;
+  padding-left: 5px;
+  font-size: 15px
+}
+
+.tsp-detail-spec-data .tsp-detail-block .tsp-detail-item {
+  padding-left: 0;
+  padding-right: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+ }
+
+@media(max-width:767px) {
+  .tsp-detail-spec-data .tsp-detail-block .tsp-detail-item {
+    padding-left: 0px;
+    padding-right: 0px
+  }
+}
+
+.tsp-detail-spec-data .tsp-detail-block .tsp-detail-item.odd {
+  background-color: #ffffff
+}
+
+.tsp-detail-spec-data .tsp-detail-block .tsp-detail-item.even {
+  background-color: #f5f5f5
+}
+
+.tsp-detail-spec-data .tsp-detail-block .tsp-detail-item .tsp-detail-label {
+  font-weight: bold
+}
+
+.tsp-detail-accordion &gt; .panel-group {
+  margin-bottom: 0;
+}
+
+.tsp-detail-accordion &gt; .panel-group &gt; .list-group-item {
+  padding: 0;
+}
+
+.tsp-icon-wrapper {
+  font-size: $font-size-base;
+}
+
+.tsp-detail-accordion {
+  overflow-y: auto;
+}</css>
+        <data_table>sp_instance_vlist</data_table>
+        <demo_data>{"options": {
+	"color":"default",
+		"title":"preview title"
+},
+	"data":
+	{		"isValid":true,
+		"list": [
+			{
+				"sys_id": "246009dadb931300f898fbefbf961957",
+				"className": "x_89907_vehicle_to_u_cmdb_ci_transponder",
+				"templateName":"dmk-enhanced-list-default",
+				"display_field": {
+					"display_value": "EZ-00804549552",
+					"label": "Name",
+					"type": "string",
+					"value": "EZ-00804549552"
+				},
+				"secondary_fields": [
+					{
+						"display_value": "",
+						"label": "Description",
+						"type": "string",
+						"value": null
+					},
+					{
+						"display_value": "AY6405",
+						"label": "Plate number",
+						"type": "string",
+						"value": "AY6405"
+					},
+					{
+						"display_value": "1031A",
+						"label": "Vehicle number",
+						"type": "string",
+						"value": "1031A"
+					},
+					{
+						"display_value": "Installed",
+						"label": "Status",
+						"type": "integer",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"sys_id": "ff4001dadb931300f898fbefbf9619a5",
+				"className": "x_89907_vehicle_to_u_cmdb_ci_transponder",
+				"templateName":"dmk-enhanced-list-default",
+				"display_field": {
+					"display_value": "EZ-00804357008",
+					"label": "Name",
+					"type": "string",
+					"value": "EZ-00804357008"
+				},
+				"secondary_fields": [
+					{
+						"display_value": "Pool Device",
+						"label": "Description",
+						"type": "string",
+						"value": "Pool Device"
+					},
+					{
+						"display_value": "AJ3804",
+						"label": "Plate number",
+						"type": "string",
+						"value": "AJ3804"
+					},
+					{
+						"display_value": "224D",
+						"label": "Vehicle number",
+						"type": "string",
+						"value": "224D"
+					},
+					{
+						"display_value": "Installed",
+						"label": "Status",
+						"type": "integer",
+						"value": "1"
+					}
+				]
+			}
+		]
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</demo_data>
+        <description/>
+        <docs/>
+        <field_list>table,filter,maximum_entries,display_field,color,size,glyph,sp_page</field_list>
+        <has_preview>true</has_preview>
+        <id>dmk-enhanced-list</id>
+        <internal>false</internal>
+        <link/>
+        <name>DMK Enhanced List</name>
+        <option_schema>[{"name":"secondary_fields","section":"Data","label":"Secondary fields","type":"field_list"},{"displayValue":"Page","name":"list_page","section":"Data","label":"List page","type":"reference","value":"sp_page","ed":{"reference":"sp_page"}},{"name":"always_show","section":"Behavior","label":"Show even when empty","type":"boolean"},{"displayValue":"UI View","hint":"View to use when target page is a form","name":"view","section":"Behavior","label":"View","type":"reference","value":"sys_ui_view","ed":{"reference":"sys_ui_view"}},{"name":"panel_body_height","section":"Presentation","label":"List body height","type":"string"},{"name":"image_field","section":"Presentation","label":"Image field","type":"field_name"},{"name":"rounded_images","section":"Presentation","label":"Rounded images","type":"boolean"},{"name":"hide_footer","section":"Presentation","label":"Hide Footer","type":"boolean"},{"name":"details_api_url","section":"other","label":"Details API url","type":"string"},{"name":"details_api_params","section":"other","label":"Details API Parameters","type":"string"},{"name":"details_api_config","section":"other","label":"Details API HTTP Configuration","type":"string"},{"hint":"'fa-truck'","name":"item_icon","section":"other","label":"Item icon expression","type":"string"},{"name":"list_type","section":"Presentation","default_value":"list","label":"List Type","type":"choice","choices":[{"label":"list","value":"list"},{"label":"accordion","value":"accordion"}]}]</option_schema>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[/* globals data options input gs $sp GlideRecordSecure GlideRecord */
+(function() {
+	data.filterMsg = gs.getMessage("Filter...");
+	if (gs.nil(options.hide_footer)) {
+		options.hide_footer = false;
+	}
+	options.hide_footer =
+		options.hide_footer == "true" || options.hide_footer == true;
+	options.table = $sp.getParameter("t") || options.table;
+
+	if (!options.table) {
+		return;
+	}
+
+	if (options.details_api_url) {
+		options.details_api_config = options.details_api_config || {
+			headers: {
+				Accept: "application/json;charset=UTF-8",
+				"Content-Type": "application/json;charset=UTF-8"
+			}
+		};
+		var tempParms = options.details_api_params;
+		/*
+				options are stored as a string in the widget options
+			 string in options needs to be escaped to parse json correctly
+			 entering the value through the widget options modal dialog will auto escape for you
+			 default template expects a response from the json in the following format:
+			{
+	      "table_name": "x_89907_vehicle_to_u_cmdb_ci_transponder",
+				"sys_id": "6a5005dadb931300f898fbefbf961939",
+				"display_value": "EZ-0000812127913",
+				"display_name": "Transponder",
+				"display_name_plural": "Transponders",
+				"fields": {
+					"name": {
+						"display_value": "EZ-0000812127913",
+						"value": "EZ-0000812127913",
+						"type": "string",
+						"label": "Name"
+						}
+					},
+				"template_name": "x_89907_vehicle_to_tsp-transponder-list-card"
+			}
+				 */
+		if (typeof tempParms === "string") {
+			options.details_api_params = JSON.parse(tempParms);
+		}
+	}
+	data.details_api_enabled =
+		options.details_api_url && options.details_api_params;
+
+	var listItemGR = new GlideRecordSecure(options.table); // does ACL checking for us
+	if (!listItemGR.isValid()) {
+		data.isValid = false;
+		return;
+	}
+	data.isValid = true;
+
+	// grTemp is used to check isValidField since using GlideRecordSecure fails for date/time fields
+	var grTemp = new GlideRecord(options.table);
+	listItemGR.addEncodedQuery(options.filter);
+	options.title = options.title || listItemGR.getED().getPlural();
+	options.display_field = $sp.getParameter("f") || options.display_field;
+	if (!options.display_field || !grTemp.isValidField(options.display_field)) {
+		options.display_field = listItemGR.getDisplayName();
+	}
+
+	if (input && input.filterText) {
+		listItemGR.addEncodedQuery(
+			options.display_field + "LIKE" + input.filterText
+		);
+	}
+
+	options.title = options.title || listItemGR.getED().getPlural();
+	options.secondary_fields = options.secondary_fields || "";
+	options.secondary_fields = options.secondary_fields.split(",");
+	if (!options.order_by || !grTemp.isValidField(options.order_by)) {
+		options.order_by = options.display_field;
+	}
+
+	// Set ID of sp_page from option schema
+	if (options.list_page) {
+		var spPageGR = GlideRecord("sp_page");
+		if (spPageGR.get(options.list_page)) {
+			options.list_page_dv = spPageGR.getDisplayValue("id");
+		}
+	}
+
+	// redo query with limit
+	if (options.order_direction == "asc") {
+		listItemGR.orderBy(options.order_by);
+	} else {
+		listItemGR.orderByDesc(options.order_by);
+	}
+
+	data.maxCount = 500;
+	listItemGR.setLimit(data.maxCount);
+	listItemGR.query();
+
+	data.count = listItemGR.getRowCount();
+	// data.actions = getActions();
+	data.actions = [];
+	data.list = [];
+	var recordIdx = 0;
+	while (listItemGR.next()) {
+		if (options.maximum_entries && recordIdx == options.maximum_entries) {
+			break;
+		}
+
+		var record = {};
+		if (data.actions.length > 0) {
+			var fields = listItemGR.getFields();
+			for (var i = 0; i < fields.size(); i++) {
+				var glideElement = fields.get(i);
+				var name = glideElement.getName();
+				if (name.indexOf("sys_") === -1) {
+					record[name] = listItemGR.getValue(name);
+				}
+			}
+		}
+		record.sys_id = listItemGR.getValue("sys_id");
+		record.className = listItemGR.getRecordClassName();
+		if (options.image_field) {
+			record.image_field = listItemGR.getDisplayValue(options.image_field);
+			if (!record.image_field) {
+				record.image_field = "noimage.pngx";
+			}
+		}
+
+		if (options.display_field) {
+			record.display_field = getField(listItemGR, options.display_field);
+		}
+		if (listItemGR.approval == "rejected") {
+			record.display_field.value =
+				record.display_field.display_value +
+				"<span class='text-danger'> Rejected</span>";
+			record.display_field.type = "translated_html";
+		}
+
+		record.secondary_fields = [];
+		// eslint-disable-next-line no-loop-func
+		options.secondary_fields.forEach(function(f) {
+			record.secondary_fields.push(getField(listItemGR, f));
+		});
+
+		if (options.sp_page) {
+			var view = "sp";
+			if (options.view) {
+				var viewGR = new GlideRecord("sys_ui_view");
+				viewGR.get(options.view);
+				view = viewGR.getValue("name");
+			}
+			record.url = {
+				id: options.sp_page,
+				table: record.className,
+				sys_id: record.sys_id,
+				view: view
+			};
+		} else if (options.url != "") {
+			record.url = options.url;
+		} else {
+			record.url = null;
+		}
+
+		data.list.push(record);
+		recordIdx++;
+	}
+
+	function getField(anyGR, fieldName) {
+		var f = {};
+		f.display_value = anyGR.getDisplayValue(fieldName);
+		f.value = anyGR.getValue(fieldName);
+		var ge = anyGR.getElement(fieldName);
+		if (ge == null) {
+			return f;
+		}
+
+		f.type = ge.getED().getInternalType();
+		f.label = ge.getLabel();
+		f.name = ge.getName();
+		return f;
+	}
+	/*
+	function getActions() {
+		var rl = GlideRecord("sp_vlist_action");
+		rl.addQuery("sp_rectangle_vlist",$sp.getValue("sys_id"));
+		rl.query();
+		var actions = [];
+		while(rl.next()) {
+			var action = {};
+			$sp.getRecordValues(action, rl, "name,glyph,hint,url,color");
+			actions.push(action);
+		}
+		return actions;
+	}
+	*/
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-12 19:22:32</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>4219e0d8dbcb2700f898fbefbf9619a4</sys_id>
+        <sys_mod_count>268</sys_mod_count>
+        <sys_name>DMK Enhanced List</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_4219e0d8dbcb2700f898fbefbf9619a4</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-15 06:09:14</sys_updated_on>
+        <template><![CDATA[<div class="panel" ng-class="[c.getPanelColor(), {'b': !c.isNested(),'tsp-no-border':c.isNested()}]"
+     ng-if="c.data.isValid && (c.options.always_show || c.data.filterText || c.data.list.length)">
+  <div class="panel-heading" ng-if="::!c.options.hide_header">
+    <h2 class="h4 panel-title">
+      <span ng-if="c.options.glyph">
+        <fa name="{{::c.options.glyph}}" />
+      </span>
+      <span>{{::c.options.title}}</span>
+    </h2>
+    <div ng-show="c.showFilter">
+      <input aria-label="${Filter}" ng-model="c.data.filterText" ng-model-options="{debounce: 300}" sn-focus="c.showFilter"
+             placeholder="{{::data.filterMsg}}" ng-change="c.update()" class="form-control input-sm filter-box">
+    </div>
+  </div>
+
+  <div ng-include="(c.options.list_type == 'accordion') ? 'accordion-template' : 'list-template'"></div>
+
+  <div class="panel-footer" ng-if="!c.options.hide_footer">
+    <div ng-if="c.options.maximum_entries && c.data.count > c.options.maximum_entries">
+      <div class="number-shown-label">{{c.getMaxShownLabel(c.options.maximum_entries, c.data.count)}}</div>
+      <a class="pull-right" ng-href="?id={{c.seeAllPage}}&table={{c.options.table}}&view={{c.options.seeAllView}}&filter={{c.options.filter}}{{c.targetPageID}}">${View
+        all}</a>      
+    </div>
+    <div ng-if="!c.options.maximum_entries || c.data.count <= c.options.maximum_entries">
+      <div class="number-shown-label">&nbsp;</div>
+      <a class="pull-right" ng-href="?id={{c.seeAllPage}}&table={{c.options.table}}&view={{c.options.seeAllView}}&filter={{c.options.filter}}{{c.targetPageID}}">${View
+        list}</a>      
+    </div>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="step" table="x_89907_vehicle_to_import_test_assertion" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>step</element>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:21:24</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>632f50711b439050195fed7dee4bcbea</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>step</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_choice_x_89907_vehicle_to_import_test_assertion_step</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 16:21:24</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>step</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Staged</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:21:24</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>40344c984fe277005d57b2718110c788</sys_id>
+            <sys_mod_count>4</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 16:30:37</sys_updated_on>
+            <value>staged</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>step</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Validated</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:21:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>15444c984fe277005d57b2718110c7c9</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 16:30:42</sys_updated_on>
+            <value>validated</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>step</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Imported</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:21:47</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>d95484d84fe277005d57b2718110c7e4</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 16:30:47</sys_updated_on>
+            <value>imported</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

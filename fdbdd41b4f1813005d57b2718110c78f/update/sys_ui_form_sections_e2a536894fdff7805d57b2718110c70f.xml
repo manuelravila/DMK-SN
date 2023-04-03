@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="e2a536894fdff7805d57b2718110c70f" sys_domain="global" table="wf_activity_variable" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-14 19:59:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>aea536894fdff7805d57b2718110c716</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="wf_activity_variable" name="wf_activity_variable" sys_domain="global" view="Default view">e2a536894fdff7805d57b2718110c70f</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="wf_activity_variable" sys_domain="global" view="Default view">02bdcc9e0a0a0b260da82a707d0dfa10</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-14 19:59:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-14 19:59:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>2aa536894fdff7805d57b2718110c713</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="wf_activity_variable" name="wf_activity_variable" sys_domain="global" view="Default view">e2a536894fdff7805d57b2718110c70f</sys_ui_form>
+            <sys_ui_section display_value="">eaa536894fdff7805d57b2718110c711</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-14 19:59:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-14 19:59:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>26a5f20d4fdff7805d57b2718110c74a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="wf_activity_variable" name="wf_activity_variable" sys_domain="global" view="Default view">e2a536894fdff7805d57b2718110c70f</sys_ui_form>
+            <sys_ui_section display_value="">26a5f20d4fdff7805d57b2718110c749</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-14 19:59:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>3</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-14 19:59:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>22a5f20d4fdff7805d57b2718110c749</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="wf_activity_variable" name="wf_activity_variable" sys_domain="global" view="Default view">e2a536894fdff7805d57b2718110c70f</sys_ui_form>
+            <sys_ui_section display_value="">a2a536894fdff7805d57b2718110c717</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-14 19:59:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>wf_activity_variable</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-14 19:59:00</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e2a536894fdff7805d57b2718110c70f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>wf_activity_variable</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_form_sections_e2a536894fdff7805d57b2718110c70f</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-14 19:59:00</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

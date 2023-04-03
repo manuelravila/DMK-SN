@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>other</category>
+        <client_script><![CDATA[function tspApprovalInfoClient($scope, spUIActionsExecuter, spUtil, spModal) {
+	var c = this;
+
+	var ESIGNATURE = {
+		// eslint-disable-next-line servicenow/no-hardcoded-sysids
+		approved: "cbfe291147220100ba13a5554ee4904d",
+		// eslint-disable-next-line servicenow/no-hardcoded-sysids
+		rejected: "580f711147220100ba13a5554ee4904b"
+	};
+
+	$scope.Rejected_Comments_Method = "inline"; // Options: inline, modal
+	$scope.data.Rejection_Reason = "";
+
+	spUtil.recordWatch(
+		$scope,
+		"sysapproval_approver",
+		"state=requested^sys_id=" + c.data.sys_id
+	);
+
+	c.action = function action(state) {
+		if (c.data.esignature.e_sig_required) {
+			var requestParams = {
+				username: c.data.esignature.username,
+				userSysId: c.data.esignature.userSysId
+			};
+			spUIActionsExecuter
+				.executeFormAction(
+					ESIGNATURE[state],
+					"sysapproval_approver",
+					c.data.sys_id,
+					[],
+					"",
+					requestParams
+				)
+				.then(function onResolve(response) {});
+		} else if (state == "rejected") {
+			if ($scope.Rejected_Comments_Method == "modal") {
+				spModal.prompt("Rejection reason").then(function onResolve(newComments) {
+					if (newComments.toString().length) {
+						$scope.data.Rejection_Reason = newComments;
+						c.data.comments = newComments;
+						c.data.op = state;
+						c.data.state = state;
+						c.server.update();
+					}
+				});
+			} else if (!$scope.data.Rejection_Reason) {
+				spUtil.addErrorMessage(
+					"A comment is required to reject this approval."
+				);
+			} else {
+				c.data.comments = $scope.data.Rejection_Reason;
+				c.data.op = state;
+				c.data.state = state;
+				c.server.update();
+			}
+		} else {
+			c.data.op = state;
+			c.data.state = state;
+			c.server.update();
+		}
+	};
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.question {
+  text-align: center;
+  margin-top: 1em;
+}
+
+.spacer {
+  display:inline-block;
+  width:5%;
+}
+
+.btn-question {
+	width: 45%;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data>{
+  "data": {
+    "fields": [
+      {
+        "type": "glide_date_time",
+        "value": "2016-01-31T17:33:54+00:00",
+        "label": "Approval Example Label"
+      }
+    ],
+    "state": "requested",
+    "label": "incident"
+  },
+  "options": {
+    "color": "default"
+  }
+}</demo_data>
+        <description/>
+        <docs/>
+        <field_list>color</field_list>
+        <has_preview>true</has_preview>
+        <id>tsp-approval-info</id>
+        <internal>false</internal>
+        <link/>
+        <name>TSP Approval Info</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function tspApprovalInfo() {
+	var approvalGR = $sp.getRecord();
+	if (approvalGR == null || !approvalGR.isValid()) {
+		data.isValid = false;
+		return;
+	}
+
+	data.isValid = true;
+	data.isMine = x_89907_vehicle_to.GlobalShims.isApprovalMine(approvalGR);
+
+	if (!data.isMine && !approvalGR.approver.nil()) {
+		data.approver = approvalGR.approver.getDisplayValue();
+	}
+	if (input && input.op && data.isMine) {
+		approvalGR.state = input.op;
+		approvalGR.comments = input.comments;
+		approvalGR.update();
+	}
+
+	var fields = $sp.getFields(approvalGR, "state,sys_created_on");
+
+	if (approvalGR.sys_mod_count > 0) {
+		fields.push($sp.getField(approvalGR, "sys_updated_on"));
+	}
+
+	data.fields = fields;
+	data.state = approvalGR.state.toString();
+	data.sys_updated_on = approvalGR.sys_updated_on.toString();
+	data.sys_id = approvalGR.getUniqueValue();
+	data.table = approvalGR.getTableName();
+	data.label = getRecordBeingApproved(approvalGR).getLabel();
+	data.esignature = {
+		username: gs.getUserName(),
+		userSysId: gs.getUserID(),
+		e_sig_required: checkESig(approvalGR.getValue("source_table"))
+	};
+	function checkESig(table) {
+		var esigRegistryGR = new GlideRecord("e_signature_registry");
+		if (!esigRegistryGR.isValid()) {
+			return false;
+		}
+
+		esigRegistryGR.addQuery("enabled", "true");
+		esigRegistryGR.addQuery("table_name", table);
+		esigRegistryGR.query();
+		return esigRegistryGR.hasNext();
+	}
+
+	function getRecordBeingApproved(approvalRequestGR) {
+		if (!approvalRequestGR.sysapproval.nil()) {
+			return approvalRequestGR.sysapproval.getRefRecord();
+		}
+
+		return approvalRequestGR.document_id.getRefRecord();
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-04-08 12:52:42</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>9698ca334f24b3005d57b2718110c739</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>TSP Approval Info</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_9698ca334f24b3005d57b2718110c739</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-16 12:20:34</sys_updated_on>
+        <template><![CDATA[<div ng-if="c.data.isValid" class="panel panel-{{::c.options.color}} b">
+  <div class="panel-heading">
+    <h4 class="panel-title" ng-if="c.data.isMine && (c.data.state == 'requested')">${This {{c.data.label}} requires your approval}</h4>
+    <h4 class="panel-title" ng-if="!c.data.isMine && (c.data.state == 'requested')">${This {{c.data.label}} requires approval <span ng-if="c.data.approver"> by {{c.data.approver}}}</span></h4>
+    <h4 class="panel-title" ng-if="c.data.state == 'approved'">${Approved} <sn-time-ago timestamp="::c.data.sys_updated_on" /></h4>
+    <h4 class="panel-title" ng-if="c.data.state == 'rejected'">${Rejected} <sn-time-ago timestamp="::c.data.sys_updated_on" /></h4>
+  </div>  
+  <div class="panel-body">
+    <form ng-submit="$event.preventDefault()" class="form-horizontal">
+      <div ng-if="c.data.fields.length > 0">
+        <div ng-repeat="field in c.data.fields" class="m-b-xs" ng-if="field.value">
+          <label class="m-n">{{field.label}}</label>
+          <span ng-switch="field.type">
+            <div ng-switch-when="glide_date_time" title="{{field.display_value}}"><sn-time-ago timestamp="::field.value" /></div>
+            <div ng-switch-default >{{field.display_value}}</div>
+          </span>
+        </div>
+      </div>
+      <!-- set font-size=0 to remove space between inline elements so we can line up the comments box -->
+      <div ng-if="c.data.isMine && (c.data.state == 'requested')" class="question" style="font-size: 0;">
+        <button type="button" name="approve" class="btn btn-primary btn-question" ng-click="c.action('approved')">${Approve}</button>
+        <div class="spacer"></div>
+        <button type="button" name="reject" class="btn btn-default btn-question" ng-click="c.action('rejected')">${Reject}</button>
+        <div ng-if="Rejected_Comments_Method == 'inline'" style="text-align:center;">
+          <textarea class="form-control" ng-model="data.Rejection_Reason" id="Rejection_Reason_{{c.data.sys_id}}" 
+                    placeholder="Rejecting because..." 
+                    style="display: inline-block; margin-top:5px; width:95%; resize:vertical; overflow: auto; padding: 6px"></textarea>
+        </div>
+      </div>
+    </form>
+  </div>  
+</div>]]></template>
+    </sp_widget>
+</record_update>

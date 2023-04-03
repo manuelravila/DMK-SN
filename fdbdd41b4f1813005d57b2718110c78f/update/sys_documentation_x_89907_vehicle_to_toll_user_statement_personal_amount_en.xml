@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="personal_amount" label="Personal amount" language="en" table="x_89907_vehicle_to_toll_user_statement">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>personal_amount</element>
+            <help/>
+            <hint>Total amount in this statement marked as personal use </hint>
+            <label>Personal amount</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <plural>Personal amounts</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-03-01 18:59:54</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>6f40c8581bfb3300dcab7596cc4bcbf9</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>Personal amount</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_documentation_x_89907_vehicle_to_toll_user_statement_personal_amount_en</sys_update_name>
+            <sys_updated_by>mark.goldman</sys_updated_by>
+            <sys_updated_on>2019-07-17 14:06:46</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function tspApprovalActivityClient($scope, $animate, $rootScope, cabrillo, $timeout, snRecordWatcher, spUtil, spAriaUtil, $http, $window, $filter) {
+	$scope.showLocationIcon = false;
+	$scope.msg = "";
+	$scope.isNative = cabrillo.isNative();
+	$scope.errorMessages = [];
+	$scope.data.expanded = true;
+	var existingEntries = {};
+	var skipNextRecordWatchUpdate = false;
+	$scope.typing = [];
+	if (!$scope.data.hasReadableJournalField && !$scope.data.isNewRecord) {
+		console.warn(
+			"No readable journal field (comments, work notes, etc.) available in the stream for this record"
+		);
+	}
+	if ($scope.page && $scope.page.g_form) {
+		hideParentJournalFields();
+	}
+
+	function hideParentJournalFields() {
+		if (!$scope.data.stream) {
+			return;
+		}
+
+		var fields = $scope.data.stream.journal_fields;
+		var g_form = $scope.page.g_form;
+		// eslint-disable-next-line no-restricted-syntax, guard-for-in
+		for (var f in fields) {
+			g_form.setDisplay(fields[f].name, false);
+		}
+	}
+	var liveProfiles = {};
+	liveProfiles[$scope.user.sys_id] = {
+		userID: $scope.user.sys_id,
+		name: $scope.user.name,
+		initials: $window.NOW.user_initials
+	};
+	if ($window.NOW.user_avatar) {
+		liveProfiles[$scope.user.sys_id].userImage = $window.NOW.user_avatar;
+	}
+
+	$scope.getLiveProfileByUserId = function getLiveProfileByUserId(userId) {
+		return liveProfiles[userId];
+	};
+
+	var pending = {};
+
+	// Little caching implementation to make sure we only get a given user's profile once.
+	$scope.hasLiveProfile = function hasLiveProfile(userId) {
+		if (liveProfiles[userId]) {
+			return true;
+		} else if (pending[userId]) {
+			return false;
+		}
+		pending[userId] = $http
+			.get("/api/now/live/profiles/sys_user." + userId)
+			.then(function onResolve(response) {
+				liveProfiles[userId] = {
+					userID: userId,
+					name: response.data.result.name,
+					initials: buildInitials(response.data.result.name),
+					avatar: response.data.result.avatar
+				};
+			});
+		return false;
+	};
+
+	function buildInitials(name) {
+		if (!name) {
+			return "--";
+		}
+
+		var initials = name
+			.split(" ")
+			.map(function wordToUpper(word) {
+				return word.toUpperCase();
+			})
+			.filter(function wordIsLetter(word) {
+				return word.match(/^[A-Z]/);
+			})
+			.map(function wordFirstTwoChars(word) {
+				return word.substring(0, 1);
+			})
+			.join("");
+
+		return initials.length > 3 ? initials.substr(0, 3) : initials;
+	}
+
+	var recordWatcherTimer;
+	$scope.$on("record.updated", function handleRecordUpdatedEvent(name, data) {
+		// Use record watcher update if:
+		// This record was updated AND This widget didn't trigger the update.
+		if (
+			data.table_name == $scope.data.table &&
+			data.sys_id == $scope.data.sys_id
+		) {
+			$timeout.cancel(recordWatcherTimer);
+			recordWatcherTimer = $timeout(function onExpired() {
+				if (skipNextRecordWatchUpdate) {
+					skipNextRecordWatchUpdate = false;
+				} else {
+					spUtil.update($scope).then(function onResolve(r) {
+						$scope.data.stream = r.stream;
+					});
+				}
+			}, 250);
+		}
+	});
+
+	$scope.$on("sp.conversation_title.changed", function handleTitleChangedEvent(evt, text) {
+		$scope.data.ticketTitle = text;
+	});
+
+	var streamUpdateTimer;
+	$scope.$watch("data.stream", function onWatchPopped() {
+		$timeout.cancel(streamUpdateTimer);
+		streamUpdateTimer = $timeout(function onExpired() {
+			mergeStreamEntries();
+		}, 50);
+	});
+
+	function mergeStreamEntries() {
+		if (!$scope.data.stream || !$scope.data.stream.entries) {
+			return;
+		}
+
+		var entries = $scope.data.stream.entries;
+		if (!$scope.data.mergedEntries) {
+			$scope.data.mergedEntries = $scope.data.stream.entries.slice();
+			for (var i = 0; i < entries.length; i++) {
+				existingEntries[entries[i].sys_id] = true;
+			}
+
+			return;
+		}
+
+		var mergedEntries = $scope.data.mergedEntries;
+		for (var j = entries.length - 1; j >= 0; j--) {
+			var curEntry = entries[j];
+			if (isNewEntry(mergedEntries, curEntry)) {
+				mergedEntries.unshift(curEntry);
+				existingEntries[curEntry.sys_id] = true;
+			}
+		}
+	}
+
+	function isNewEntry(mergedEntries, item) {
+		for (var i = 0; i < mergedEntries.length; i++) {
+			if (mergedEntries[i].sys_id === item.sys_id) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	$scope.getPlaceholder = function getPlaceholder() {
+		if (
+			$scope.data.use_dynamic_placeholder &&
+			$scope.data.useSecondaryJournalField
+		) {
+			return $scope.data.secondaryJournalField.label;
+		}
+		return $scope.placeholder;
+	};
+
+	var colorCache;
+	$scope.getFieldColor = function getFieldColor(fieldName) {
+		var defaultColor = "transparent";
+		if (colorCache) {
+			if (fieldName in colorCache) {
+				return colorCache[fieldName];
+			}
+			return defaultColor;
+		}
+
+		colorCache = {};
+		var jf = $scope.data.stream.journal_fields;
+		for (var i = 0; i < jf.length; i++) {
+			colorCache[jf[i].name] = jf[i].color || defaultColor;
+		}
+		return $scope.getFieldColor(fieldName);
+	};
+
+	var fieldCache;
+	$scope.getFieldDefinition = function getFieldDefinition(fieldName) {
+		if (fieldCache) {
+			if (fieldName in fieldCache) {
+				return fieldCache[fieldName];
+			}
+			return undefined;
+		}
+
+		fieldCache = {};
+		var jf = $scope.data.stream.journal_fields;
+		for (var i = 0; i < jf.length; i++) {
+			fieldCache[jf[i].name] = jf[i];
+		}
+		return $scope.getFieldDefinition(fieldName);
+	};
+
+	$scope.toggleExpanded = function toggleExpanded() {
+		$scope.data.expanded = !$scope.data.expanded;
+	};
+
+	$scope.getFormattedValue = function getFormattedValue(value, type) {
+		if (type == "currency") {
+			return $filter("currency")(value);
+		} else if (type == "date") {
+			return $filter("date")(value, g_user_date_time_format);
+		}
+		return value;
+	};
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.timeline &gt; li &gt; .timeline-panel {
+	float: left;
+	position: relative;
+	width: calc(85% - 40px);
+	border: 1px solid #dee5e7;
+	border-radius: 4px;
+	-webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, .1);
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, .1);
+  left: calc(15% + 10px);
+}
+
+.timeline &gt; li &gt; .timeline-badge {
+    z-index: 100;
+    position: absolute;
+    float: left;
+    top: 16px;
+    left: 10%;
+    width: 50px;
+    height: 50px;
+    margin-left: -25px;
+    border-radius: 50% 50% 50% 50%;
+    text-align: center;
+    font-size: 1.4em;
+    line-height: 50px;
+    color: #fff;
+}
+
+.timeline:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 20px;
+	left: 0;
+	right: 90%;
+	border-right: 2px #dee5e7 solid;
+}
+.timeline-heading.flex-item-narrow {
+  flex: 0 0 35%;
+}
+.timeline-body.flex-item-narrow {
+  flex: 0 0 65%;
+}
+
+.flex-container {
+  height: initial;
+  width: initial;
+}
+
+.timeline-body &gt; p {
+  white-space: pre-wrap;
+}
+
+.no-resize {
+  resize: none;
+}
+
+.journal-field-indicator {
+	width: 5px;
+  height: 23px;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  z-index: 3;
+}
+
+.panel-heading {
+ word-wrap: break-word;
+}
+
+.avatar-container {
+  cursor: default;
+}
+
+ul {
+	list-style: none;
+
+  li {
+  float: left;
+  }
+}
+
+.panel-title {
+  display: inline;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.timeline-badge.success {
+  background-color: $success;
+}
+
+.timeline &gt; span &gt; .timeline-badge {
+	z-index: 100;
+	position: relative;
+	float: left;
+	top: 16px;
+	left: 50%;
+	width: 50px;
+	height: 50px;
+	margin-left: -25px;
+	border-radius: 50% 50% 50% 50%;
+	text-align: center;
+	font-size: 1.4em;
+	line-height: 50px;
+	color: #fff;
+}
+
+.journal-type {
+ 	display: inline-flex;
+  display: -ms-inline-flexbox;
+  flex-wrap: wrap;
+  -webkit-justify-content: flex-end;
+}
+
+.fa-circle {
+  font-size: 4px;
+  padding: 7px;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data>{"options": {
+	"sys_id": -1,
+		"table": "incident"
+	}
+}</demo_data>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>tsp-approval-activity</id>
+        <internal>false</internal>
+        <link><![CDATA[function tspApprovalActivityLink(scope, elm) {
+	// Set the focus back on the input for IE11
+	scope.setFocus = function setFocus() {
+		var input = $(elm[0]).find("textarea#post-input");
+		if (input[0]) {
+			input[0].focus();
+		}
+	};
+}
+]]></link>
+        <name>TSP Approval Activity</name>
+        <option_schema>[{"hint":"Placeholder text shows selected journal field","name":"use_dynamic_placeholder","section":"Behavior","label":"Use dynamic placeholder","type":"boolean"},{"hint":"Message to show when record has no readable journal field","name":"no_readable_journal_field_message","default_value":"","section":"Presentation","label":"No readable journal field message","type":"string"}]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[/* globals data,gs,input,options,$sp,GlideRecord */
+/* OOB reference source is Ticket Conversations - modified to
+ * handle non-task records
+ */
+(function tspApprovalActivity() {
+	data.viewMsg = gs.getMessage("View");
+
+	if (!input) {
+		data.sys_id = options.sys_id;
+		data.table = options.table;
+	} else {
+		data.sys_id = input.sys_id || options.sys_id || $sp.getParameter("sys_id");
+		data.table = input.table || options.table || $sp.getParameter("table");
+	}
+	// don't use options.title unless sys_id and table also come from options
+	if (options && options.sys_id && options.table) {
+		data.ticketTitle = options.title;
+	}
+	options.no_readable_journal_field_message =
+		options.no_readable_journal_field_message ||
+		gs.getMessage("No readable comment field");
+	data.includeExtended = options.includeExtended || false;
+
+	var primaryGR = new GlideRecord(data.table);
+	if (!primaryGR.isValid()) {
+		return;
+	}
+
+	primaryGR.get(data.sys_id);
+	if (!primaryGR.canRead()) {
+		return;
+	}
+
+	$sp.logStat("Task View", data.table, data.sys_id);
+	data.table = primaryGR.getRecordClassName(); // use actual table for the record
+	data.number = primaryGR.getDisplayValue("number");
+	data.created_on = primaryGR.getValue("sys_created_on");
+	data.tableLabel = primaryGR.getLabel();
+	data.canRead = primaryGR.canRead();
+	data.isNewRecord = data.sys_id == -1 || primaryGR.isNewRecord();
+
+	if (!data.ticketTitle) {
+		if (primaryGR.short_description.canRead()) {
+			data.ticketTitle = primaryGR.getDisplayValue("short_description");
+		}
+		if (!data.ticketTitle) {
+			data.ticketTitle = data.number;
+		}
+	}
+
+	data.hasReadableJournalField = false;
+	if (data.canRead && !data.isNewRecord) {
+		data.stream = getStream(data.sys_id, data.table, data.number, primaryGR);
+		// Journal fields come in correct order already
+		// so grab the first 2 writeable fields
+		if ("journal_fields" in data.stream) {
+			var jf = data.stream.journal_fields;
+			for (var i = 0; i < jf.length; i++) {
+				if (jf[i].can_read === true) {
+					data.hasReadableJournalField = true;
+				}
+			}
+		}
+	}
+	
+	function getStream(sysID, table, number, record) {
+		var stream = {};
+		stream.display_value = number;
+		stream.label = record.getLabel();
+		stream.number = number;
+		stream.short_description = record.getDisplayValue("short_description");
+		stream.sys_id = sysID;
+		stream.table = table;
+		stream.user_full_name = gs.getUserDisplayName();
+		stream.user_login = gs.getUserName();
+		stream.user_sys_id = gs.getUserID();
+		stream.journal_fields = [];
+
+		// ALL OF THE ACTIVITY TYPES THAT WE'D LIKE TO LOOK AT
+		stream.journal_fields.push({
+			can_read: true,
+			can_write: false,
+			color: "orange",
+			label: "Approval",
+			name: "approval",
+			type: "choice"
+		});
+		stream.journal_fields.push({
+			can_read: true,
+			can_write: false,
+			color: "orange",
+			label: "Approval History",
+			name: "approval_history",
+			type: "journal"
+		});
+		stream.journal_fields.push({
+			can_read: true,
+			can_write: false,
+			color: "orange",
+			label: "Approval Set",
+			name: "approval_set",
+			type: "date"
+		});
+		stream.journal_fields.push({
+			can_read: true,
+			can_write: false,
+			color: "transparent",
+			label: "Status",
+			name: "status",
+			type: "choice"
+		});
+		stream.journal_fields.push({
+			can_read: true,
+			can_write: false,
+			color: "transparent",
+			label: "Phase",
+			name: "progress_phase",
+			type: "choice"
+		});
+		stream.journal_fields.push({
+			can_read: true,
+			can_write: false,
+			color: "red",
+			label: "User",
+			name: "user",
+			type: "user"
+		});
+		stream.journal_fields.push({
+			can_read: true,
+			can_write: false,
+			color: "transparent",
+			label: "Personal Amount",
+			name: "personal_amount",
+			type: "currency",
+			filter: "currency"
+		});
+		stream.journal_fields.push({
+			can_read: true,
+			can_write: false,
+			color: "transparent",
+			label: "Short Description",
+			name: "short_description",
+			type: "text"
+		});
+		stream.journal_fields.push({
+			can_read: true,
+			can_write: false,
+			color: "red",
+			label: "Status Notes",
+			name: "status_notes",
+			type: "journal"
+		});
+
+		// Collect the field names for the history query
+		// Key the field defs for reference
+		var fieldNames = [];
+		var fieldDefs = {};
+		for (var j = 0; j < stream.journal_fields.length; j++) {
+			fieldDefs[stream.journal_fields[j].name] = stream.journal_fields[j];
+			fieldNames.push(stream.journal_fields[j].name);
+		}
+
+		// ALL OF THE ENTRIES WE WANT TO SEE
+		stream.entries = [];
+		var rs2 = new GlideRecord("sys_audit");
+		rs2.addQuery("documentkey", sysID.toString());
+		rs2.addQuery("tablename", table.toString());
+		rs2.addQuery("fieldname", "IN", fieldNames.join(","));
+		rs2.orderByDesc("sys_created_on");
+		rs2.query();
+
+		var lookupCaches = {
+			choice_labels: [],
+			user_names: []
+		};
+		while (rs2.next()) {
+			stream.entries.push(
+				createStreamEntry(rs2, table, fieldDefs, lookupCaches)
+			);
+		}
+		return stream;
+	}
+
+	function createStreamEntry(rs2, table, fieldDefs, lookupCaches) {
+		var entry = {
+			element: rs2.getValue("fieldname"),
+			field_label: rs2.fieldname.getDisplayValue(),
+			// initials: gs.getUserDisplayName().split(" ")[0].toString().substr(0, 1) +gs.getUserDisplayName().split(" ")[1].toString().substr(0, 1),
+			login_name: GetUserNameByUserId(rs2.user.getDisplayValue()),
+			name: GetUserNameByUserId(rs2.user.getDisplayValue()),
+			sys_created_on: rs2.getValue("sys_created_on"),
+			sys_created_on_adjusted: rs2.sys_created_on.getDisplayValue(),
+			sys_id: rs2.sys_id.toString(),
+			user_sys_id: GetSysIdByUserId(rs2.user.getDisplayValue()),
+			//				value: formatStreamValue(rs2, table),
+			oldValue: rs2.oldvalue.toString(),
+			newValue: rs2.newvalue.toString()
+		};
+		var fieldDef = fieldDefs[entry.element];
+		entry.type = fieldDef.type;
+		if (fieldDef.type === "choice") {
+			if (entry.oldValue) {
+				entry.oldValueFmt = lookUpChoiceLabel(
+					table,
+					fieldDef.name,
+					entry.oldValue,
+					lookupCaches
+				);
+			}
+			if (entry.newValue) {
+				entry.newValueFmt = lookUpChoiceLabel(
+					table,
+					fieldDef.name,
+					entry.newValue,
+					lookupCaches
+				);
+			}
+		} else if (fieldDef.type === "user") {
+			if (entry.oldValue) {
+				entry.oldValueFmt = lookUpUserLabel(entry.oldValue, lookupCaches);
+			}
+			if (entry.newValue) {
+				entry.newValueFmt = lookUpUserLabel(entry.newValue, lookupCaches);
+			}
+		} else if (fieldDef.type === "journal") {
+			entry.oldValue = "";
+			entry.oldValueFmt = "";
+			entry.newValueFmt = entry.newValue;
+		} else if (fieldDef.type === "date") {
+			var gdt;
+			if (entry.oldValue) {
+				gdt = new GlideDateTime(entry.oldValue);
+				entry.oldValueFmt = gdt.getNumericValue();
+			}
+			if (entry.newValue) {
+				gdt = new GlideDateTime(entry.newValue);
+				entry.newValueFmt = gdt.getNumericValue();
+			}
+		} else {
+			entry.oldValueFmt = entry.oldValue;
+			entry.newValueFmt = entry.newValue;
+		}
+		return entry;
+	}
+
+	function lookUpUserLabel(userSysID, lookupCaches) {
+		var key = userSysID;
+		if (lookupCaches.user_names[key]) {
+			return lookupCaches.user_names[key];
+		}
+		var label = GetUserNameBySysId(userSysID);
+		label = label || "(Not Found)";
+		// eslint-disable-next-line no-param-reassign
+		lookupCaches.user_names[key] = label;
+		return label;
+	}
+
+	function lookUpChoiceLabel(table, name, value, lookupCaches) {
+		var key = table + name + value;
+		if (lookupCaches.choice_labels[key]) {
+			return lookupCaches.choice_labels[key];
+		}
+		var label = GetChoiceLabelByValue(table, value, name);
+		label = label || value;
+		// eslint-disable-next-line no-param-reassign
+		lookupCaches.choice_labels[key] = label;
+		return label;
+	}
+	/*
+	function formatStreamValue(rs2, table) {
+
+			default:
+				result = (newValue.indexOf("[code]") != -1) ? newValue.replace("[code]", "").replace("[/code]", "") : GlideStringUtil.escapeHTML(newValue);
+		}
+		return result;
+	}
+	*/
+
+	// EXTRA FUNCTIONS NEEDED FOR GETSTREAM REPLACEMENT CODE
+
+	function GetUserNameByUserId(_id) {
+		var rs = new GlideRecord("sys_user");
+		rs.addQuery("user_name", _id);
+		rs.query();
+		if (rs.next()) {
+			return rs.getDisplayValue();
+		}
+		return "ServiceNow"; // IF WE CAN'T FIND IT, IT'S MOST LIKELY A BUSINESS RULE OR OTHER INTERNAL PROCESS
+	}
+
+	function GetSysIdByUserId(_id) {
+		var rs = new GlideRecord("sys_user");
+		rs.addQuery("user_name", _id);
+		rs.query();
+		if (rs.next()) {
+			return rs.sys_id.toString();
+		}
+		return "";
+	}
+
+	function GetUserNameBySysId(_id) {
+		var rs = new GlideRecord("sys_user");
+		rs.addQuery("sys_id", _id);
+		rs.query();
+		if (rs.next()) {
+			return rs.name.getDisplayValue();
+		}
+		return "Unknown";
+	}
+
+	function GetChoiceLabelByValue(_table, _value, _element) {
+		var rs = new GlideRecord("sys_choice");
+		rs.addQuery("name", _table);
+		rs.addQuery("value", _value);
+		rs.addQuery("element", _element);
+		rs.query();
+		if (rs.next()) {
+			return rs.label.toString();
+		}
+		// WE DIDN'T FIND IT, ASSUME IT'S UP ON THE TASK TABLE. MANUALLY CHECK ONCE FOR IT, UGLY BUT ALRIGHT
+		var rs1 = new GlideRecord("sys_choice");
+		rs1.addQuery("name", "task");
+		rs1.addQuery("value", _value);
+		rs1.addQuery("element", _element);
+		rs1.query();
+		if (rs1.next()) {
+			return rs1.label.toString();
+		}
+		return "None";
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-06-21 19:16:29</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>e516a0334f0a3b405d57b2718110c74d</sys_id>
+        <sys_mod_count>92</sys_mod_count>
+        <sys_name>TSP Approval Activity</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_e516a0334f0a3b405d57b2718110c74d</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-16 12:12:22</sys_updated_on>
+        <template><![CDATA[<div>
+    <div ng-if="!data.canRead && !data.isNewRecord">
+      ${Requested record not found}
+    </div>
+    <div ng-if="data.canRead && !data.isNewRecord" class="panel panel-{{options.color}} b ticket_conversation" >
+      <div class="panel-heading">
+        <div class="h2 panel-title">
+          <h2 class="h4 panel-title" aria-label="{{::data.ticketTitle}} ${Ticket history}" >{{::data.ticketTitle}}</h2>
+        </div>
+        <div class="h2 panel-title pull-right">
+          <a href ng-click="toggleExpanded()" title="Expand/Collapse">
+            <h2 class="h4 panel-title"><i class="fa fa-lg" ng-class="data.expanded ? 'fa-angle-double-up' : 'fa-angle-double-down'" aria-hidden="true"></i>{{data.expanded ? " Collapse" : " Expand"}}</h2>
+          </a>
+        </div>
+      </div>
+  
+      <div class="panel-body" ng-show="data.expanded">
+        <div ng-if="data.hasReadableJournalField">
+          <div class="timeline-container">
+            <ul role="list" class="timeline" aria-label="${Ticket history}">
+              <li class="timeline-item timeline-inverted" ng-repeat="e in data.mergedEntries" aria-label="{{::e.name}}">
+                <div class="timeline-badge">
+                  <sn-avatar-once
+                             ng-if="hasLiveProfile(e.user_sys_id)"
+                             primary="getLiveProfileByUserId(e.user_sys_id)"
+                             class="avatar-large"
+                             show-presence="false"
+                             enable-context-menu="false">
+                  </sn-avatar-once>
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-panel-inner flex-container" ng-style="::{'border-color': getFieldColor(e.element)}">
+                    <div class="timeline-heading flex-item-narrow">
+                      <div class="timeline-title h4">{{::e.name}}</div>
+                      <p class = "time-text">
+                        <small class="text-muted" >
+                          <span class="glyphicon glyphicon-time" aria-hidden="true" tabindex="-1" />
+                          <sn-time-ago  timestamp="::e.sys_created_on"  /> 
+                        </small>
+                        <br/>
+                        <small class = "text-muted journal-type">{{::e.field_label}}</small>
+                      </p>
+                    </div>
+                    <div class="timeline-body flex-item-narrow">
+                      <script type="text/ng-template" id="fieldChangeTemplate">
+												<p ng-if="e.oldValueFmt && e.newValueFmt">
+                        	{{::getFieldDefinition(e.element).label}} changed from <b>{{::getFormattedValue(e.oldValueFmt, e.type)}}</b> to <b>{{::getFormattedValue(e.newValueFmt, e.type)}}</b>
+                        </p>
+												<p ng-if="e.oldValueFmt && !e.newValueFmt">
+                        	{{::getFieldDefinition(e.element).label}} cleared. Was <b>{{::getFormattedValue(e.oldValueFmt, e.type)}}</b>.
+                        </p>
+												<p ng-if="!e.oldValueFmt && e.newValueFmt">
+                        	{{::getFieldDefinition(e.element).label}} set to <b>{{::getFormattedValue(e.newValueFmt, e.type)}}</b>. Was empty.
+                        </p>
+                      </script>
+                      <script type="text/ng-template" id="journalTemplate">
+												<p>
+                        	Added {{::getFieldDefinition(e.element).label}}:<br/>
+                          <b>{{::e.newValueFmt}}</b>
+                        </p>
+                      </script>
+                      
+                      <ng-include ng-if="::(e.element != 'attachment')" src="e.type == 'journal' ? 'journalTemplate' : 'fieldChangeTemplate'"></ng-include>
+                      <div ng-if="::(e.element == 'attachment')">
+                        <a target="_blank" href="/sys_attachment.do?view=true&sys_id={{::e.attachment.sys_id}}" title="{{::dataViewMsg}}" >
+                          <img ng-if="e.attachment.thumbnail_path" alt="" ng-src="/{{::e.attachment.path}}?t=medium" class="img-responsive"/>
+                        </a>
+                        <div>
+                          <a href="/sys_attachment.do?sys_id={{::e.attachment.sys_id}}" target="_blank" title="{{::dataViewMsg}}"><strong>{{::e.attachment.file_name}}</strong></a><br/>
+                          {{::e.attachment.size}}
+                        </div>
+                      </div>
+                      
+                      
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li role="listitem" class="timeline-item timeline-inverted" aria-label="{{data.stream.user_full_name}}">
+                <div class="timeline-badge">
+                  <sn-avatar-once
+                             ng-if="hasLiveProfile(data.stream.user_sys_id)"
+                             primary="getLiveProfileByUserId(data.stream.user_sys_id)"
+                             class="avatar-large"
+                             show-presence="false"
+                             enable-context-menu="false">
+                  </sn-avatar-once>
+                </div>
+                <div class="timeline-panel timeline-panel-first-item">
+                  <div class="timeline-heading">
+                    <div class="timeline-title h4">{{data.stream.user_full_name}}</div>
+                    <p>
+                      <small class="text-muted">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true" tabindex="-1" />
+                        <sn-time-ago timestamp="data.created_on" />
+                      </small>
+                    </p>
+                  </div>
+                  <div class="timeline-body">
+                    <p>{{data.number}} ${Created}</p>
+                  </div>
+                </div>
+              </li>
+              <span role="presentation" aria-hidden="true" class="timeline-start">
+                <div class="timeline-badge success">
+                  ${Start}
+                </div>
+              </span>
+            </ul>
+          </div>
+  
+        </div>
+        <div ng-if="!data.hasReadableJournalField">
+          {{options.no_readable_journal_field_message}}
+        </div>
+      </div>
+      <div class="panel-footer">
+        <ng-pluralize
+                      count="data.mergedEntries.length"
+                      when="{'0': 'No entries.',
+                            'one': '1 entry.',
+                            'other': '{} entries.'
+                            }">
+        </ng-pluralize>
+      </div>
+    </div>
+  </div>]]></template>
+    </sp_widget>
+</record_update>

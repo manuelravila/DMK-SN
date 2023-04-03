@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="7c110efddb55e700f898fbefbf9619e0" sys_domain="global" table="x_89907_vehicle_to_payment" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>number</element>
+            <position>0</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>4c44fb814f513b405d57b2718110c7bf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>user</element>
+            <position>1</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>c044fb814f513b405d57b2718110c7c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>company</element>
+            <position>2</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>4444fb814f513b405d57b2718110c7c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>check_amount</element>
+            <position>3</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>c444fb814f513b405d57b2718110c7c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>check_number</element>
+            <position>4</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>4844fb814f513b405d57b2718110c7c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>date_of_check</element>
+            <position>5</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>c844fb814f513b405d57b2718110c7c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>date_received</element>
+            <position>6</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>4c44fb814f513b405d57b2718110c7c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>override_amount_validation</element>
+            <position>7</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>cc44fb814f513b405d57b2718110c7c0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>8</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>4044fb814f513b405d57b2718110c7c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>amount</element>
+            <position>9</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>c044fb814f513b405d57b2718110c7c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>total_user_statements</element>
+            <position>10</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>4444fb814f513b405d57b2718110c7c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>status</element>
+            <position>11</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>c444fb814f513b405d57b2718110c7c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>phase</element>
+            <position>12</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>4844fb814f513b405d57b2718110c7c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>closed_by</element>
+            <position>13</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>c844fb814f513b405d57b2718110c7c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>closed</element>
+            <position>14</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>4c44fb814f513b405d57b2718110c7c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>15</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>cc44fb814f513b405d57b2718110c7c1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>resolution_comments</element>
+            <position>16</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-07 14:26:52</sys_created_on>
+            <sys_id>4044fb814f513b405d57b2718110c7c2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_payment" sys_domain="global" view="Default view">7c110efddb55e700f898fbefbf9619e0</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-07 14:26:52</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_89907_vehicle_to_payment</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2018-10-22 17:47:56</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>7c110efddb55e700f898fbefbf9619e0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_payment</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_section_7c110efddb55e700f898fbefbf9619e0</sys_update_name>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2018-10-22 17:47:56</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

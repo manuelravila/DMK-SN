@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Status notes" section_id="48593d684ff073005d57b2718110c70a" sys_domain="global" table="x_89907_vehicle_to_toll_user_statement" version="3" view="Coordinator">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>status_notes</element>
+            <position>0</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-04-10 19:41:24</sys_created_on>
+            <sys_id>1c593d684ff073005d57b2718110c72d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Status notes" display_value="Status notes" name="x_89907_vehicle_to_toll_user_statement" sys_domain="global" view="9cb4fb8cdbc31300f898fbefbf961918">48593d684ff073005d57b2718110c70a</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-04-10 19:41:24</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Status notes</caption>
+            <header>false</header>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-04-10 19:41:23</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>48593d684ff073005d57b2718110c70a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_toll_user_statement</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_section_48593d684ff073005d57b2718110c70a</sys_update_name>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-04-10 19:41:23</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Coordinator" name="Coordinator">9cb4fb8cdbc31300f898fbefbf961918</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

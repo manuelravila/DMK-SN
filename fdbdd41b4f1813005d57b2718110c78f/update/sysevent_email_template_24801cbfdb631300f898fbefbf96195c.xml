@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysevent_email_template">
+    <sysevent_email_template action="INSERT_OR_UPDATE">
+        <collection>x_89907_vehicle_to_toll_notification_control</collection>
+        <email_layout/>
+        <message/>
+        <message_html><![CDATA[<div><span style="text-decoration: underline; font-family: verdana, geneva; font-size: 10pt;"><strong>Reminder To Review&nbsp;Toll Charges</strong></span></div>
+<div>&nbsp;</div>
+<div><span style="font-family: verdana, geneva; font-size: 10pt;">Greetings. You are receiving this reminder because our records indicate that you have not reviewed your monthly E-ZPass Statement(s).&nbsp;Please note it is a requirement that <strong>all</strong>&nbsp;E-ZPass charges, whether <span style="text-decoration: underline;">business or personal,</span>&nbsp;be reviewed each month.</span></div>
+<div><span style="font-family: verdana, geneva; font-size: 10pt;">&nbsp;</span></div>
+<div><span style="font-family: verdana, geneva; font-size: 10pt;">Please log into the ${mail_script:toll.portal.link} to review your statements.</span></div>
+<div style="font-size: medium;">&nbsp;</div>
+<div style="font-size: medium;"><span style="font-family: verdana, geneva; font-size: 10pt;"><strong>Failure to review and act on invoices assigned to you may result in disciplinary action.</strong></span></div>
+<div style="font-size: medium;">&nbsp;</div>
+<div style="font-size: medium;">&nbsp;</div>]]></message_html>
+        <message_list/>
+        <message_text/>
+        <name>User Statement Pending</name>
+        <sms_alternate/>
+        <subject>You have ${total_user_statements} pending statement(s) to review and submit</subject>
+        <sys_class_name>sysevent_email_template</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-08-02 14:55:03</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>24801cbfdb631300f898fbefbf96195c</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>User Statement Pending</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysevent_email_template_24801cbfdb631300f898fbefbf96195c</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 04:18:13</sys_updated_on>
+        <sys_version>2</sys_version>
+    </sysevent_email_template>
+</record_update>

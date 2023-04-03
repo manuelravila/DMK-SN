@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TransponderUsageExceptionRuleSet</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>TransponderUsageExceptionRuleSet</name>
+        <script><![CDATA[gs.include("UsageExceptionRuleSet");
+
+var TransponderUsageExceptionRuleSet = Class.create();
+TransponderUsageExceptionRuleSet.prototype = Object.extendsObject(
+	UsageExceptionRuleSet,
+	{
+		initialize: function initialize(transponderGR, parentRuleSet) {
+			UsageExceptionRuleSet.prototype.initialize.call(this, transponderGR);
+			// store the literal values from the transponderGR so it's loop safe
+			this._allowOutOfArea = !!transponderGR.allow_out_of_area;
+			this._alternateShift = !!transponderGR.alternate_shift;
+
+			Object.defineProperty(this, "parent", {
+				get: function() {
+					return parentRuleSet;
+				}
+			});
+			Object.defineProperty(this, "allowOutOfArea", {
+				get: function() {
+					return this._allowOutOfArea;
+				}
+			});
+			Object.defineProperty(this, "alternateShift", {
+				get: function() {
+					return this._alternateShift;
+				}
+			});
+		},
+
+		isPlazaException: function isPlazaException(plazaID, plazaAgencyCode) {
+			if (this.allowOutOfArea) {
+				return false;
+			}
+			return this.parent && this.parent.isPlazaException(plazaID, plazaAgencyCode);
+		},
+
+		isTimeException: function isTimeException(time) {
+			if (this.alternateShift) {
+				// return super.isTimeException(time);
+				return UsageExceptionRuleSet.prototype.isTimeException.call(this, time);
+			}
+			return this.parent && this.parent.isTimeException(time);
+		},
+
+		isDayOfWeekException: function isDayOfWeekException(day) {
+			if (typeof this.allowWeekends == "undefined") {
+				return this.parent && this.parent.isDayOfWeekException(day);
+			}
+			// return super.isDayOfWeekException(day);
+			return UsageExceptionRuleSet.prototype.isDayOfWeekException.call(
+				this,
+				day
+			);
+		},
+
+		type: "TransponderUsageExceptionRuleSet"
+	}
+);
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-06-03 19:50:52</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2d4ff7714f357b005d57b2718110c775</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>TransponderUsageExceptionRuleSet</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_2d4ff7714f357b005d57b2718110c775</sys_update_name>
+        <sys_updated_by>SN_Chall</sys_updated_by>
+        <sys_updated_on>2021-09-13 03:13:07</sys_updated_on>
+    </sys_script_include>
+</record_update>

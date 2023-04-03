@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_email">
+    <sys_script_email action="INSERT_OR_UPDATE">
+        <name>manager.snapshot</name>
+        <new_lines_to_html>false</new_lines_to_html>
+        <script><![CDATA[(function runMailScript(/* GlideRecord */ current, /* TemplatePrinter */ template,
+          /* Optional EmailOutbound */ email, /* Optional GlideRecord */ email_action,
+          /* Optional GlideRecord */ event) {
+
+	var pending = 0;
+	var paymentOwed = 0;
+	var disputed = 0;
+	var ack= 0;
+	var paid = 0;
+	var total = 0;
+	
+	template.print('<style type="text/css">');
+    template.print('.tg  {border-collapse:collapse;border-spacing:0;}');
+    template.print('.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}');
+    template.print('.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}');
+    template.print('.tg .tg-fs8j{background-color:#ffffff;text-align:left}');
+    template.print('.tg .tg-3ye8{background-color:#00d2cb;text-align:left}');
+    template.print('</style>');
+	
+    template.print('<p><font size="5" color="#808080" face="helvetica"><strong>');
+ 	template.print('Manager snapshot for ' + current.manager.name + '-' + current.name);
+	template.print('</strong></font></p>');
+
+	template.print('<table class="tg">');
+	template.print('<tr>');
+	template.print('<th class="tg-3ye8">Name</th>');
+	template.print('<th class="tg-3ye8">Pending</th>');
+	template.print('<th class="tg-3ye8">Acknowledged</th>');
+	template.print('<th class="tg-3ye8">Owed</th>');
+	template.print('<th class="tg-3ye8">Paid</th>');
+	template.print('<th class="tg-3ye8">Disputed</th>');
+	template.print('<th class="tg-3ye8">Total</th>');
+	template.print('</tr>');
+	
+    var gx = new GlideRecord("x_89907_vehicle_to_m2m_users_toll_approvers");  
+    gx.addQuery('toll_approver',current.sys_id);
+    gx.query();
+    while(gx.next())
+     {	
+	
+		var gz = new GlideAggregate("x_89907_vehicle_to_toll_user_statement");
+		gz.addQuery('user','=',gx.user);
+		gz.addAggregate('COUNT');
+		gz.groupBy('progress_phase');
+		gz.query();
+		if(gz.getRowCount() > 0)
+		 {
+		  pending = 0;paymentOwed = 0;disputed = 0;ack= 0;paid = 0;total = 0;
+		 }
+		else;
+		while(gz.next())
+		 {
+		  total += parseInt(gz.getAggregate('COUNT'));
+		  switch(gz.progress_phase.getDisplayValue())
+		   {
+			case 'Pending':
+			  pending = gz.getAggregate('COUNT');
+			  break;
+			case 'Acknowledged':
+			  ack = gz.getAggregate('COUNT');
+			  break;
+			case 'PaymentOwed':
+			  paymentOwedack = gz.getAggregate('COUNT');
+			  break;
+			case 'Paid':
+			  paid = gz.getAggregate('COUNT');
+			  break;
+			default:
+			  disputed = gz.getAggregate('COUNT');
+			  break;
+		   }
+		 }
+	     template.print('<tr>');	
+		 template.print('<td class="tg-fs8j">' + gx.user.getDisplayValue() + '</td>');
+		 template.print('<td class="tg-fs8j">' + pending + '</td>');
+		 template.print('<td class="tg-fs8j">' + ack + '</td>');
+		 template.print('<td class="tg-fs8j">' + paymentOwed + '</td>');
+		 template.print('<td class="tg-fs8j">' + paid + '</td>');
+		 template.print('<td class="tg-fs8j">' + disputed + '</td>');
+		 template.print('<td class="tg-fs8j">' + total + '</td>');
+ 	 	 template.print('</tr>');	
+
+	}
+   template.print('</table>');
+	
+})(current, template, email, email_action, event);]]></script>
+        <sys_class_name>sys_script_email</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-05-15 15:50:40</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2e14113f4f11ff405d57b2718110c741</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>manager.snapshot</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_email_2e14113f4f11ff405d57b2718110c741</sys_update_name>
+        <sys_updated_by>dan.lengyel</sys_updated_by>
+        <sys_updated_on>2019-05-16 12:13:27</sys_updated_on>
+    </sys_script_email>
+</record_update>

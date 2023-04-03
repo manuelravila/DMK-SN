@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_ng_template">
+    <sp_ng_template action="INSERT_OR_UPDATE">
+        <id>accordion-template</id>
+        <sp_widget display_value="DMK Enhanced List">4219e0d8dbcb2700f898fbefbf9619a4</sp_widget>
+        <sys_class_name>sp_ng_template</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-24 13:49:05</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>45cf810cdb5b6f00f898fbefbf961980</sys_id>
+        <sys_mod_count>35</sys_mod_count>
+        <sys_name>accordion-template</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_ng_template_45cf810cdb5b6f00f898fbefbf961980</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-15 06:17:44</sys_updated_on>
+        <template><![CDATA[<div ng-style="{'max-height': c.getMaxHeight()}" style="overflow-y: auto">
+    <uib-accordion close-others="true" class="tsp-detail-accordion list-group hide-x-overflow">
+				<uib-accordion-group ng-if="c.data.list.length > 0" ng-repeat="item in c.data.list track by item.sys_id"
+                             ng-click="c.expandAccordion(item)" panel-class="list-group-item" ng-init="item.accordion={}" is-open="item.accordion.isOpen" template-url="group-template.html">
+            <uib-accordion-heading>
+                <div>
+                    <div class="pull-left m-r-sm">
+                        <span ng-repeat="action in c.data.actions" href="" ng-click="c.onClick($event, item, action.url, action)"
+                            ng-if="action.glyph" class="list-action l-h-40 pull-right">
+                            <fa name="{{action.glyph}}" ng-class="c.getActionColor(action)" />
+                        </span>
+                        <span ng-if="c.options.image_field" class="pull-left m-r" ng-class="{'avatar': c.options.rounded_images, 'thumb-sm': c.options.rounded_images}">
+                            <img ng-src="{{item.image_field}}" alt="..." class="img-sm" ng-class="{'img-circle': c.options.rounded_images}">
+                        </span>
+                        <span class="pull-left tsp-icon-wrapper" ng-if="item.icon || c.options.item_icon">
+                            <span class="fa fa-stack fa-lg text-info">
+                                <i class="fa fa-square-o fa-stack-2x"></i>
+                                <i class="fa fa-stack-1x" ng-class="c.getItemIcon(item)"></i>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="pull-right m-l-sm">
+                        <i class="fa fa-lg" ng-class="{'fa-angle-double-up': item.accordion.isOpen, 'fa-angle-double-down': !item.accordion.isOpen}"></i>
+                    </div>
+                    <div style="display:table">
+                        <div ng-switch on="item.display_field.type" ng-class="{'l-h-40': !item.secondary_fields.length}">
+                            <span ng-switch-when="translated_html" class="translated-html" ng-bind-html="item.display_field.value"></span>
+                            <div ng-switch-default class="text-primary">{{item.display_field.display_value}}</div>
+                        </div>
+                        <ul class="tsp-detail-attr-list list-inline text-muted text-base">
+                          <li ng-repeat="f in item.secondary_fields" ng-if="(f.type != 'boolean') || (f.type == 'boolean' && f.value == '1')">
+                            <span ng-switch="f.type" title="{{::f.label}}" style="display: inline-block;">
+                              <span ng-switch-when="dot_mod_show_date_not_timeAgo && glide_date">
+                                <sn-time-ago timestamp="::f.value" style="display: inline-block;" /></span>
+                              <span ng-switch-when="glide_date">{{f.display_value | date:g_user_date_format}}</span>
+                              <span ng-switch-when="dot_mod_show_date_not_timeAgo && glide_date_time">
+                                <sn-time-ago timestamp="::f.value" style="display: inline-block;" /></span>
+                              <span ng-switch-when="glide_date_time">{{f.display_value | date:g_user_date_time_format}}</span>
+                              <span ng-switch-when="boolean">{{f.label}}</span>                            
+                              <span ng-switch-default="" style="display: inline-block;">{{f.display_value}}</span>
+                            </span>
+                          </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </uib-accordion-heading>
+            <div ng-if="!item.loaded" ng-show="loadingIndicator">
+                <div class="sp-loading-indicator la-dark">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div ng-include="item.templateURL" ng-if="item.loaded">
+            </div>
+        </uib-accordion-group>
+        <div ng-if="!c.data.list.length" class="list-group-item">
+            ${No records found}
+        </div>
+    </uib-accordion>
+</div>
+<script type="text/ng-template" id="group-template.html">
+<div class="panel" ng-class="panelClass || 'panel-default'">
+  <div role="tab" id="{{::headingId}}" aria-selected="{{isOpen}}" class="panel-heading" ng-keypress="toggleOpen($event)">
+    <div class="panel-title">
+      <a role="button" data-toggle="collapse" href aria-expanded="{{isOpen}}" aria-controls="{{::panelId}}" tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+    </div>
+  </div>
+  <div id="{{::panelId}}" aria-labelledby="{{::headingId}}" aria-hidden="{{!isOpen}}" role="tabpanel" class="panel-collapse collapse" uib-collapse="!isOpen">
+    <div class="panel-body" ng-transclude></div>
+  </div>
+</div>
+  </script>]]></template>
+    </sp_ng_template>
+</record_update>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>update</directory>
+        <documentkey>d3bc26554f9b67005d57b2718110c739</documentkey>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="x_89907_vehicle_to_toll_import_type">
+    <x_89907_vehicle_to_toll_import_type action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <comments/>
+        <content_type>text/plain</content_type>
+        <default_time_zone>US/Eastern</default_time_zone>
+        <file_extension/>
+        <name>E-ZPass V1</name>
+        <parser>ny_ezpass_v1</parser>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-28 17:47:39</sys_created_on>
+        <sys_id>d3bc26554f9b67005d57b2718110c739</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-07-12 19:49:02</sys_updated_on>
+        <vendor display_value="E-ZPass">bbdc16994f5b67005d57b2718110c721</vendor>
+    </x_89907_vehicle_to_toll_import_type>
+</record_update>
+]]></payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-25 13:01:13</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f736d6224fbab7405d57b2718110c7c6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>E-ZPass V1</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_metadata_link_f736d6224fbab7405d57b2718110c7c6</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-07-25 13:01:13</sys_updated_on>
+        <tablename>x_89907_vehicle_to_toll_import_type</tablename>
+    </sys_metadata_link>
+</record_update>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_metadata_link">
+    <sys_metadata_link action="INSERT_OR_UPDATE">
+        <directory>update</directory>
+        <documentkey>edf5619fdb7bd700f898fbefbf9619ef</documentkey>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="x_89907_vehicle_to_toll_charge_type">
+    <x_89907_vehicle_to_toll_charge_type action="INSERT_OR_UPDATE">
+        <category>misc</category>
+        <comments/>
+        <credit>false</credit>
+        <label>Prepaid Trf Debit</label>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-08-13 18:06:11</sys_created_on>
+        <sys_id>edf5619fdb7bd700f898fbefbf9619ef</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2018-08-13 18:20:09</sys_updated_on>
+    </x_89907_vehicle_to_toll_charge_type>
+</record_update>
+]]></payload>
+        <sys_class_name>sys_metadata_link</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-25 13:02:41</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>019616624fbab7405d57b2718110c729</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Prepaid Trf Debit</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_metadata_link_019616624fbab7405d57b2718110c729</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-07-25 13:02:41</sys_updated_on>
+        <tablename>x_89907_vehicle_to_toll_charge_type</tablename>
+    </sys_metadata_link>
+</record_update>

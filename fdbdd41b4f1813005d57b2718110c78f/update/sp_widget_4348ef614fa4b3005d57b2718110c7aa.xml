@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function tspApprovalsClient($scope, spUtil, spUIActionsExecuter, spModal) {
+	var ESIGNATURE = {
+		TYPE: "form",
+		// eslint-disable-next-line servicenow/no-hardcoded-sysids
+		APPROVE_SYS: "cbfe291147220100ba13a5554ee4904d",
+		// eslint-disable-next-line servicenow/no-hardcoded-sysids
+		REJECT_SYS: "580f711147220100ba13a5554ee4904b"
+	};
+
+	$scope.Rejected_Comments_Method = "inline"; // Options: inline, modal
+
+	if ($scope.options.portal == true || $scope.options.portal == "true") {
+		$scope.contentColClass = "col-xs-12";
+		$scope.options.portal = true;
+	} else {
+		$scope.options.portal = false;
+		$scope.contentColClass = "col-sm-9";
+	}
+
+	$scope.data.op = "";
+	spUtil.recordWatch(
+		$scope,
+		"sysapproval_approver",
+		"state=requested^approverIN" + $scope.data.myApprovals.toString()
+	);
+
+	function get() {
+		spUtil.update($scope);
+	}
+
+	$scope.approve = function approve(id, esigRequired) {
+		var requestParams = {
+			username: $scope.data.esignature.username,
+			userSysId: $scope.data.esignature.userSysId
+		};
+
+		if ($scope.data.esignature.e_sig_required && esigRequired) {
+			spUIActionsExecuter
+				.executeFormAction(
+					ESIGNATURE.APPROVE_SYS,
+					"sysapproval_approver",
+					id,
+					[],
+					"",
+					requestParams
+				)
+				.then(function onResolve(response) {});
+		} else {
+			$scope.data.op = "approved";
+			$scope.data.target = id;
+			get();
+		}
+	};
+
+	$scope.reject = function reject(id, esigRequired) {
+		var requestParams = {
+			username: $scope.data.esignature.username,
+			userSysId: $scope.data.esignature.userSysId
+		};
+
+		if ($scope.data.esignature.e_sig_required && esigRequired) {
+			spUIActionsExecuter
+				.executeFormAction(
+					ESIGNATURE.REJECT_SYS,
+					"sysapproval_approver",
+					id,
+					[],
+					"",
+					requestParams
+				)
+				.then(function onResolve(response) {});
+		} else if ($scope.Rejected_Comments_Method == "modal") {
+			spModal.prompt("Rejection reason").then(function onResolve(newComments) {
+				$scope.data.op = "rejected";
+				$scope.data.comments = newComments;
+				$scope.data.target = id;
+				get();
+			});
+		} else {
+			$scope.data.comments =
+				$scope.data.approvals[$scope.data.ids.indexOf(id)].rejectComment;
+			if (!$scope.data.comments) {
+				spUtil.addErrorMessage(
+					"A comment is required to reject this approval."
+				);
+			} else {
+				$scope.data.op = "rejected";
+				$scope.data.target = id;
+				get();
+			}
+		}
+	};
+
+	// pagination
+	$scope.previousPage = function previousPage() {
+		if ($scope.data.pagination.currentPage > 1) {
+			$scope.data.pagination.currentPage =
+				$scope.data.pagination.currentPage - 1;
+		} else {
+			$scope.data.pagination.currentPage = 0;
+		}
+
+		get();
+	};
+
+	$scope.nextPage = function nextPage() {
+		$scope.data.pagination.currentPage = $scope.data.pagination.currentPage + 1;
+		get();
+	};
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.tsp-compact .form-group {
+   margin-bottom: 0px!important;
+}</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list>color,glyph</field_list>
+        <has_preview>false</has_preview>
+        <id>tsp-approvals</id>
+        <internal>false</internal>
+        <link><![CDATA[function tspApprovalsLink(scope, element, attr, ctrl) {
+	/* place jQuery client side code here */
+}
+]]></link>
+        <name>TSP Approvals</name>
+        <option_schema>[{"hint":"If false, buttons are stacked on the right; if true, they are side-by-side","name":"portal","section":"Presentation","label":"Buttons stacked side by side","type":"boolean"},{"hint":"Maximum number of elements that are shown in the list of approvals","name":"max_number_of_elements_shown_on_the_list","default_value":"10","section":"Presentation","label":"Max number of elements shown in the list (only positive numbers &gt; 0, 10 otherwise)","type":"integer"}]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function tspApproals() {
+	// we get only a max number of elements to avoid to have a big list of it
+	var maxNumberOfItemsInTheList = parseInt(
+		options.max_number_of_elements_shown_on_the_list,
+		10
+	);
+	// set 10 if maxnumber is undefined, empty or negative value
+	maxNumberOfItemsInTheList =
+		maxNumberOfItemsInTheList > 0 ? maxNumberOfItemsInTheList : 10;
+
+	var initRow = 0;
+	var lastRow = maxNumberOfItemsInTheList;
+	var currentPage = 0; // 0 is the first page
+	if (input) {
+		// update pagination
+		currentPage = input.pagination.currentPage;
+		initRow = currentPage * maxNumberOfItemsInTheList;
+		lastRow = initRow + maxNumberOfItemsInTheList;
+
+		if (input.op == "approved" || input.op == "rejected") {
+			var app = new GlideRecord("sysapproval_approver");
+			if (app.get(input.target)) {
+				if (input.op == "rejected" && app.state == "requested") {
+					if (!input.comments) {
+						gs.addErrorMessage(
+							"Comments are required to reject this approval."
+						);
+						clearInput();
+						return;
+					}
+					app.comments = input.comments;
+				}
+				app.state = input.op;
+				app.update();
+				clearInput();
+			}
+		}
+	}
+
+	data.ViewApprovalPageMsg = gs.getMessage("View approval page");
+	data.esignature = {
+		username: gs.getUserName(),
+		userSysId: gs.getUserID(),
+		// todo - isRegistered is not available in scoped app
+		// e_sig_required: GlidePluginManager.isRegistered('com.glide.e_signature_approvals')
+		e_sig_required: false
+	};
+
+	var esigRequiredMap = {};
+	if (data.esignature.e_sig_required) {
+		var esigRegistryGR = new GlideRecord("e_signature_registry");
+		esigRegistryGR.addQuery("enabled", "true");
+		esigRegistryGR.query();
+		while (esigRegistryGR.next()) {
+			esigRequiredMap[esigRegistryGR.getValue("table_name")] = true;
+		}
+	}
+
+	data.myApprovals = x_89907_vehicle_to.GlobalShims.getMyApprovals();
+	var approvalGR = new GlideRecord("sysapproval_approver");
+	approvalGR.addQuery("state", "requested");
+	approvalGR.addQuery("approver", data.myApprovals);
+	approvalGR.addQuery("source_table", "x_89907_vehicle_to_toll_user_statement");
+	approvalGR.orderBy("sys_created_on");
+	approvalGR.chooseWindow(initRow, lastRow);
+	approvalGR.query();
+	var rowCount = approvalGR.getRowCount();
+	var approvals = [];
+	var ids = [];
+
+	while (approvalGR.next()) {
+		var task = getRecordBeingApproved(approvalGR);
+		if (task.isValidRecord()) {
+			ids.push(approvalGR.getUniqueValue());
+			var t = {};
+			t.number = task.getDisplayValue();
+			t.short_description = task.short_description.toString();
+			if (approvalGR.getValue("approver") != gs.getUserID()) {
+				t.approver = approvalGR.approver.getDisplayValue();
+			}
+			if (task.isValidField("user") && !task.user.nil()) {
+				t.user = task.user.getDisplayValue();
+			}
+
+			// requestor >> opener
+			if (task.isValidField("requested_by") && !task.requested_by.nil()) {
+				t.user = task.requested_by.getDisplayValue();
+			}
+
+			t.table = task.getLabel();
+			var items = [];
+			var itemsGR = new GlideRecord("x_89907_vehicle_to_toll_charge");
+			itemsGR.addQuery("user_statement", task.sys_id);
+			itemsGR.orderBy("file_sequence_number");
+			itemsGR.query();
+			if (itemsGR.getRowCount() > 0) {
+				t.short_description += " (" + itemsGR.getRowCount() + " charges)";
+			}
+
+			while (itemsGR.next()) {
+				if (itemsGR.getValue("amount") != 0) {
+					var description =
+						itemsGR.getDisplayValue("toll_provider") +
+						" - " +
+						itemsGR.getDisplayValue("exit_plaza");
+					var item = { variables: {} };
+					item.variables.description = {
+						label: "Description",
+						display_value: description
+					};
+					item.variables.datetime = {
+						label: "Date/Time",
+						display_value: itemsGR.getDisplayValue("exit_date_time")
+					};
+					item.variables.amount = {
+						label: "Amount",
+						display_value: itemsGR.getDisplayValue("amount")
+					};
+					item.variables.personal = {
+						label: "Personal",
+						display_value: itemsGR.getDisplayValue("personal_toll")
+					};
+					items.push(item);
+				}
+			}
+
+			var j = {};
+			j.sys_id = approvalGR.getUniqueValue();
+			j.table = approvalGR.getRecordClassName();
+			j.approval_source_table = approvalGR.getValue("source_table");
+			j.requireEsigApproval = esigRequiredMap[j.approval_source_table];
+			j.task = t;
+
+			if (task) {
+				var variableHolder = {};
+				$sp.getRecordElements(
+					variableHolder,
+					task,
+					"personal_amount,total_amount,vehicle_number,plate_number," +
+						"period_begin_date,period_end_date,transponder,transponder_type," +
+						"account,cost_center,statement"
+				);
+				//		j.variables = Object.keys(variableHolder).map(function (key) {return variableHolder[key];});
+				j.variables = variableHolder;
+			}
+			j.items = items;
+			j.state = approvalGR.getValue("state");
+			j.stateLabel = approvalGR.state.getDisplayValue();
+			approvals.push(j);
+		}
+	}
+
+	data.ids = ids;
+	data.approvals = approvals;
+	data.showApprovals = gs.getUser().hasRole("approver_user");
+	// for pagination
+	data.pagination = {};
+	data.pagination.hasNext =
+		approvals.length === parseInt(lastRow, 10) - parseInt(initRow, 10) &&
+		lastRow < rowCount;
+	data.pagination.hasPrevious = parseInt(initRow, 10) > 0;
+	data.pagination.from = parseInt(initRow + 1, 10);
+	data.pagination.to =
+		parseInt(lastRow, 10) < parseInt(rowCount, 10)
+			? parseInt(lastRow, 10)
+			: parseInt(rowCount, 10);
+	data.pagination.of = parseInt(rowCount, 10);
+	data.pagination.showPagination =
+		data.pagination.hasPrevious || data.pagination.hasNext;
+	data.pagination.currentPage =
+		data.pagination.from > data.pagination.to ? currentPage - 1 : currentPage;
+
+	function getRecordBeingApproved(approvalRequestGR) {
+		if (!approvalRequestGR.sysapproval.nil()) {
+			return approvalRequestGR.sysapproval.getRefRecord();
+		}
+
+		return approvalRequestGR.document_id.getRefRecord();
+	}
+
+	function clearInput() {
+		// clear the input fields so actions aren't repeated on subsequent update cycles
+		input.op = "";
+		delete input.target;
+		delete input.comments;
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-04-01 20:04:30</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>4348ef614fa4b3005d57b2718110c7aa</sys_id>
+        <sys_mod_count>67</sys_mod_count>
+        <sys_name>TSP Approvals</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_4348ef614fa4b3005d57b2718110c7aa</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-06-21 15:30:32</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-{{::options.color}} b" ng-if="data.showApprovals">
+  <div class="panel-heading">
+    <h2 class="h4 panel-title"><fa ng-if="::options.glyph.length" name="{{::options.glyph}}" class="m-r-sm" />${My Approvals}
+      <label ng-if="data.pagination.showPagination && (data.pagination.from <= data.pagination.to)" class="pull-right text-info">
+        <span ng-if="data.pagination.from != data.pagination.to">{{data.pagination.from}} ${to_lower}</span> {{data.pagination.to}} of {{data.pagination.of}}</label>
+    </h2>
+  </div>
+  <div class="panel-body" ng-class="{'padder-b-none': data.approvals.length != 0}">
+    <div ng-if="data.approvals.length == 0 && data.pagination.of == 0">
+      ${You have no pending approvals}
+    </div>
+    <div ng-if="data.approvals.length == 0 && data.pagination.of != 0">
+      ${Loading approvals...}
+    </div>
+    <div ng-repeat="approval in data.approvals" class="sp-approval m-b-xl">
+      <div class="row">
+        <div ng-class="contentColClass">
+          <div ng-if="approval.task.number || approval.task.short_description">
+            <a ng-href="?id=tsp_approval&table=sysapproval_approver&sys_id={{::approval.sys_id}}" title="{{data.ViewApprovalPageMsg}}">
+              <span ng-if="approval.task.number">{{::approval.task.number}}</span>
+              <span ng-if="approval.task.number && approval.task.short_description"> - </span>
+              <span ng-if="approval.task.short_description">{{::approval.task.short_description}}</span>
+            </a>
+          </div>
+          <div ng-if="approval.task.user"><label><strong>${User}</strong></label> {{::approval.task.user}}</div>
+          <div ng-if="approval.task.approver"><label><strong>${Approver}</strong></label> {{::approval.task.approver}}</div>
+        
+          <div ng-if="approval.variables" ng-init="variable_toggle=false">
+            <a href="javascript:void(0)" ng-click="variable_toggle = !variable_toggle">
+              <span class="glyphicon"
+                    ng-class="{'glyphicon-chevron-down': !variable_toggle, 'glyphicon-chevron-up': variable_toggle}">
+              </span>
+              ${Details}
+            </a>
+            <div ng-if="variable_toggle">
+              <div ng-include="'detail-content'"></div>
+            </div>
+          </div>
+          
+          <div ng-if="approval.items.length > 5">
+            <div>
+            <a ng-href="?id=tsp_approval&table=sysapproval_approver&sys_id={{::approval.sys_id}}"
+               title="{{data.ViewApprovalPageMsg}}">Click to see charges</a>
+            </div>
+          </div>
+          <div ng-if="approval.items.length <= 5">
+            <div ng-init="variable_toggle=false">
+              <a href="javascript:void(0)" ng-click="variable_toggle = !variable_toggle">
+                <span class="glyphicon"
+                      ng-class="{'glyphicon-chevron-down': !variable_toggle, 'glyphicon-chevron-up': variable_toggle}">
+                </span>
+                ${Charges}
+              </a>
+              <div ng-if="variable_toggle" style="margin-left: 15px">
+                <div class="row">
+									<div class="col-sm-2">
+                    <strong>Personal</strong>
+                  </div>                  
+									<div class="col-sm-2">
+                    <strong>Amount</strong>
+                  </div>                  
+									<div class="col-sm-3">
+                    <strong>Date/Time</strong>
+                  </div>                  
+									<div class="col-sm-5">
+                    <strong>Description</strong>
+                  </div>                  
+                </div>
+                <div ng-repeat="item in approval.items" >
+									<div class="col-sm-2">
+                  	{{::item.variables.personal.display_value}}
+                  </div>                  
+									<div class="col-sm-2">
+                    {{::item.variables.amount.display_value}}
+                  </div>                  
+									<div class="col-sm-3">
+                    {{::item.variables.datetime.display_value}}
+                  </div>                  
+									<div class="col-sm-5">
+                    {{::item.variables.description.display_value}}
+                  </div>                  
+                </div>
+<!--
+                <div ng-repeat="variable in item.variables">
+                  <label class="text-muted">{{::variable.label}}</label>
+                  <div>{{::variable.display_value}}</div>
+                </div>
+-->              
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div ng-if="!options.portal" class="col-sm-3">
+          <button name="approve" ng-if="approval.state == 'requested'" class="btn btn-primary btn-block" 
+                  style="border-width:1px;" ng-click="approve(approval.sys_id, approval.requireEsigApproval);">${Approve}</button>
+          <button name="reject" ng-if="approval.state == 'requested'" class="btn btn-default btn-block" 
+                  ng-click="reject(approval.sys_id);">${Reject}</button>
+          <textarea ng-if="approval.state == 'requested' && Rejected_Comments_Method == 'inline'" 
+                    ng-model="approval.rejectComment"
+                    class="form-control" id="Rejection_Reason_{{approval.sys_id}}" 
+                    placeholder="Rejecting because..." 
+                    style="margin-top:5px; width:100%; resize:vertical; overflow: auto; padding: 6px;"></textarea>
+          <button ng-if="approval.state == 'approved'" class="btn btn-success btn-block">{{approval.stateLabel}}</button>
+          <button ng-if="approval.state == 'rejected'" class="btn btn-danger btn-block">{{approval.stateLabel}}</button>
+          <button ng-if="approval.state != 'requested'" class="btn btn-default btn-block" 
+                  style="visibility:hidden">{{approval.stateLabel}}</button>
+        </div>
+        <div ng-if="options.portal && approval.state == 'requested'" class="col-xs-6">
+          <button name="reject" class="btn btn-default btn-block" 
+                  ng-click="reject(approval.sys_id, approval.requireEsigApproval);">${Reject}</button>
+        </div>
+        <div ng-if="options.portal && approval.state == 'requested'" class="col-xs-6">
+          <button name="approve" class="btn btn-primary btn-block" 
+                  ng-click="approve(approval.sys_id, approval.requireEsigApproval);">${Approve}</button>
+        </div>
+        <div ng-if="options.portal && approval.state == 'requested' && Rejected_Comments_Method == 'inline'" style="text-align:center;">
+          <textarea class="form-control" id="Rejection_Reason_{{approval.sys_id}}" 
+                    placeholder="Rejecting because..." 
+                    style="margin-top:5px; width:90%; resize:vertical; overflow: auto; padding: 6px;"></textarea>
+		</div>
+        <div ng-if="options.portal && approval.state != 'requested'" class="col-xs-12">
+          <button ng-if="approval.state == 'approved'" class="btn btn-success btn-block">{{approval.stateLabel}}</button>
+          <button ng-if="approval.state == 'rejected'" class="btn btn-danger btn-block">{{approval.stateLabel}}</button>
+        </div>
+      </div>
+    </div> <!-- body -->
+
+  </div>
+  <div class="panel-footer clearfix" ng-if="data.pagination.showPagination">
+    <a id="previous-btn" href="javascript:void(0)" ng-click="previousPage()" ng-show="data.pagination.hasPrevious" class="pull-left btn btn-sm btn-default" aria-label="${Pagination button Previous}">
+      <i class="fa fa-arrow-left m-r-sm" aria-hidden="true"></i>${Previous}</a>
+    <a id="next_btn" href="javascript:void(0)" ng-click="nextPage()" ng-show="data.pagination.hasNext" class="pull-right btn btn-sm btn-default " aria-label="${Pagination button Next}">
+      ${Next}<i class="fa fa-arrow-right m-r-sm col-md-offset-3" aria-hidden="true"></i></a>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

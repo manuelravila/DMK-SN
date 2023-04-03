@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>ignore</disabled>
+        <field>manufacturer</field>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-07-10 13:32:22</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>69f02514db531300f898fbefbf9619a4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>manufacturer</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_policy_action_69f02514db531300f898fbefbf9619a4</sys_update_name>
+        <sys_updated_by>Dan.Lengyel</sys_updated_by>
+        <sys_updated_on>2018-07-10 13:32:22</sys_updated_on>
+        <table>x_89907_vehicle_to_u_cmdb_ci_transponder</table>
+        <ui_policy display_value="Transponder (Admin)">64bca484dbf21300f898fbefbf9619bd</ui_policy>
+        <visible>true</visible>
+    </sys_ui_policy_action>
+</record_update>

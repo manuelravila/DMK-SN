@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance_table">
+    <sp_instance_table action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <display_field>u_transponder_number</display_field>
+        <field_list>install_status,assigned_to,u_pool_device,u_vehicle_number,u_transponder_type,u_cost_center</field_list>
+        <filter table="x_89907_vehicle_to_u_cmdb_ci_transponder">install_status=1^u_cost_center.vehicle_coordinatorsDYNAMIC90d1921e5f510100a9ad2572f2b477fe^u_pool_device=true^EQ<item display_value="Installed" endquery="false" field="install_status" goto="false" newquery="false" operator="=" or="false" value="1"/>
+            <item endquery="false" field="u_cost_center.vehicle_coordinators" goto="false" newquery="false" operator="DYNAMIC" or="false" value="90d1921e5f510100a9ad2572f2b477fe"/>
+            <item endquery="false" field="u_pool_device" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter>
+        <glyph/>
+        <id>tsp-vc-trans-pool</id>
+        <maximum_entries>5</maximum_entries>
+        <order>1</order>
+        <order_by/>
+        <order_direction>asc</order_direction>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="1">9d46f166db7e00107cf5a455ca9619da</sp_column>
+        <sp_page/>
+        <sp_widget display_value="DMK Data Table from Instance Definition">fedde122db7e00107cf5a455ca961983</sp_widget>
+        <sys_class_name>sp_instance_table</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-28 06:57:01</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>0e7d6728db5300107cf5a455ca9619be</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Transponders - Pool</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_instance_table_0e7d6728db5300107cf5a455ca9619be</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-28 06:57:01</sys_updated_on>
+        <table>x_89907_vehicle_to_u_cmdb_ci_transponder</table>
+        <title>Transponders - Pool</title>
+        <url/>
+        <widget_parameters/>
+    </sp_instance_table>
+    <sys_translated_text action="delete_multiple" query="documentkey=0e7d6728db5300107cf5a455ca9619be"/>
+</record_update>

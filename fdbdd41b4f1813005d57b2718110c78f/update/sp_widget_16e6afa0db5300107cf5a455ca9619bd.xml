@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>standard</category>
+        <client_script><![CDATA[function ($scope, spUtil) {
+	var c = this;
+	if (!c.options.table)
+		return;
+	
+	spUtil.recordWatch($scope, c.options.table, c.options.filter);
+}]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.count {
+	margin-top: 0px;
+  	color: #fff;
+}</css>
+        <data_table>sp_instance_table</data_table>
+        <demo_data>{
+  "data": {
+    "table": "incident",
+    "count": 25
+  },
+  "options": {
+		"color": "success",
+		"glyph": "cogs",
+    "title": "Incidents"
+  }
+}</demo_data>
+        <description/>
+        <docs/>
+        <field_list>table,filter,title,color,glyph,sp_page</field_list>
+        <has_preview>false</has_preview>
+        <id>tsp-vc-count</id>
+        <internal>false</internal>
+        <link/>
+        <name>TSP VC Count</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function () {
+	if (!options.table)
+		return;
+	
+	data.filter = options.filter || 'sys_id!=NULL';
+	var ga = new GlideRecord(options.table);
+	ga.addEncodedQuery(data.filter);
+	ga.query();
+	data.count = ga.getRowCount();	
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-28 06:28:21</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>16e6afa0db5300107cf5a455ca9619bd</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>TSP VC Count</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_16e6afa0db5300107cf5a455ca9619bd</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-28 06:33:12</sys_updated_on>
+        <template><![CDATA[<div class="{{::c.options.class_name}} wrapper label-{{::c.options.color}}" ng-if="c.options.table">  
+  <a ng-href="?id={{::c.options.sp_page_dv}}&listid={{::c.options.listid}}">
+    <div class="row">
+      <div class="col-xs-3">
+        <span class="fa fa-{{::c.options.glyph}} fa-3x text-white" />
+      </div>
+      <div class="col-xs-9 text-right">
+        <div class="h2 count">{{c.data.count}}</div>
+      </div>
+    </div>
+    <div class="text-right text-white">{{::c.options.title}}</div>
+  </a>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

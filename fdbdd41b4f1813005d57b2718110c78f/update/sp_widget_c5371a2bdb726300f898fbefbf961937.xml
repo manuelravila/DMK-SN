@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function tspUserDevices($scope, $rootScope, spUtil, $http, $uibModal, spAriaUtil) {
+	var c = this;
+	this.data.filterText = "";
+	this.showFilter = false;
+
+	if (c.options.table) {
+		spUtil.recordWatch($scope, c.options.table, c.options.filter);
+	}
+
+	this.getMaxShownLabel = function getMaxShownLabel(maxEntries, totalCount) {
+		if (totalCount == c.data.maxCount) {
+			return "${First [0] of more than [1]}"
+				.replace("[0]", maxEntries)
+				.replace("[1]", totalCount);
+		}
+
+		return "${First [0] of [1]}"
+			.replace("[0]", maxEntries)
+			.replace("[1]", totalCount);
+	};
+
+	this.seeAllPage = c.options.list_page_dv || "list";
+	this.targetPageID = c.options.sp_page
+		? "&target_page_id=" + c.options.sp_page
+		: "";
+
+	c.getMaxHeight = function getMaxHeight() {
+		return c.options.panel_body_height || "none";
+	};
+
+	c.getActionColor = function getActionColor(action) {
+		return "text-" + action.color;
+	};
+
+	c.update = function update() {
+		c.server.update();
+	};
+
+	c.toggleFilter = function toggleFilter() {
+		c.showFilter = !c.showFilter;
+	};
+
+	$scope.openReference = function openReference($event, item) {
+		$event.stopPropagation();
+		$event.preventDefault();
+		c.data.getListItem = item.sys_id;
+		//        c.server.update().then(function() {
+		spUtil.update($scope).then(function onResolve() {
+			c.data.getListItem = undefined;
+			if (c.data.selectedListItem) {
+				c.modalInstance = $uibModal.open({
+					templateUrl: c.data.popupTemplateName, // Replace <templatename> by the name of your template
+					controllerAs: "mc", // Controller used in the modal
+					controller: [
+						"popupRecord",
+						"$uibModalInstance",
+						function controllerFn(popupRecord, $modalInstance) {
+							var mc = this;
+							mc.data = popupRecord;
+							mc.closeModal = function closeModal() {
+								c.data.selectedListItem = undefined;
+								c.closeModal();
+							};
+						}
+					],
+					ariaLabelledBy: "modal-title",
+					ariaDescribedBy: "modal-body",
+					size: "sm",
+					// appendTo: parentElem,
+					resolve: {
+						popupRecord: function popupRecord() {
+							return c.data.selectedListItem;
+						}
+					}
+				});
+			}
+		});
+	};
+	/*
+	var unregister;
+	$scope.openReference = function ($event, item) {
+		$event.stopPropagation();
+		$event.preventDefault();
+		var data = { table: item.className, sys_id: item.sys_id };
+		data.sys_id = item.sys_id;
+		if (unregister)
+			unregister();
+		unregister = $rootScope.$on('$sp.openReference', function (evt, data) {
+			unregister();
+			unregister = null;
+			if (!evt.defaultPrevented && evt.targetScope === $scope)
+				showForm(data);
+		});
+		$scope.$emit('$sp.openReference', data);
+	};
+
+	$scope.$on("$destroy", function () {
+		if (unregister)
+			unregister();
+	});
+	
+	function showForm(data) {
+		var url = spUtil.getWidgetURL("widget-form");
+		var req = {
+			method: 'POST',
+			url: url,
+			headers: spUtil.getHeaders(),
+			data: data
+		}
+		$http(req).then(qs, qe);
+		function qs(response) {
+			var r = response.data.result;
+			showModal(r);
+		}
+		function qe(error) {
+			console.error("Error " + error.status + " " + error.statusText);
+		}
+	}
+	function showModal(form) {
+		var opts = {
+			size: 'lg',
+			templateUrl: 'sp_form_modal',
+			controller: ModalInstanceCtrl,
+			resolve: {}
+		};
+		opts.resolve.item = function () {
+			return angular.copy({
+				form: form
+			});
+		};
+		var modalInstance = $uibModal.open(opts);
+		modalInstance.result.then(function () { }, function () {
+			spAriaUtil.sendLiveMessage($scope.exitMsg);
+		});
+		$scope.$on("$destroy", function () {
+			modalInstance.close();
+		});
+		var unregister = $scope.$on('sp.form.record.updated', function (evt, fields) {
+			unregister();
+			unregister = null;
+			modalInstance.close();
+			if (evt.stopPropagation)
+				evt.stopPropagation();
+			evt.preventDefault();
+		});
+	}
+	function ModalInstanceCtrl($scope, $uibModalInstance, item) {
+		$scope.item = item;
+		$scope.ok = function () {
+			$uibModalInstance.close();
+		};
+		$scope.cancel = function () {
+			$uibModalInstance.dismiss('cancel');
+		};
+	}
+*/
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>tsp-user-devices</id>
+        <internal>false</internal>
+        <link/>
+        <name>TSP User Devices</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[/* global input, data, options, gs, GlideRecord, GlideRecordSecure, GlideDateTime */
+/* eslint no-underscore-dangle: ["error", { "allow": ["_display_value"] }] */
+(function tspUserDevices() {
+	if (input && input.getListItem) {
+		var listItemGR = new GlideRecordSecure(
+			"x_89907_vehicle_to_u_cmdb_ci_transponder"
+		);
+		if (!listItemGR.isValid()) {
+			data.isValid = false;
+			return;
+		}
+		data.isValid = true;
+		if (listItemGR.get(input.getListItem)) {
+			var listItemRecord = {};
+			listItemRecord._display_value = listItemGR.getDisplayValue();
+			var listItemFields = listItemGR.getElements();
+			for (var j = 0; j < listItemFields.length; j++) {
+				var listItemGE = listItemFields[j];
+				var listItemFieldName = listItemGE.getName();
+				listItemRecord[listItemFieldName] = getField(
+					listItemGR,
+					listItemFieldName
+				);
+			}
+			data.selectedListItem = listItemRecord;
+		}
+
+		return;
+	}
+	data.filterMsg = gs.getMessage("Filter...");
+	if (gs.nil(options.hide_footer)) {
+		options.hide_footer = false;
+	}
+	options.hide_footer =
+		options.hide_footer == "true" || options.hide_footer == true;
+	options.table = options.table || "x_89907_vehicle_to_u_cmdb_ci_transponder";
+	options.display_field = options.display_field || "name";
+	options.secondary_fields =
+		options.secondary_fields ||
+		"short_description,u_plate_number,u_vehicle_number,install_status";
+	data.popupTemplateName = options.popupTemplateName || "tsp-user-device-pop";
+
+	var deviceGR = new GlideRecordSecure(options.table); // does ACL checking for us
+	if (!deviceGR.isValid()) {
+		data.isValid = false;
+		return;
+	}
+	data.isValid = true;
+	deviceGR.addQuery("assigned_to", gs.getUserID());
+	deviceGR.addQuery("install_status", 1);
+
+	var ed = deviceGR.getED();
+	options.title = options.title || ed.getPlural();
+	options.secondary_fields = options.secondary_fields.split(",");
+
+	// Set ID of sp_page from option schema
+	if (options.list_page) {
+		var spPageGR = GlideRecord("sp_page");
+		if (spPageGR.get(options.list_page)) {
+			options.list_page_dv = spPageGR.getDisplayValue("id");
+		}
+	}
+
+	if (options.order_direction == "asc") {
+		deviceGR.orderBy("created");
+	} else {
+		deviceGR.orderByDesc("created");
+	}
+
+	// redo query with limit
+	data.maxCount = 30;
+	deviceGR.setLimit(data.maxCount);
+	deviceGR.query();
+	data.count = deviceGR.getRowCount();
+	//	data.actions = getActions();
+	data.actions = [];
+	data.list = [];
+	var recordIdx = 0;
+	while (deviceGR.next()) {
+		if (options.maximum_entries && recordIdx == options.maximum_entries) {
+			break;
+		}
+
+		var record = {};
+		if (data.actions.length > 0) {
+			var fields = deviceGR.getFields();
+			for (var i = 0; i < fields.size(); i++) {
+				var glideElement = fields.get(i);
+				var name = glideElement.getName();
+				if (name.indexOf("sys_") === -1) {
+					record[name] = deviceGR.getValue(name);
+				}
+			}
+		}
+
+		record.sys_id = deviceGR.getValue("sys_id");
+		record.className = deviceGR.getRecordClassName();
+		if (options.image_field) {
+			record.image_field = deviceGR.getDisplayValue(options.image_field);
+			if (!record.image_field) {
+				record.image_field = "noimage.pngx";
+			}
+		}
+
+		if (options.display_field) {
+			record.display_field = getField(deviceGR, options.display_field);
+		}
+
+		record.secondary_fields = [];
+		// eslint-disable-next-line no-loop-func
+		options.secondary_fields.forEach(function getSecondaryField(f) {
+			record.secondary_fields.push(getField(deviceGR, f));
+		});
+
+		if (options.sp_page) {
+			var view = "sp";
+			if (options.view) {
+				var viewGR = new GlideRecord("sys_ui_view");
+				viewGR.get(options.view);
+				view = viewGR.getValue("name");
+			}
+			record.url = {
+				id: options.sp_page,
+				table: record.className,
+				sys_id: record.sys_id,
+				view: view
+			};
+		} else if (options.url != "") {
+			record.url = options.url;
+		} else {
+			record.url = null;
+		}
+
+		data.list.push(record);
+		recordIdx++;
+	}
+
+	function getField(anyGR, fieldName) {
+		var f = {};
+		f.display_value = anyGR.getDisplayValue(fieldName);
+		f.value = anyGR.getValue(fieldName);
+		var ge = anyGR.getElement(fieldName);
+		if (ge == null) {
+			return f;
+		}
+
+		f.type = ge.getED().getInternalType();
+		f.label = ge.getLabel();
+		if (f.type == "glide_date_time" && f.value) {
+			var tmpGDT = new GlideDateTime(f.value);
+			f.date_display_value = tmpGDT.getDate().getDisplayValue();
+		}
+		return f;
+	}
+
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-10 19:28:11</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>c5371a2bdb726300f898fbefbf961937</sys_id>
+        <sys_mod_count>42</sys_mod_count>
+        <sys_name>TSP User Devices</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_c5371a2bdb726300f898fbefbf961937</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-16 12:19:16</sys_updated_on>
+        <template><![CDATA[<!--
+<pre>{{data|json}}</pre>
+-->
+<div class="panel panel-default b" ng-if="c.data.isValid">
+  <div class="panel-heading" ng-if="::!c.options.hide_header">
+    <h4 class="panel-title">
+      <span ng-if="c.options.glyph">
+        <fa name="{{::c.options.glyph}}" />
+      </span>{{::c.options.title}}
+    </h4>
+  </div>
+  <ul class="list-group hide-x-overflow" style="overflow-y: auto; max-height: 300px;">
+    <li ng-if="c.data.list.length > 0" ng-repeat="item in c.data.list track by item.sys_id" class="list-group-item">
+      <div class="row">
+        <div class="pull-left m-r m-l">
+          <span class="fa fa-stack" style="font-size:1.5em;">
+            <i class="fa fa-square-o fa-stack-2x"></i>
+            <i class="fa fa-stack-1x fa-truck"></i>
+          </span>
+        </div>
+        <div class="">
+          <a class="focus-inline-block" ng-click="openReference($event, item)" href="javascript:void(0)">
+            <div>
+              <div ng-switch on="item.display_field.type" ng-class="{'l-h-40': !item.secondary_fields.length}">
+                <span class="translated-html" ng-switch-when="translated_html" ng-bind-html="item.display_field.value"></span>
+                <div ng-switch-default>{{item.display_field.display_value}}</div>
+              </div>
+              <small class="text-muted" ng-repeat="f in item.secondary_fields">
+                <span ng-if="!$first"> • </span>
+                <span ng-switch="f.type" title="{{::f.label}}">
+                  <span ng-switch-when="glide_date"><sn-time-ago timestamp="::f.value" /></span>
+                  <span ng-switch-when="glide_date_time"><sn-time-ago timestamp="::f.value" /></span>
+                  <span ng-switch-default="">{{f.display_value}}</span>
+                </span>
+              </small>
+            </div>
+          </a>
+        </div>
+      </div>
+    </li>
+    <div ng-if="!c.data.list.length" class="list-group-item">
+      ${No records found} 
+    </div>
+  </ul>
+  <div class="panel-footer" ng-if="!c.options.hide_footer">
+    <div ng-if="c.options.maximum_entries && c.data.count > c.options.maximum_entries">
+	    <div class="h4 number-shown-label">{{c.getMaxShownLabel(c.options.maximum_entries, c.data.count)}}</div>
+	    <a class="pull-right" ng-href="?id={{c.seeAllPage}}&table={{c.options.table}}&filter={{c.options.filter}}{{c.targetPageID}}">${View
+	      all}</a>      
+    </div>
+    <div ng-if="!c.options.maximum_entries || c.data.count <= c.options.maximum_entries">
+	    <a class="pull-right" ng-href="?id={{c.seeAllPage}}&table={{c.options.table}}&filter={{c.options.filter}}{{c.targetPageID}}">${View
+	      list}</a>      
+    </div>
+  </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

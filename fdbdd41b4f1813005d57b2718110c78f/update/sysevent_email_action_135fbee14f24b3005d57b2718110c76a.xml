@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sysevent_email_action">
+    <sysevent_email_action action="INSERT_OR_UPDATE">
+        <action_insert>false</action_insert>
+        <action_update>false</action_update>
+        <active>true</active>
+        <advanced_condition/>
+        <affected_field_on_event/>
+        <category display_value="Approval" name="Approval">1a9d02137f232200ee2e108c3ffa9113</category>
+        <collection>x_89907_vehicle_to_toll_user_statement</collection>
+        <condition/>
+        <content_type>text/html</content_type>
+        <default_interval/>
+        <description>Notify end user their user statement was rejected. Triggered by user statement approval workflow.</description>
+        <digest_from/>
+        <digest_html/>
+        <digest_reply_to/>
+        <digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>]]></digest_separator_html>
+        <digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+        <digest_subject/>
+        <digest_template/>
+        <digest_text/>
+        <digestable>false</digestable>
+        <enable_dynamic_translation>false</enable_dynamic_translation>
+        <event_name>x_89907_vehicle_to.user.statement.reject</event_name>
+        <event_parm_1>true</event_parm_1>
+        <event_parm_2>false</event_parm_2>
+        <exclude_delegates>false</exclude_delegates>
+        <force_delivery>false</force_delivery>
+        <from/>
+        <generation_type>event</generation_type>
+        <importance/>
+        <include_attachments>false</include_attachments>
+        <item>event.parm1</item>
+        <item_table/>
+        <mandatory>false</mandatory>
+        <message/>
+        <message_html><![CDATA[<p><span style="font-size: 10pt; font-family: verdana, geneva;">${mail_script:user.statement.portal.link} was rejected by a toll approval manager. Review the comments below and then correct and re-submit your statement on the ${mail_script:toll.portal.link}.</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;">Contact your manager for additional information.</span></p>
+<p><span style="font-size: 12pt; font-family: verdana, geneva;"><strong>Rejection Notes</strong></span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;">${status_notes}</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 12pt; font-family: verdana, geneva;"><strong>Statement Details</strong></span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Vehicle number:</strong>&nbsp;${vehicle_number}</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Pool Vehicle:</strong>&nbsp;${transponder.u_pool_device}</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Transponder number:</strong>&nbsp;${transponder_number}&nbsp;</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Transponder type:</strong>&nbsp;${transponder_type}</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Plate number:</strong>&nbsp;${plate_number}</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Period begin date:</strong>&nbsp;${period_begin_date}&nbsp;</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Period end date:</strong>&nbsp;${period_end_date}</span></p>]]></message_html>
+        <message_list/>
+        <message_text/>
+        <name>User Statement Rejected</name>
+        <omit_watermark>false</omit_watermark>
+        <order>100</order>
+        <push_message_only>false</push_message_only>
+        <recipient_fields/>
+        <recipient_groups/>
+        <recipient_users/>
+        <reply_to/>
+        <send_self>false</send_self>
+        <sms_alternate/>
+        <style/>
+        <subject>Toll User statement rejected</subject>
+        <subscribable>false</subscribable>
+        <sys_class_name>sysevent_email_action</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-04-01 17:20:27</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>135fbee14f24b3005d57b2718110c76a</sys_id>
+        <sys_mod_count>13</sys_mod_count>
+        <sys_name>User Statement Rejected</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysevent_email_action_135fbee14f24b3005d57b2718110c76a</sys_update_name>
+        <sys_updated_by>SN_dtseten</sys_updated_by>
+        <sys_updated_on>2020-09-08 22:39:42</sys_updated_on>
+        <sys_version>2</sys_version>
+        <template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+        <type>email</type>
+        <weight>0</weight>
+    </sysevent_email_action>
+</record_update>

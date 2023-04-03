@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="62d0e670dbef9300f898fbefbf96193c" sys_domain="global" table="x_89907_vehicle_to_toll_configuration" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>company</element>
+            <position>0</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-07 20:24:27</sys_created_on>
+            <sys_id>c3587ab24fcf73805d57b2718110c768</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_configuration" sys_domain="global" view="Default view">62d0e670dbef9300f898fbefbf96193c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-07 20:24:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>nickname</element>
+            <position>1</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-07 20:24:27</sys_created_on>
+            <sys_id>8b587ab24fcf73805d57b2718110c768</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_configuration" sys_domain="global" view="Default view">62d0e670dbef9300f898fbefbf96193c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-07 20:24:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>2</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-07 20:24:27</sys_created_on>
+            <sys_id>0f587ab24fcf73805d57b2718110c768</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_configuration" sys_domain="global" view="Default view">62d0e670dbef9300f898fbefbf96193c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-07 20:24:27</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>3</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-07 20:24:27</sys_created_on>
+            <sys_id>8f587ab24fcf73805d57b2718110c768</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_configuration" sys_domain="global" view="Default view">62d0e670dbef9300f898fbefbf96193c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-07 20:24:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>create_user_statements</element>
+            <position>4</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-07 20:24:27</sys_created_on>
+            <sys_id>03587ab24fcf73805d57b2718110c769</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_configuration" sys_domain="global" view="Default view">62d0e670dbef9300f898fbefbf96193c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-07 20:24:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>user_statement_approval</element>
+            <position>5</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-07 20:24:27</sys_created_on>
+            <sys_id>83587ab24fcf73805d57b2718110c769</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_configuration" sys_domain="global" view="Default view">62d0e670dbef9300f898fbefbf96193c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-07 20:24:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>6</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-07 20:24:27</sys_created_on>
+            <sys_id>07587ab24fcf73805d57b2718110c769</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_configuration" sys_domain="global" view="Default view">62d0e670dbef9300f898fbefbf96193c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-07 20:24:27</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>description</element>
+            <position>7</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-08-07 20:24:27</sys_created_on>
+            <sys_id>87587ab24fcf73805d57b2718110c769</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_89907_vehicle_to_toll_configuration" sys_domain="global" view="Default view">62d0e670dbef9300f898fbefbf96193c</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-08-07 20:24:27</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-24 17:42:59</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>62d0e670dbef9300f898fbefbf96193c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_toll_configuration</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_section_62d0e670dbef9300f898fbefbf96193c</sys_update_name>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-24 17:42:59</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

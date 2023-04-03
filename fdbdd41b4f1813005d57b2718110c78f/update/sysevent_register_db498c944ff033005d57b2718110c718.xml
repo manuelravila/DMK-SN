@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysevent_register">
+    <sysevent_register action="INSERT_OR_UPDATE">
+        <caller_access/>
+        <description>Scheduled script User Statements Requiring Approval runs and  this event is fired to send an email</description>
+        <event_name>x_89907_vehicle_to.statement.requires.ap</event_name>
+        <fired_by>Scheduled script User Statements Requiring Approvalwhen a notification needs to happen</fired_by>
+        <queue/>
+        <suffix>statement.requires.approval</suffix>
+        <sys_class_name>sysevent_register</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-04-09 16:53:31</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>db498c944ff033005d57b2718110c718</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>x_89907_vehicle_to.statement.requires.ap</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysevent_register_db498c944ff033005d57b2718110c718</sys_update_name>
+        <sys_updated_by>dan.lengyel</sys_updated_by>
+        <sys_updated_on>2019-04-09 17:08:53</sys_updated_on>
+        <table/>
+    </sysevent_register>
+</record_update>

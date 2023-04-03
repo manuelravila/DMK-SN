@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_user_role_contains">
+    <sys_user_role_contains action="INSERT_OR_UPDATE">
+        <contains display_value="view_changer" name="view_changer">8a454be00a0a0b8c00de7dae26869165</contains>
+        <role display_value="x_89907_vehicle_to.admin" name="x_89907_vehicle_to.admin">7044651bdb621300f898fbefbf9619ad</role>
+        <sys_class_name>sys_user_role_contains</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-07-10 13:48:56</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>21052594db531300f898fbefbf96196f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>view_changer.x_89907_vehicle_to.admin</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_user_role_contains_21052594db531300f898fbefbf96196f</sys_update_name>
+        <sys_updated_by>Dan.Lengyel</sys_updated_by>
+        <sys_updated_on>2018-07-10 13:48:56</sys_updated_on>
+    </sys_user_role_contains>
+</record_update>

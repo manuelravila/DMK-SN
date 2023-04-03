@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TollTestStatementGenerator</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>1b08b6df4f52f3005d57b2718110c750</description>
+        <name>TollTestStatementGenerator</name>
+        <script><![CDATA[var TollTestStatementGenerator = Class.create();
+TollTestStatementGenerator.prototype = {
+	initialize: function initialize(definition) {
+		this.definition = definition;
+	},
+
+	createInputRecord: function createInputRecord() {
+		var inputData = this.getInputData();
+		if (!inputData) {
+			gs.info("TollTestStatementGenerator: Unable to load input data");
+			return null;
+		}
+		// 		gs.info("TollTestStatementGenerator: inputData: " + JSON.stringify(inputData));
+		var inputRecord = new GlideRecord(inputData.table_name);
+		inputRecord.newRecord();
+		// 		gs.info("TollTestStatementGenerator: after newrecord");
+		this.setInputRecordFields(inputRecord, inputData.fields);
+		// 		gs.info("TollTestStatementGenerator: after setInputRecordFields");
+		this.createInputRecordAttachments(inputRecord, inputData.attachments);
+		// 		gs.info("TollTestStatementGenerator: after createInputRecordAttachments");
+		var inputRecordSysID = inputRecord.insert();
+		if (!inputRecordSysID) {
+			gs.info("TollTestStatementGenerator: Unable to create input record");
+			return null;
+		}
+		// 		gs.info("TollTestStatementGenerator: inputRecord: " + inputRecordSysID + " -- " + inputRecord.getDisplayValue());
+		return inputRecordSysID;
+	},
+
+	createInputRecordAttachments: function createInputRecordAttachments(
+		record,
+		attachmentDefs
+	) {
+		for (var i = 0; i < attachmentDefs.length; i++) {
+			var attachmentDef = attachmentDefs[i];
+			var attachment = new GlideSysAttachment();
+			if (attachmentDef.fileName) {
+				var fileName = attachmentDef.fileName;
+				var contentType = attachmentDef.contentType;
+				var contentFieldName = attachmentDef.contentField;
+				if (!this.definition.isValidField(contentFieldName)) {
+					gs.info(
+						"Error in Test Definition configuration: {0} is not a valid field.",
+						contentFieldName
+					);
+					throw new Error(contentFieldName + " is not a valid field");
+				}
+				var content = this.definition.getValue(contentFieldName) || "";
+				var attachmentSysID = attachment.write(
+					record,
+					fileName,
+					contentType,
+					content
+				);
+				gs.info("created attachment {0}", attachmentSysID);
+			} else {
+				var sourceTable = attachmentDef.sourceTable;
+				var sourceID = attachmentDef.sourceID;
+				var targetTable = record.getTableName();
+				var targetID = record.getUniqueValue();
+				var attachmentSysIDs = attachment.copy(
+					sourceTable,
+					sourceID,
+					targetTable,
+					targetID
+				);
+				gs.info("created attachments {0}", JSON.stringify(attachmentSysIDs));
+			}
+		}
+	},
+
+	setInputRecordFields: function setInputRecordFields(record, fields) {
+		for (var i = 0; i < fields.length; i++) {
+			var field = fields[i];
+			record.setValue(field.name, field.value);
+		}
+	},
+
+	getInputData: function getInputData() {
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.evaluateScript(this.definition, "input_data", { result: null });
+		return evaluator.getVariable("result");
+	},
+
+	getAssertions: function getAssertions(mode) {
+		var assertions = [];
+		var m2mParent = this.definition;
+		var m2mTable = "x_89907_vehicle_to_m2m_import_test_import_test";
+		var m2mParentRef = "import_test_definition";
+		var m2mChildRef = "import_test_assertion";
+		var m2mChildTable = "x_89907_vehicle_to_import_test_assertion";
+		var filter = [];
+		switch (mode) {
+			case "validate":
+				filter.push({
+					fieldName: "step",
+					operator: "CONTAINS",
+					fieldValue: "validated"
+				});
+				break;
+			case "import":
+				filter.push({
+					fieldName: "step",
+					operator: "CONTAINS",
+					fieldValue: "imported"
+				});
+				break;
+			default:
+			// no filter
+		}
+		var assertionGR = this.getM2MList(
+			m2mParent,
+			m2mTable,
+			m2mParentRef,
+			m2mChildRef,
+			m2mChildTable,
+			filter
+		);
+		while (assertionGR.next()) {
+			assertions.push({ sys_id: assertionGR.getUniqueValue() });
+		}
+		return {
+			table: "x_89907_vehicle_to_import_test_assertion",
+			assertions: assertions
+		};
+	},
+
+	getM2MList: function getM2MList(
+		parent,
+		m2mTable,
+		parentReference,
+		childReference,
+		childTable,
+		filter
+	) {
+		var childIDs = this.getM2MChildIDs(
+			parent,
+			m2mTable,
+			parentReference,
+			childReference,
+			childTable
+		);
+		var childGR = new GlideRecord(childTable);
+		childGR.addQuery("sys_id", childIDs);
+		for (var i = 0; i < filter.length; i++) {
+			var cond = filter[i];
+			childGR.addQuery(cond.fieldName, cond.operator || "=", cond.fieldValue);
+		}
+		childGR.query();
+		return childGR;
+	},
+
+	getM2MChildIDs: function getM2MChildIDs(
+		parent,
+		m2mTable,
+		parentReference,
+		childReference,
+		childTable
+	) {
+		var m2mGR = new GlideRecord(m2mTable);
+		m2mGR.addQuery(parentReference, parent.sys_id);
+		m2mGR.query();
+		var childIDs = [];
+		while (m2mGR.next()) {
+			childIDs.push("" + m2mGR.getValue(childReference));
+		}
+		return childIDs;
+	},
+
+	extractAssertion: function extractAssertion(assertionGR, context) {
+		var evaluator = new GlideScopedEvaluator();
+		evaluator.evaluateScript(this.definition, "input_data", { result: null });
+		return evaluator.getVariable("result");
+	},
+
+	type: "TollTestStatementGenerator"
+};
+TollTestStatementGenerator.findField = function findField(fieldName, fields) {
+	var found;
+	for (var i = 0; i < fields.length; i++) {
+		if (fields[i].name == fieldName) {
+			found = fields[i];
+			break;
+		}
+	}
+	return found;
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-03 03:19:39</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>1b08b6df4f52f3005d57b2718110c750</sys_id>
+        <sys_mod_count>28</sys_mod_count>
+        <sys_name>TollTestStatementGenerator</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_1b08b6df4f52f3005d57b2718110c750</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-15 14:34:02</sys_updated_on>
+    </sys_script_include>
+</record_update>

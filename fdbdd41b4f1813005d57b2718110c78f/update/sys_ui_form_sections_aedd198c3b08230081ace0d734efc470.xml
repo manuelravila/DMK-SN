@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="aedd198c3b08230081ace0d734efc470" sys_domain="global" table="atf_output_variable" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 13:34:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a61e5f004fa277005d57b2718110c7ec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="atf_output_variable" name="atf_output_variable" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">aedd198c3b08230081ace0d734efc470</sys_ui_form>
+            <sys_ui_section display_value="">621e5b004fa277005d57b2718110c771</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 13:34:40</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 13:34:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>361e5f004fa277005d57b2718110c7ef</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="atf_output_variable" name="atf_output_variable" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">aedd198c3b08230081ace0d734efc470</sys_ui_form>
+            <sys_ui_section display_value="">aa1e5f004fa277005d57b2718110c7ec</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 13:34:40</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 13:34:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ea1e5b004fa277005d57b2718110c76d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="atf_output_variable" name="atf_output_variable" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">aedd198c3b08230081ace0d734efc470</sys_ui_form>
+            <sys_ui_section display_value="">ae1e5b004fa277005d57b2718110c76b</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 13:34:40</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>3</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 13:34:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e61e5b004fa277005d57b2718110c76f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="atf_output_variable" name="atf_output_variable" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">aedd198c3b08230081ace0d734efc470</sys_ui_form>
+            <sys_ui_section display_value="">e21e5b004fa277005d57b2718110c76e</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 13:34:40</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>4</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 13:34:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>6e1e5b004fa277005d57b2718110c770</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="atf_output_variable" name="atf_output_variable" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">aedd198c3b08230081ace0d734efc470</sys_ui_form>
+            <sys_ui_section display_value="">ea1e5b004fa277005d57b2718110c76f</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 13:34:40</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>5</position>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 13:34:40</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>3e1e5f004fa277005d57b2718110c7f0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="atf_output_variable" name="atf_output_variable" sys_domain="global" view="7966be310a0a0b8c00bd504090503227">aedd198c3b08230081ace0d734efc470</sys_ui_form>
+            <sys_ui_section display_value="">3a1e5f004fa277005d57b2718110c7ef</sys_ui_section>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 13:34:40</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>atf_output_variable</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 13:34:40</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>aedd198c3b08230081ace0d734efc470</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>atf_output_variable</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy>read</sys_policy>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_form_sections_aedd198c3b08230081ace0d734efc470</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 13:34:40</sys_updated_on>
+            <sys_user/>
+            <view display_value="Advanced" name="advanced">7966be310a0a0b8c00bd504090503227</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

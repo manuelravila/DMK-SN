@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function dmkJournalListClient($uibModal, $scope, $sce) {
+	/* widget controller */
+	var c = this;
+
+	if (c.data.entries) {
+		for (var i = 0; i < c.data.entries.length; i++) {
+			var en = c.data.entries[i];
+			if (!en.htmlValue && en.value) {
+				en.htmlValue = $sce.trustAsHtml(en.value.replace(/\n/g, "<br />"));
+			}
+		}
+	}
+
+	c.openJournalEntriesModal = function openJournalEntriesModal() {
+		c.journalEntriesInstance = $uibModal.open({
+			templateUrl: "journalEntriesModalTemplate",
+			scope: $scope
+		});
+	};
+
+	c.closeJournalEntriesModal = function closeJournalEntriesModal() {
+		c.journalEntriesInstance.close();
+	};
+
+	c.getMaxHeight = function getMaxHeight() {
+		return c.data.panel_body_height || "none";
+	};
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>dmk-journal-list</id>
+        <internal>false</internal>
+        <link/>
+        <name>DMKJournalList</name>
+        <option_schema>[{"name":"field_name","section":"Data","label":"Field Name","type":"string"},{"name":"field_label","section":"Data","label":"Field Label","type":"string"},{"name":"entries_to_show","section":"Presentation","default_value":"2","label":"Entries to show","type":"integer"},{"hint":"300px","name":"panel_body_height","section":"Presentation","default_value":"300px","label":"Panel body height","type":"string"}]</option_schema>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function dmkJournalList() {
+	/* populate the 'data' object */
+	/* e.g., data.table = $sp.getValue('table'); */
+
+	if (input) {
+		data.sys_id = input.sys_id;
+	} else {
+		data.sys_id = options.sys_id || $sp.getParameter("sys_id");
+	}
+
+	if (!data.sys_id) {
+		return;
+	}
+
+	data.field_name = options.field_name || $sp.getParameter("field_name");
+	if (!data.field_name) {
+		return;
+	}
+
+	data.field_label = options.field_label || $sp.getParameter("field_label");
+	data.entries_to_show = options.entries_to_show || 2;
+	data.panel_body_height = options.panel_body_height || "300px";
+
+	data.entries = getJournalEntries(data.sys_id, data.field_name);
+
+	/**
+	 * Gets all journal entries for this incident.
+	 *
+	 * @param sysID - sys_id of the record that contains the journal field
+	 * @param fieldName - column name of the journal field
+	 * @returns [{journalEntry}] -each journal entry is an object with the following properties:
+	 *    created - String - date/time stamp of the entry
+	 *    user - {
+	 *       user_name : Login name of the user e.g., "jim.user"
+	 *       name : Display name of the user e.g., "Jim User"
+	 *       }
+	 *    value - String - text value of the journal entry
+	 */
+
+	function getJournalEntries(sysID, fieldName) {
+		var entries = [];
+		// Get the query object for the entries
+		var journalGr = primGetJournalEntries(sysID, fieldName);
+		// We're going to memoize the users so we only have to look them
+		// up once with the expensive glide query
+		var users = {};
+		while (journalGr.next()) {
+			var user;
+			var userName = journalGr.sys_created_by.toString();
+			if (users[userName]) {
+				user = users[userName];
+			} else {
+				user = primGetUser(userName);
+				users[userName] = user;
+			}
+			var entry = {
+				created: journalGr.sys_created_on.toString(),
+				user: user,
+				value: journalGr.value.toString()
+			};
+			entries.push(entry);
+		}
+		return entries;
+	}
+
+	function primGetJournalEntries(sysID, fieldName) {
+		var journalGr = new GlideRecord("sys_journal_field");
+		journalGr.addQuery("element", fieldName);
+		journalGr.addQuery("element_id", sysID);
+		journalGr.orderByDesc("sys_created_on");
+		journalGr.query();
+		return journalGr;
+	}
+
+	function primGetUser(userName) {
+		var user;
+		var grUser = new GlideRecord("sys_user");
+		grUser.addQuery("user_name", userName);
+		grUser.addActiveQuery();
+		grUser.query();
+		if (grUser.next()) {
+			user = {};
+			$sp.getRecordDisplayValues(user, grUser, "name,user_name");
+		} else {
+			user = {
+				user_name: userName,
+				name: "(" + userName + ")"
+			};
+		}
+		return user;
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-06-18 15:08:35</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f890547e4fca77405d57b2718110c7c8</sys_id>
+        <sys_mod_count>59</sys_mod_count>
+        <sys_name>DMKJournalList</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_f890547e4fca77405d57b2718110c7c8</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-19 05:28:30</sys_updated_on>
+        <template><![CDATA[<div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <span class="panel-title" aria-label="c.data.field_label">{{c.data.field_label}}</span>
+    </div>
+    <div class="panel-body">
+      <div ng-repeat="e in c.data.entries | limitTo: c.data.entries_to_show">
+        <div ng-if="!$first">
+          <span>
+          </span>
+          <hr>
+        </div>
+        <div>
+          <span>
+            <strong>{{e.created}} - {{e.user.name}}</strong>
+          </span>
+        </div>
+        <div>
+          <span>
+            <span style="word-wrap:break-word;display:block;" ng-bind-html="e.htmlValue"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <div ng-if="c.data.entries.length > c.data.entries_to_show">
+        <span>Showing {{c.data.entries_to_show}} of {{c.data.entries.length}}</span>
+        <span class="pull-right"><a href="#popupJournalEntries" ng-click="c.openJournalEntriesModal()">Show all</a></span>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/ng-template" id="journalEntriesModalTemplate">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">{{c.data.field_label}}</h4>
+  	</div>
+		<div class="panel-body" ng-style="{'max-height': c.getMaxHeight()}" style="overflow-y: auto">
+      <div ng-repeat="e in c.data.entries">
+        <div ng-if="!$first">
+          <span>
+          </span>
+          <hr>
+        </div>
+        <div>
+          <span>
+            <strong>{{e.created}} - {{e.user.name}}</strong>
+          </span>
+        </div>
+        <div>
+          <span>
+            <span style="word-wrap:break-word;display:block;" ng-bind-html="e.htmlValue"></span>
+          </span>
+        </div>
+      </div>
+  	</div>
+		<div class="panel-footer text-right">
+			<button class="btn btn-primary" ng-click="c.closeJournalEntriesModal()">${Close}</button>
+		</div>
+	</div>
+</script>]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TollTestJasmineHelper</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>bc3d5e904faa77005d57b2718110c716</description>
+        <name>TollTestJasmineHelper</name>
+        <script><![CDATA[/* globals beforeEach:readonly describe:readonly expect:readonly it:readonly */
+var TollTestJasmineHelper = Class.create();
+TollTestJasmineHelper.processAssertions = function processAssertions(
+	keyedAssertions
+) {
+	function doAssertions(assertions, itKey) {
+		for (var i = 0; i < assertions.length; i++) {
+			var assertion = assertions[i];
+			TollTestJasmineHelper.assertionFunctionFactory(assertion, itKey);
+		}
+	}
+
+	function fnDescribe(its) {
+		return function tollTestDescribe() {
+			beforeEach(function tollTestBeforeEach() {
+				function stringify(entity) {
+					return jasmine.pp(entity);
+				}
+				this.addMatchers({
+					toHaveSameItems: function toHaveSameItems(expected, ignoreOrder) {
+						function isObject(obj) {
+							return Object.prototype.toString.apply(obj) === "[object Object]";
+						}
+
+						function craftMessage(actual, expectedValue, mismatches) {
+							if (mismatches.length === 0) {
+								return (
+									"The collections do not match in length or objects. \n Expected collection:" +
+									stringify(actual) +
+									" is not equal to " +
+									stringify(expectedValue)
+								);
+							}
+							return ["The collections have equal length, but do not match."]
+								.concat(
+									mismatches.map(function createMessageString(m) {
+										return (
+											"At " +
+											m.index +
+											": expected " +
+											stringify(m.expected) +
+											", actual " +
+											stringify(m.actual)
+										);
+									})
+								)
+								.join("\n    ");
+						}
+
+						function compareHashes(actual, expectedValue) {
+							var mismatches = {};
+							Object.keys(actual).forEach(function checkActual(key) {
+								if (
+									!jasmine.getEnv().equals_(actual[key], expectedValue[key])
+								) {
+									mismatches[key] = {
+										index: key,
+										actual: actual[key],
+										expected: expectedValue[key]
+									};
+								}
+							});
+							Object.keys(expectedValue).forEach(function checkExpected(key) {
+								if (
+									!jasmine.getEnv().equals_(actual[key], expectedValue[key]) &&
+									!mismatches[key]
+								) {
+									mismatches[key] = {
+										index: key,
+										actual: actual[key],
+										expected: expectedValue[key]
+									};
+								}
+							});
+							return Object.keys(mismatches).map(function getMismatches(key) {
+								return mismatches[key];
+							});
+						}
+
+						function compareArraysSorted(actual, expectedValue) {
+							var mismatches = [];
+							actual.forEach(function checkActual(item, i) {
+								if (!jasmine.getEnv().equals_(item, expectedValue[i])) {
+									mismatches.push({
+										index: i,
+										actual: item,
+										expected: expectedValue[i]
+									});
+								}
+							});
+							return mismatches;
+						}
+
+						function compareArraysIgnoreSort(actual, expectedValue) {
+							var myExpected = expectedValue.slice(0);
+							var mismatches = [];
+							actual.forEach(function checkActual(item, i) {
+								var foundIndex = -1;
+								myExpected.some(function checkExpected(expectedItem, idx) {
+									if (jasmine.getEnv().equals_(item, expectedItem)) {
+										foundIndex = idx;
+										return true;
+									}
+									return false;
+								});
+								if (foundIndex > -1) {
+									myExpected.splice(foundIndex, 1);
+								} else {
+									mismatches.push({ index: i, actual: item, expected: null });
+								}
+							});
+							mismatches = mismatches.concat(
+								myExpected.map(function createMismatchObj(val, i) {
+									return {
+										index: actual.length + i,
+										actual: null,
+										expected: val
+									};
+								})
+							);
+							return mismatches;
+						}
+
+						if (!Array.isArray(this.actual) && !isObject(this.actual)) {
+							throw new Error(
+								"Actual must be an Array or Object. Is type: " +
+									typeof this.actual
+							);
+						}
+						if (!Array.isArray(expected) && !isObject(expected)) {
+							throw new Error(
+								"Expectation must be an Array or Object. Is type: " +
+									typeof expected
+							);
+						}
+						var mismatches;
+						if (Array.isArray(this.actual) && Array.isArray(expected)) {
+							if (this.actual.length !== expected.length) {
+								var messageString =
+									"Array length differs! Actual length: " +
+									this.actual.length +
+									", expected length: " +
+									expected.length +
+									"\n" +
+									"Actual: \n" +
+									stringify(this.actual) +
+									"\n" +
+									"Expected: \n" +
+									stringify(expected);
+								this.message = function message() {
+									return messageString;
+								};
+								return false;
+							}
+							if (ignoreOrder) {
+								mismatches = compareArraysIgnoreSort(this.actual, expected);
+							} else {
+								mismatches = compareArraysSorted(this.actual, expected);
+							}
+						} else {
+							mismatches = compareHashes(this.actual, expected);
+						}
+						messageString = craftMessage(this.actual, expected, mismatches);
+						this.message = function message() {
+							return messageString;
+						};
+						return mismatches.length === 0;
+					}
+				});
+			});
+			// eslint-disable-next-line no-restricted-syntax, guard-for-in
+			for (var itKey in its) {
+				var assertions = its[itKey];
+				doAssertions(assertions, itKey);
+			}
+		};
+	}
+
+	// eslint-disable-next-line no-restricted-syntax, guard-for-in
+	for (var describeKey in keyedAssertions) {
+		var its = keyedAssertions[describeKey];
+		describe(describeKey, fnDescribe(its));
+	}
+};
+
+TollTestJasmineHelper.assertionFunctionFactory = function assertionFunctionFactory(
+	assertion,
+	itKey
+) {
+	// 		gs.info(JSON.stringify({"TollTestJasmineHelper": {
+	// 			"method": assertion.method.toString(),
+	// 			"expect": assertion.expect.toString(),
+	// 			"expected": assertion.expected.toString()
+	// 		}},null,'\t'));
+	// 				gs.info(JSON.stringify(assertion,null,'\t'));
+
+	function fnExpectHasProp(expected, actual, propertyName) {
+		return function expectHasProperty() {
+			expect(
+				Object.prototype.hasOwnProperty.call(actual, propertyName)
+			).toBeTruthy();
+		};
+	}
+
+	function fnExpectPropEqual(expected, actual, propertyName) {
+		return function expectPropertyEqual() {
+			expect(actual[propertyName]).toEqual(expected[propertyName]);
+		};
+	}
+
+	if (assertion.method == "propsToAllEqual") {
+		// eslint-disable-next-line no-restricted-syntax, guard-for-in
+		for (var prop in assertion.expected) {
+			it(
+				"should have the property " + prop,
+				fnExpectHasProp(assertion.expected, assertion.expect, prop)
+			);
+			it(
+				prop + " should be equal",
+				fnExpectPropEqual(assertion.expected, assertion.expect, prop)
+			);
+		}
+		return;
+	}
+	if (assertion.method == "arrayPropsToAllEqual") {
+		// 		it("should have the same length", function() {
+		// 			expect(assertion.expect.length).toEqual(assertion.expected.length);
+		// 		});
+		// 		if (assertion.expect.length == assertion.expected.length) {
+		it("should have the same items", function expectSameItems() {
+			expect(assertion.expect).toHaveSameItems(assertion.expected, true);
+		});
+		// 		}
+		/*		if (assertion.expect.length == assertion.expected.length) {
+			for (var i = 0; i < assertion.expected.length; i++) {
+				var actualItem = assertion.expect[i];
+				var expectedItem = assertion.expected[i];
+				for (var prop2 in expectedItem) {
+					it("[" + i + "] :: should have the property " + prop2, fnExpectHasProp(expectedItem, actualItem, prop2));
+					it("[" + i + "] :: " + prop2 + " should be equal", fnExpectPropEqual(expectedItem, actualItem, prop2));
+				}
+			}
+		}
+*/
+
+		return;
+	}
+	it(itKey, function testAssertion() {
+		switch (assertion.method) {
+			case "toBe":
+				expect(assertion.expect).toBe(assertion.expected);
+				break;
+			case "toNotBe":
+				expect(assertion.expect).toNotBe(assertion.expected);
+				break;
+			case "toEqual":
+				expect(assertion.expect).toEqual(assertion.expected);
+				break;
+			case "toNotEqual":
+				expect(assertion.expect).toNotEqual(assertion.expected);
+				break;
+			case "toBeDefined":
+				expect(assertion.expect).toBeDefined();
+				break;
+			case "toNotBeDefined":
+				expect(assertion.expect).toNotBeDefined();
+				break;
+			case "toBeNull":
+				expect(assertion.expect).toBeNull();
+				break;
+			case "toNotBeNull":
+				expect(assertion.expect).toNotBeNull();
+				break;
+			case "toBeTruthy":
+				expect(assertion.expect).toBeTruthy();
+				break;
+			case "toBeFalsy":
+				expect(assertion.expect).toBeFalsy();
+				break;
+			case "toContain":
+				expect(assertion.expect).toContain(assertion.expected);
+				break;
+			case "toNotContain":
+				expect(assertion.expect).toNotContain(assertion.expected);
+				break;
+			case "toContainAll":
+				for (var i = 0; i < assertion.expected.length; i++) {
+					expect(assertion.expect).toContain(assertion.expected[i]);
+				}
+				break;
+			default:
+			// no op
+		}
+	});
+};
+
+TollTestJasmineHelper.getExceptionsForImportStatement = function getExceptionsForImportStatement(
+	importStatementGR,
+	filter
+) {
+	// gs.info("getExceptionsForImportStatement import_statement" + importStatementGR + importStatementGR.isValidRecord());
+	// gs.info("getExceptionsForImportStatement filter" + filter);
+	var exceptionGR = new GlideRecord("x_89907_vehicle_to_toll_import_exception");
+	exceptionGR.orderBy("created");
+	exceptionGR.addQuery("import_statement", importStatementGR.getUniqueValue());
+	if (filter) {
+		// eslint-disable-next-line no-restricted-syntax, guard-for-in
+		for (var attrName in filter) {
+			exceptionGR.addQuery(attrName, filter[attrName]);
+		}
+	}
+	// 	gs.info("encoded query" + exceptionGR.getEncodedQuery());
+	exceptionGR.query();
+	// 	gs.info("getExceptionsForImportStatement exceptionGR" + exceptionGR + " rows " + exceptionGR.getRowCount());
+	return exceptionGR;
+};
+
+TollTestJasmineHelper.objectifyExceptions = function objectifyExceptions(
+	exceptionGR
+) {
+	// gs.info("objectifyExceptions exceptionGR" + exceptionGR + " rows " + exceptionGR.getRowCount());
+	var fields = [
+		"error_class",
+		"error_message",
+		"error_type",
+		"field_name",
+		"field_type",
+		"field_value"
+	];
+	var exceptionsObj = [];
+	while (exceptionGR.next()) {
+		var obj = {};
+		// 		gs.info("objectifyExceptions in next" + exceptionGR.isValidRecord());
+		for (var i = 0; i < fields.length; i++) {
+			obj[fields[i]] = exceptionGR.getValue(fields[i]);
+		}
+		exceptionsObj.push(obj);
+	}
+	// 		gs.info("objectifyExceptions exceptionsObj" + JSON.stringify(exceptionsObj));
+	return exceptionsObj;
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-06 03:49:51</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>bc3d5e904faa77005d57b2718110c716</sys_id>
+        <sys_mod_count>61</sys_mod_count>
+        <sys_name>TollTestJasmineHelper</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_bc3d5e904faa77005d57b2718110c716</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-15 14:33:45</sys_updated_on>
+    </sys_script_include>
+</record_update>

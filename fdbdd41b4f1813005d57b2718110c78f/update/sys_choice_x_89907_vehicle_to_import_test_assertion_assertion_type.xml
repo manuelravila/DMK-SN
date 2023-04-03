@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="assertion_type" table="x_89907_vehicle_to_import_test_assertion" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>assertion_type</element>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:11:41</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>2f2f50711b439050195fed7dee4bcbcf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>assertion_type</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_choice_x_89907_vehicle_to_import_test_assertion_assertion_type</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-05 16:11:41</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Be</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:11:41</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>08028cd44fe277005d57b2718110c77c</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>tobe</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Not Be</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:13:28</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>be02cc944fe277005d57b2718110c767</sys_id>
+            <sys_mod_count>6</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toNotBe</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Equal</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:15:26</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>7872cc944fe277005d57b2718110c7b2</sys_id>
+            <sys_mod_count>4</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toEqual</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Not Equal</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:15:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>79e2c8944fe277005d57b2718110c72e</sys_id>
+            <sys_mod_count>4</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toNotEqual</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Be Defined</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:16:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f6f2c8944fe277005d57b2718110c72f</sys_id>
+            <sys_mod_count>4</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toBeDefined</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Not Be Defined</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:16:42</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f7138cd44fe277005d57b2718110c77e</sys_id>
+            <sys_mod_count>4</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toNotBeDefined</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Be Null</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:16:56</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>943388984fe277005d57b2718110c783</sys_id>
+            <sys_mod_count>5</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toBeNull</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Not Be Null</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>7</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:17:10</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c8434c984fe277005d57b2718110c706</sys_id>
+            <sys_mod_count>4</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toNotBeNull</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Be Truthy</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>8</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:17:48</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>9b438c584fe277005d57b2718110c756</sys_id>
+            <sys_mod_count>5</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toBeTruthy</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Be Falsy</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>9</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:18:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a8734c184fe277005d57b2718110c73a</sys_id>
+            <sys_mod_count>5</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toBeFalsy</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Contain</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:18:35</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ab730c984fe277005d57b2718110c797</sys_id>
+            <sys_mod_count>5</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toContain</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>To Not Contain</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>11</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-05 16:18:51</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>80a304584fe277005d57b2718110c7aa</sys_id>
+            <sys_mod_count>4</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>toNotContain</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Properties To All Equal</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>12</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-12 15:16:50</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e498bf124f26fb005d57b2718110c74b</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:08:36</sys_updated_on>
+            <value>propsToAllEqual</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>assertion_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Array Item Properties To All Equal</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_import_test_assertion</name>
+            <sequence>13</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-07-12 19:08:36</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>aead20ea4fa6fb005d57b2718110c720</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-07-12 19:09:28</sys_updated_on>
+            <value>arrayPropsToAllEqual</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

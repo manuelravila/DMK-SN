@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>false</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_89907_vehicle_to_u_cmdb_ci_transponder</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition table="x_89907_vehicle_to_u_cmdb_ci_transponder">vendorISEMPTY^ORmanufacturerISEMPTY^ORcompanyISEMPTY^install_statusIN1^EQ<item endquery="false" field="vendor" goto="false" newquery="false" operator="ISEMPTY" or="false" value=""/>
+            <item endquery="false" field="manufacturer" goto="false" newquery="false" operator="ISEMPTY" or="true" value=""/>
+            <item endquery="false" field="company" goto="false" newquery="false" operator="ISEMPTY" or="true" value=""/>
+            <item display_value="Installed" endquery="false" field="install_status" goto="false" newquery="false" operator="IN" or="false" value="1"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter_condition>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Ensure required fields for billing</name>
+        <order>100</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /* null when async */) {
+	if (current == null) {
+		// prevent null pointer exceptions.
+		return;
+	}
+
+	if (current.company.nil()) {
+		// Get the company for the transponder record based on current user
+		var companyGR = new GlideRecord("core_company");
+		companyGR.addQuery('primary',true);
+		companyGR.addQuery('canonical',true);
+		companyGR.setLimit(1);
+		companyGR.query();
+		current.company.setValue( companyGR.next() ? companyGR.sys_id : 'bdd47b74dbc26600f788f6e9af961937');
+	}
+	
+	if (current.vendor.nil()) {
+		// Get the vendor for the transponder record
+		// TODO - this should come from configuration
+		var vendorGR = new GlideRecord("core_company");
+		vendorGR.addQuery("name","E-ZPass");
+		vendorGR.query();
+		if (vendorGR.next()) {
+			current.vendor.setValue(vendorGR.sys_id);
+		}
+	}
+
+	if (current.manufacturer.nil()) {
+		// Get the model and manufacturer for the transponder record
+		// TODO - this should come from configuration
+		var modelGR = new GlideRecord("cmdb_hardware_product_model");
+		modelGR.addQuery("name","Toll Transponder");
+		modelGR.query();
+		if (modelGR.next()) {
+			current.model_id.setValue(modelGR.sys_id);
+			if (!modelGR.manufacturer.nil()) {
+				current.manufacturer.setValue(modelGR.manufacturer);
+			}
+		}
+	}
+
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>SN_Chall</sys_created_by>
+        <sys_created_on>2021-08-31 03:32:30</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>4d199ba91b1e381079d6113fad4bcb58</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Ensure required fields for billing</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_4d199ba91b1e381079d6113fad4bcb58</sys_update_name>
+        <sys_updated_by>SN_Chall</sys_updated_by>
+        <sys_updated_on>2021-08-31 03:39:56</sys_updated_on>
+        <template/>
+        <when>before</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=4d199ba91b1e381079d6113fad4bcb58"/>
+</record_update>

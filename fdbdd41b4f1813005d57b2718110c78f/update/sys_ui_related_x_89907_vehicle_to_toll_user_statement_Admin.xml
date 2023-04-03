@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_related sys_domain="global" table="x_89907_vehicle_to_toll_user_statement" version="2" view="Admin">
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="Toll User Statement - Admin" name="x_89907_vehicle_to_toll_user_statement" related_list="NULL" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">4754e28b4f157f405d57b2718110c7a9</list_id>
+            <order_by/>
+            <position>0</position>
+            <related_list>REL:7900afc8db59e300f898fbefbf96191b</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-05-13 13:45:40</sys_created_on>
+            <sys_id>4754e28b4f157f405d57b2718110c7aa</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-05-13 13:45:40</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="Toll User Statement - Admin" name="x_89907_vehicle_to_toll_user_statement" related_list="NULL" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">4754e28b4f157f405d57b2718110c7a9</list_id>
+            <order_by/>
+            <position>1</position>
+            <related_list>REL:7b7c95e3dbf21300f898fbefbf961938</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-05-13 13:45:40</sys_created_on>
+            <sys_id>cf54e28b4f157f405d57b2718110c7aa</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-05-13 13:45:40</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="Toll User Statement - Admin" name="x_89907_vehicle_to_toll_user_statement" related_list="NULL" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">4754e28b4f157f405d57b2718110c7a9</list_id>
+            <order_by/>
+            <position>2</position>
+            <related_list>REL:7b840e33db321300f898fbefbf9619e4</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-05-13 13:45:40</sys_created_on>
+            <sys_id>4754e28b4f157f405d57b2718110c7ab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-05-13 13:45:40</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="Toll User Statement - Admin" name="x_89907_vehicle_to_toll_user_statement" related_list="NULL" sys_domain="global" view="52eacb210fcca600b7fe85ace1050e92">4754e28b4f157f405d57b2718110c7a9</list_id>
+            <order_by/>
+            <position>3</position>
+            <related_list>REL:4824228b4f157f405d57b2718110c7b4</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-05-13 13:45:40</sys_created_on>
+            <sys_id>cb54e28b4f157f405d57b2718110c7ab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-05-13 13:45:40</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list action="INSERT_OR_UPDATE">
+            <calculated_name>Toll User Statement - Admin</calculated_name>
+            <filter/>
+            <name>x_89907_vehicle_to_toll_user_statement</name>
+            <order_by/>
+            <position/>
+            <related_list/>
+            <sys_class_name>sys_ui_related_list</sys_class_name>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-05-13 13:45:40</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>4754e28b4f157f405d57b2718110c7a9</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Toll User Statement - Admin</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_related_x_89907_vehicle_to_toll_user_statement_Admin</sys_update_name>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-05-13 13:45:40</sys_updated_on>
+            <sys_user/>
+            <view display_value="Admin" name="Admin">52eacb210fcca600b7fe85ace1050e92</view>
+            <view_name/>
+        </sys_ui_related_list>
+    </sys_ui_related>
+</record_update>

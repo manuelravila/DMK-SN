@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.VehicleCoordinatorUtilities</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>VehicleCoordinatorUtilities</name>
+        <script><![CDATA[var VehicleCoordinatorUtilities = Class.create();
+VehicleCoordinatorUtilities.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	
+	getCostCenters: function() {
+		var costCenters = [];
+		var cc = new GlideRecord('x_89907_vehicle_to_transponder_cost_center');
+		cc.addQuery('vehicle_coordinators','CONTAINS',gs.getUserID());
+		cc.query();
+		while(cc.next()) {
+			costCenters.push(cc.getValue('code'));
+		}
+		return costCenters;
+	},
+	
+	type: 'VehicleCoordinatorUtilities'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2020-02-08 22:27:19</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>02814ca2db7a00107cf5a455ca9619fe</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>VehicleCoordinatorUtilities</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_02814ca2db7a00107cf5a455ca9619fe</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-17 21:55:46</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TollStatementParser_EZPassNY_v2</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>New in 2018 format for billing data from NY E-ZPass (comma-delimited)
+162934a24fe6fb005d57b2718110c7f7</description>
+        <name>TollStatementParser_EZPassNY_v2</name>
+        <script><![CDATA[var FIELD_DELIM = ",";
+var TYPE_CHARGEDETAIL = "chargedetail";
+var TYPE_CHARGESRESULT = "TYPE_CHARGESRESULT";
+var TYPE_SUMMARYFIELDS = "summaryfields";
+var TYPE_EXCEPTION = "exception";
+var TYPE_FILEPARSEERROR = "fileparseerror";
+var TYPE_DATAFORMATERROR = "dataformaterror";
+var TYPE_INVALIDCONTENTERROR = "invalidcontenterror";
+
+// eslint-disable-next-line camelcase
+var TollStatementParser_EZPassNY_v2 = Class.create();
+TollStatementParser_EZPassNY_v2.prototype = {
+	initialize: function initialize(label) {
+		this.importLabel = label;
+	},
+
+	primaryDatePattern: function plazaDatePattern() {
+		//		return /^(02)\/([12][0-9]|0[1-9])|(0[469]|11)\/(30|[12][0-9]|0[1-9])|(0[13578]|1[02])\/(3[01]|[12][0-9]|0[1-9])\/2[0-9][0-9][0-9]$/;
+		return /^(?:(02)\/([12][0-9]|0[1-9])|(0[469]|11)\/(30|[12][0-9]|0[1-9])|(0[13578]|1[02])\/(3[01]|[12][0-9]|0[1-9]))\/2[0-9][0-9][0-9]$/;
+	},
+
+	primaryDateFormatString: function primaryDateFormatString() {
+		return "MM/dd/yyyy";
+	},
+
+	plazaDatePattern: function plazaDatePattern() {
+		//		return /^(02)\/([12][0-9]|0[1-9])|(0[469]|11)\/(30|[12][0-9]|0[1-9])|(0[13578]|1[02])\/(3[01]|[12][0-9]|0[1-9])\/2[0-9][0-9][0-9]$/;
+		return /^(?:(02)\/([12][0-9]|0[1-9])|(0[469]|11)\/(30|[12][0-9]|0[1-9])|(0[13578]|1[02])\/(3[01]|[12][0-9]|0[1-9]))\/2[0-9][0-9][0-9]$/;
+	},
+
+	plazaTimePattern: function plazaTimePattern() {
+		return /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+	},
+
+	chargeDetailType: function chargeDetailType() {
+		return TYPE_CHARGEDETAIL;
+	},
+
+	chargesResultType: function chargesResultType() {
+		return TYPE_CHARGESRESULT;
+	},
+
+	fileParseErrorType: function fileParseErrorType() {
+		return TYPE_FILEPARSEERROR;
+	},
+
+	dataFormatErrorType: function dataFormatErrorType() {
+		return TYPE_DATAFORMATERROR;
+	},
+
+	invalidContentErrorType: function invalidContentErrorType() {
+		return TYPE_INVALIDCONTENTERROR;
+	},
+
+	summaryFieldsType: function summaryFieldsType() {
+		return TYPE_SUMMARYFIELDS;
+	},
+
+	lineToArray: function lineToArray(ln) {
+		if (!ln) {
+			return ln;
+		}
+		
+/* ORIGINAL CODE BY CHAD HALL, REPLACED ON MAY 9TH 2022		******************************************************************
+		var tokens = [];
+		var inToken = false;
+		var currentToken = [];
+		for (var i = 0; i < ln.length; i++) {
+			var ch = ln[i];
+			if (inToken && ch === '"') {
+				if (currentToken.length === 0) {
+					tokens.push(null);
+				} else {
+					tokens.push(currentToken.join(""));
+				}
+				currentToken = null;
+				inToken = false;
+			} else if (inToken) {
+				currentToken.push(ch);
+			} else if (ch === '"') {
+				inToken = true;
+				currentToken = [];
+			}
+		}
+		
+*********************************************************************************************************************************/
+/* New routine that converts line into array, no matter values are inside quotes or not */
+
+		var tokens = ln.replace(/"/g, '').replace(/=/g, '').split(",");
+
+		for (index = 0; index < tokens.length; index++) {
+			if (tokens[index] === '') {
+				tokens[index] = null;
+			}
+		}	
+		
+		return tokens;
+	},
+
+	readChargeDetail: function readChargeDetail(lnnum, ln) {
+		// 		gs.info("LINE {0}:{1}",lnnum, ln);
+		var chargeDetailArr = this.lineToArray(ln);
+		if (chargeDetailArr.length !== 14) {
+			return {
+				type: TYPE_EXCEPTION,
+				message: "Invalid number of fields in charge detail line"
+			};
+		}
+
+		return {
+			type: TYPE_CHARGEDETAIL,
+			postDate: chargeDetailArr[0],
+			trxnDate: chargeDetailArr[1],
+			tagOrPlate: chargeDetailArr[2],
+			agency: chargeDetailArr[3],
+			entryPlaza: chargeDetailArr[4],
+			entryDate: chargeDetailArr[5],
+			entryTime: chargeDetailArr[6],
+			exitPlaza: chargeDetailArr[7],
+			exitDate: chargeDetailArr[8],
+			exitTime: chargeDetailArr[9],
+			plan: chargeDetailArr[10],
+			chargeClass: chargeDetailArr[11],
+			amount: chargeDetailArr[12],
+			balance: chargeDetailArr[13]
+		};
+	},
+
+	readSummaryFields: function readSummaryFields(attachmentSysID) {
+		// Parse attachment content looking for problems
+		var ln;
+		var lnnum = 0;
+		var fields;
+		// Get attachment content stream
+		var attgsa = new GlideSysAttachment();
+		var attis = attgsa.getContentStream(attachmentSysID);
+		var tr = new GlideTextReader(attis);
+		var summaryFieldsObj = {
+			type: TYPE_SUMMARYFIELDS
+		};
+
+		// ******* First line should be the account person name  and statement date
+		ln = tr.readLine();
+		lnnum++;
+		fields = this.lineToArray(ln);
+		if (!fields || fields.length < 13) {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "Summary Fields",
+				message: "Error parsing summary"
+			};
+		}
+
+		// Validate the Account Name
+		if (!fields[0]) {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "Account Name",
+				message: "end of file"
+			};
+		}
+		summaryFieldsObj.account_person_name = {
+			value: fields[0],
+			ln: ln,
+			lnnum: lnnum
+		};
+
+		// Validate the statement date
+		if (!fields[12] || fields[11] !== "STATEMENT DATE") {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "STATEMENT DATE",
+				message: ln || "end of file"
+			};
+		}
+		var statementDate = fields[12]; // format is mm/dd/yyy
+		summaryFieldsObj.statement_date = this.getDateFieldValue(
+			lnnum,
+			ln,
+			"STATEMENT DATE",
+			statementDate
+		);
+
+		// ******* Second line should be the address 1 and account number
+		ln = tr.readLine();
+		lnnum++;
+		fields = this.lineToArray(ln);
+		if (!fields || fields.length < 13) {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "Summary Fields",
+				message: "Error parsing summary" + fields.length
+			};
+		}
+
+		summaryFieldsObj.address = { value: [], ln: ln, lnnum: lnnum };
+
+		// Set the Address 1
+		summaryFieldsObj.address.value.push(fields[0]);
+
+		// Validate the account number
+		if (!fields[12] || fields[11] !== "ACCOUNT") {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "ACCOUNT",
+				message: ln || "end of file"
+			};
+		}
+		var accountNumStr = fields[12];
+		summaryFieldsObj.account_number = {
+			value: accountNumStr,
+			ln: ln,
+			lnnum: lnnum
+		};
+
+		// ******* Third line should be the address 2 and period
+		ln = tr.readLine();
+		lnnum++;
+		fields = this.lineToArray(ln);
+		if (!(fields && fields.length >= 13)) {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "Summary Fields",
+				message: "Error parsing summary"
+			};
+		}
+
+		// Set the Address 2
+		summaryFieldsObj.address.value.push(fields[0]);
+
+		// Parse out the PERIOD
+		if (!fields[12] || fields[11] !== "PERIOD") {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "PERIOD",
+				message: ln || "end of file"
+			};
+		}
+		var period = fields[12];
+		var periodArray = period.split(" - ");
+		if (periodArray.length !== 2) {
+			return {
+				type: TYPE_INVALIDCONTENTERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "PERIOD",
+				message: "Unexpected format for PERIOD " + period
+			};
+		}
+		summaryFieldsObj.bill_begin_date = this.getDateFieldValue(
+			lnnum,
+			ln,
+			"PERIOD",
+			periodArray[0]
+		);
+		summaryFieldsObj.bill_end_date = this.getDateFieldValue(
+			lnnum,
+			ln,
+			"PERIOD",
+			periodArray[1]
+		);
+
+		// ******* Fourth line should be the address 3 and REPLENISHMENT AMT
+		ln = tr.readLine();
+		lnnum++;
+		fields = this.lineToArray(ln);
+		if (!(fields && fields.length >= 13)) {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "Summary Fields",
+				message: "Error parsing summary"
+			};
+		}
+
+		// Set the Address 3
+		summaryFieldsObj.address.value.push(fields[0]);
+
+		// Validate the REPLENISHMENT AMT
+		if (fields[11] !== "REPLENISHMENT AMT") {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "REPLENISHMENT AMT",
+				message: ln || "end of file"
+			};
+		}
+		if (!fields[12]) {
+			return {
+				type: TYPE_INVALIDCONTENTERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "REPLENISHMENT AMT",
+				message: "Missing value for REPLENISHMENT AMT"
+			};
+		}
+		var replenishAmt = fields[12];
+		summaryFieldsObj.replenish_amount = this.getCurrencyFieldValue(
+			lnnum,
+			ln,
+			"REPLENISHMENT AMT",
+			replenishAmt
+		);
+
+		// ******* Fifth line should be the address 4 and METHOD
+		ln = tr.readLine();
+		lnnum++;
+		fields = this.lineToArray(ln);
+		if (!(fields && fields.length >= 13)) {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "Summary Fields",
+				message: "Error parsing summary"
+			};
+		}
+
+		// Set the Address 4
+		summaryFieldsObj.address.value.push(fields[0]);
+
+		// Validate the METHOD
+		if (fields[11] !== "METHOD") {
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "METHOD",
+				message: ln || "end of file"
+			};
+		}
+		if (!fields[12]) {
+			return {
+				type: TYPE_INVALIDCONTENTERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "METHOD",
+				message: "Missing value for METHOD"
+			};
+		}
+		var paymentMethod = fields[12];
+		if (!(paymentMethod === "CASH" || paymentMethod === "CHECK")) {
+			return {
+				type: TYPE_INVALIDCONTENTERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "METHOD",
+				message: "Unexpected value for METHOD: " + paymentMethod
+			};
+		}
+		summaryFieldsObj.payment_method = {
+			value: paymentMethod,
+			ln: ln,
+			lnnum: lnnum
+		};
+
+		// ******* Lines 6 - 12 should be the rest of the amount fields
+
+		var amountTypes = [
+			"THRESHOLD",
+			"TAG DEPOSITS",
+			"BEGINNING BALANCE",
+			"TOLLS & FEES",
+			"REPLENISHMENT PAYMENTS",
+			"ENDING BALANCE",
+			"REPLENISHMENT THRESHOLD"
+		];
+		var fieldNames = [
+			"threshold",
+			"transponder_deposits",
+			"beginning_balance",
+			"tolls_and_fees",
+			"replenish_payments",
+			"ending_balance",
+			"replenish_threshold"
+		];
+		for (var i = 0; i < amountTypes.length; i++) {
+			ln = tr.readLine();
+			lnnum++;
+			fields = this.lineToArray(ln);
+			if (!(fields && fields.length >= 13)) {
+				return {
+					type: TYPE_FILEPARSEERROR,
+					lnnum: lnnum,
+					ln: ln,
+					fieldName: "Summary Fields",
+					message: "Error parsing summary"
+				};
+			}
+			if (fields[11] !== amountTypes[i]) {
+				return {
+					type: TYPE_FILEPARSEERROR,
+					lnnum: lnnum,
+					ln: ln,
+					fieldName: amountTypes[i],
+					message: ln || "end of file"
+				};
+			}
+			var amountString = fields[12];
+			if (amountString.length === 0) {
+				return {
+					type: TYPE_INVALIDCONTENTERROR,
+					lnnum: lnnum,
+					ln: ln,
+					fieldName: amountTypes[i],
+					message: "Missing value for " + amountTypes[i]
+				};
+			}
+			summaryFieldsObj[fieldNames[i]] = this.getCurrencyFieldValue(
+				lnnum,
+				ln,
+				amountTypes[i],
+				amountString
+			);
+		}
+
+		return summaryFieldsObj;
+	},
+
+	readCharges: function readCharges(attachmentSysID, chargeCallback, proc) {
+		var ln;
+		var lnnum = 0;
+
+		// Get attachment content stream
+		var attgsa = new GlideSysAttachment();
+		var attis = attgsa.getContentStream(attachmentSysID);
+		var tr = new GlideTextReader(attis);
+
+		// Skip ahead to the charges header line
+		var expectedHeaders = [
+			"POSTING-DATE",
+			"TRANSACTION-DATE",
+			"TAG or PLATE",
+			"AGENCY-NAME",
+			"ENTRY-PLAZA",
+			"ENTRY_DATE",
+			"ENTRY-TIME",
+			"EXIT-PLAZA",
+			"EXIT_DATE",
+			"EXIT-TIME",
+			"PLAN",
+			"CLASS",
+			"AMOUNT",
+			"BALANCE"
+		];
+
+		do {
+			ln = tr.readLine();
+			lnnum++;
+		} while (
+			!(typeof ln == "undefined" || ln == null) &&
+			!ln.startsWith(expectedHeaders[0])
+		);
+
+		if (
+			typeof ln == "undefined" ||
+			ln == null ||
+			!ln.startsWith(expectedHeaders[0])
+		) {
+			// stop processing and issue error
+			gs.error(
+				"Fatal error detected parsing charge data for {0}\n Line: {1}\n {2}",
+				this.importLabel,
+				lnnum,
+				ln
+			);
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "Detail Header",
+				message: "Error parsing charges"
+			};
+		}
+
+		// verify we have the expected headers
+		var header = ln;
+		var headers = header.trim().split(FIELD_DELIM);
+		for (var i = 0; i < headers.length; i++) {
+			headers[i] = headers[i].trim();
+		}
+		var arrayUtil = new global.ArrayUtil();
+		var headerDiff = arrayUtil.diff(expectedHeaders, headers);
+		if (headerDiff.length !== 0) {
+			gs.error(
+				"Fatal error detected parsing charge data for {0}\n Line: {1}\n {2}",
+				this.importLabel,
+				lnnum,
+				ln
+			);
+			gs.error("Fatal error parsing header. Expected {0}", expectedHeaders);
+			return {
+				type: TYPE_FILEPARSEERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: "Detail Header",
+				message: "Header line failed validation."
+			};
+		}
+
+		// parse through the charge lines until we hit a blank line
+		var chargeCount = 0;
+		// debug: limit to parsing charges to 50 for testing
+		// 	while (ln && chargeCount <= 50) {
+		while (ln) {
+			ln = tr.readLine();
+			lnnum++;
+			if (ln == null || ln == "" || ln.replace(/,/g, '') === '') {
+				break;
+			}
+			if (chargeCount % 2000 === 0) {
+				gs.info(
+					"Read line {0} charge {1} for {2}",
+					lnnum,
+					chargeCount,
+					this.importLabel
+				);
+			}
+			chargeCount++;
+			var chargeDetailResult = chargeCallback.call(
+				proc,
+				lnnum,
+				ln,
+				chargeCount
+			);
+			if (!chargeDetailResult) {
+				gs.error(
+					"Fatal error detected parsing charge data for {0}\n Line: {1}\n {2}",
+					this.importLabel,
+					lnnum,
+					ln
+				);
+				return false;
+			}
+		}
+		gs.info(
+			"Scanned {0} charge details for {1}",
+			chargeCount,
+			this.importLabel
+		);
+		return {
+			type: TYPE_CHARGESRESULT,
+			chargeCount: chargeCount,
+			message: "Read " + chargeCount + "charges"
+		};
+	},
+
+	getDateFieldValue: function getDateFieldValue(
+		lnnum,
+		ln,
+		fieldName,
+		dateString
+	) {
+		// Get the value and validate format
+		var datePattern = this.primaryDatePattern();
+		if (!datePattern.test(dateString)) {
+			return {
+				type: TYPE_DATAFORMATERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: fieldName,
+				fieldValue: dateString,
+				message: "Invalid date format"
+			};
+		}
+
+		// See if we can format date
+		var tmpGDT = new GlideDateTime();
+		try {
+			tmpGDT.setValueUTC(dateString, this.primaryDateFormatString());
+		} catch (error) {
+			var dateParseError = tmpGDT.getErrorMsg();
+			return {
+				type: TYPE_DATAFORMATERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: fieldName,
+				fieldValue: dateString,
+				message: dateParseError || "Error parsing date"
+			};
+		}
+		return { value: tmpGDT, ln: ln, lnnum: lnnum };
+	},
+
+	getCurrencyFieldValue: function getCurrencyFieldValue(
+		lnnum,
+		ln,
+		fieldName,
+		currencyString
+	) {
+		// clear out the dollar sign and comma and then just make sure it is a valid number
+		var cleanString = currencyString.replace(/[$,]/g, "");
+		if (!this.isNumeric(cleanString)) {
+			return {
+				type: TYPE_DATAFORMATERROR,
+				lnnum: lnnum,
+				ln: ln,
+				fieldName: fieldName,
+				fieldValue: currencyString,
+				message: "Invalid number format"
+			};
+		}
+
+		return {
+			value: parseFloat(cleanString),
+			rawValue: currencyString,
+			ln: ln,
+			lnnum: lnnum
+		};
+	},
+
+	isNumeric: function isNumeric(n) {
+		return isFinite(parseFloat(n));
+	},
+
+	type: "TollStatementParser_EZPassNY_v2"
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-12 20:00:40</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>162934a24fe6fb005d57b2718110c7f7</sys_id>
+        <sys_mod_count>33</sys_mod_count>
+        <sys_name>TollStatementParser_EZPassNY_v2</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_162934a24fe6fb005d57b2718110c7f7</sys_update_name>
+        <sys_updated_by>SN_Mavila</sys_updated_by>
+        <sys_updated_on>2022-05-26 02:24:42</sys_updated_on>
+    </sys_script_include>
+</record_update>

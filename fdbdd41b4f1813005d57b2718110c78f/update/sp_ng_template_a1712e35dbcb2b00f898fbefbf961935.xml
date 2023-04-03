@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_ng_template">
+    <sp_ng_template action="INSERT_OR_UPDATE">
+        <id>dmk-enhanced-list-default</id>
+        <sp_widget display_value="DMK Enhanced List">4219e0d8dbcb2700f898fbefbf9619a4</sp_widget>
+        <sys_class_name>sp_ng_template</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-17 20:01:54</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>a1712e35dbcb2b00f898fbefbf961935</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>dmk-enhanced-list-default</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_ng_template_a1712e35dbcb2b00f898fbefbf961935</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-15 05:25:48</sys_updated_on>
+        <template><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<div>
+	<div class="groupedTable tsp-detail-spec-data">
+		<div class="col-xs-12 no-gutter tsp-detail-block">
+			<div class="col-xs-12 tsp-detail-header no-gutter-left">
+				<span class="tsp-detail-header-text">Details</span>
+			</div>
+			<div class="col-xs-12 tsp-detail-item" ng-class="$even ? 'odd' : 'even'" ng-repeat="f in item.details.fields">
+				<div class="col-sm-5 col-xs-6 tsp-detail-label">{{::f.label}}</div>
+				<div class="col-sm-7 col-xs-6">
+					<span ng-switch="f.type" title="{{::f.label}}">
+						<span ng-switch-when="glide_date"><sn-time-ago timestamp="::f.value"/></span>
+						<span ng-switch-when="glide_date_time"><sn-time-ago timestamp="::f.value"/></span>
+						<span ng-switch-default="">{{f.display_value}}</span>
+					</span>
+				</div>
+			</div>
+		</div>        
+	</div>
+</div>]]></template>
+    </sp_ng_template>
+</record_update>

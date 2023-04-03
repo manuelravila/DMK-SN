@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TollDataMigrationUtil</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>TollDataMigrationUtil</name>
+        <script><![CDATA[var TollDataMigrationUtil = Class.create();
+TollDataMigrationUtil.prototype = {
+    initialize: function() {
+    },
+	
+	/**
+	* Find the user to assign to the transponder
+	*	Set the foundUserSysID variable
+	*	     a sys_user record sys ID - the transponder assigned_to field will be set to this user sys ID
+	*	     null - the transponder will be un-assigned
+	* @returns {string} The sys ID of the user to assign
+	*/
+	findUser: function findUser(companySysID, emailAddress, iWiseLogonID, lastName, firstName, middleName, status) {
+		
+		var result;
+		if (emailAddress) {
+			result = this._findUserPrivate(companySysID, emailAddress, null, lastName, firstName, middleName, status);
+		} else if (iWiseLogonID) {
+			result = this._findUserPrivate(companySysID, null, iWiseLogonID, lastName, firstName, middleName, status);
+		} else { 
+			result = null;
+		}
+		return result;
+
+	},
+
+	_findUserPrivate: function _findUserPrivate(companySysID, emailAddress, iWiseLogonID, lastName, firstName, middleName, status) {
+		
+		if (!emailAddress && ! iWiseLogonID) {
+			return null;
+		}
+		
+		var sgr = new GlideRecord("sys_user");
+		if (emailAddress) {
+			sgr.addQuery("email",emailAddress);
+		}
+		if (iWiseLogonID) {
+			sgr.addQuery("user_name",iWiseLogonID);
+		}
+		sgr.addQuery("company",companySysID);
+		sgr.query();
+
+		return sgr.next() ? sgr.getUniqueValue() : null;
+	
+	},
+	
+	/**
+	* Create a new user record to assign to the transponder
+	* IMPORTANT: You are responsible for preventing duplicates with a proper implementation of findUser above
+	*	Set the foundUserSysID variable
+	*	     a sys_user record sys ID - the transponder assigned_to field will be set to this user sys ID
+	*	     null - the transponder will be un-assigned
+	* @returns {string} The sys ID of the user to assign
+	*/
+	createUser: function createUser(companySysID, emailAddress, iWiseLogonID, lastName, firstName, middleName, status) {
+
+		var sgr = new GlideRecord("sys_user");
+		sgr.newRecord();
+		sgr.active = status;
+		sgr.company = companySysID;
+		sgr.email = emailAddress;
+		sgr.first_name = firstName;
+		sgr.last_name = lastName;
+		sgr.middle_name = middleName;
+		sgr.user_name = iWiseLogonID;
+
+		return sgr.insert(); // returns Unique ID of the inserted record, or null if the record is not inserted
+	},
+
+	/**
+	* If COMPANY_SYS_ID is not set, this function is used to determine the correct company for looking up the user
+	* Setting the company value to null is not supported and may lead to issues
+	* @returns {string} The sys ID of the company to use in the default search
+	*/
+	findCompany: function findCompany(emailAddress, iWiseLogonID, lastName, firstName, middleName, status) {
+
+		var companyGR = new GlideRecord("core_company");
+		companyGR.get("primary",true);
+		return companyGR.getUniqueValue(); // returns unique primary key as a String, or null if the key is null
+
+	},
+
+    type: 'TollDataMigrationUtil'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-07-30 18:05:40</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>24da05584f43fb405d57b2718110c7ba</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>TollDataMigrationUtil</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_24da05584f43fb405d57b2718110c7ba</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-03-18 03:14:05</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <business_calendar/>
+        <condition><![CDATA[// Get the day of week. 1=Monday, 7=Sunday
+var now = new GlideDateTime();
+
+// Run only on weekdays
+now.getDayOfWeekLocalTime() < 6;]]></condition>
+        <conditional>true</conditional>
+        <entered_time/>
+        <name>User Statements Pending</name>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as/>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2018-08-01 18:54:18</run_start>
+        <run_time>1970-01-01 12:00:00</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[gs.info("Starting User Statements Pending scheduled job");
+
+//-------------------------------------------------------------------------------------
+// Initialise -- initialize some variables used throughout
+//-------------------------------------------------------------------------------------
+var logTotals = false;
+var logSummary = true;
+
+//-------------------------------------------------------------------------------------
+// Part 1 -- inactivate all the notification control records that do not have pending
+//           invoices anymore
+//-------------------------------------------------------------------------------------
+var zgr = new GlideRecord("x_89907_vehicle_to_toll_notification_control");
+zgr.addQuery("active", true);
+zgr.addQuery("process", "2");
+zgr.query();
+while (zgr.next()) {
+	var ygr = new GlideAggregate("x_89907_vehicle_to_toll_user_statement");
+	ygr.addQuery("progress_phase", "=", "1");
+	ygr.addQuery("status", "=", "1");
+	ygr.addQuery("user", "=", zgr.user);
+	ygr.addAggregate("COUNT");
+	ygr.query();
+	if (ygr.getAggregate("COUNT") == 0) {
+		zgr.active = false;
+	}
+	zgr.send_notification = false;
+	zgr.update();
+}
+
+//-------------------------------------------------------------------------------------
+// Part 2 -- load all the PENDING user statements into the stash
+// Find all user statements that are OPEN/PAYMENTOWED and group them
+//-------------------------------------------------------------------------------------
+var stmtGAgg = new GlideAggregate("x_89907_vehicle_to_toll_user_statement");
+stmtGAgg.addQuery("progress_phase", "=", "1");
+stmtGAgg.addQuery("status", "=", "1");
+stmtGAgg.addNotNullQuery("user");
+stmtGAgg.addNotNullQuery("transponder.company");
+
+stmtGAgg.addAggregate("MIN", "sys_created_on");
+stmtGAgg.addAggregate("COUNT");
+
+stmtGAgg.groupBy("transponder.company");
+stmtGAgg.groupBy("user");
+
+stmtGAgg.query();
+//-------------------------------------------------------------------------------------
+// Get each user statement either insert if new or update if already there
+//-------------------------------------------------------------------------------------
+var totalPotential = stmtGAgg.getRowCount();
+var totalProcessed = 0;
+while (stmtGAgg.next()) {
+	var userSysID = stmtGAgg.user;
+	var companySysID = stmtGAgg.getValue("transponder.company");
+	var totalUserStatements = stmtGAgg.getAggregate("COUNT");
+	var earliestUserStatementDate = stmtGAgg.getAggregate("MIN", "sys_created_on").substr(0,10);
+	//-------------------------------------------------------------------------------------
+	// Locate the current notification control record
+	//-------------------------------------------------------------------------------------
+	var sgr = new GlideRecord("x_89907_vehicle_to_toll_notification_control");
+	sgr.addQuery("user", userSysID);
+	sgr.addQuery("company", companySysID);
+	sgr.addQuery("process", "2");
+	sgr.query();
+	//-------------------------------------------------------------------------------------
+	// If there read it else initialize to create a new one
+	//-------------------------------------------------------------------------------------
+	if (sgr.getRowCount() === 1) {
+		sgr.next();
+	} else {
+		sgr.initialize();
+		sgr.company = companySysID;
+		sgr.user = userSysID;
+		sgr.process = "2";
+	}
+	sgr.total_user_statements = totalUserStatements;
+    var gd = new GlideDate();
+    gd.setValue(earliestUserStatementDate);
+	sgr.earliest_statement_date = gd;
+	sgr.active = true;
+	//-------------------------------------------------------------------------------------
+	// Update or insert
+	//-------------------------------------------------------------------------------------
+	sgr.update();
+	totalProcessed++;
+}
+
+if (logTotals) {
+	gs.info(
+		"Total processed: {0}\nTotal          : {1}",
+		totalProcessed,
+		totalPotential
+	);
+}
+
+//-------------------------------------------------------------------------------------
+// Part 3 -- Read all the configurations and save the thresholds
+//-------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+// Part 4 -- Determine if they breached a threhold
+//-------------------------------------------------------------------------------------
+var lastCompanyConfiguration = null;
+var ngr = null;
+var cgr = null;
+var notifyDifference = null;
+
+var notify = false;
+var lastNotificationDate = new GlideDate();
+var lastNotificationDateNumeric = null;
+
+var today = new GlideDate();
+var curDateNumeric = today.getNumericValue();
+
+var userEarliestUserStatementDate = new GlideDate();
+var earliestDateNumeric = null;
+//-------------------------------------------------------------------------------------
+// Find all the records that my need to be notified
+//-------------------------------------------------------------------------------------
+ngr = new GlideRecord("x_89907_vehicle_to_toll_notification_control");
+ngr.addQuery("process", "2");
+ngr.addQuery("active", true);
+ngr.query();
+//-------------------------------------------------------------------------------------
+// For each row see if we have the configuration loaded -- if not then load
+//-------------------------------------------------------------------------------------
+while (ngr.next()) {
+	//-------------------------------------------------------------------------------------
+	// Not saved the load
+	//-------------------------------------------------------------------------------------
+	if (lastCompanyConfiguration != ngr.company) {
+		cgr = new GlideRecord("x_89907_vehicle_to_toll_configuration");
+		cgr.addQuery("active", true);
+		cgr.addQuery("company", ngr.company);
+		cgr.addQuery("run_pending_notification", true);
+		cgr.query();
+		if (cgr.next()) {
+			lastCompanyConfiguration = cgr.company;
+		} else {
+			lastCompanyConfiguration = null;
+			// eslint-disable-next-line no-continue
+			continue;
+		}
+	}
+	//-------------------------------------------------------------------------------------
+	// Get the earliest create date to absolute -- for info purposes only
+	//-------------------------------------------------------------------------------------
+	if (ngr.earliest_statement_date != null) {
+		userEarliestUserStatementDate.setValue(ngr.getValue("earliest_statement_date"));
+		earliestDateNumeric = userEarliestUserStatementDate.getNumericValue();
+	} else {
+		userEarliestUserStatementDate = null;
+	}
+
+	//-------------------------------------------------------------------------------------
+	// See if we have to notify
+	//-------------------------------------------------------------------------------------
+	notify = false;
+	if (ngr.last_notification_date == null) {
+		notify = true;
+	} else {
+		lastNotificationDate.setValue(ngr.getValue("last_notification_date"));
+		lastNotificationDateNumeric = lastNotificationDate.getNumericValue();
+		notifyDifference =
+			cgr.repeat_pending_notification -
+			(curDateNumeric - lastNotificationDateNumeric) / 86400000;
+		if (notifyDifference < 0) {
+			notify = true;
+		}
+	}
+
+	//-------------------------------------------------------------------------------------
+	// Information
+	//-------------------------------------------------------------------------------------
+	if (logSummary) {
+		var debugInfo = [];
+		debugInfo.push("PendingUser=" + ngr.user.getDisplayValue());
+		debugInfo.push(",Earliest date=" + userEarliestUserStatementDate);
+		debugInfo.push(" (" + earliestDateNumeric + ")");
+		debugInfo.push(",Last notify=" + ngr.last_notification_date);
+		debugInfo.push(",Repeat notification=" + cgr.repeat_pending_notification);
+		debugInfo.push(",Notify=" + notify);
+		gs.info(debugInfo.join(""));
+	}
+
+	//-------------------------------------------------------------------------------------
+	// Update notification control
+	//-------------------------------------------------------------------------------------
+	ngr.send_notification = (notify === true);
+	ngr.amount_breached = false;
+	ngr.time_breached = false;
+
+	ngr.update();
+}
+]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-08-01 18:55:02</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>11edf31fdba31300f898fbefbf96190e</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>User Statements Pending</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysauto_script_11edf31fdba31300f898fbefbf96190e</sys_update_name>
+        <sys_updated_by>SN_DLengyel</sys_updated_by>
+        <sys_updated_on>2020-02-10 13:58:00</sys_updated_on>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

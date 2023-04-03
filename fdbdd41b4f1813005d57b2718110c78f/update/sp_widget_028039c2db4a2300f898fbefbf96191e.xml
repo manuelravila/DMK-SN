@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[function wClient($location, spModal) {
+	var c = this;
+	c.disabled = !!c.data.disabled;
+	
+	c.uiAction = function(action) {
+		spModal
+			.confirm(c.data.prompterText)
+			.then(function(confirmed) {
+				if (confirmed) {
+					c.data.action = action;
+					c.server
+						.update()
+						.then(function() {
+							c.data.action = undefined;
+							setTimeout(function() {
+								location.href = "/toll_service_portal?id=toll_index";
+								},2000);
+						});
+
+				}
+			});
+
+	};
+}
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>user_statement_submit_button</id>
+        <internal>false</internal>
+        <link/>
+        <name>User Statement Submit Button</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[(function() {
+	
+	if (input) {
+		data.table = input.table;
+		data.sys_id = input.sys_id;
+	}
+	data.table = data.table || $sp.getParameter("table");
+	data.sys_id = data.sys_id || $sp.getParameter("sys_id");
+
+	if (!data.table || !data.sys_id) {
+		return;
+	}
+
+	// Valid GlideRecord
+	var statementGR = new GlideRecord(data.table);
+	if (!statementGR.isValid()) {
+		return;
+	}
+
+	// Valid sys_id
+	if (!statementGR.get(data.sys_id)) {
+		return;
+	}
+
+	data.disabled = statementGR.getValue("progress_phase") != 1;
+
+	if (!input) {
+		data.prompterText = getPrompterText();
+		return;
+	}
+
+	if (input && input.action) {
+		var action = input.action;
+		if (action == "submit") {
+			statementGR.setValue("internal_submit", true);
+			statementGR.setValue("internal_info_message", "User Statement submitted");
+			statementGR.update();
+		}
+	}
+
+	function getPrompterText() {
+		// return the prompter text from the config record or default text
+
+		var defaultText =
+			"If you submitted charges as 'personal use' than it will be marked as such and will be saved in the record. You are expected to reimburse your company for charges from personal use. Do you want to continue?";
+
+		var grTollCfg = new GlideRecord("x_89907_vehicle_to_toll_configuration");
+		if (!grTollCfg.isValid()) {
+			gs.info(
+				"Error reading toll configuration record. Record type is invalid."
+			);
+			return defaultText;
+		}
+
+		var company = gs.getUser().getCompanyID();
+		grTollCfg.addQuery("company", company);
+		grTollCfg.addQuery("active", true);
+		grTollCfg.query();
+		if (!grTollCfg.next()) {
+			gs.info(
+				"Error reading toll configuration record. No configuration record found for company {0}.",
+				company
+			);
+			return defaultText;
+		}
+		var configTextEl = grTollCfg.getElement(
+			"user_statement_submit_prompt_text"
+		);
+		return configTextEl.nil() ? defaultText : configTextEl.toString();
+	}
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-11-29 18:01:14</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>028039c2db4a2300f898fbefbf96191e</sys_id>
+        <sys_mod_count>43</sys_mod_count>
+        <sys_name>User Statement Submit Button</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_widget_028039c2db4a2300f898fbefbf96191e</sys_update_name>
+        <sys_updated_by>SN_dtseten</sys_updated_by>
+        <sys_updated_on>2020-10-14 17:11:07</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-default">
+ <div class="panel-body">
+ <button type="button" class="btn btn-primary btn-block" ng-disabled="c.disabled" ng-click="c.uiAction('submit')">Submit</button>
+ </div>
+</div>]]></template>
+    </sp_widget>
+</record_update>

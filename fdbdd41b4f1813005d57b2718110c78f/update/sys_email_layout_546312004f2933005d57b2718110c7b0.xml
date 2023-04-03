@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_email_layout">
+    <sys_email_layout action="INSERT_OR_UPDATE">
+        <advanced>false</advanced>
+        <advanced_layout><![CDATA[<p></p>
+<table style="width: 100%; background-color: #e7e9eb;">
+<tbody>
+<tr>
+<td>
+<table style="width: 100%; text-align: center; max-width: 800px; margin: auto;">
+<tbody>
+<tr>
+<td style="color: #e7e9eb; height: 60px; text-align: left; border-bottom: 1px solid #bec1c6; background-color: #e7e9eb; padding: 10px 0px 10px 30px;"><img align="baseline" src="/logo_service-now.gifx" vspace="" hspace="" border="" alt="" title="" height="" style="align: baseline;" /></td>
+</tr>
+<tr>
+<td style="color: #303a46; text-align: left; font-size: 16px; background-color: #e7e9eb; padding: 25px 0px 10px 30px;">
+<p class="p1">${notification:body}</p>
+</td>
+</tr>
+<tr>
+<td style="background-color: #e7e9eb; padding-left: 30px;">
+<table style="text-align: center; background-color: #278efc; border-color: #0368d4; border-radius: 5px; color: white; height: 35px;">
+<tbody>
+<tr>
+<td style="text-align: center; color: #ffffff; padding-left: 20px; padding-right: 20px; font-size: 16px;">${mail_script:go_to_instance_hyperlink}</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td style="text-align: center; height: 35px;"></td>
+</tr>
+<!--	
+<tr>
+<td style="color: #455464; height: 50px; text-align: left; font-size: 16px; background-color: #e7e9eb; padding: 30px 0px 0px 30px;">
+<p>${NOTIF_UNSUB} | ${NOTIF_PREFS+link_text="Manage Preferences"}</p>
+</td>
+</tr>
+-->
+</tbody>
+</table>
+</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>]]></advanced_layout>
+        <description>Email layout for the Vehicle Tolls Application</description>
+        <layout><![CDATA[<p></p>
+<p>${notification:body}</p>]]></layout>
+        <name>Toll Email Layout</name>
+        <sys_class_name>sys_email_layout</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-05-16 15:08:21</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>546312004f2933005d57b2718110c7b0</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>Toll Email Layout</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_email_layout_546312004f2933005d57b2718110c7b0</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-01-20 17:23:52</sys_updated_on>
+    </sys_email_layout>
+</record_update>

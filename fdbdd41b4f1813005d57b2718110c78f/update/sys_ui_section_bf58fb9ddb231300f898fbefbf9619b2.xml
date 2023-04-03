@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Summary" section_id="bf58fb9ddb231300f898fbefbf9619b2" sys_domain="global" table="x_89907_vehicle_to_toll_notification_control" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>process</element>
+            <position>0</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>c530f4894fc433005d57b2718110c780</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>user</element>
+            <position>1</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>4930f4894fc433005d57b2718110c780</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>company</element>
+            <position>2</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>c930f4894fc433005d57b2718110c780</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>last_notification_date</element>
+            <position>3</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>4d30f4894fc433005d57b2718110c780</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>total_personal_amount</element>
+            <position>4</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>cd30f4894fc433005d57b2718110c780</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>total_user_statements</element>
+            <position>5</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>4130f4894fc433005d57b2718110c781</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>6</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>c130f4894fc433005d57b2718110c781</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>7</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>4530f4894fc433005d57b2718110c781</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>send_notification</element>
+            <position>8</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>c530f4894fc433005d57b2718110c781</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>skip_notification</element>
+            <position>9</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>4930f4894fc433005d57b2718110c781</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>amount_breached</element>
+            <position>10</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>c930f4894fc433005d57b2718110c781</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>time_breached</element>
+            <position>11</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>4d30f4894fc433005d57b2718110c781</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>earliest_statement_date</element>
+            <position>12</position>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-03-05 20:51:50</sys_created_on>
+            <sys_id>cd30f4894fc433005d57b2718110c781</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_89907_vehicle_to_toll_notification_control" sys_domain="global" view="Default view">bf58fb9ddb231300f898fbefbf9619b2</sys_ui_section>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-03-05 20:51:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Summary</caption>
+            <header>false</header>
+            <name>x_89907_vehicle_to_toll_notification_control</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-26 13:22:18</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>bf58fb9ddb231300f898fbefbf9619b2</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_toll_notification_control</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_section_bf58fb9ddb231300f898fbefbf9619b2</sys_update_name>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-26 13:28:35</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

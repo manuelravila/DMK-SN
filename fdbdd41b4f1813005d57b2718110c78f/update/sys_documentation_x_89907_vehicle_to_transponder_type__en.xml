@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="" label="Transponder Type" language="en" table="x_89907_vehicle_to_transponder_type">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element/>
+            <help/>
+            <hint/>
+            <label>Transponder Type</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_transponder_type</name>
+            <plural>Transponder Types</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-03-01 15:41:27</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>f050cc581bfb3300dcab7596cc4bcbd0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Transponder Type</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_documentation_x_89907_vehicle_to_transponder_type__en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-03-01 15:41:27</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

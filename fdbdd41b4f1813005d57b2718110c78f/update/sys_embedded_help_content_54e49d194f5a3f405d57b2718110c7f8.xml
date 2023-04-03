@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_embedded_help_content">
+    <sys_embedded_help_content action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category/>
+        <content><![CDATA[<h1 class="title topictitle1">Toll Statements</h1>
+<p>Toll Statements are part of the toll data load process. See Related information below for more assistance.</p>
+<div class="related-links role-embedded_help_admin">
+<div class="relinfo">
+<div class="reltitle">Related information <br />
+<div><a title="Payments" href="kb_view.do?sysparm_article&#61;KBVT10025" target="_blank">Toll Data Load Process</a></div>
+</div>
+</div>
+</div>]]></content>
+        <last_sync/>
+        <modifier>normal</modifier>
+        <name>x_89907_vehicle_to_toll_statement-normal</name>
+        <page>x_89907_vehicle_to_toll_statement</page>
+        <product>1</product>
+        <qualifier/>
+        <role/>
+        <role_order>1000</role_order>
+        <snc_created>false</snc_created>
+        <sys_class_name>sys_embedded_help_content</sys_class_name>
+        <sys_created_by>mark.goldman</sys_created_by>
+        <sys_created_on>2019-06-26 14:32:17</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>54e49d194f5a3f405d57b2718110c7f8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_89907_vehicle_to_toll_statement-normal</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_embedded_help_content_54e49d194f5a3f405d57b2718110c7f8</sys_update_name>
+        <sys_updated_by>mark.goldman</sys_updated_by>
+        <sys_updated_on>2019-06-26 14:32:17</sys_updated_on>
+        <version>l</version>
+    </sys_embedded_help_content>
+    <sys_translated_text action="delete_multiple" query="documentkey=54e49d194f5a3f405d57b2718110c7f8"/>
+</record_update>

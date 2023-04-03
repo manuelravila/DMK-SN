@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_transform_entry">
+    <sys_transform_entry action="INSERT_OR_UPDATE">
+        <choice_action>create</choice_action>
+        <coalesce>false</coalesce>
+        <coalesce_case_sensitive>false</coalesce_case_sensitive>
+        <coalesce_empty_fields>false</coalesce_empty_fields>
+        <date_format>yyyy-MM-dd HH:mm:ss</date_format>
+        <map display_value="Historic Toll Charge Transform">fe71acfcdb10e300f898fbefbf961924</map>
+        <reference_value_field>sys_id</reference_value_field>
+        <source_field>[Script]</source_field>
+        <source_script><![CDATA[answer = (function transformEntry(source) {
+
+	var chargeTypeLookup = {
+		C2:  {primLabel: "Toll Dispute Credit",     sysID: "21f5619fdb7bd700f898fbefbf9619ec" },
+		C7:  {primLabel: "Prepaid Toll Payment",    sysID: "65f5619fdb7bd700f898fbefbf9619ed" },
+		C8:  {primLabel: "Vnb Commercial D",        sysID: "61f5619fdb7bd700f898fbefbf9619ee" },
+		D11: {primLabel: "Violation payment",       sysID: "25f5619fdb7bd700f898fbefbf9619ee" },
+		D12: {primLabel: "Swap No Return Fee",      sysID: "2df5619fdb7bd700f898fbefbf9619ec" },
+		D5:  {primLabel: "Dispute Debit",           sysID: "29f5619fdb7bd700f898fbefbf9619ed" },
+		D8:  {primLabel: "Lease Tag Fee-IN",        sysID: "21f5619fdb7bd700f898fbefbf9619ef" },
+		T:   {primLabel: "Toll",                    sysID: "6017e99fdb7bd700f898fbefbf9619f8" },
+		C6:  {primLabel: "Prepaid Refund",          sysID: "69f5619fdb7bd700f898fbefbf9619ec" },
+		D2:  {primLabel: "Stolen Tag Fee",          sysID: "a1f5619fdb7bd700f898fbefbf9619ed" },
+		C4:  {primLabel: "Prepaid Toll Trf",        sysID: "69f5619fdb7bd700f898fbefbf9619ef" },
+		C5:  {primLabel: "Prepaid Adj Credit",      sysID: "6df5619fdb7bd700f898fbefbf9619ee" },
+		C1:  {primLabel: "Refund Fee",              sysID: "a5f5619fdb7bd700f898fbefbf9619ef" },
+		C3:  {primLabel: "Truck Volume Discount",   sysID: "a9f5619fdb7bd700f898fbefbf9619ee" },
+		C9:  {primLabel: "Refund Swap Fee",         sysID: "e1f5619fdb7bd700f898fbefbf9619ef" },
+		D1:  {primLabel: "Lost Tag Fee",            sysID: "edf5619fdb7bd700f898fbefbf9619ec" },
+		D13: {primLabel: "Reverse Prepaid Refund",  sysID: "adf5619fdb7bd700f898fbefbf9619ed" },
+		D14: {primLabel: "Adjustment",              sysID: "" },
+		D6:  {primLabel: "Prepaid Trf Debit",       sysID: "edf5619fdb7bd700f898fbefbf9619ef" },
+		D7:  {primLabel: "Damaged Tag Fee",         sysID: "e9f5619fdb7bd700f898fbefbf9619ed" },
+		D9:  {primLabel: "Lease Tag Fee-EX",        sysID: "e5f5619fdb7bd700f898fbefbf9619ee" }
+	};
+	var chargeTypeSysID = "";
+	if (source.u_chargetype) {
+		var srcChargeType = source.u_chargetype.toString();
+		var chargeLookupObj = chargeTypeLookup[srcChargeType];
+		if (chargeLookupObj) {
+			chargeTypeSysID = chargeLookupObj.sysID;
+		}
+	}
+
+	return chargeTypeSysID; // return the value to be put into the target field
+
+})(source);]]></source_script>
+        <source_table>x_89907_vehicle_to_historic_toll_charge_import</source_table>
+        <sys_class_name>sys_transform_entry</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-08-30 15:25:43</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f844e0b4db50e300f898fbefbf9619f0</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>[Script]</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_transform_entry_f844e0b4db50e300f898fbefbf9619f0</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-05 01:42:01</sys_updated_on>
+        <target_field>charge_type</target_field>
+        <target_table>x_89907_vehicle_to_toll_charge</target_table>
+        <use_source_script>true</use_source_script>
+    </sys_transform_entry>
+</record_update>

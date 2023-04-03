@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_ng_template">
+    <sp_ng_template action="INSERT_OR_UPDATE">
+        <id>list-template</id>
+        <sp_widget display_value="DMK Enhanced List">4219e0d8dbcb2700f898fbefbf9619a4</sp_widget>
+        <sys_class_name>sp_ng_template</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-01-24 13:49:28</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>a8ef410cdb5b6f00f898fbefbf961918</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>list-template</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sp_ng_template_a8ef410cdb5b6f00f898fbefbf961918</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-15 05:26:09</sys_updated_on>
+        <template><![CDATA[<div ng-style="{'max-height': c.getMaxHeight()}" style="overflow-y: auto">
+    <ul class="list-group hide-x-overflow" >
+        <li ng-if="c.data.list.length > 0" ng-repeat="item in c.data.list track by item.sys_id" class="list-group-item">
+            <a class="focus-inline-block" ng-click="c.onClick($event, item, item.url, {})" href="javascript:void(0)">
+                <span ng-repeat="action in c.data.actions" href="" ng-click="c.onClick($event, item, action.url, action)"
+                    ng-if="action.glyph" class="list-action l-h-40 pull-right">
+                    <fa name="{{action.glyph}}" ng-class="c.getActionColor(action)" />
+                </span>
+                <span ng-if="c.options.image_field" class="pull-left m-r" ng-class="{'avatar': c.options.rounded_images, 'thumb-sm': c.options.rounded_images}">
+                    <img ng-src="{{item.image_field}}" alt="..." class="img-sm" ng-class="{'img-circle': c.options.rounded_images}">
+                </span>
+                <div>
+                    <div ng-switch on="item.display_field.type" ng-class="{'l-h-40': !item.secondary_fields.length}">
+                        <span class="translated-html" ng-switch-when="translated_html" ng-bind-html="item.display_field.value"></span>
+                        <div ng-switch-default>{{item.display_field.display_value}}</div>
+                    </div>
+                    <small class="text-muted" ng-repeat="f in item.secondary_fields">
+                        <span ng-if="!$first"> • </span>
+                        <span ng-switch="f.type" title="{{::f.label}}">
+                            <span ng-switch-when="glide_date">
+                                <sn-time-ago timestamp="::f.value" /></span>
+                            <span ng-switch-when="glide_date_time">
+                                <sn-time-ago timestamp="::f.value" /></span>
+                            <span ng-switch-default="">{{f.display_value}}</span>
+                        </span>
+                    </small>
+                </div>
+            </a>
+        </li>
+        <div ng-if="!c.data.list.length" class="list-group-item">
+            ${No records found}
+        </div>
+    </ul>
+</div>]]></template>
+    </sp_ng_template>
+</record_update>

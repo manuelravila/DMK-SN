@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="pa_dashboards_permissions">
+    <pa_dashboards_permissions action="INSERT_OR_UPDATE">
+        <dashboard display_value="Statement Management">3afedd9f4fcdb3405d57b2718110c793</dashboard>
+        <delete>false</delete>
+        <group display_value="Toll Financial" name="Toll Financial">2b505ca24faba7005d57b2718110c7c9</group>
+        <identity>2b505ca24faba7005d57b2718110c7c9</identity>
+        <read>true</read>
+        <role/>
+        <sys_class_name>pa_dashboards_permissions</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-05-01 17:13:42</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>e9e025134f01f3405d57b2718110c79b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>2b505ca24faba7005d57b2718110c7c9</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>pa_dashboards_permissions_e9e025134f01f3405d57b2718110c79b</sys_update_name>
+        <sys_updated_by>dan.lengyel</sys_updated_by>
+        <sys_updated_on>2019-05-01 17:13:42</sys_updated_on>
+        <type>2</type>
+        <user/>
+        <write>false</write>
+    </pa_dashboards_permissions>
+</record_update>

@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[/* eslint-disable no-restricted-syntax, guard-for-in */
+/* global 
+	js_checkNumber:writable
+	js_dateOfCheck:writable
+	js_dateCheckReceived:writable
+	show:readonly
+	formatNumber:readonly
+	formatClean:readonly
+	getDateFromFormat:readonly
+*/
+/* exported 
+js_checkNumber, js_dateOfCheck, js_dateCheckReceived, onProceedToPhase,
+ onProceedToReviewConfirm, onProceedToSelectUserStatements, getNumberSelected,
+ checkAmountChanged, onLoadFunction, onCancel, onSubmitPayment 
+*/
+
+/* ********************* */
+/*   set up variables    */
+/* ********************* */
+// hack instantiate glideform so form message functionality works
+// not all g_form functionality works (e.g., setFieldMsg)
+// requires hidden field with id of dummy_table_name.do to avoid
+// exception firing an event on page load
+var g_form = new GlideForm("x_89907_vehicle_to_payment");
+
+var clientArrJSON = jQuery("#hidden_userStatementArray").val();
+var clientArr = JSON.parse(clientArrJSON);
+var unChanged = [];
+for (var key in clientArr) {
+	var obj = clientArr[key];
+	unChanged.push(obj.sysid);
+}
+var toUnlink = [];
+var toLink = [];
+
+var overrideAmountValidationChecked = false;
+var disallowUnderpayment = true;
+
+/* ********************* */
+/*   dynamic behavior    */
+/* ********************* */
+function onProceedToPhase(targetPhase) {
+	proceedToPhase(targetPhase);
+}
+
+function onProceedToSelectUserStatements() {
+	g_form.clearMessages();
+	if (validatePaymentDetailForm()) {
+		// user is readonly and has already been validated so proceed
+		proceedToPhase(2);
+	}
+}
+
+function onProceedToReviewConfirm() {
+	g_form.clearMessages();
+	if (!validatePaymentDetailForm()) {
+		// user is readonly and has already been validated so proceed
+		proceedToPhase(1);
+	} else if (validateCheckAmountAgainstStatements()) {
+		proceedToPhase(3);
+	}
+}
+
+function proceedToPhase(targetPhase) {
+	var targetID = "#x_89907_vehicle_to_record_payment_wizard_page" + targetPhase;
+	jQuery("div[id^='x_89907_vehicle_to_record_payment_wizard_page'")
+		.not(targetID)
+		.hide();
+	jQuery(targetID).show();
+	jQuery("#x_89907_vehicle_to_record_payment_wizard_stage").text(
+		targetPhase.toString()
+	);
+}
+
+function validateCheckAmountAgainstStatements() {
+	if (!validateCheckAmount()) {
+		return false;
+	}
+	var checkAmountFloat = parseFloat(gel("check_amount").value);
+	var amountSelected = getAmountSelected();
+	if (amountSelected == 0) {
+		g_form.addErrorMessage(
+			"Please select the statement(s) this payment applies to."
+		);
+		return false;
+	}
+	if (!overrideAmountValidationChecked) {
+		if (checkAmountFloat.toFixed(2) != amountSelected.toFixed(2)) {
+			g_form.addErrorMessage(
+				"Check amount (" +
+				checkAmountFloat.toFixed(2) +
+				") does not match selected amount (" +
+				amountSelected.toFixed(2) +
+				")"
+			);
+			return false;
+		}
+	} else {
+		if (disallowUnderpayment) {
+			var cxCheckAmount = (Math.floor(checkAmountFloat*1000))/1000; // correct for precision error
+			var cxAmountSelected = (Math.floor(amountSelected*1000))/1000; // correct for precision error
+			if (cxCheckAmount < cxAmountSelected) {
+				g_form.addErrorMessage(
+					"Check amount (" +
+					checkAmountFloat.toFixed(2) +
+					") is less than selected amount (" +
+					amountSelected.toFixed(2) +
+					"). Underpayment is prohibited."
+				);
+				return false;
+			}
+		}
+
+	}
+	return true;
+}
+
+function validatePaymentDetailForm() {
+	if (
+		!validateUserField() ||
+		!validateDateReceived() ||
+		!validateDateOfCheck() ||
+		!validateCheckAmount()
+	) {
+		return false;
+	}
+	return true;
+}
+
+function validateUserField() {
+	var value = gel("user_name").value;
+	if (value == "" || value == undefined || value == null) {
+		g_form.addErrorMessage("User name is required.");
+		return false;
+	}
+	return true;
+}
+
+function validateDateReceived() {
+	var value = gel("date_received").value;
+	if (value == "" || value == undefined || value == null) {
+		g_form.addErrorMessage("Date received is required.");
+		return false;
+	} else if (!isValidDate(value)) {
+		g_form.addErrorMessage(
+			"Date received is not a valid date or not in the expected format."
+		);
+		return false;
+	}
+	return true;
+}
+
+function validateDateOfCheck() {
+	var value = gel("date_of_check").value;
+	if (value == "" || value == undefined || value == null) {
+		return true;
+	} else if (!isValidDate(value)) {
+		g_form.addErrorMessage(
+			"Date of check is not a valid date or not in the expected format."
+		);
+		return false;
+	}
+	return true;
+}
+
+function validateCheckAmount() {
+	var value = gel("check_amount").value;
+	if (value == "" || value == undefined || value == null) {
+		g_form.addErrorMessage("Check amount is required.");
+		return false;
+	} else if (!isValidDecimal(value)) {
+		g_form.addErrorMessage("Check amount is not valid.");
+		return false;
+	}
+	return true;
+}
+
+function isValidDecimal(value) {
+	var valueFloat = parseFloat(value);
+	if (isNaN(valueFloat) || !isFinite(valueFloat)) {
+		return false;
+	}
+	return true;
+}
+
+function isValidDate(value) {
+	if (value == "" || value == undefined || value == null) {
+		return false;
+	}
+	return getDateFromFormat(value, g_user_date_format) != 0;
+}
+
+function stmtCheckboxGhostChangeHandler(mutationList) {
+	mutationList.forEach(function handleMutation(mutation) {
+		switch (mutation.type) {
+			case "attributes":
+				switch (mutation.attributeName) {
+					case "value":
+						if (mutation.target.value == "false") {
+							userStatementCheckboxUnchecked(mutation.target.id);
+						} else if (mutation.target.value == "true") {
+							userStatementCheckboxChecked(mutation.target.id);
+						}
+						break;
+					default:
+				}
+				break;
+			default:
+		}
+	});
+}
+
+function userStatementCheckboxUnchecked(checkboxID) {
+	g_form.clearMessages();
+	var stmtID = checkboxID.split("_")[1];
+	var stmtObj = getUserStatementObj(stmtID);
+	stmtObj.isRelated = false;
+	if (stmtObj.orgIsRelated) {
+		// was related and is not related now so remove from unchanged and put in unlink
+		unChanged = arrayRemove(unChanged, stmtID);
+		toUnlink.push(stmtID);
+	} else {
+		// was not related and is not related now so remove from link and put in unchanged
+		toLink = arrayRemove(toLink, stmtID);
+		unChanged.push(stmtID);
+	}
+	updateSummaryInfo();
+	updateAmountMatchIcon();
+	updateReviewUserStatementList();
+}
+
+function userStatementCheckboxChecked(checkboxID) {
+	g_form.clearMessages();
+	var reimbID = checkboxID.split("_")[1];
+	var reimbObj = getUserStatementObj(reimbID);
+	reimbObj.isRelated = true;
+	if (reimbObj.orgIsRelated) {
+		// was related and is related now so remove from unlink and put in unchanged
+		toUnlink = arrayRemove(toUnlink, reimbID);
+		unChanged.push(reimbID);
+	} else {
+		unChanged = arrayRemove(unChanged, reimbID);
+		toLink.push(reimbID);
+	}
+	updateSummaryInfo();
+	updateAmountMatchIcon();
+	updateReviewUserStatementList();
+}
+
+function updateReviewUserStatementList() {
+	var tbody = $("payment_flow_s3_userStatement_list_body");
+	var newbody = tbody.clone();
+	/* jshint multistr: true */
+	var rowTemplate = new Template(
+		"								<tr class='data_row'> " +
+			"									<td class='vt grid-field' " +
+			"										<span>#{number}</span> " +
+			"									</td> " +
+			"									<td class='vt grid-field'> " +
+			"										<span>#{period_begin_date}</span> " +
+			"									</td> " +
+			"									<td class='vt grid-field'> " +
+			"										<span>#{period_end_date}</span> " +
+			"									</td> " +
+			"									<td class='vt grid-field'> " +
+			"										<span>#{vehicle_number}</span> " +
+			"									</td> " +
+			"									<td class='vt grid-field'> " +
+			"										<span>#{transponder_number}</span> " +
+			"									</td> " +
+			"									<td class='vt grid-field'> " +
+			"										<span>#{total_amount}</span> " +
+			"									</td> " +
+			"									<td class='vt grid-field'> " +
+			"										<span>#{personal_amount}</span> " +
+			"									</td> " +
+			"								</tr> " +
+			"								"
+	);
+	for (var objKey in clientArr) {
+		var objVal = clientArr[objKey];
+		if (objVal.isRelated) {
+			var newrow = rowTemplate.evaluate(objVal);
+			newbody.insert(newrow);
+		}
+	}
+	tbody.replace(newbody);
+}
+
+function getAmountSelected() {
+	var amountSelected = 0.0;
+	for (var objKey in clientArr) {
+		var objVal = clientArr[objKey];
+		if (objVal.isRelated) {
+			amountSelected += parseFloat(objVal.personalAmount);
+		}
+	}
+	return amountSelected;
+}
+
+function getNumberSelected() {
+	var numberSelected = 0;
+	for (var objKey in clientArr) {
+		var objVal = clientArr[objKey];
+		if (objVal.isRelated) {
+			numberSelected += 1;
+		}
+	}
+	return numberSelected;
+}
+
+function checkAmountChanged(el) {
+	g_form.clearMessages();
+	var input = formatClean(el.value);
+	var formatted = formatNumber(input);
+	if (input == "" && el.value != "") {
+		g_form.addErrorMessage("Invalid check amount.");
+		return;
+	} else if (formatted == "0" && input != "0") {
+		g_form.addErrorMessage("Invalid check amount.");
+		return;
+	}
+	var checkAmountFloat = parseFloat(input);
+	if (isNaN(checkAmountFloat) || !isFinite(checkAmountFloat)) {
+		g_form.addErrorMessage("Invalid check amount.");
+	} else {
+		// eslint-disable-next-line no-param-reassign
+		el.value = checkAmountFloat.toFixed(2);
+	}
+	onChange("check_amount");
+	myOnChange("check_amount", el.value);
+}
+
+function myOnChange(elementName, value) {
+	g_form.clearMessages();
+	if (elementName == "check_number") {
+		js_checkNumber = value;
+		jQuery("#x_89907_vehicle_to_payments3_check_number").val(value);
+	} else if (elementName == "check_amount") {
+		js_check_amount = parseFloat(value);
+		var amt_fmt = js_check_amount.toFixed(2);
+		jQuery("#x_89907_vehicle_to_payments2_check_amount").val(amt_fmt);
+		jQuery("#x_89907_vehicle_to_payments3_check_amount").val(amt_fmt);
+		updateAmountMatchIcon();
+	} else if (elementName == "date_of_check") {
+		js_dateOfCheck = value;
+		jQuery("#x_89907_vehicle_to_payments3_date_of_check").val(value);
+	} else if (elementName == "date_received") {
+		js_dateCheckReceived = value;
+		jQuery("#x_89907_vehicle_to_payments3_date_received").val(value);
+	}
+	return true;
+}
+
+function onOverrideValidationChange() {
+	g_form.clearMessages();
+	overrideAmountValidationChecked = jQuery(
+		"#ni\\.override_amount_validation"
+	)[0].checked;
+}
+
+function updateSummaryInfo() {
+	var amountSelected = getAmountSelected();
+	jQuery("#x_89907_vehicle_to_userStatements2_amount_selected").val(
+		amountSelected.toFixed(2)
+	);
+	jQuery("#x_89907_vehicle_to_userStatements3_amount_selected").val(
+		amountSelected.toFixed(2)
+	);
+	jQuery("#hidden_userStatementArray").val(JSON.stringify(clientArr));
+}
+
+function updateAmountMatchIcon() {
+	var checkAmountStr = jQuery(
+		"#x_89907_vehicle_to_payments2_check_amount"
+	).val();
+	var checkAmount = parseFloat(checkAmountStr);
+	var selectedAmount = getAmountSelected();
+	var matchSpanEl = jQuery(
+		"#x_89907_vehicle_to_userStatements2_match_indicator > span"
+	);
+	var matchIconEl = jQuery(
+		"#x_89907_vehicle_to_userStatements2_match_indicator > span > i"
+	);
+	var matchTextEl = jQuery(
+		"#x_89907_vehicle_to_userStatements2_match_indicator_text"
+	);
+	if (checkAmount.toFixed(2) == selectedAmount.toFixed(2)) {
+		matchSpanEl.css("color", "Green");
+		matchIconEl
+			.toggleClass("fa-check-circle", true)
+			.toggleClass("fa-times-circle", false);
+		matchTextEl.text(" Check amount matches total statement amounts.");
+	} else {
+		matchSpanEl.css("color", "Red");
+		matchIconEl
+			.toggleClass("fa-check-circle", false)
+			.toggleClass("fa-times-circle", true);
+		if (checkAmount > selectedAmount) {
+			matchTextEl.text(
+				" $" +
+					(checkAmount - selectedAmount).toFixed(2) +
+					" remaining to allocate."
+			);
+		} else {
+			matchTextEl.text(
+				" Selected amount exceeds check amount by $" +
+					(selectedAmount - checkAmount).toFixed(2) +
+					"."
+			);
+		}
+	}
+}
+
+// HELPER FUNCTIONS
+
+function getUserStatementObj(seek) {
+	for (var objKey in clientArr) {
+		if (objKey === seek) {
+			return clientArr[objKey];
+		}
+	}
+	return null;
+}
+function arrayRemove(arr, value) {
+	return arr.filter(function notMatchesValue(ele) {
+		return ele != value;
+	});
+}
+
+/* ********************* */
+/*    onLoad()           */
+/* ********************* */
+
+function onLoadFunction() {
+	var stmtCheckboxGhosts = jQuery(
+		"#x_89907_vehicle_to_userStatement_list input:hidden[name^='check_']"
+	);
+	stmtCheckboxGhosts.each(function addObserver(i) {
+		var observer = new MutationObserver(stmtCheckboxGhostChangeHandler);
+		observer.observe(this, {
+			attributes: true,
+			attributeFilter: ["value"]
+		});
+	});
+	var tabs = new GlideTabs2("tabs2_section", gel("list_span"), 0, "");
+	tabs.activate();
+	show("list_span");
+
+	jQuery("#ni\\.override_amount_validation").each(function addOnChange(i) {
+		this.onchange = onOverrideValidationChange;
+	});
+}
+
+/* ********************* */
+/*    onCancel()         */
+/* ********************* */
+
+function onCancel() {
+	var c = gel("cancelled");
+	c.value = "true";
+
+	// not in dialog - let processing script redirect
+	return true;
+}
+
+/* ********************* */
+/*    onOK()             */
+/* ********************* */
+
+function onSubmitPayment() {
+	// 	var debugString = "To link:\n" + toLink.join() + "\n\nTo Unlink:\n" + toUnlink.join() + "\n\nUnchanged:\n" + unChanged.join();
+	// 	var debugString = "user_name: " + gel('user_name').value + "   " + gel('hidden_payment_user').value + "\ndate_of_check: " + gel('date_of_check').value + "\ndate_received: " + gel('date_received').value + "\ncheck_amount: " + gel('check_amount').value + "\ncheck_number: " + gel('check_number').value;
+	//	alert(debugString);
+	//	return false;
+	return true;
+}
+]]></client_script>
+        <description>UI Page to select user statement records associated with payment; used by financial coordinator upon receipt of payment from user&#13;
+Next button flows to page to review payment details and confirm receipt of payment (submit)&#13;
+Parameters:&#13;
+sysparm_user_statement_user - sysid of the record of the user making the payment (required)&#13;
+sysparm_dialog - true/false indicating whether we are presented in a dialog/modal window (optional, default = false)&#13;
+sysparm_date_of_check - value to use for date_of_check field in payment record&#13;
+sysparm_check_amount - value to use for check_amount field in payment record&#13;
+sysparm_check_number - value to use for check_number field in payment record</description>
+        <direct>false</direct>
+        <endpoint>x_89907_vehicle_to_submit_payment.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+<link type="text/css" rel="stylesheet" href="/scripts/icon-fonts/font-awesome/css/font-awesome.cssx?v=08-22-2018_1559"/>
+
+	<!-- Set up some environment descriptor vars -->
+	<j:set var="jvar_isDialog_parm" value="${sysparm_dialog}"/>
+	<g:evaluate var="jvar_isDialog" jelly="true">
+		(jelly.jvar_isDialog_parm) ? jelly.jvar_isDialog_parm : false
+	</g:evaluate>
+	<g:evaluate var="jvar_isMobile">
+		var myIsMobile = gs.isMobile();
+		myIsMobile
+	</g:evaluate>
+	
+	<!-- Initialize some values from dialog preferences set in ui action or from url -->
+	<j:set var="jvar_stage" value="2"/>
+	<g:evaluate var="jvar_check_number">
+		var js_checkNumber = '${sysparm_check_number}';
+		js_checkNumber;
+	</g:evaluate>
+	<g:evaluate var="jvar_date_of_check">
+		var js_dateOfCheck = '${sysparm_date_of_check}';
+		js_dateOfCheck;
+	</g:evaluate>
+	<g:evaluate var="jvar_date_check_received">
+		var js_dateCheckReceived = '${sysparm_date_received}';
+		js_dateCheckReceived;
+	</g:evaluate>
+	<g:evaluate var = "jvar_check_amount_parm">
+		var check_amount_parm = '${sysparm_check_amount}';
+		check_amount_parm;
+	</g:evaluate>
+	<g:evaluate var="jvar_check_amount">
+		var js_check_amount = parseFloat(check_amount_parm);
+		js_check_amount;
+	</g:evaluate>
+	<g:evaluate var="jvar_check_amount_fmt">
+		var js_check_amount_fmt = parseFloat(check_amount_parm).toFixed(2);
+		js_check_amount_fmt;
+	</g:evaluate>
+	<j:set var="jvar_my_user" value="${sysparm_user_statement_user}"/>
+
+	<!-- Validate the statement user -->
+	<g:evaluate jelly="true">
+		if (!jelly.jvar_my_user) {
+			gs.addErrorMessage("Required parameter &lt;sysparm_user_statement_user&gt; is missing.");
+		}
+	</g:evaluate>
+	<g:evaluate var="jvar_gr_user" object="true" jelly="true">
+		var gr_user = new GlideRecord("sys_user");
+		var success = gr_user.get(jelly.jvar_my_user);
+		if (!success) {
+			gs.addErrorMessage("Unable to locate user record " +  jelly.jvar_my_user + ".");
+		}
+		gr_user;
+	</g:evaluate>
+
+	<!-- Get all open/paymentowed user statement records for the user -->
+	<g:evaluate var="jvar_gr" object="true" jelly="true">
+		var gr = new GlideRecord("x_89907_vehicle_to_toll_user_statement");
+		gr.addQuery("user", jelly.jvar_my_user);
+		gr.addQuery("status","1"); //Open
+		gr.addQuery("progress_phase","2"); //PaymentOwed
+		gr.query();
+		if (!gr.hasNext()) {
+			gs.addErrorMessage("No PaymentOwed statements located for " +  gr_user.getDisplayValue() + ".");
+		}
+		gr;
+	</g:evaluate>
+
+	<!-- set up control block to track user statement status -->
+	<g:evaluate>
+		var userStatementArray = {};
+	</g:evaluate>
+
+	<!-- initialize summary vars -->
+	<g:evaluate var="jvar_selected_total_amount">
+		var js_selected_total_amount = 0.0;
+		js_selected_total_amount;
+	</g:evaluate>
+	<g:evaluate var="jvar_total_amount">
+		var js_total_amount = 0.0;
+		js_total_amount;
+	</g:evaluate>
+	<g:evaluate var="jvar_selected_total_number">
+		var js_selected_total_number = 0;
+		js_selected_total_number;
+	</g:evaluate>
+	<g:evaluate var="jvar_paymentGR">
+    	// paymentGR.getElement("number").getLabel()
+    	var paymentGR = new GlideRecord('x_89907_vehicle_to_payment');
+    	paymentGR;
+    </g:evaluate>
+
+	<script>
+		addLoadEvent( function() {
+			onLoadFunction();
+		});
+	</script>
+	<!-- Set up form fields and labels -->
+	<g:ui_form name="user_statement_select">
+		<!-- Create dummy field element so fire function doesnt bomb because there's no element named xxx.do -->
+		<input type="hidden" id="x_89907_vehicle_to_payment.do" name="x_89907_vehicle_to_payment" value="x_89907_vehicle_to_payment" />
+		<h1>Payment Wizard</h1>.
+		<div id="x_89907_vehicle_to_record_payment_wizard_page1" style="display: none">
+			<!-- 
+
+
+			ENTER PAYMENT DETAILS - WIZARD PAGE 1
+
+	
+			-->
+			<g:macro_invoke macro="x_89907_vehicle_to_payment_process_flow" stage="1" id="payment_flow_s1"/>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-sm-1">$[SP]</div>
+					<div class="col-lg-6 col-sm-10 page-header">Enter information for the payment</div>
+					<div class="col-lg-3 col-sm-1">$[SP]</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-3 col-sm-1"></div>
+					<div class="col-lg-6 col-sm-10">
+						<div class="form-horizontal">
+							<div class="row">
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_field" name="user_name" label="${paymentGR.getElement('user').getLabel()}" id="user_name" 
+												value="${gr_user.getDisplayValue()}" readonly="true"/>
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_field" name="check_number" label="${paymentGR.getElement('check_number').getLabel()}" id="check_number" 
+												value="${js_checkNumber}"  onchange="onChange('check_number');myOnChange('check_number',this.value);"/>
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_currency_field" name="check_amount" label="${paymentGR.getElement('check_amount').getLabel()}" id="check_amount"
+												value="${js_check_amount}"  onchange="return checkAmountChanged(this);" mandatory="true"/>
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_date_field" name="date_of_check" label="${paymentGR.getElement('date_of_check').getLabel()}" id="date_of_check"
+												value="${js_dateOfCheck}"  onchange="myOnChange('date_of_check',this.value);"/>
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_date_field" name="date_received" label="${paymentGR.getElement('date_received').getLabel()}" id="date_received"
+												value="${js_dateCheckReceived}"  onchange="myOnChange('date_received',this.value);" mandatory="true"/>
+							</div>
+							<div class="row">
+								<div style="float:right;padding-top:5px;">
+									<button type="submit" id="payment_flow_s1.cancel_button" onclick="return onCancel();" 
+											title="" style="min-width: 5em;" class="btn btn-default" data-original-title="">Cancel</button>$[SP]
+									<button type="button" id="payment_flow_s1.next_button" onclick="return onProceedToSelectUserStatements();" 
+											title="" style="min-width: 5em;" class="btn btn-primary" data-original-title="">Next</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>		
+			</div>
+		</div>
+		<div id="x_89907_vehicle_to_record_payment_wizard_page2" style="display: block">
+			<!-- 
+
+
+   SELECT USER STATEMENTS - WIZARD PAGE 2
+
+
+   -->
+			<g:macro_invoke macro="x_89907_vehicle_to_payment_process_flow" stage="2" id="payment_flow_s2"/><br/>
+			<!-- Set up table for layout -->
+			<div class="container">
+				<div class="row">
+					<div class="col-md-1 col-xs-12"></div>
+					<div class="col-md-10 col-xs-12 page-header">Select user statements being paid</div>
+					<div class="col-md-1 col-xs-12"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-1 col-xs-12"></div>
+					<div class="col-md-10 col-xs-12">
+						<!-- Set up user statement list table - page 2-->
+						<table id="x_89907_vehicle_to_userStatement_list" class="table table-hover original-table list-grid" style="cursor: default; user-select: text;border: 1px solid #bdc0c4;">
+							<thead class="table-body-headers">
+								<tr class="table-header">
+									<th>
+										<span class="input-group-checkbox">
+											<input type="checkbox" class="checkbox"/>
+											<label class="checkbox-label"></label>
+										</span>
+									</th>
+									<th>
+										<!-- <button class="icon-search list-header-search btn btn-icon table-btn-lg"></button> -->
+									</th>
+									<th class="table-column-header text-center">
+										<i class="icon-menu col-menu" style="cursor: pointer;margin-right: 4px;"></i>
+										<a class="sort-columns">${gr.getElement("number").getLabel()}</a>
+									</th>
+									<th class="table-column-header text-center">
+										<i class="icon-menu col-menu list-header-context-menu context-menu-click" style="cursor: pointer;margin-right: 4px;"></i>
+										<a class="sort-columns">${gr.getElement("period_begin_date").getLabel()}</a>
+									</th>
+									<th class="table-column-header text-center">
+										<i class="icon-menu col-menu list-header-context-menu context-menu-click" style="cursor: pointer;margin-right: 4px;"></i>
+										<a class="sort-columns">${gr.getElement("period_end_date").getLabel()}</a>
+									</th>
+									<th class="table-column-header text-center">
+										<i class="icon-menu col-menu list-header-context-menu context-menu-click" style="cursor: pointer;margin-right: 4px;"></i>
+										<a class="sort-columns">${gr.getElement("vehicle_number").getLabel()}</a>
+									</th>
+									<th class="table-column-header text-center">
+										<i class="icon-menu col-menu list-header-context-menu context-menu-click" style="cursor: pointer;margin-right: 4px;"></i>
+										<a class="sort-columns">${gr.getElement("transponder_number").getLabel()}</a>
+									</th>
+									<th class="table-column-header text-center">
+										<i class="icon-menu col-menu list-header-context-menu context-menu-click" style="cursor: pointer;margin-right: 4px;"></i>
+										<a class="sort-columns">${gr.getElement("total_amount").getLabel()}</a>
+									</th>
+									<th class="table-column-header text-center">
+										<i class="icon-menu col-menu list-header-context-menu context-menu-click" style="cursor: pointer;margin-right: 4px;"></i>
+										<a class="sort-columns">${gr.getElement("personal_amount").getLabel()}</a>
+									</th>
+								</tr>
+							</thead>
+							<tbody class="list_table_tbody">
+								<j:while test="${gr.next()}"> <!-- Iterate user statements -->
+									<g:evaluate var="jvar_total_amount" jelly="true">
+										if (gr.getValue("personal_amount")) {
+										js_total_amount += parseFloat(gr.getValue("personal_amount"));
+										}
+										js_total_amount;
+									</g:evaluate>
+									<g:evaluate jelly="true">
+										var tmpName = gr.getUniqueValue();
+										userStatementArray[tmpName] = {
+										"sysid":tmpName,
+										"isRelated":false,
+										"personalAmount":parseFloat(gr.getValue("personal_amount")),
+
+										number	:	gr.getValue('number'),
+										period_begin_date	:	gr.getDisplayValue('period_begin_date'),
+										period_end_date	:	gr.getDisplayValue('period_end_date'),
+										vehicle_number	:	gr.getDisplayValue('vehicle_number'),
+										transponder_number	:	gr.getDisplayValue('transponder_number'),
+										total_amount	:	gr.getDisplayValue('total_amount'),
+										personal_amount	:	gr.getDisplayValue('personal_amount')
+										};
+									</g:evaluate>
+									<tr class="data_row">
+										<td class="col-small col-center decoration_cell col-control">
+											<g:ui_checkbox name="check_${gr.getUniqueValue()}" value="${userStatementArray[gr.getUniqueValue()].isRelated}" />
+											<label class="checkbox-label"></label>
+										</td>
+										<td class="col-center col-small decoration_cell">
+											<button type="button" class="sn-popover-complex btn btn-icon table-btn-lg icon-info list-select-record"></button>
+										</td>
+										<td class="vt grid-field"><span>${gr.getDisplayValue("number")}</span></td>
+										<td class="vt grid-field"><span>${gr.getDisplayValue("period_begin_date")}</span></td>
+										<td class="vt grid-field"><span>${gr.getDisplayValue("period_end_date")}</span></td>
+										<td class="vt grid-field"><span>${gr.getDisplayValue("vehicle_number")}</span></td>
+										<td class="vt grid-field"><span>${gr.getDisplayValue("transponder_number")}</span></td>
+										<td class="vt grid-field"><span>${gr.getDisplayValue("total_amount")}</span></td>
+										<td class="vt grid-field"><span>${gr.getDisplayValue("personal_amount")}</span></td>
+									</tr>
+								</j:while> <!-- END Iterate user statements -->
+							</tbody>
+						</table><!-- END user statement list table -->
+					</div>
+					<div class="col-md-1 col-xs-12"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 col-xs-2"></div>
+					<div class="col-md-6 col-xs-8">
+						<div class="form-horizontal">
+							<div class="row">
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_currency_field" name="x_89907_vehicle_to_payments2_check_amount"
+												label="${paymentGR.getElement('check_amount').getLabel()}" id="x_89907_vehicle_to_payments2_check_amount" 
+												value="${js_check_amount_fmt}" readonly="true"/>
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_currency_field" name="x_89907_vehicle_to_userStatements2_amount_selected" 
+												label="Selected amount" id="x_89907_vehicle_to_userStatements2_amount_selected" 
+												value="${js_selected_total_amount.toFixed(2)}" readonly="true"/>
+								<div class="form-group amount-validation">
+									<div>
+										<div class="col-xs-12 col-md-3 col-lg-4"></div>
+										<div class="col-xs-12 col-md-9 col-lg-8 form-field ">								
+											<div id="x_89907_vehicle_to_userStatements2_match_indicator">
+												<j:choose>
+													<j:when test="${jvar_selected_total_amount gt jvar_check_amount}">
+														<span style="color: Red;">
+															<i class="fa fa-times-circle"></i><span id="x_89907_vehicle_to_userStatements2_match_indicator_text">$[SP]Selected amount exceeds check amount by ${"$"}${(js_selected_total_amount - js_check_amount).toFixed(2)}.</span>
+														</span>
+													</j:when>
+													<j:when test="${jvar_selected_total_amount lt jvar_check_amount}">
+														<span style="color: Red;">
+															<i class="fa fa-times-circle"></i><span id="x_89907_vehicle_to_userStatements2_match_indicator_text">$[SP]${"$"}${(js_check_amount - js_selected_total_amount).toFixed(2)} remaining to allocate.</span>
+														</span>
+													</j:when>
+													<j:when test="${jvar_selected_total_amount.toFixed(2) eq jvar_check_amount.toFixed(2)}">
+														<span style="color: Green;">
+															<i class="fa fa-check-circle"></i><span id="x_89907_vehicle_to_userStatements2_match_indicator_text">Check amount matches total statement amounts.</span>
+														</span>
+													</j:when>
+													<j:otherwise></j:otherwise>
+												</j:choose>
+											</div>
+										</div>
+									</div>
+									
+									<div>
+										<div id="element.override_amount_validation" class="form-group">
+											<div id="label.override_amount_validation" class="col-xs-12 col-md-3 col-lg-4 text-right">
+												<label for="override_amount_validation" dir="ltr" class="control-label" title="Override amount validation. Required when user has overpaid or is not paying all statements that are due">
+													<span id="status.override_amount_validation" mandatory="" oclass="" class="required-marker"></span>
+													<span class="label-text" data-html="false">Override amount validation</span>
+												</label>
+											</div>
+											<div class="col-xs-12 col-md-9 col-lg-8 form-field input_controls">
+												<g:ui_checkbox title="Override amount validation. Required when user has overpaid or is not paying all statements that are due" class="form-control" name="override_amount_validation" value="false"/>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="row">
+								<div style="float:right;padding-top:5px;">
+									<button type="submit" id="payment_flow_s2.cancel_button" onclick="return onCancel();"
+											title="" style="min-width: 5em;" class="btn btn-default" data-original-title="">Cancel</button>$[SP]
+									<button type="button" id="payment_flow_s2.back_button"  onclick="return onProceedToPhase(1);" 
+											title="" style="min-width: 5em;" class="btn btn-default" >Back</button>$[SP]
+									<button type="button" id="payment_flow_s2.next_button" onclick="return onProceedToReviewConfirm();" 
+											title="" style="min-width: 5em;" class="btn btn-primary" data-original-title="">Next</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-1 col-xs-12"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="x_89907_vehicle_to_record_payment_wizard_page3" style="display: none">
+			<!-- 
+
+
+   REVIEW AND CONFIRM - WIZARD PAGE 3
+
+
+   -->
+			<g:macro_invoke macro="x_89907_vehicle_to_payment_process_flow" stage="3" id="payment_flow_s3"/><br/>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-1 col-xs-12"></div>
+					<div class="col-md-10 col-xs-12 page-header">Review payment details</div>
+					<div class="col-md-1 col-xs-12"></div>
+				</div>
+				<div class="row">
+						<div id="element.x_89907_vehicle_to_payments3_statement_list" class="form-group">
+							<div class="col-md-2 col-xs-1"></div>
+							<div class="col-md-8 col-xs-10 ">
+								<!-- Set up user statement list table - page 3 -->
+								<label dir="ltr" class="control-label">
+									<span class="label-text" data-html="false">User statements marked for payment</span>
+								</label>
+								<table class="table table-hover original-table list-grid" style="cursor: default; user-select: text;border: 1px solid #bdc0c4;">
+									<thead class="table-body-headers">
+										<tr class="table-header">
+											<th class="table-column-header">${gr.getElement("number").getLabel()}</th>
+											<th class="table-column-header">${gr.getElement("period_begin_date").getLabel()}</th>
+											<th class="table-column-header">${gr.getElement("period_end_date").getLabel()}</th>
+											<th class="table-column-header">${gr.getElement("vehicle_number").getLabel()}</th>
+											<th class="table-column-header">${gr.getElement("transponder_number").getLabel()}</th>
+											<th class="table-column-header">${gr.getElement("total_amount").getLabel()}</th>
+											<th class="table-column-header">${gr.getElement("personal_amount").getLabel()}</th>
+										</tr>
+									</thead>
+									<tbody class="list_table_tbody" id="payment_flow_s3_userStatement_list_body">
+										<j:while test="${gr.next()}"> <!-- Iterate user statements -->
+											<g:evaluate var="jvar_total_amount" jelly="true">
+												if (gr.getValue("personal_amount")) {
+												js_total_amount += parseFloat(gr.getValue("personal_amount"));
+												}
+												js_total_amount;
+											</g:evaluate>
+											<g:evaluate jelly="true">
+												var tmpName = gr.getUniqueValue();
+												userStatementArray[tmpName] = {"sysid":tmpName,"isRelated":false,
+												"personalAmount":parseFloat(gr.getValue("personal_amount"))};
+											</g:evaluate>
+											<tr class="data_row">
+												<td class="vt grid-field"><span>${gr.getDisplayValue("number")}</span></td>
+												<td class="vt grid-field"><span>${gr.getDisplayValue("period_begin_date")}</span></td>
+												<td class="vt grid-field"><span>${gr.getDisplayValue("period_end_date")}</span></td>
+												<td class="vt grid-field"><span>${gr.getDisplayValue("vehicle_number")}</span></td>
+												<td class="vt grid-field"><span>${gr.getDisplayValue("transponder_number")}</span></td>
+												<td class="vt grid-field"><span>${gr.getDisplayValue("total_amount")}</span></td>
+												<td class="vt grid-field"><span>${gr.getDisplayValue("personal_amount")}</span></td>
+											</tr>
+										</j:while> <!-- END Iterate user statements -->
+									</tbody>
+								</table><!-- END user statement list table -->
+							</div>
+							<div class="col-md-2 col-xs-1"></div>
+						</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 col-xs-2"></div>
+					<div class="col-md-6 col-xs-8">
+						<div class="form-horizontal">
+							<div class="row">
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_field" name="user_name" label="${paymentGR.getElement('user').getLabel()}" id="x_89907_vehicle_to_payments3_user_name" 
+												value="${gr_user.getDisplayValue()}" readonly="true"/>
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_field" name="check_number" label="${paymentGR.getElement('check_number').getLabel()}" id="x_89907_vehicle_to_payments3_check_number" 
+												value="${js_checkNumber}" readonly="true"/>
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_currency_field" name="check_amount" label="${paymentGR.getElement('check_amount').getLabel()}" id="x_89907_vehicle_to_payments3_check_amount" 
+												value="${js_check_amount_fmt}" readonly="true"/>
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_field" name="date_of_check" label="${paymentGR.getElement('date_of_check').getLabel()}" id="x_89907_vehicle_to_payments3_date_of_check" 
+												value="${js_dateOfCheck}" readonly="true"/>
+								<g:macro_invoke macro="x_89907_vehicle_to_payment_wizard_field" name="date_received" label="${paymentGR.getElement('date_received').getLabel()}" id="x_89907_vehicle_to_payments3_date_received" 
+												value="${js_dateCheckReceived}" readonly="true"/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-xs-2"></div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 col-xs-2"></div>
+					<div class="col-md-6 col-xs-8">
+						<div style="float:right;padding-top:5px;">
+							<button type="submit" id="payment_flow_s3.cancel_button" onclick="return onCancel();" 
+									title="" style="min-width: 5em;" class="btn btn-default" data-original-title="">Cancel</button>$[SP]
+							<button type="button" id="payment_flow_s3.back_button"  onclick="return onProceedToPhase(2);" 
+									title="" style="min-width: 5em;" class="btn btn-default" >Back</button>$[SP]
+							<button type="submit" id="payment_flow_s3.next_button" onclick="return onSubmitPayment();" 
+									title="" style="min-width: 5em;" class="btn btn-primary" data-original-title="">Submit</button>
+						</div>
+					</div>
+					<div class="col-md-3 col-xs-2"></div>
+				</div>
+			</div>
+		</div>
+
+		<g:evaluate var="jvar_userStatementArray" object="true">
+			new global.JSON().encode(userStatementArray);
+		</g:evaluate>
+		<input type="hidden" name="hidden_userStatementArray" id="hidden_userStatementArray" value="${jvar_userStatementArray}"/>
+		<input type="hidden" name="hidden_payment_user" id="hidden_payment_user" value="${sysparm_user_statement_user}"/>
+		<input type="hidden" name="hidden_isdialog" id="hidden_isdialog" value="${sysparm_dialog}"/>
+		<input type="hidden" name="cancelled" id="cancelled" value="false"/>
+	</g:ui_form>
+</j:jelly>]]></html>
+        <name>submit_payment</name>
+        <processing_script><![CDATA[/* globals user_name,date_of_check,check_number,check_amount,date_of_check,date_received,
+override_amount_validation,hidden_userStatementArray,hidden_payment_user */
+/* eslint camelcase: ["warn", {properties: "never", allow: ["^user_name$"]}] */
+
+if (cancelled == "true") {
+	response.sendRedirect(
+		"x_89907_vehicle_to_payment_list.do?sysparm_userpref_module=aceced31db55e700f898fbefbf961915&sysparm_clear_stack=true"
+	);
+	gs.addInfoMessage("Creation of new payment cancelled.");
+}
+
+if (cancelled == "false") {
+	var nowGDT = new GlideDateTime();
+	var paymentGR = new GlideRecord("x_89907_vehicle_to_payment");
+	paymentGR.newRecord();
+	paymentGR.setValue("user", hidden_payment_user);
+	paymentGR.date_of_check.setDisplayValue(date_of_check);
+	paymentGR.date_received.setDisplayValue(date_received);
+	paymentGR.setValue("check_amount", check_amount);
+	paymentGR.setValue("amount", check_amount);
+	paymentGR.setValue("check_number", check_number);
+	paymentGR.setValue("override_amount_validation", override_amount_validation);
+	var paymentSysID = paymentGR.insert();
+	if (!paymentSysID) {
+		gs.addInfoMessage(
+			"Failed to create new payment: " + paymentGR.getLastErrorMessage()
+		);
+		// leave them on the form
+	} else {
+		var userStatementArray = JSON.parse(hidden_userStatementArray);
+		var toUnlink = [];
+		var toLink = [];
+
+		// eslint-disable-next-line guard-for-in, no-restricted-syntax
+		for (var key in userStatementArray) {
+			var obj = userStatementArray[key];
+			if (obj.isRelated && !obj.orgIsRelated) {
+				// if it wasn't related before and is now, link it
+				toLink.push(obj.sysid);
+			} else if (!obj.isRelated && obj.orgIsRelated) {
+				// if it was related before and isn't now, un-link it
+				toUnlink.push(obj.sysid);
+			}
+		}
+
+		var grUnlink = new GlideRecord("x_89907_vehicle_to_toll_user_statement");
+		grUnlink.addQuery("sys_id", "IN", toUnlink.join());
+		grUnlink.query();
+		if (grUnlink.hasNext()) {
+			grUnlink.setValue("payment", "NULL");
+			grUnlink.updateMultiple();
+		}
+
+		var grLink = new GlideRecord("x_89907_vehicle_to_toll_user_statement");
+		grLink.addQuery("sys_id", "IN", toLink.join());
+		grLink.query();
+		if (grLink.hasNext()) {
+			grLink.setValue("payment", paymentSysID);
+			grLink.setValue("progress_phase", 7); // "Paid"
+			grLink.setValue("status", 2); // "Closed"
+			grLink.setValue("closed_by", gs.getUserID());
+			grLink.setValue("closed_on", nowGDT);
+			grLink.setValue(
+				"resolution_comments",
+				"User statement closed with related payment"
+			);
+			grLink.updateMultiple();
+		}
+
+		paymentGR.setValue("total_user_statements", grLink.getRowCount()); // "Paid"
+		paymentGR.setValue("company", gs.getUser().getCompanyID());
+		paymentGR.setValue("phase", 3); // "Paid"
+		paymentGR.setValue("status", 2); // "Closed"
+		paymentGR.setValue("closed_by", gs.getUserID());
+		paymentGR.setValue("closed", nowGDT);
+		paymentGR.setValue(
+			"resolution_comments",
+			"Payment closed using payment wizard"
+		);
+		paymentGR.update();
+
+		var queryUrlParm = gs.urlEncode(
+			"sys_created_onONToday%40javascript:gs.beginningOfToday()%40javascript:gs.endOfToday()"
+		);
+		response.sendRedirect(
+			paymentGR.getLink(true) +
+				"&sysparm_clear_stack=true&sysparm_stack=x_89907_vehicle_to_payment_list.do?sysparm_query=" +
+				queryUrlParm
+		);
+		gs.addInfoMessage("Payment record created for " + user_name + ".");
+	}
+}
+]]></processing_script>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-12-10 19:35:52</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>afafeae1dbd22300f898fbefbf9619bc</sys_id>
+        <sys_mod_count>207</sys_mod_count>
+        <sys_name>submit_payment</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_page_afafeae1dbd22300f898fbefbf9619bc</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-09-16 05:27:36</sys_updated_on>
+    </sys_ui_page>
+</record_update>

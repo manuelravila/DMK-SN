@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sysevent_email_action">
+    <sysevent_email_action action="INSERT_OR_UPDATE">
+        <action_insert>true</action_insert>
+        <action_update>false</action_update>
+        <active>true</active>
+        <advanced_condition/>
+        <affected_field_on_event/>
+        <category display_value="Targeted Communication" name="Targeted Communication">4a789ea27f3032005f58108c3ffa91af</category>
+        <collection>x_89907_vehicle_to_toll_user_statement</collection>
+        <condition table="x_89907_vehicle_to_toll_user_statement">status=1^progress_phase=1^EQ<item display_value="Open" endquery="false" field="status" goto="false" newquery="false" operator="=" or="false" value="1"/>
+            <item display_value="Pending" endquery="false" field="progress_phase" goto="false" newquery="false" operator="=" or="false" value="1"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </condition>
+        <content_type>text/html</content_type>
+        <default_interval/>
+        <description>Notify end user of new user statement</description>
+        <digest_from/>
+        <digest_html/>
+        <digest_reply_to/>
+        <digest_separator_html><![CDATA[<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>]]></digest_separator_html>
+        <digest_separator_text><![CDATA[\n--------------------------------------------------------------------------------\n]]></digest_separator_text>
+        <digest_subject/>
+        <digest_template/>
+        <digest_text/>
+        <digestable>false</digestable>
+        <enable_dynamic_translation>false</enable_dynamic_translation>
+        <event_name>approval.cancelled</event_name>
+        <event_parm_1>false</event_parm_1>
+        <event_parm_2>false</event_parm_2>
+        <exclude_delegates>false</exclude_delegates>
+        <force_delivery>false</force_delivery>
+        <from/>
+        <generation_type>engine</generation_type>
+        <importance>low</importance>
+        <include_attachments>false</include_attachments>
+        <item>event.parm1</item>
+        <item_table/>
+        <mandatory>false</mandatory>
+        <message/>
+        <message_html><![CDATA[<p><span style="font-size: 10pt; font-family: verdana, geneva;">Toll user statement ${mail_script:user.statement.portal.link} for billing period ${period_begin_date} through&nbsp;${period_end_date} for vehicle ${vehicle_number} is assigned to you for review and submission.</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><span style="font-family: verdana, geneva; font-size: 13.3333px;">Please log in to the ${mail_script:toll.portal.link} and review your outstanding statement(s).</span></span></p>
+<p><span style="font-size: 12pt; font-family: verdana, geneva;"><strong>Statement Details</strong></span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Vehicle number:</strong>&nbsp;${vehicle_number}</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Pool Vehicle:</strong>&nbsp;${transponder.u_pool_device}</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Transponder number:</strong>&nbsp;${transponder_number}&nbsp;</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Transponder type:</strong>&nbsp;${transponder_type}</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Plate number:</strong>&nbsp;${plate_number}</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Period begin date:</strong>&nbsp;${period_begin_date}&nbsp;</span></p>
+<p><span style="font-size: 10pt; font-family: verdana, geneva;"><strong>Period end date:</strong>&nbsp;${period_end_date}</span></p>]]></message_html>
+        <message_list/>
+        <message_text/>
+        <name>User Statement Created</name>
+        <omit_watermark>false</omit_watermark>
+        <order>100</order>
+        <push_message_only>false</push_message_only>
+        <recipient_fields>user</recipient_fields>
+        <recipient_groups/>
+        <recipient_users/>
+        <reply_to/>
+        <send_self>false</send_self>
+        <sms_alternate/>
+        <style/>
+        <subject>Toll user statement for vehicle ${vehicle_number} created and assigned to you for submission</subject>
+        <subscribable>false</subscribable>
+        <sys_class_name>sysevent_email_action</sys_class_name>
+        <sys_created_by>Dan.Lengyel</sys_created_by>
+        <sys_created_on>2018-07-24 12:45:28</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>337b5178db2f9300f898fbefbf961988</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>User Statement Created</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sysevent_email_action_337b5178db2f9300f898fbefbf961988</sys_update_name>
+        <sys_updated_by>SN_dtseten</sys_updated_by>
+        <sys_updated_on>2020-09-08 22:41:36</sys_updated_on>
+        <sys_version>2</sys_version>
+        <template display_value="Unsubscribe and Preferences">7ed0481f3b0b2200c869c2c703efc487</template>
+        <type>email</type>
+        <weight>0</weight>
+    </sysevent_email_action>
+</record_update>

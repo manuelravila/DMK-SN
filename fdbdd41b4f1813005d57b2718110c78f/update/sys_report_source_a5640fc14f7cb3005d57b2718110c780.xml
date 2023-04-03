@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_report_source">
+    <sys_report_source action="INSERT_OR_UPDATE">
+        <description>User statements that are disputed</description>
+        <display>User statements.Disputed (Toll User Statement)</display>
+        <filter table="x_89907_vehicle_to_toll_user_statement">progress_phase=5<item display_value="Disputed" endquery="false" field="progress_phase" goto="false" newquery="false" operator="=" or="false" value="5"/>
+        </filter>
+        <name>User statements.Disputed</name>
+        <sys_class_name>sys_report_source</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-04-12 14:27:01</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>a5640fc14f7cb3005d57b2718110c780</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>User statements.Disputed (Toll User Statement)</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_report_source_a5640fc14f7cb3005d57b2718110c780</sys_update_name>
+        <sys_updated_by>dan.lengyel</sys_updated_by>
+        <sys_updated_on>2019-04-12 14:27:01</sys_updated_on>
+        <table>x_89907_vehicle_to_toll_user_statement</table>
+    </sys_report_source>
+</record_update>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_email">
+    <sys_script_email action="INSERT_OR_UPDATE">
+        <name>userStatement.disputed</name>
+        <new_lines_to_html>false</new_lines_to_html>
+        <script><![CDATA[(function runMailScript(current, template, email, email_action, event) {
+	var m2mGR = new GlideRecord("x_89907_vehicle_to_m2m_users_toll_approvers");
+	m2mGR.addQuery("user",current.user);
+	m2mGR.query();
+	while(m2mGR.next()) {
+		var approvalGroupGR = new GlideRecord("x_89907_vehicle_to_toll_approver");
+		approvalGroupGR.addQuery("sys_id",m2mGR.toll_approver);
+		approvalGroupGR.addQuery("active",true);
+		approvalGroupGR.query();
+		if(approvalGroupGR.next()) {
+			var manager = approvalGroupGR.manager;
+			if (!manager.email.nil() && manager.notification == "2") {
+				email.addAddress("cc", manager.email.toString(), manager.getDisplayValue());
+			}
+		}
+	}
+})(current, template, email, email_action, event);]]></script>
+        <sys_class_name>sys_script_email</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2019-08-14 03:25:49</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>c252d7f04f97f7805d57b2718110c78b</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>userStatement.disputed</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_email_c252d7f04f97f7805d57b2718110c78b</sys_update_name>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2019-08-20 03:17:09</sys_updated_on>
+    </sys_script_email>
+</record_update>

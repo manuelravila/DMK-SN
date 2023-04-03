@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="repeat_payment_owed_notification" label="Repeat payment owed notification" language="en" table="x_89907_vehicle_to_toll_configuration">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>repeat_payment_owed_notification</element>
+            <help/>
+            <hint/>
+            <label>Repeat payment owed notification</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <plural>Repeat payment owed notifications</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-26 19:21:47</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>ad5040981bfb3300dcab7596cc4bcb49</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Repeat payment owed notification</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_documentation_x_89907_vehicle_to_toll_configuration_repeat_payment_owed_notification_en</sys_update_name>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-26 19:21:47</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

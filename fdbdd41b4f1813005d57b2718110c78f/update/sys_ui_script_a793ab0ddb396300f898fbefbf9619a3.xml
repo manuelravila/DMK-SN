@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>Directive decorator for sp-editable-field to replace controller functionality so boolean fields are updated correctly; server API returns '0'/'1' for new value instead of 'true'/'false', so we adjust for that in the modified updateFieldModel function</description>
+        <global>false</global>
+        <ignore_in_now_experience>false</ignore_in_now_experience>
+        <name>x_89907_vehicle_to.fixSpEditableField</name>
+        <script><![CDATA[/* Override spNotificationsDirective controller */
+
+angular.module('sn.$sp').config(function($provide) {
+	$provide.decorator('spEditableFieldDirective', function($delegate, glideFormFactory, $http, spUtil, spModelUtil, $timeout) {
+		var directive = $delegate[0];
+		var controllerName = directive.controller;
+		directive.controller = function($scope) {
+			var REST_API_PATH = "/api/now/v1/ui/table_edit/";
+			var g_form;
+			this.createShadowModel = function() {
+				spModelUtil.extendField($scope.fieldModel);
+				$scope.shadowModel = angular.copy($scope.fieldModel);
+				$scope.shadowModel.table = $scope.table;
+				$scope.shadowModel.sys_id = $scope.tableId;
+				$scope.blockDisplay = $scope.block ? {display: 'block'} : {};
+					$scope.editable = !$scope.shadowModel.readonly && $scope.editableByUser;
+					$scope.fieldID = $scope.table + "-" + $scope.shadowModel.name.replace('.', '_dot_') + "-" + $scope.tableId;
+					initGlideForm();
+				};
+				this.createShadowModel();
+				$scope.getGlideForm = function() {
+					return g_form;
+				};
+				$scope.saveForm = function() {
+					if (g_form)
+						g_form.submit();
+					if (angular.isDefined($scope.asyncSubmitValidation)) {
+						$scope.asyncSubmitValidation(g_form, $scope.shadowModel).then(function(result) {
+							if (result)
+								completeSave();
+						});
+					}
+				};
+			$scope.checkNullChoiceOverride = function() {
+				if ($scope.fieldModel.type != "choice")
+					return;
+				if ($scope.fieldModel.value || $scope.fieldModel.displayValue)
+					return;
+				var choices = $scope.fieldModel.choices || [];
+				for (var i = 0; i < choices.length; i++) {
+					if (choices[i].value == "") {
+						$scope.fieldModel.displayValue = choices[i].label;
+						return;
+					}
+				}
+			};
+				function completeSave() {
+					var url = REST_API_PATH + $scope.table + "?sysparm_records=" + $scope.tableId + "&sysparm_view=default&sysparm_fields=" + $scope.shadowModel.name;
+					var data = {};
+						data[$scope.shadowModel.name] = $scope.shadowModel.value;
+						$http.put(url, data).success(function (data) {
+							if (data.result && Array.isArray(data.result.records))
+								updateFieldModel(data.result.records);
+							$scope.closePopover();
+						});
+					}
+// 				function updateFieldModel(records) {
+// 					for (var i=0; i<records.length; i++){
+// 						var r = records[i];
+// 						if (r.data && $scope.fieldModel.name in r.data) {
+// 							var updated = r.data[$scope.fieldModel.name];
+// 							$scope.fieldModel.value = updated.value;
+// 							$scope.fieldModel.displayValue = updated.display_value;
+// 						}
+// 					}
+// 				}
+				function updateFieldModel(records) {
+					for (var i=0; i<records.length; i++){
+						var r = records[i];
+						if (r.data && $scope.fieldModel.name in r.data) {
+							var updated = r.data[$scope.fieldModel.name];
+							if ($scope.fieldModel.type == 'boolean') {
+								if (updated.value == '1') {
+									$scope.fieldModel.value = 'true';
+								}
+								else if (updated.value == '0') {
+									$scope.fieldModel.value = 'false';
+								}
+								else {
+									$scope.fieldModel.value = updated.value;
+								}
+							}
+							else {
+								$scope.fieldModel.value = updated.value;
+							}
+							$scope.fieldModel.displayValue = updated.display_value;
+						}
+					}
+				}
+				function initGlideForm() {
+					if (g_form)
+						g_form.$private.events.cleanup();
+					var uiMessageHandler = function(g_form, type, message) {
+						switch (type) {
+							case 'infoMessage':
+								spUtil.addInfoMessage(message);
+								break;
+							case 'errorMessage':
+								spUtil.addErrorMessage(message);
+								break;
+							case 'clearMessages':
+								break;
+							default:
+								return false;
+						}
+					};
+					g_form = glideFormFactory.create($scope, $scope.table, $scope.tableId, [$scope.shadowModel], null, {uiMessageHandler: uiMessageHandler});
+					$scope.$emit("spEditableField.gForm.initialized", g_form, $scope.shadowModel);
+					if (angular.isDefined($scope.onChange))
+						g_form.$private.events.on("change", function(fieldName, oldValue, newValue){
+							return $scope.onChange.call($scope.onChange, g_form, $scope.shadowModel, oldValue, newValue); });
+					if (angular.isDefined($scope.onSubmit))
+						g_form.$private.events.on("submit", function(){
+							return $scope.onSubmit.call($scope.onSubmit, g_form, $scope.shadowModel); });
+					if (!angular.isDefined($scope.asyncSubmitValidation)) {
+						g_form.$private.events.on('submitted', function() {
+							completeSave();
+						});
+					}
+				}
+		};
+		return $delegate;
+	});
+});]]></script>
+        <script_name>fixSpEditableField</script_name>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2018-11-14 13:51:54</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>a793ab0ddb396300f898fbefbf9619a3</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>x_89907_vehicle_to.fixSpEditableField</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_script_a793ab0ddb396300f898fbefbf9619a3</sys_update_name>
+        <sys_updated_by>SN_CHall</sys_updated_by>
+        <sys_updated_on>2020-06-16 01:10:02</sys_updated_on>
+        <ui_type>1</ui_type>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>

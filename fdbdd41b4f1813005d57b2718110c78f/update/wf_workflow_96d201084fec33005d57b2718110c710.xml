@@ -1,0 +1,2840 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="wf_workflow_version">
+    <wf_workflow_version action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <activity_stages>{"activities":{},"stages":{},"subflows":[],"ends":["5b4d986bdbf200107cf5a455ca961926"]}</activity_stages>
+        <after_business_rules>false</after_business_rules>
+        <checked_out/>
+        <checked_out_by/>
+        <column_renderer display_value="Workflow-driven">a56213111b030100adca1e094f0713ac</column_renderer>
+        <condition table="x_89907_vehicle_to_toll_user_statement">approvalSTARTSWITH^EQ<item display_value="-- None --" endquery="false" field="approval" goto="false" newquery="false" operator="STARTSWITH" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </condition>
+        <condition_type>run_match</condition_type>
+        <description/>
+        <expected_sequences>5f4d986bdbf200107cf5a455ca961914,df4d986bdbf200107cf5a455ca961916,1f4dd46bdbf200107cf5a455ca961964,174d986bdbf200107cf5a455ca961918,974d986bdbf200107cf5a455ca961924,974d986bdbf200107cf5a455ca96191b,974d986bdbf200107cf5a455ca961927,be6dd86bdbf200107cf5a455ca961969,934d986bdbf200107cf5a455ca961925,1f4d986bdbf200107cf5a455ca961920,5b4d986bdbf200107cf5a455ca961926</expected_sequences>
+        <expected_time>1970-01-01 14:00:00</expected_time>
+        <expected_time_type/>
+        <full_sequences>5f4d986bdbf200107cf5a455ca961914,df4d986bdbf200107cf5a455ca961916,174d986bdbf200107cf5a455ca961922,1f4dd46bdbf200107cf5a455ca961964,5b4d986bdbf200107cf5a455ca961926,174d986bdbf200107cf5a455ca961918,9f4d986bdbf200107cf5a455ca961915,974d986bdbf200107cf5a455ca961924,934d986bdbf200107cf5a455ca961925,974d986bdbf200107cf5a455ca96191b,1f4d986bdbf200107cf5a455ca961920,1b4d986bdbf200107cf5a455ca961921,974d986bdbf200107cf5a455ca961927,174d986bdbf200107cf5a455ca961923,be6dd86bdbf200107cf5a455ca961969,1b4d986bdbf200107cf5a455ca961913,d74d986bdbf200107cf5a455ca961928</full_sequences>
+        <journal/>
+        <max_activity_count>100</max_activity_count>
+        <name>User Statement Manager Approval</name>
+        <not_cacheable>false</not_cacheable>
+        <on_cancel><![CDATA[// This script executes if the workflow is cancelled.// The global variable context_sys_id contains the sys_id of the cancelled workflow context.]]></on_cancel>
+        <order>100</order>
+        <pin_type>set_by_activity</pin_type>
+        <published>true</published>
+        <relative_duration/>
+        <requires_ert>true</requires_ert>
+        <run_multiple>false</run_multiple>
+        <schedule/>
+        <stage_field/>
+        <stage_order>computed</stage_order>
+        <start display_value="Begin - If status is already closed, bypass everything">5f4d986bdbf200107cf5a455ca961914</start>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>db4dd46bdbf200107cf5a455ca961962</sys_id>
+        <sys_mod_count>20</sys_mod_count>
+        <sys_updated_by>SN_Chall</sys_updated_by>
+        <sys_updated_on>2020-09-05 04:44:36</sys_updated_on>
+        <table>x_89907_vehicle_to_toll_user_statement</table>
+        <timezone/>
+        <validated>true</validated>
+        <workflow display_value="User Statement Manager Approval">96d201084fec33005d57b2718110c710</workflow>
+    </wf_workflow_version>
+    <wf_workflow action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <description/>
+        <name>User Statement Manager Approval</name>
+        <preview/>
+        <sys_class_name>wf_workflow</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-03-27 16:10:46</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>96d201084fec33005d57b2718110c710</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>User Statement Manager Approval</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>wf_workflow_96d201084fec33005d57b2718110c710</sys_update_name>
+        <sys_updated_by>dan.lengyel</sys_updated_by>
+        <sys_updated_on>2019-03-27 16:10:46</sys_updated_on>
+        <table>x_89907_vehicle_to_toll_user_statement</table>
+        <template>false</template>
+        <vars/>
+    </wf_workflow>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Approval - User">35433da80a0a029a0028c639a1e51eb4</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>3</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Add approval</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca96191b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>558</x>
+        <y>478</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=974d986bdbf200107cf5a455ca96191b"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1110</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Duration">a769a182c0a8006629db7fa3fc2a863d</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1360</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// Set 'answer' to the number of seconds this timer should wait&#13;
+answer = 0;</value>
+        <variable display_value="Due date script">a782cde9c0a8006608f39abdd85c8395</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1330</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Groups">02c618170a0a0b26436f5c2c9f7a3901</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>2050</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// Set the variable 'answer' to a comma-separated list of user ids and/or group ids or an array of user/group ids to add as approvers.&#13;
+//&#13;
+// For example:&#13;
+//       answer = [];&#13;
+//       answer.push('id1');&#13;
+//       answer.push('id2');&#13;
+&#13;
+answer = [];&#13;
+var sgr = new GlideRecord("x_89907_vehicle_to_m2m_users_toll_approvers");&#13;
+sgr.addQuery("user",current.user);&#13;
+sgr.query();&#13;
+while(sgr.next())&#13;
+ {&#13;
+  var zgr = new GlideRecord("x_89907_vehicle_to_toll_approver");&#13;
+  zgr.addQuery("sys_id",sgr.toll_approver);&#13;
+  zgr.addQuery("active",true);&#13;
+  zgr.query();&#13;
+  if(zgr.next())&#13;
+   {&#13;
+    answer.push(zgr.manager);	   &#13;
+   }     &#13;
+  else;&#13;
+ }&#13;
+&#13;
+&#13;
+&#13;
+&#13;
+</value>
+        <variable display_value="Additional approvers script">c35e582f0a0a0ba96248a70985207e63</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>110</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca96191b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Schedule based on">a77191a4c0a800662b403f7dff5f1bbd</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>900</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>08fcd0830a0a0b2600079f56b1adb9ae</value>
+        <variable display_value="Schedule">a7754e91c0a800664938d0ef6d2664d7</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>120</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>534d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Time zone based on">a77903a7c0a8006641af7c9b1d34444e</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Time zone">a775f59ac0a8006665d72362ae687035</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>900</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Schedule field">a774138dc0a80066000be7af20961c7d</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1150</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5b4d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Due date field">a76b8c6ec0a800664bb14d5d8b9cd7c4</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>310</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5f4d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>reject</value>
+        <variable display_value="When anyone rejects">502163410a6a803f0356332b24dc7945</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1370</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// Set the variable 'answer' to '', 'approved' or 'rejected' to indicate the approval status for this approval.  When called, the following information is available:&#13;
+//&#13;
+//    counts.total = total number of users that are part of this approval&#13;
+//    counts.approved = # of users that approved so far&#13;
+//    counts.rejected = # of users that rejected so far&#13;
+//    counts.requested = # of users that are pending approval&#13;
+//    counts.not_requested = # of users that are not pending approval&#13;
+//    counts.not_required = # of users that approval is not required&#13;
+//&#13;
+</value>
+        <variable display_value="Approval Script">02c86d780a0a0b261e6a356bc893d348</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>any</value>
+        <variable display_value="Wait for">c35e5bdd0a0a0ba96248a709f495c9ae</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1120</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>3bf802c20a0a0b52008e2859cd8abcf2</value>
+        <variable display_value="Relative duration">a76c6257c0a8006645cff43883470e64</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>330</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval_history</value>
+        <variable display_value="Approval Journal Column">e863e3b80a0004f911d67787e77e0f16</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>103</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Document ID">e37b77ac0a0004f973283ad13b341c5b</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Time zone field">a7781cb6c0a80066147dc7a5244d5d16</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>50</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d34d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Condition">4485eef70a6a803f6bc4bafa9e999640</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d74d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Users">c35e4cc40a0a0ba96248a7098ec9cb06</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>101</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>db4d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval</value>
+        <variable display_value="Approval Column">e846198f0a0004f91fba434a514ba8b8</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>115</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>db4d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Due date based on">a76680b9c0a8006661b107d0f21fae67</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>2000</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>df4d986bdbf200107cf5a455ca96191b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>1</value>
+        <variable display_value="Advanced">02ca01820a0a0b261cf923fb95f5e1d0</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>104</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>df4d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Document Table">e37a96e80a0004f978b47d2d6c5e0b22</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>50</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d34d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Condition">4485eef70a6a803f6bc4bafa9e999640</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>any</value>
+        <variable display_value="Wait for">c35e5bdd0a0a0ba96248a709f495c9ae</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>101</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>db4d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval</value>
+        <variable display_value="Approval Column">e846198f0a0004f91fba434a514ba8b8</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>103</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Document ID">e37b77ac0a0004f973283ad13b341c5b</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>104</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>df4d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Document Table">e37a96e80a0004f978b47d2d6c5e0b22</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>110</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca96191b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Schedule based on">a77191a4c0a800662b403f7dff5f1bbd</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>115</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>db4d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Due date based on">a76680b9c0a8006661b107d0f21fae67</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>120</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>534d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Time zone based on">a77903a7c0a8006641af7c9b1d34444e</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d74d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Users">c35e4cc40a0a0ba96248a7098ec9cb06</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>310</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5f4d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>reject</value>
+        <variable display_value="When anyone rejects">502163410a6a803f0356332b24dc7945</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>330</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval_history</value>
+        <variable display_value="Approval Journal Column">e863e3b80a0004f911d67787e77e0f16</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>900</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>08fcd0830a0a0b2600079f56b1adb9ae</value>
+        <variable display_value="Schedule">a7754e91c0a800664938d0ef6d2664d7</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>900</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Schedule field">a774138dc0a80066000be7af20961c7d</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1110</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Duration">a769a182c0a8006629db7fa3fc2a863d</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1120</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>3bf802c20a0a0b52008e2859cd8abcf2</value>
+        <variable display_value="Relative duration">a76c6257c0a8006645cff43883470e64</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1150</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5b4d986bdbf200107cf5a455ca96191e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Due date field">a76b8c6ec0a800664bb14d5d8b9cd7c4</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Time zone field">a7781cb6c0a80066147dc7a5244d5d16</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Time zone">a775f59ac0a8006665d72362ae687035</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1330</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Groups">02c618170a0a0b26436f5c2c9f7a3901</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1360</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca96191d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// Set 'answer' to the number of seconds this timer should wait&#13;
+answer = 0;</value>
+        <variable display_value="Due date script">a782cde9c0a8006608f39abdd85c8395</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>1370</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934d986bdbf200107cf5a455ca96191c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// Set the variable 'answer' to '', 'approved' or 'rejected' to indicate the approval status for this approval.  When called, the following information is available:&#13;
+//&#13;
+//    counts.total = total number of users that are part of this approval&#13;
+//    counts.approved = # of users that approved so far&#13;
+//    counts.rejected = # of users that rejected so far&#13;
+//    counts.requested = # of users that are pending approval&#13;
+//    counts.not_requested = # of users that are not pending approval&#13;
+//    counts.not_required = # of users that approval is not required&#13;
+//&#13;
+</value>
+        <variable display_value="Approval Script">02c86d780a0a0b261e6a356bc893d348</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>2000</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>df4d986bdbf200107cf5a455ca96191b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>1</value>
+        <variable display_value="Advanced">02ca01820a0a0b261cf923fb95f5e1d0</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca96191b</document_key>
+        <order>2050</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca96191f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// Set the variable 'answer' to a comma-separated list of user ids and/or group ids or an array of user/group ids to add as approvers.&#13;
+//&#13;
+// For example:&#13;
+//       answer = [];&#13;
+//       answer.push('id1');&#13;
+//       answer.push('id2');&#13;
+&#13;
+answer = [];&#13;
+var sgr = new GlideRecord("x_89907_vehicle_to_m2m_users_toll_approvers");&#13;
+sgr.addQuery("user",current.user);&#13;
+sgr.query();&#13;
+while(sgr.next())&#13;
+ {&#13;
+  var zgr = new GlideRecord("x_89907_vehicle_to_toll_approver");&#13;
+  zgr.addQuery("sys_id",sgr.toll_approver);&#13;
+  zgr.addQuery("active",true);&#13;
+  zgr.query();&#13;
+  if(zgr.next())&#13;
+   {&#13;
+    answer.push(zgr.manager);	   &#13;
+   }     &#13;
+  else;&#13;
+ }&#13;
+&#13;
+&#13;
+&#13;
+&#13;
+</value>
+        <variable display_value="Additional approvers script">c35e582f0a0a0ba96248a70985207e63</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Add approval">974d986bdbf200107cf5a455ca96191b</activity>
+        <condition>activity.result == 'approved' || activity.result == 'skipped'</condition>
+        <condition_default display_value="Approved">586e1fa60a0a0b5c008121ab894f2b06</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Approved</name>
+        <order>1</order>
+        <short_description>Approval request was approved</short_description>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca961920</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Add approval">974d986bdbf200107cf5a455ca96191b</activity>
+        <condition>activity.result == 'rejected'</condition>
+        <condition_default display_value="Rejected">586e4ef60a0a0b5c00440b56c014c8a5</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>false</is_positive>
+        <name>Rejected</name>
+        <order>2</order>
+        <short_description>Approval request was rejected</short_description>
+        <skip_during_generate>true</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca961920</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Approval Action">50a78fa50a6a803f66d064255f7201a5</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>4</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Approved</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca961927</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>876</x>
+        <y>367</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=974d986bdbf200107cf5a455ca961927"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca961927</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca961927</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approved</value>
+        <variable display_value="Action">50ab35f70a6a803f76d36e1ebaf3639e</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca961927</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca961927</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approved</value>
+        <variable display_value="Action">50ab35f70a6a803f76d36e1ebaf3639e</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Approved">974d986bdbf200107cf5a455ca961927</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca961927</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Begin">c7a5e32c0a0a0b3a002377c24ed8ea76</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>1</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Begin - If status is already closed, bypass everything</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5f4d986bdbf200107cf5a455ca961914</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width>80</width>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>32</x>
+        <y>32</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=5f4d986bdbf200107cf5a455ca961914"/>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Begin - If status is already closed, bypass everything">5f4d986bdbf200107cf5a455ca961914</activity>
+        <condition/>
+        <condition_default/>
+        <condition_type>else_flag</condition_type>
+        <else_flag>true</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>false</is_positive>
+        <name>Closed</name>
+        <order>1</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca961915</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Begin - If status is already closed, bypass everything">5f4d986bdbf200107cf5a455ca961914</activity>
+        <condition>current.status == 1</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>false</is_positive>
+        <name>Open</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca961915</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Set Values">1ca8d7cf0a0a0b265e9a000c2c08248c</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>9</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Close the user statement</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca961920</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>1244</x>
+        <y>689</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=1f4d986bdbf200107cf5a455ca961920"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1f4d986bdbf200107cf5a455ca961920</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca961920</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>status=2^closed_by=javascript:gs.getUserID()^closed_on=javascript:gs.nowDateTime()^approval_set=javascript:gs.nowDateTime()^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1f4d986bdbf200107cf5a455ca961920</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca961920</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>status=2^closed_by=javascript:gs.getUserID()^closed_on=javascript:gs.nowDateTime()^approval_set=javascript:gs.nowDateTime()^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Close the user statement">1f4d986bdbf200107cf5a455ca961920</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934d986bdbf200107cf5a455ca961921</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="If">98f621ca0a0a0b5900f7c291f5e45a0e</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>19</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Does statement match approval criteria from toll configuration?</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4dd46bdbf200107cf5a455ca961964</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>491</x>
+        <y>69</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=1f4dd46bdbf200107cf5a455ca961964"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1f4dd46bdbf200107cf5a455ca961964</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574dd46bdbf200107cf5a455ca961965</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Condition">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1f4dd46bdbf200107cf5a455ca961964</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934dd46bdbf200107cf5a455ca961966</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>/**&#13;
+* Set the answer variable to 'yes' if configuration indicates approval&#13;
+* If we don't have everything we need to find configuration or &#13;
+* statement doesn't match configuration approval criteria, return 'no'&#13;
+*/&#13;
+answer = configurationRequiresApproval() ? 'yes' : 'no';&#13;
+&#13;
+function configurationRequiresApproval() {&#13;
+	// Verify we have everything we need to find the configuration&#13;
+	if (current == null || !current.transponder || !current.transponder.company) {&#13;
+		return false;&#13;
+	}&#13;
+	// Find an active configuration for the transponder's company&#13;
+	var tollConfigGR = new GlideRecord("x_89907_vehicle_to_toll_configuration");&#13;
+	tollConfigGR.addQuery("active",true);&#13;
+	tollConfigGR.addQuery("company",current.transponder.company);&#13;
+	tollConfigGR.query();&#13;
+	if (!tollConfigGR.next()) {&#13;
+		return false;&#13;
+	}&#13;
+	// Test the configuration approval criteria against the statement's phase&#13;
+	var approvalCriteria = tollConfigGR.user_statement_approval.toString();&#13;
+	if (approvalCriteria == 'all') {&#13;
+		return true;&#13;
+	}&#13;
+	if (current.phase == '0' &amp;&amp; approvalCriteria == 'acknowledged') {&#13;
+		return true;&#13;
+	}&#13;
+	if (current.phase == '2' &amp;&amp; approvalCriteria == 'paymentOwed') {&#13;
+		return true;&#13;
+	}&#13;
+	return false;&#13;
+}&#13;
+</value>
+        <variable display_value="Script">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1f4dd46bdbf200107cf5a455ca961964</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>df4dd46bdbf200107cf5a455ca961965</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>1</value>
+        <variable display_value="Advanced">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1f4dd46bdbf200107cf5a455ca961964</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574dd46bdbf200107cf5a455ca961965</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Condition">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1f4dd46bdbf200107cf5a455ca961964</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>df4dd46bdbf200107cf5a455ca961965</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>1</value>
+        <variable display_value="Advanced">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1f4dd46bdbf200107cf5a455ca961964</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934dd46bdbf200107cf5a455ca961966</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>/**&#13;
+* Set the answer variable to 'yes' if configuration indicates approval&#13;
+* If we don't have everything we need to find configuration or &#13;
+* statement doesn't match configuration approval criteria, return 'no'&#13;
+*/&#13;
+answer = configurationRequiresApproval() ? 'yes' : 'no';&#13;
+&#13;
+function configurationRequiresApproval() {&#13;
+	// Verify we have everything we need to find the configuration&#13;
+	if (current == null || !current.transponder || !current.transponder.company) {&#13;
+		return false;&#13;
+	}&#13;
+	// Find an active configuration for the transponder's company&#13;
+	var tollConfigGR = new GlideRecord("x_89907_vehicle_to_toll_configuration");&#13;
+	tollConfigGR.addQuery("active",true);&#13;
+	tollConfigGR.addQuery("company",current.transponder.company);&#13;
+	tollConfigGR.query();&#13;
+	if (!tollConfigGR.next()) {&#13;
+		return false;&#13;
+	}&#13;
+	// Test the configuration approval criteria against the statement's phase&#13;
+	var approvalCriteria = tollConfigGR.user_statement_approval.toString();&#13;
+	if (approvalCriteria == 'all') {&#13;
+		return true;&#13;
+	}&#13;
+	if (current.phase == '0' &amp;&amp; approvalCriteria == 'acknowledged') {&#13;
+		return true;&#13;
+	}&#13;
+	if (current.phase == '2' &amp;&amp; approvalCriteria == 'paymentOwed') {&#13;
+		return true;&#13;
+	}&#13;
+	return false;&#13;
+}&#13;
+</value>
+        <variable display_value="Script">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Does statement match approval criteria from toll configuration?">1f4dd46bdbf200107cf5a455ca961964</activity>
+        <condition>activity.result == 'no'</condition>
+        <condition_default display_value="No">c1eff6430a0a0b59000f955abe842c94</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>false</is_positive>
+        <name>No</name>
+        <order>200</order>
+        <short_description/>
+        <skip_during_generate>true</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4dd46bdbf200107cf5a455ca961966</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Does statement match approval criteria from toll configuration?">1f4dd46bdbf200107cf5a455ca961964</activity>
+        <condition>activity.result == 'yes'</condition>
+        <condition_default display_value="Yes">c1ef63200a0a0b59005ef89bae78feb7</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Yes</name>
+        <order>100</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>db4dd46bdbf200107cf5a455ca961966</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="If">98f621ca0a0a0b5900f7c291f5e45a0e</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>15</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Does user have M2M link to active manager (toll approver)?</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca961918</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>314</x>
+        <y>242</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=174d986bdbf200107cf5a455ca961918"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961918</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca961918</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// This script needs to set answer to 'yes' or 'no' to indicate the state of the activity.&#13;
+//&#13;
+// For example,&#13;
+//&#13;
+  &#13;
+   answer = ifScript();&#13;
+&#13;
+   function ifScript() {&#13;
+	   &#13;
+    var sgr = new GlideRecord("x_89907_vehicle_to_m2m_users_toll_approvers");&#13;
+    sgr.addQuery("user",current.user);&#13;
+    sgr.query();&#13;
+    if(sgr.next())&#13;
+     {&#13;
+      var zgr = new GlideRecord("x_89907_vehicle_to_toll_approver");&#13;
+      zgr.addQuery("sys_id",sgr.toll_approver);&#13;
+      zgr.addQuery("active",true);&#13;
+      zgr.query();&#13;
+      if(zgr.next())&#13;
+        return 'yes';&#13;
+      else		 &#13;
+        return 'no';	   &#13;
+     }&#13;
+    else&#13;
+      return 'no';	   &#13;
+      &#13;
+   }&#13;
+</value>
+        <variable display_value="Script">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961918</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5b4d986bdbf200107cf5a455ca961918</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>1</value>
+        <variable display_value="Advanced">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961918</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca961918</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Condition">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961918</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca961918</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value/>
+        <variable display_value="Condition">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961918</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5b4d986bdbf200107cf5a455ca961918</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>1</value>
+        <variable display_value="Advanced">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961918</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca961918</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// This script needs to set answer to 'yes' or 'no' to indicate the state of the activity.&#13;
+//&#13;
+// For example,&#13;
+//&#13;
+  &#13;
+   answer = ifScript();&#13;
+&#13;
+   function ifScript() {&#13;
+	   &#13;
+    var sgr = new GlideRecord("x_89907_vehicle_to_m2m_users_toll_approvers");&#13;
+    sgr.addQuery("user",current.user);&#13;
+    sgr.query();&#13;
+    if(sgr.next())&#13;
+     {&#13;
+      var zgr = new GlideRecord("x_89907_vehicle_to_toll_approver");&#13;
+      zgr.addQuery("sys_id",sgr.toll_approver);&#13;
+      zgr.addQuery("active",true);&#13;
+      zgr.query();&#13;
+      if(zgr.next())&#13;
+        return 'yes';&#13;
+      else		 &#13;
+        return 'no';	   &#13;
+     }&#13;
+    else&#13;
+      return 'no';	   &#13;
+      &#13;
+   }&#13;
+</value>
+        <variable display_value="Script">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Does user have M2M link to active manager (toll approver)?">174d986bdbf200107cf5a455ca961918</activity>
+        <condition>activity.result == 'no'</condition>
+        <condition_default display_value="No">c1eff6430a0a0b59000f955abe842c94</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>false</is_positive>
+        <name>No</name>
+        <order>200</order>
+        <short_description/>
+        <skip_during_generate>true</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca961919</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Does user have M2M link to active manager (toll approver)?">174d986bdbf200107cf5a455ca961918</activity>
+        <condition>activity.result == 'yes'</condition>
+        <condition_default display_value="Yes">c1ef63200a0a0b59005ef89bae78feb7</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Yes</name>
+        <order>100</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934d986bdbf200107cf5a455ca961919</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="End">c7a66f7d0a0a0b3a004544a6d2f14076</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>2</databus_lookup_id>
+        <height/>
+        <input/>
+        <is_parent>false</is_parent>
+        <name>End</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5b4d986bdbf200107cf5a455ca961926</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width>80</width>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>1150</x>
+        <y>846</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=5b4d986bdbf200107cf5a455ca961926"/>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Create Event">9f680b92c0a801640026553f665b429f</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>20</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Fire Approved Event</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 03:03:45</sys_created_on>
+        <sys_id>be6dd86bdbf200107cf5a455ca961969</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:05:23</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>870</x>
+        <y>454</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=be6dd86bdbf200107cf5a455ca961969"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>be6dd86bdbf200107cf5a455ca961969</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 03:03:45</sys_created_on>
+        <sys_id>1dae94abdbf200107cf5a455ca9619ce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:03:45</sys_updated_on>
+        <value>(function() {&#13;
+	// return the value to use for Parameter 2&#13;
+	return "";&#13;
+}());</value>
+        <variable display_value="Parameter 2">c35dd3ef0a0a0ba96248a70947e35325</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>be6dd86bdbf200107cf5a455ca961969</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 03:03:45</sys_created_on>
+        <sys_id>55ae94abdbf200107cf5a455ca9619ce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:03:45</sys_updated_on>
+        <value>28ab5ca7dbf200107cf5a455ca9619b7</value>
+        <variable display_value="Event name">c35dcc7a0a0a0ba96248a70926fa68b5</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>be6dd86bdbf200107cf5a455ca961969</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 03:03:45</sys_created_on>
+        <sys_id>59ae94abdbf200107cf5a455ca9619ce</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:05:17</sys_updated_on>
+        <value>(function() {&#13;
+	// return the value to use for Parameter 1&#13;
+	return current.user;&#13;
+}());</value>
+        <variable display_value="Parameter 1">c35dd0310a0a0ba96248a70936d276b3</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>be6dd86bdbf200107cf5a455ca961969</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 03:03:45</sys_created_on>
+        <sys_id>55ae94abdbf200107cf5a455ca9619ce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:03:45</sys_updated_on>
+        <value>28ab5ca7dbf200107cf5a455ca9619b7</value>
+        <variable display_value="Event name">c35dcc7a0a0a0ba96248a70926fa68b5</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>be6dd86bdbf200107cf5a455ca961969</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 03:03:45</sys_created_on>
+        <sys_id>59ae94abdbf200107cf5a455ca9619ce</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:05:17</sys_updated_on>
+        <value>(function() {&#13;
+	// return the value to use for Parameter 1&#13;
+	return current.user;&#13;
+}());</value>
+        <variable display_value="Parameter 1">c35dd0310a0a0ba96248a70936d276b3</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>be6dd86bdbf200107cf5a455ca961969</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 03:03:45</sys_created_on>
+        <sys_id>1dae94abdbf200107cf5a455ca9619ce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:03:45</sys_updated_on>
+        <value>(function() {&#13;
+	// return the value to use for Parameter 2&#13;
+	return "";&#13;
+}());</value>
+        <variable display_value="Parameter 2">c35dd3ef0a0a0ba96248a70947e35325</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Fire Approved Event">be6dd86bdbf200107cf5a455ca961969</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 03:03:45</sys_created_on>
+        <sys_id>15ae94abdbf200107cf5a455ca9619cf</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:03:45</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Set Values">1ca8d7cf0a0a0b265e9a000c2c08248c</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>14</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Keep statement open </name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca961921</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>1019</x>
+        <y>688</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=1b4d986bdbf200107cf5a455ca961921"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1b4d986bdbf200107cf5a455ca961921</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca961921</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval_set=javascript:gs.nowDateTime()^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1b4d986bdbf200107cf5a455ca961921</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca961921</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval_set=javascript:gs.nowDateTime()^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Keep statement open ">1b4d986bdbf200107cf5a455ca961921</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca961921</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Set Values">1ca8d7cf0a0a0b265e9a000c2c08248c</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>18</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>No Approval Required - Statement created/imported as already closed</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca961922</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>41</x>
+        <y>790</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=174d986bdbf200107cf5a455ca961922"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961922</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca961922</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval=not_required^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961922</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca961922</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval=not_required^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="No Approval Required - Statement created/imported as already closed">174d986bdbf200107cf5a455ca961922</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca961922</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="If">98f621ca0a0a0b5900f7c291f5e45a0e</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>13</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Phase is Acknowledged?</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934d986bdbf200107cf5a455ca961925</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>1044</x>
+        <y>511</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=934d986bdbf200107cf5a455ca961925"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>934d986bdbf200107cf5a455ca961925</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca961925</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>progress_phase=0^EQ</value>
+        <variable display_value="Condition">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>934d986bdbf200107cf5a455ca961925</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca961925</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// This script needs to set answer to 'yes' or 'no' to indicate the state of the activity.&#13;
+//&#13;
+// For example,&#13;
+//&#13;
+//   answer = ifScript();&#13;
+//&#13;
+//   function ifScript() {&#13;
+//      if (condition is true) {&#13;
+//         return 'yes';&#13;
+//      }&#13;
+//      return 'no';&#13;
+//   }&#13;
+</value>
+        <variable display_value="Script">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>934d986bdbf200107cf5a455ca961925</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d74d986bdbf200107cf5a455ca961925</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>0</value>
+        <variable display_value="Advanced">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>934d986bdbf200107cf5a455ca961925</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca961925</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>progress_phase=0^EQ</value>
+        <variable display_value="Condition">493cba6a0a6a803f07df24b118473551</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>934d986bdbf200107cf5a455ca961925</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d74d986bdbf200107cf5a455ca961925</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>0</value>
+        <variable display_value="Advanced">493d2c1d0a6a803f3217a75738ea3289</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>934d986bdbf200107cf5a455ca961925</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca961925</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// This script needs to set answer to 'yes' or 'no' to indicate the state of the activity.&#13;
+//&#13;
+// For example,&#13;
+//&#13;
+//   answer = ifScript();&#13;
+//&#13;
+//   function ifScript() {&#13;
+//      if (condition is true) {&#13;
+//         return 'yes';&#13;
+//      }&#13;
+//      return 'no';&#13;
+//   }&#13;
+</value>
+        <variable display_value="Script">c35e50810a0a0ba96248a709b450fc32</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Phase is Acknowledged?">934d986bdbf200107cf5a455ca961925</activity>
+        <condition>activity.result == 'no'</condition>
+        <condition_default display_value="No">c1eff6430a0a0b59000f955abe842c94</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>false</is_positive>
+        <name>No</name>
+        <order>200</order>
+        <short_description/>
+        <skip_during_generate>true</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca961926</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Phase is Acknowledged?">934d986bdbf200107cf5a455ca961925</activity>
+        <condition>activity.result == 'yes'</condition>
+        <condition_default display_value="Yes">c1ef63200a0a0b59005ef89bae78feb7</condition_default>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Yes</name>
+        <order>100</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca961925</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Create Event">9f680b92c0a801640026553f665b429f</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>12</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Reject notification</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d74d986bdbf200107cf5a455ca961928</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>639</x>
+        <y>731</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=d74d986bdbf200107cf5a455ca961928"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d74d986bdbf200107cf5a455ca961928</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca961929</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>(function() {&#13;
+	// return the value to use for Parameter 1&#13;
+	return current.user;&#13;
+}());</value>
+        <variable display_value="Parameter 1">c35dd0310a0a0ba96248a70936d276b3</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d74d986bdbf200107cf5a455ca961928</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5f4d986bdbf200107cf5a455ca961928</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>ca01b5084f6073005d57b2718110c7be</value>
+        <variable display_value="Event name">c35dcc7a0a0a0ba96248a70926fa68b5</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d74d986bdbf200107cf5a455ca961928</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d34d986bdbf200107cf5a455ca961929</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>(function() {&#13;
+	// return the value to use for Parameter 2&#13;
+	return "";&#13;
+}());</value>
+        <variable display_value="Parameter 2">c35dd3ef0a0a0ba96248a70947e35325</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d74d986bdbf200107cf5a455ca961928</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5f4d986bdbf200107cf5a455ca961928</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>ca01b5084f6073005d57b2718110c7be</value>
+        <variable display_value="Event name">c35dcc7a0a0a0ba96248a70926fa68b5</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d74d986bdbf200107cf5a455ca961928</document_key>
+        <order>200</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca961929</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>(function() {&#13;
+	// return the value to use for Parameter 1&#13;
+	return current.user;&#13;
+}());</value>
+        <variable display_value="Parameter 1">c35dd0310a0a0ba96248a70936d276b3</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>d74d986bdbf200107cf5a455ca961928</document_key>
+        <order>300</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d34d986bdbf200107cf5a455ca961929</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>(function() {&#13;
+	// return the value to use for Parameter 2&#13;
+	return "";&#13;
+}());</value>
+        <variable display_value="Parameter 2">c35dd3ef0a0a0ba96248a70947e35325</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Reject notification">d74d986bdbf200107cf5a455ca961928</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5b4d986bdbf200107cf5a455ca961929</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Approval Action">50a78fa50a6a803f66d064255f7201a5</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>5</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Rejected</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca961923</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>376</x>
+        <y>616</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=174d986bdbf200107cf5a455ca961923"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961923</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca961923</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>rejected</value>
+        <variable display_value="Action">50ab35f70a6a803f76d36e1ebaf3639e</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>174d986bdbf200107cf5a455ca961923</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca961923</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>rejected</value>
+        <variable display_value="Action">50ab35f70a6a803f76d36e1ebaf3639e</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Rejected">174d986bdbf200107cf5a455ca961923</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca961924</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Approval Action">50a78fa50a6a803f66d064255f7201a5</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>6</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Requested</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca961924</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>484</x>
+        <y>366</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=974d986bdbf200107cf5a455ca961924"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca961924</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca961924</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>requested</value>
+        <variable display_value="Action">50ab35f70a6a803f76d36e1ebaf3639e</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>974d986bdbf200107cf5a455ca961924</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca961924</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>requested</value>
+        <variable display_value="Action">50ab35f70a6a803f76d36e1ebaf3639e</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Requested">974d986bdbf200107cf5a455ca961924</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca961924</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Set Values">1ca8d7cf0a0a0b265e9a000c2c08248c</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>11</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Reset user statement back to OPEN/PENDING</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca961913</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>384</x>
+        <y>733</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=1b4d986bdbf200107cf5a455ca961913"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1b4d986bdbf200107cf5a455ca961913</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca961913</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval_set=javascript:gs.nowDateTime()^status=1^progress_phase=1^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>1b4d986bdbf200107cf5a455ca961913</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca961913</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval_set=javascript:gs.nowDateTime()^status=1^progress_phase=1^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Reset user statement back to OPEN/PENDING">1b4d986bdbf200107cf5a455ca961913</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca961914</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Set Values">1ca8d7cf0a0a0b265e9a000c2c08248c</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>17</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Set approval no longer required</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca961915</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>1066</x>
+        <y>254</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=9f4d986bdbf200107cf5a455ca961915"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>9f4d986bdbf200107cf5a455ca961915</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca961916</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval=not_required^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>9f4d986bdbf200107cf5a455ca961915</document_key>
+        <order>100</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca961916</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>approval=not_required^EQ</value>
+        <variable display_value="Set these values">1cb38c8f0a0a0b266fb48e08de35f507</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Set approval no longer required">9f4d986bdbf200107cf5a455ca961915</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca961916</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_activity action="INSERT_OR_UPDATE">
+        <activity_definition display_value="Wait for condition">d93a02ae0a0a0aa30077abad3fdac035</activity_definition>
+        <activity_definition_updated>false</activity_definition_updated>
+        <databus_lookup_id>8</databus_lookup_id>
+        <height/>
+        <input>{}</input>
+        <is_parent>false</is_parent>
+        <name>Wait for correct status and phase - Open/Acknowledged or Open/PaymentOwed</name>
+        <new_activity_definition/>
+        <notes/>
+        <out_of_date>false</out_of_date>
+        <parent/>
+        <pinned>false</pinned>
+        <pinned_version/>
+        <stage/>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>df4d986bdbf200107cf5a455ca961916</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <timeout>1970-01-01 00:00:00</timeout>
+        <vars/>
+        <width/>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+        <x>194</x>
+        <y>11</y>
+    </wf_activity>
+    <sys_variable_value action="delete_multiple" query="document_key=df4d986bdbf200107cf5a455ca961916"/>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>df4d986bdbf200107cf5a455ca961916</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca961917</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>progress_phase=0^status=1^NQprogress_phase=2^status=1^EQ</value>
+        <variable display_value="Condition">c35dc4cd0a0a0ba96248a70990c1ac54</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>df4d986bdbf200107cf5a455ca961916</document_key>
+        <order>2</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574d986bdbf200107cf5a455ca961917</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// Set the variable 'answer' to true or false to indicate if the condition has been met or not.&#13;
+answer = true;&#13;
+</value>
+        <variable display_value="Condition script">c35debce0a0a0ba96248a709440cf31a</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>df4d986bdbf200107cf5a455ca961916</document_key>
+        <order>1</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca961917</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>progress_phase=0^status=1^NQprogress_phase=2^status=1^EQ</value>
+        <variable display_value="Condition">c35dc4cd0a0a0ba96248a70990c1ac54</variable>
+    </sys_variable_value>
+    <sys_variable_value action="INSERT_OR_UPDATE">
+        <document>wf_activity</document>
+        <document_key>df4d986bdbf200107cf5a455ca961916</document_key>
+        <order>2</order>
+        <sys_class_name>sys_variable_value</sys_class_name>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574d986bdbf200107cf5a455ca961917</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <value>// Set the variable 'answer' to true or false to indicate if the condition has been met or not.&#13;
+answer = true;&#13;
+</value>
+        <variable display_value="Condition script">c35debce0a0a0ba96248a709440cf31a</variable>
+    </sys_variable_value>
+    <wf_condition action="INSERT_OR_UPDATE">
+        <activity display_value="Wait for correct status and phase - Open/Acknowledged or Open/PaymentOwed">df4d986bdbf200107cf5a455ca961916</activity>
+        <condition>true</condition>
+        <condition_default/>
+        <condition_type>standard</condition_type>
+        <else_flag>false</else_flag>
+        <error>false</error>
+        <event>false</event>
+        <event_name/>
+        <is_positive>true</is_positive>
+        <name>Always</name>
+        <order>0</order>
+        <short_description/>
+        <skip_during_generate>false</skip_during_generate>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9f4d986bdbf200107cf5a455ca961917</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+    </wf_condition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Yes">db4dd46bdbf200107cf5a455ca961966</condition>
+        <from display_value="Does statement match approval criteria from toll configuration?">1f4dd46bdbf200107cf5a455ca961964</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca96192b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Does user have M2M link to active manager (toll approver)?">174d986bdbf200107cf5a455ca961918</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">134d986bdbf200107cf5a455ca961924</condition>
+        <from display_value="Rejected">174d986bdbf200107cf5a455ca961923</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>134d986bdbf200107cf5a455ca96192c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Reset user statement back to OPEN/PENDING">1b4d986bdbf200107cf5a455ca961913</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Open">1b4d986bdbf200107cf5a455ca961915</condition>
+        <from display_value="Begin - If status is already closed, bypass everything">5f4d986bdbf200107cf5a455ca961914</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>174d986bdbf200107cf5a455ca96192a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Wait for correct status and phase - Open/Acknowledged or Open/PaymentOwed">df4d986bdbf200107cf5a455ca961916</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="No">134d986bdbf200107cf5a455ca961919</condition>
+        <from display_value="Does user have M2M link to active manager (toll approver)?">174d986bdbf200107cf5a455ca961918</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1b4d986bdbf200107cf5a455ca96192d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Set approval no longer required">9f4d986bdbf200107cf5a455ca961915</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">9f4d986bdbf200107cf5a455ca961921</condition>
+        <from display_value="Keep statement open ">1b4d986bdbf200107cf5a455ca961921</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>1f4d986bdbf200107cf5a455ca96192c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="End">5b4d986bdbf200107cf5a455ca961926</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Yes">9f4d986bdbf200107cf5a455ca961925</condition>
+        <from display_value="Phase is Acknowledged?">934d986bdbf200107cf5a455ca961925</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>534d986bdbf200107cf5a455ca96192d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Close the user statement">1f4d986bdbf200107cf5a455ca961920</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Approved">174d986bdbf200107cf5a455ca961920</condition>
+        <from display_value="Add approval">974d986bdbf200107cf5a455ca96191b</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574d986bdbf200107cf5a455ca96192b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Approved">974d986bdbf200107cf5a455ca961927</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">1f4d986bdbf200107cf5a455ca961927</condition>
+        <from display_value="Approved">974d986bdbf200107cf5a455ca961927</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>574d986bdbf200107cf5a455ca96192d</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:05:38</sys_updated_on>
+        <to display_value="Fire Approved Event">be6dd86bdbf200107cf5a455ca961969</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">9f4d986bdbf200107cf5a455ca961917</condition>
+        <from display_value="Wait for correct status and phase - Open/Acknowledged or Open/PaymentOwed">df4d986bdbf200107cf5a455ca961916</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5b4d986bdbf200107cf5a455ca96192c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Does statement match approval criteria from toll configuration?">1f4dd46bdbf200107cf5a455ca961964</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">174d986bdbf200107cf5a455ca961916</condition>
+        <from display_value="Set approval no longer required">9f4d986bdbf200107cf5a455ca961915</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5f4d986bdbf200107cf5a455ca96192a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Phase is Acknowledged?">934d986bdbf200107cf5a455ca961925</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">174d986bdbf200107cf5a455ca961914</condition>
+        <from display_value="Reset user statement back to OPEN/PENDING">1b4d986bdbf200107cf5a455ca961913</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>5f4d986bdbf200107cf5a455ca96192b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Reject notification">d74d986bdbf200107cf5a455ca961928</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="No">1b4dd46bdbf200107cf5a455ca961966</condition>
+        <from display_value="Does statement match approval criteria from toll configuration?">1f4dd46bdbf200107cf5a455ca961964</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>934d986bdbf200107cf5a455ca96192b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Set approval no longer required">9f4d986bdbf200107cf5a455ca961915</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">5b4d986bdbf200107cf5a455ca961929</condition>
+        <from display_value="Reject notification">d74d986bdbf200107cf5a455ca961928</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>974d986bdbf200107cf5a455ca96192c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Wait for correct status and phase - Open/Acknowledged or Open/PaymentOwed">df4d986bdbf200107cf5a455ca961916</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">9b4d986bdbf200107cf5a455ca961922</condition>
+        <from display_value="No Approval Required - Statement created/imported as already closed">174d986bdbf200107cf5a455ca961922</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca96192a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="End">5b4d986bdbf200107cf5a455ca961926</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">934d986bdbf200107cf5a455ca961921</condition>
+        <from display_value="Close the user statement">1f4d986bdbf200107cf5a455ca961920</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca96192b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="End">5b4d986bdbf200107cf5a455ca961926</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Yes">934d986bdbf200107cf5a455ca961919</condition>
+        <from display_value="Does user have M2M link to active manager (toll approver)?">174d986bdbf200107cf5a455ca961918</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>9b4d986bdbf200107cf5a455ca96192d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Requested">974d986bdbf200107cf5a455ca961924</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">15ae94abdbf200107cf5a455ca9619cf</condition>
+        <from display_value="Fire Approved Event">be6dd86bdbf200107cf5a455ca961969</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 03:05:41</sys_created_on>
+        <sys_id>a91f50abdbf200107cf5a455ca961917</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 03:05:41</sys_updated_on>
+        <to display_value="Phase is Acknowledged?">934d986bdbf200107cf5a455ca961925</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Always">1f4d986bdbf200107cf5a455ca961924</condition>
+        <from display_value="Requested">974d986bdbf200107cf5a455ca961924</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d34d986bdbf200107cf5a455ca96192c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Add approval">974d986bdbf200107cf5a455ca96191b</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Closed">974d986bdbf200107cf5a455ca961915</condition>
+        <from display_value="Begin - If status is already closed, bypass everything">5f4d986bdbf200107cf5a455ca961914</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d74d986bdbf200107cf5a455ca96192a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="No Approval Required - Statement created/imported as already closed">174d986bdbf200107cf5a455ca961922</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="Rejected">974d986bdbf200107cf5a455ca961920</condition>
+        <from display_value="Add approval">974d986bdbf200107cf5a455ca96191b</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>d74d986bdbf200107cf5a455ca96192b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Rejected">174d986bdbf200107cf5a455ca961923</to>
+    </wf_transition>
+    <wf_transition action="INSERT_OR_UPDATE">
+        <condition display_value="No">134d986bdbf200107cf5a455ca961926</condition>
+        <from display_value="Phase is Acknowledged?">934d986bdbf200107cf5a455ca961925</from>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>df4d986bdbf200107cf5a455ca96192c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <to display_value="Keep statement open ">1b4d986bdbf200107cf5a455ca961921</to>
+    </wf_transition>
+    <wf_estimated_runtime_config action="INSERT_OR_UPDATE">
+        <estimated_run_time/>
+        <no_of_data_points>1</no_of_data_points>
+        <percentage_threshold_ert>20</percentage_threshold_ert>
+        <sys_created_by>chad.hall</sys_created_by>
+        <sys_created_on>2020-02-12 02:57:53</sys_created_on>
+        <sys_id>df4dd46bdbf200107cf5a455ca961962</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>chad.hall</sys_updated_by>
+        <sys_updated_on>2020-02-12 02:57:53</sys_updated_on>
+        <workflow_version display_value="User Statement Manager Approval">db4dd46bdbf200107cf5a455ca961962</workflow_version>
+    </wf_estimated_runtime_config>
+    <wf_workflow_version action="update_multiple" query="workflow=96d201084fec33005d57b2718110c710^sys_id!=db4dd46bdbf200107cf5a455ca961962">
+        <published>false</published>
+    </wf_workflow_version>
+</record_update>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Toll Charge activity formatter fields</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>glide.ui.x_89907_vehicle_to_toll_charge_activity.fields</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>dan.lengyel</sys_created_by>
+        <sys_created_on>2019-02-13 17:24:52</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>9601cdaa4f2fa7005d57b2718110c761</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>glide.ui.x_89907_vehicle_to_toll_charge_activity.fields</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_properties_9601cdaa4f2fa7005d57b2718110c761</sys_update_name>
+        <sys_updated_by>dan.lengyel</sys_updated_by>
+        <sys_updated_on>2019-02-13 17:24:52</sys_updated_on>
+        <type>string</type>
+        <value>personal_toll,entry_plaza,entry_date_time,exit_plaza,exit_date_time,amount,balance,charge_type,cost_center,sys_created_on,sys_created_by,file_sequence_number,plan,plate_captured,plate_number,posting_date,reimbursement,statement,sys_tags,toll_provider,transaction_date,transponder,transponder_number,sys_updated_on,sys_updated_by,sys_mod_count,user,vehicle_class,vehicle_number,*Email*,*Attachments*</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=9601cdaa4f2fa7005d57b2718110c761"/>
+</record_update>

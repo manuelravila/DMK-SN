@@ -32,6 +32,7 @@
         <onclick>reassignTransponders()</onclick>
         <order>10</order>
         <script><![CDATA[function reassignTransponders() {
+	
     var sysIds = g_list.getChecked();
     if (sysIds === '') {
         alert('Please select at least one transponder to reassign.');
@@ -55,7 +56,7 @@
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>d1b9d7b61b0a65106df72026ec4bcb8c</sys_id>
-        <sys_mod_count>11</sys_mod_count>
+        <sys_mod_count>12</sys_mod_count>
         <sys_name>Bulk Assign Transponders</sys_name>
         <sys_overrides/>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
@@ -63,7 +64,7 @@
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_ui_action_d1b9d7b61b0a65106df72026ec4bcb8c</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-04-11 22:19:12</sys_updated_on>
+        <sys_updated_on>2023-04-11 23:01:22</sys_updated_on>
         <table>x_89907_vehicle_to_u_cmdb_ci_transponder</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>true</ui16_compatible>

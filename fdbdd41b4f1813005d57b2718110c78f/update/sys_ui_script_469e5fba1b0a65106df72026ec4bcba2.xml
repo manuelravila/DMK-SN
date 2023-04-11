@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description>This UI Script disables the 'Bulk Reassign Transponders' button and Action menu item when no transponders are selected in the list view. The button and Action menu item are enabled when at least one transponder is selected. The script listens for changes in the selection of transponders and updates the button's state accordingly.</description>
+        <global>false</global>
+        <ignore_in_now_experience>false</ignore_in_now_experience>
+        <name>x_89907_vehicle_to.DisableBulkReassignTr</name>
+        <script><![CDATA[var x_89907_vehicle_to = x_89907_vehicle_to || {};
+
+x_89907_vehicle_to.DisableBulkReassignTransponders = (function() {
+	"use strict";
+
+/* set your private variables and functions here. For example: 
+	var privateVar = 0; 
+	function private_function() {
+		return ++privateVar;
+	}
+*/
+
+/* Share variables between multiple UI scripts by adding them to your scope object. For example: 
+	x_89907_vehicle_to.sharedVar = 0; 
+
+ Then access them in your scripts the same way. For example: 
+	function get_shared() {
+		return x_89907_vehicle_to.sharedVar;
+	}
+*/
+
+	return {
+
+/* set your public API here. For example:
+		incrementAndReturnPrivateVar: function() {
+			return private_function();
+		},
+*/
+		type:  "DisableBulkReassignTransponders"
+	};
+})();
+
+// Function to enable or disable the "Bulk Reassign Transponders" button based on the transponders selected in the list view
+function enableOrDisableBulkReassign() {
+  var selected = g_list.getSelected(); // Get the selected transponders in the list view
+  var bulkReassignBtn = document.getElementById('bulk_reassign_transponders'); // Get the "Bulk Reassign Transponders" button element by its ID
+
+  // If at least one transponder is selected, enable the "Bulk Reassign Transponders" button
+  if (selected) {
+    bulkReassignBtn.removeAttribute('disabled');
+  } else {
+    // If no transponders are selected, disable the "Bulk Reassign Transponders" button
+    bulkReassignBtn.setAttribute('disabled', 'true');
+  }
+}
+
+// Function to initialize the button state and register the event listener for the list view
+function initializeDisableBulkReassign() {
+  var bulkReassignBtn = document.getElementById('bulk_reassign_transponders'); // Get the "Bulk Reassign Transponders" button element by its ID
+  bulkReassignBtn.setAttribute('disabled', 'true'); // Initially disable the "Bulk Reassign Transponders" button
+
+  // Register the 'change' event listener on the list view to call the 'enableOrDisableBulkReassign' function
+  g_list.on('change', enableOrDisableBulkReassign);
+}
+
+// Call the 'initializeDisableBulkReassign' function when the page loads
+addLoadEvent(initializeDisableBulkReassign);
+]]></script>
+        <script_name>DisableBulkReassignTransponders</script_name>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-04-11 03:32:03</sys_created_on>
+        <sys_id>469e5fba1b0a65106df72026ec4bcba2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_89907_vehicle_to.DisableBulkReassignTr</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_script_469e5fba1b0a65106df72026ec4bcba2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-04-11 03:32:03</sys_updated_on>
+        <ui_type>0</ui_type>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[function assignTransponders() {
+    var userReference = gel('user_reference').value;
+    if (!userReference) {
+        alert('Please select a user to assign the transponders to.');
+        return;
+    }
+
+    var customSysparmParentId = gel('sysparm_parent_id').value;
+   // console.log('Transponders to be reassigned: ' + customSysparmParentId);
+   // console.log('Selected user: ' + userReference);
+
+    var ga = new GlideAjax('x_89907_vehicle_to.TransponderAssignment');
+    ga.addParam('sysparm_name', 'assignTransponders');
+    ga.addParam('user', userReference);
+    ga.addParam('sysIds', customSysparmParentId);
+	
+	//console.log('GlideAjax parameters:', ga.params);
+	
+	ga.getXML(getResponse); 
+}
+
+function closeDialog() {
+    window.g_form.hideModal();
+}
+
+function getResponse(response) {
+		//	console.log(response); // Add this line to log the response
+		var result = response.responseXML.documentElement.getAttribute('answer');
+		if (result === 'success') {
+			alert('Transponders have been successfully reassigned.');
+			window.location.reload();
+		} else {
+			alert('Error occurred while reassigning transponders. Please try again.');
+		}
+}
+]]></client_script>
+        <description>User Reference Dialog</description>
+        <direct>false</direct>
+        <endpoint>x_89907_vehicle_to_user_reference_dialog.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+<html>
+<head>
+    <include type="stylesheet" />
+    <include type="script" />
+</head>
+<body>
+    <form>
+        <div>
+            <label for="user_reference">User:</label>
+            <g:ui_reference name="user_reference" id="user_reference" table="sys_user" query="active=true" columns="name; title"/>
+        </div>
+        <div>
+			<input type="hidden" id="sysparm_parent_id" value="${sysparm_parent_id}"></input>
+            <button onclick="assignTransponders();" type="button">Assign Transponders</button>
+            <button type="button" onclick="cancel();">Cancel</button>
+        </div>
+    </form>
+
+</body>
+</html>
+
+
+</j:jelly>
+]]></html>
+        <name>user_reference_dialog</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-04-11 02:54:16</sys_created_on>
+        <sys_id>2333dfbe1bc665106df72026ec4bcbf8</sys_id>
+        <sys_mod_count>68</sys_mod_count>
+        <sys_name>user_reference_dialog</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_page_2333dfbe1bc665106df72026ec4bcbf8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-04-11 22:36:45</sys_updated_on>
+    </sys_ui_page>
+</record_update>

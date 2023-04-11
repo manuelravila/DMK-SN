@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>bulk_reassign_transponders</action_name>
+        <active>true</active>
+        <client>true</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments>This UI Action allows application administrators to bulk assign Transponders to a single user from the Transponder list view.&#13;
+</comments>
+        <condition>gs.hasRole("x_89907_vehicle_to.coordinator")</condition>
+        <form_action>false</form_action>
+        <form_button>false</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <format_for_configurable_workspace>false</format_for_configurable_workspace>
+        <hint>Bulk assign selected transponders to a single user</hint>
+        <isolate_script>true</isolate_script>
+        <list_action>true</list_action>
+        <list_banner_button>true</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>true</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <messages/>
+        <name>Bulk Assign Transponders</name>
+        <onclick>reassignTransponders()</onclick>
+        <order>10</order>
+        <script><![CDATA[function reassignTransponders() {
+    var sysIds = g_list.getChecked();
+    if (sysIds === '') {
+        alert('Please select at least one transponder to reassign.');
+        return;
+    }
+
+    var userReference = new GlideDialogWindow('x_89907_vehicle_to_user_reference_dialog');
+    userReference.setTitle('Select User to Assign Transponders to');
+    userReference.setPreference('sysparm_parent_id', sysIds);
+    userReference.setSize(400, 400);
+    userReference.render();
+}
+]]></script>
+        <show_insert>true</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-04-11 03:16:09</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>d1b9d7b61b0a65106df72026ec4bcb8c</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>Bulk Assign Transponders</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_ui_action_d1b9d7b61b0a65106df72026ec4bcb8c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-04-11 22:19:12</sys_updated_on>
+        <table>x_89907_vehicle_to_u_cmdb_ci_transponder</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>true</ui16_compatible>
+    </sys_ui_action>
+</record_update>

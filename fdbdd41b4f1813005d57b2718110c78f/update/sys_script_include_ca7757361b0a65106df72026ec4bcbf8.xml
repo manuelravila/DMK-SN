@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.TransponderAssignment</api_name>
+        <caller_access>2</caller_access>
+        <client_callable>true</client_callable>
+        <description>This Script Include handles the bulk reassignment of transponders to a single user in the Vehicle Tolls application. It is called from a client-side UI Page using GlideAjax and updates the 'Assigned to' field of the selected transponder records.&#13;
+</description>
+        <name>TransponderAssignment</name>
+        <script><![CDATA[var TransponderAssignment = Class.create();
+TransponderAssignment.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    assignTransponders: function() {
+        var user = this.getParameter('user');
+        var sysIds = this.getParameter('sysIds');
+		
+		gs.info('Transponders ' + sysIds + ' to be assigned to user ' + user);
+
+        if (!user || !sysIds) {
+            return 'Error: Missing required parameters.';
+        }
+
+        sysIds = sysIds.split(',');
+
+        try {
+            for (var i = 0; i < sysIds.length; i++) {
+                var transponder = new GlideRecordSecure('x_89907_vehicle_to_u_cmdb_ci_transponder');
+                if (transponder.get(sysIds[i])) {
+                    transponder.setValue('assigned_to', user);
+                    transponder.update();
+                    gs.info('Transponder ' + transponder.getDisplayValue() + ' reassigned to user ' + user);
+                } else {
+                    gs.info('Error: Transponder with sys_id ' + sysIds[i] + ' not found.');
+                    return 'Error: Transponder with sys_id ' + sysIds[i] + ' not found.';
+                }
+            }
+        } catch (error) {
+            gs.info('Error occurred while reassigning transponders: ' + error);
+            return 'Error occurred while reassigning transponders: ' + error;
+        }
+
+        return 'success';
+    },
+
+    type: 'TransponderAssignment'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-04-11 03:01:23</sys_created_on>
+        <sys_id>ca7757361b0a65106df72026ec4bcbf8</sys_id>
+        <sys_mod_count>28</sys_mod_count>
+        <sys_name>TransponderAssignment</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_ca7757361b0a65106df72026ec4bcbf8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-04-11 21:21:01</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -2,9 +2,11 @@
     <sys_ui_page action="INSERT_OR_UPDATE">
         <category>general</category>
         <client_script><![CDATA[function assignTransponders() {
+	toggleProcessingIndicator(); 
     var userReference = gel('user_reference').value;
     if (!userReference) {
         alert('Please select a user to assign the transponders to.');
+		toggleProcessingIndicator(); 
         return;
     }
 
@@ -20,6 +22,7 @@
 	//console.log('GlideAjax parameters:', ga.params);
 	
 	ga.getXML(getResponse); 
+	
 }
 
 function closeDialog() {
@@ -35,7 +38,22 @@ function getResponse(response) {
 		} else {
 			alert('Error occurred while reassigning transponders. Please try again.');
 		}
+	toggleProcessingIndicator();
 }
+
+function toggleProcessingIndicator() {
+    var assignButton = document.getElementById('assignButton');
+    var processingIndicator = document.getElementById('processingIndicator');
+
+    if (processingIndicator.style.display === 'none') {
+        processingIndicator.style.display = 'block';
+        assignButton.disabled = true;
+    } else {
+        processingIndicator.style.display = 'none';
+        assignButton.disabled = false;
+    }
+}
+
 ]]></client_script>
         <description>User Reference Dialog</description>
         <direct>false</direct>
@@ -56,14 +74,19 @@ function getResponse(response) {
         </div>
         <div>
 			<input type="hidden" id="sysparm_parent_id" value="${sysparm_parent_id}"></input>
-            <button onclick="assignTransponders();" type="button">Assign Transponders</button>
+            <button id="assignButton" class="btn btn-primary" onclick="assignTransponders()">Assign Transponders</button>
+
             <button type="button" onclick="cancel();">Cancel</button>
+			
+			<div id="processingIndicator" style="display: none; text-align: center;">
+				<img src="images/ajax-loader.gif" alt="Processing..."/>
+				<span>Assigning Transponders...</span>
+			</div>
         </div>
     </form>
 
 </body>
 </html>
-
 
 </j:jelly>
 ]]></html>
@@ -73,13 +96,13 @@ function getResponse(response) {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2023-04-11 02:54:16</sys_created_on>
         <sys_id>2333dfbe1bc665106df72026ec4bcbf8</sys_id>
-        <sys_mod_count>68</sys_mod_count>
+        <sys_mod_count>76</sys_mod_count>
         <sys_name>user_reference_dialog</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_ui_page_2333dfbe1bc665106df72026ec4bcbf8</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-04-11 22:36:45</sys_updated_on>
+        <sys_updated_on>2023-04-25 20:26:47</sys_updated_on>
     </sys_ui_page>
 </record_update>

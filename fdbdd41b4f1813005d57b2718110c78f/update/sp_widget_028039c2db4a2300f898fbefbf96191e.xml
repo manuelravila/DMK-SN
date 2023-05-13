@@ -2,28 +2,30 @@
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
         <client_script><![CDATA[function wClient($location, spModal) {
-	var c = this;
-	c.disabled = !!c.data.disabled;
-	
-	c.uiAction = function(action) {
-		spModal
-			.confirm(c.data.prompterText)
-			.then(function(confirmed) {
-				if (confirmed) {
-					c.data.action = action;
-					c.server
-						.update()
-						.then(function() {
-							c.data.action = undefined;
-							setTimeout(function() {
-								location.href = "/toll_service_portal?id=toll_index";
-								},2000);
-						});
-
-				}
-			});
-
-	};
+    var c = this;
+    c.disabled = !!c.data.disabled;
+    
+    c.uiAction = function(action) {
+        c.data.action = action; // Assign action to data.action
+        c.server.refresh(); // Refresh server data
+        
+        c.server.get().then(function(){
+            spModal
+                .confirm(c.data.prompterText)
+                .then(function(confirmed) {
+                    if (confirmed) {
+                        c.server
+                            .update()
+                            .then(function() {
+                                c.data.action = undefined;
+                                setTimeout(function() {
+                                    location.href = "/toll_service_portal?id=toll_index";
+                                    },2000);
+                            });
+                    }
+                });
+        });
+    };
 }
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -47,9 +49,15 @@
 		data.table = input.table;
 		data.sys_id = input.sys_id;
 	}
+	
+	var personalTollExists = false;
+	
 	data.table = data.table || $sp.getParameter("table");
 	data.sys_id = data.sys_id || $sp.getParameter("sys_id");
-
+	
+	gs.info("data.table: " + data.table);
+	gs.info("data.sys_id: " + data.sys_id);
+	
 	if (!data.table || !data.sys_id) {
 		return;
 	}
@@ -81,11 +89,20 @@
 		}
 	}
 
+	// Log all fields in the statementGR
+	//if (statementGR.isValid() && statementGR.next()) {
+	//		var elements = statementGR.getElements();
+	//		for (var i = 0; i < elements.length; i++) {
+	//				var element = elements[i];
+	//				var fieldValue = statementGR.getValue(element.getName());
+	//				gs.info('Field name: ' + element.getName() + ', Field value: ' + fieldValue);
+	//		}
+	//}	
+	
 	function getPrompterText() {
 		// return the prompter text from the config record or default text
-
 		var defaultText =
-			"If you submitted charges as 'personal use' than it will be marked as such and will be saved in the record. You are expected to reimburse your company for charges from personal use. Do you want to continue?";
+			"If you submitted charges as 'personal use' than it will be flagged as such and will be saved in the record. You are expected to reimburse your company for charges from personal use. Do you want to continue?";
 
 		var grTollCfg = new GlideRecord("x_89907_vehicle_to_toll_configuration");
 		if (!grTollCfg.isValid()) {
@@ -109,6 +126,34 @@
 		var configTextEl = grTollCfg.getElement(
 			"user_statement_submit_prompt_text"
 		);
+
+		// Create a GlideRecord object for the 'x_89907_vehicle_to_toll_user_statement' table
+    var statementsGR = new GlideRecord('x_89907_vehicle_to_toll_user_statement');
+    // Add a query to filter the records where 'sys_id' is equal to 'data.sys_id'
+    statementsGR.addQuery('sys_id', data.sys_id);
+    statementsGR.query();
+		
+    // Create a GlideRecord object for the 'x_89907_vehicle_to_toll_charge' table
+    var chargesGR = new GlideRecord('x_89907_vehicle_to_toll_charge');
+    // Add a query to filter the records where 'statement' is equal to the 'number' field of the current statementGR record
+    chargesGR.addQuery('user_statement', data.sys_id);
+    chargesGR.query();
+
+
+    while(chargesGR.next()) {
+				gs.info("Is Personal: " + chargesGR.getValue('personal_toll'));
+        if(chargesGR.getValue('personal_toll') == 1){
+            personalTollExists = true;
+            break;
+        }
+    }
+		
+		if(personalTollExists) {
+			defaultText = "You are required to reimburse NYC DOT ONLY for the charges you flagged as “personal use”. Do you want to continue?";
+		} else {
+			defaultText = "You did not flag any calls as “personal consumption” so no reimbursement will have to be made. Do you want to continue?";
+		}
+		
 		return configTextEl.nil() ? defaultText : configTextEl.toString();
 	}
 })();
@@ -117,17 +162,15 @@
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>chad.hall</sys_created_by>
         <sys_created_on>2018-11-29 18:01:14</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>028039c2db4a2300f898fbefbf96191e</sys_id>
-        <sys_mod_count>43</sys_mod_count>
+        <sys_mod_count>85</sys_mod_count>
         <sys_name>User Statement Submit Button</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sp_widget_028039c2db4a2300f898fbefbf96191e</sys_update_name>
-        <sys_updated_by>SN_dtseten</sys_updated_by>
-        <sys_updated_on>2020-10-14 17:11:07</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-05-13 03:26:59</sys_updated_on>
         <template><![CDATA[<div class="panel panel-default">
  <div class="panel-body">
  <button type="button" class="btn btn-primary btn-block" ng-disabled="c.disabled" ng-click="c.uiAction('submit')">Submit</button>

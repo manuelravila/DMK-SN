@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_angular_provider">
     <sp_angular_provider action="INSERT_OR_UPDATE">
-        <name>personalTollCheckbox</name>
-        <script><![CDATA[function personalTollCheckbox($timeout) {
+        <name>disputedCheckbox</name>
+        <script><![CDATA[function disputedCheckbox($timeout) {
     var fnLink = function($scope, elem, attrs, ngModel) {
         $timeout(function() {
-            var el = elem.find("span.sp-editable-field span[id^='field-x_89907_vehicle_to_toll_charge-personal_toll']");
+            var el = elem.find("span.sp-editable-field span[id^='field-x_89907_vehicle_to_toll_charge-disputed']");
             var img = document.createElement("i");  // Create with DOM
             img.classList.add("fa");
             img.classList.add("fa-lg");
-            
+
             function updateCheckbox() {
                 if ($scope.ischecked == 'true') {
                     img.classList.add("fa-check-square-o");
@@ -32,14 +32,14 @@
 
             el.on('click', function() {
                 if ($scope.otherModel.value === 'true') {
-                    alert('Cannot set this record to Personal while the Disputed option is already checked');
+                    alert('Cannot set this record to Disputed while the Personal toll option is already checked');
                     $scope.$apply(function() {
                         $scope.fieldmodel.value = 'false';
                     });
                     return false;
                 }
             });
-        });	
+        });
     };
     
     return {
@@ -51,18 +51,17 @@
         },
         link: fnLink
     };
-}
-]]></script>
+}]]></script>
         <sys_class_name>sp_angular_provider</sys_class_name>
-        <sys_created_by>chad.hall</sys_created_by>
-        <sys_created_on>2018-11-08 19:32:37</sys_created_on>
-        <sys_id>1a267d53dba56300f898fbefbf9619c0</sys_id>
-        <sys_mod_count>106</sys_mod_count>
-        <sys_name>personalTollCheckbox</sys_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-07-18 03:27:07</sys_created_on>
+        <sys_id>5e59802a47403110dc766241e36d43d2</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>disputedCheckbox</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
-        <sys_update_name>sp_angular_provider_1a267d53dba56300f898fbefbf9619c0</sys_update_name>
+        <sys_update_name>sp_angular_provider_5e59802a47403110dc766241e36d43d2</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2023-07-19 20:14:27</sys_updated_on>
         <type>directive</type>

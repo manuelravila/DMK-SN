@@ -7,7 +7,7 @@
         <client_callable>false</client_callable>
         <description>fe5584494fdafb405d57b2718110c7d5</description>
         <name>TollStatementImporter</name>
-        <script><![CDATA[gs.include("moment-timezone-with-data-2012-2022.js");
+        <script><![CDATA[gs.include("moment-timezone.js");
 
 var TollStatementImporter = Class.create();
 TollStatementImporter.prototype = {
@@ -933,6 +933,8 @@ TollStatementImporter.prototype = {
 		var mtTollLocal;
 		var strTimeTollLocal;
 		var tollTimeZoneStr = this.defaultTimeZoneID;
+		
+		//gs.info('Value of tollTimeZoneStr: ' + tollTimeZoneStr);
 
 		if (chargeObject.entry_date_time) {
 			var plazaGDT = new GlideDateTime(chargeObject.entry_date_time);
@@ -1514,16 +1516,14 @@ TollStatementImporter.prototype = {
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>chad.hall</sys_created_by>
         <sys_created_on>2019-06-25 14:06:51</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>fe5584494fdafb405d57b2718110c7d5</sys_id>
-        <sys_mod_count>150</sys_mod_count>
+        <sys_mod_count>155</sys_mod_count>
         <sys_name>TollStatementImporter</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy>read</sys_policy>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_script_include_fe5584494fdafb405d57b2718110c7d5</sys_update_name>
-        <sys_updated_by>SN_Mavila</sys_updated_by>
-        <sys_updated_on>2022-08-06 17:22:25</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-07-20 19:05:42</sys_updated_on>
     </sys_script_include>
 </record_update>

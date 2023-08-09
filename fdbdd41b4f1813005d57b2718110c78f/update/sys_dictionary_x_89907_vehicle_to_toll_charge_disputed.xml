@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_dictionary action="INSERT_OR_UPDATE" element="amount" table="x_89907_vehicle_to_toll_charge">
+    <sys_dictionary action="INSERT_OR_UPDATE" element="disputed" table="x_89907_vehicle_to_toll_charge">
         <active>true</active>
         <array>false</array>
-        <attributes>omit_sys_original=true,edge_encryption_enabled=true</attributes>
+        <attributes>edge_encryption_enabled=true</attributes>
         <audit>false</audit>
         <calculation><![CDATA[(function calculatedFieldValue(current) {
 
@@ -13,7 +13,7 @@
         <choice/>
         <choice_field/>
         <choice_table/>
-        <column_label>Amount</column_label>
+        <column_label>Dispute charge</column_label>
         <comments/>
         <create_roles/>
         <default_value/>
@@ -26,15 +26,15 @@
         <dynamic_creation_script/>
         <dynamic_default_value/>
         <dynamic_ref_qual/>
-        <element>amount</element>
+        <element>disputed</element>
         <element_reference>false</element_reference>
         <foreign_database/>
         <formula/>
         <function_definition/>
         <function_field>false</function_field>
-        <internal_type display_value="Currency">currency</internal_type>
+        <internal_type display_value="">boolean</internal_type>
         <mandatory>false</mandatory>
-        <max_length>20</max_length>
+        <max_length>40</max_length>
         <name>x_89907_vehicle_to_toll_charge</name>
         <next_element/>
         <primary>false</primary>
@@ -50,16 +50,16 @@
         <spell_check>false</spell_check>
         <staged>false</staged>
         <sys_class_name>sys_dictionary</sys_class_name>
-        <sys_created_by>chad.hall</sys_created_by>
-        <sys_created_on>2018-08-13 15:28:44</sys_created_on>
-        <sys_id>08504c581bfb3300dcab7596cc4bcb8c</sys_id>
-        <sys_name>Amount</sys_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-07-18 02:45:58</sys_created_on>
+        <sys_id>cf80802247403110dc766241e36d43c4</sys_id>
+        <sys_name>Dispute charge</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
-        <sys_update_name>sys_dictionary_x_89907_vehicle_to_toll_charge_amount</sys_update_name>
+        <sys_update_name>sys_dictionary_x_89907_vehicle_to_toll_charge_disputed</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-07-30 13:57:24</sys_updated_on>
+        <sys_updated_on>2023-07-28 19:52:11</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

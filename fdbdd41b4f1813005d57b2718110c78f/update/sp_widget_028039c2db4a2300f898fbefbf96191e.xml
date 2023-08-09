@@ -1,31 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[function wClient($location, spModal) {
+        <client_script><![CDATA[function wClient($location, spModal, $rootScope) {  // Inject $rootScope here
+
     var c = this;
     c.disabled = !!c.data.disabled;
-    
-    c.uiAction = function(action) {
-        c.data.action = action; // Assign action to data.action
-        c.server.refresh(); // Refresh server data
-        
-        c.server.get().then(function(){
-            spModal
-                .confirm(c.data.prompterText)
-                .then(function(confirmed) {
-                    if (confirmed) {
-                        c.server
-                            .update()
-                            .then(function() {
-                                c.data.action = undefined;
-                                setTimeout(function() {
-                                    location.href = "/toll_service_portal?id=toll_index";
-                                    },2000);
-                            });
-                    }
-                });
-        });
-    };
+
+    $rootScope.$on('disputeEntireStatementChanged', function(event, data) {
+        c.disputeEntireStatement = data;
+				//console.log('disputeEntireStatement value: ', c.disputeEntireStatement);
+    });
+
+		c.uiAction = function(action) {
+				c.data.disputeEntireStatement = c.disputeEntireStatement;
+
+				// Create a temporary action "pre-submit" to check form but not submit
+				c.data.action = "pre-" + action;
+
+				c.server.refresh().then(function() {
+						if (c.data.disputeEntireStatement) {
+							spModal.alert("You cannot submit the statement while the 'Dispute entire statement' checkbox is selected");
+						}	else if (c.data.prompterText.startsWith("You cannot submit the statement while")) {
+							spModal.alert(c.data.prompterText);
+						} else {
+								spModal
+										.confirm(c.data.prompterText)
+										.then(function(confirmed) {
+												if (confirmed) {
+														// Now send the real action to submit the form
+														c.data.action = action;
+														c.server.update().then(function() {
+																setTimeout(function() {
+																		location.href = "/toll_service_portal?id=toll_index";
+																},2000);
+														});
+												}
+										});
+						}
+				});
+		};
+
+
 }
 ]]></client_script>
         <controller_as>c</controller_as>
@@ -46,17 +61,19 @@
         <script><![CDATA[(function() {
 	
 	if (input) {
-		data.table = input.table;
-		data.sys_id = input.sys_id;
+			data.table = input.table;
+			data.sys_id = input.sys_id;
+			data.disputeEntireStatement = input.disputeEntireStatement;  // Add this line
+			
 	}
+
+	//gs.info('disputeEntireStatement value: ' + data.disputeEntireStatement);
 	
 	var personalTollExists = false;
+	var disputedChargeExists = false;
 	
 	data.table = data.table || $sp.getParameter("table");
 	data.sys_id = data.sys_id || $sp.getParameter("sys_id");
-	
-	gs.info("data.table: " + data.table);
-	gs.info("data.sys_id: " + data.sys_id);
 	
 	if (!data.table || !data.sys_id) {
 		return;
@@ -81,13 +98,18 @@
 	}
 
 	if (input && input.action) {
-		var action = input.action;
-		if (action == "submit") {
-			statementGR.setValue("internal_submit", true);
-			statementGR.setValue("internal_info_message", "User Statement submitted");
-			statementGR.update();
-		}
+    var action = input.action;
+    if (action == "pre-submit") {
+        // Just prepare the prompterText for the client to display in the modal
+        data.prompterText = getPrompterText();
+    } else if (action == "submit") {
+        // Now perform the actual record update
+        statementGR.setValue("internal_submit", true);
+        statementGR.setValue("internal_info_message", "User Statement submitted");
+        statementGR.update();
+    }
 	}
+
 
 	// Log all fields in the statementGR
 	//if (statementGR.isValid() && statementGR.next()) {
@@ -98,6 +120,12 @@
 	//				gs.info('Field name: ' + element.getName() + ', Field value: ' + fieldValue);
 	//		}
 	//}	
+	
+	if (!input) {
+  //gs.info('disputeEntireStatement value: ' + data.disputeEntireStatement);  // Add this line
+  data.prompterText = getPrompterText();
+  return;
+	}
 	
 	function getPrompterText() {
 		// return the prompter text from the config record or default text
@@ -141,19 +169,26 @@
 
 
     while(chargesGR.next()) {
-				gs.info("Is Personal: " + chargesGR.getValue('personal_toll'));
+				//gs.info("Is Disputed: " + chargesGR.getValue('disputed'));
         if(chargesGR.getValue('personal_toll') == 1){
             personalTollExists = true;
             break;
         }
+			  if(chargesGR.getValue('disputed') == 1){
+            disputedChargeExists = true;
+        }
     }
 		
-		if(personalTollExists) {
+		if(data.disputeEntireStatement) {
+    	defaultText = "You cannot submit the statement while the 'Dispute entire statement' checkbox is selected";
+		} else if(disputedChargeExists) {
+			defaultText = "You cannot submit the statement while there are disputed charges. Please use the 'Dispute' button to report the incorrect charges.";
+		} else if(personalTollExists) {
 			defaultText = "You are required to reimburse NYC DOT ONLY for the charges you flagged as “personal use”. Do you want to continue?";
 		} else {
 			defaultText = "You did not flag any calls as “personal use” so no reimbursement will have to be made. Do you want to continue?";
 		}
-		
+
 		return configTextEl.nil() ? defaultText : configTextEl.toString();
 	}
 })();
@@ -163,17 +198,18 @@
         <sys_created_by>chad.hall</sys_created_by>
         <sys_created_on>2018-11-29 18:01:14</sys_created_on>
         <sys_id>028039c2db4a2300f898fbefbf96191e</sys_id>
-        <sys_mod_count>86</sys_mod_count>
+        <sys_mod_count>119</sys_mod_count>
         <sys_name>User Statement Submit Button</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sp_widget_028039c2db4a2300f898fbefbf96191e</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2023-06-05 18:37:21</sys_updated_on>
+        <sys_updated_on>2023-07-29 19:03:47</sys_updated_on>
         <template><![CDATA[<div class="panel panel-default">
  <div class="panel-body">
- <button type="button" class="btn btn-primary btn-block" ng-disabled="c.disabled" ng-click="c.uiAction('submit')">Submit</button>
+  <br> 
+ 	<button type="button" class="btn btn-primary btn-block" ng-disabled="c.disabled" ng-click="c.uiAction('submit')">Submit</button>
  </div>
 </div>]]></template>
     </sp_widget>

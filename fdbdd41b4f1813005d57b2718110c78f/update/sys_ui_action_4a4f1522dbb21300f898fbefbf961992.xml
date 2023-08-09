@@ -3,7 +3,9 @@
         <action_name>Reset user statement</action_name>
         <active>true</active>
         <client>true</client>
-        <client_script_v2/>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
         <comments/>
         <condition> current.progress_phase != 6  &amp;&amp;  current.progress_phase != 1  &amp;&amp;  current.progress_phase != 7 </condition>
         <form_action>true</form_action>
@@ -77,7 +79,27 @@ function runBusRuleCode() {
 	current.payment = "";
 	current.status_notes =
 		"This user statement was reset by " + gs.getUserDisplayName();
+	
+	// Create a new GlideRecord for the 'x_89907_vehicle_to_toll_charge' table
+    var gr = new GlideRecord('x_89907_vehicle_to_toll_charge');
 
+    // Add a query to find records where 'user_statement' equals 'current.number' and 'disputed' is true
+    gr.addQuery('user_statement', current.sys_id);
+    gr.addQuery('disputed', true);
+
+    // Execute the query
+    gr.query();
+
+    // Loop through the matching records
+    while (gr.next()) {
+        // Set 'disputed' to false
+        gr.disputed = false;
+
+        // Update the record
+        gr.update();
+    }
+
+	
 	// Queue a message for the user who initiated
 	var msgArray = [];
 	msgArray.push(current.number);
@@ -111,20 +133,18 @@ function runBusRuleCode() {
         <sys_class_name>sys_ui_action</sys_class_name>
         <sys_created_by>Dan.Lengyel</sys_created_by>
         <sys_created_on>2018-06-22 16:38:46</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>4a4f1522dbb21300f898fbefbf961992</sys_id>
-        <sys_mod_count>56</sys_mod_count>
+        <sys_mod_count>57</sys_mod_count>
         <sys_name>Reset</sys_name>
         <sys_overrides/>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_ui_action_4a4f1522dbb21300f898fbefbf961992</sys_update_name>
-        <sys_updated_by>chad.hall</sys_updated_by>
-        <sys_updated_on>2019-08-16 12:23:40</sys_updated_on>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-08-09 02:48:56</sys_updated_on>
         <table>x_89907_vehicle_to_toll_user_statement</table>
         <ui11_compatible>true</ui11_compatible>
         <ui16_compatible>false</ui16_compatible>

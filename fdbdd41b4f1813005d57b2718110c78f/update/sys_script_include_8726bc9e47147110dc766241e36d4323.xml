@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_89907_vehicle_to.WaiveChargesAjaxProcessor</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Routine that changes the amount and disputed fields of a waived charge</description>
+        <name>WaiveChargesAjaxProcessor</name>
+        <script><![CDATA[var WaiveChargesAjaxProcessor = Class.create();
+WaiveChargesAjaxProcessor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    process: function() {
+        var ids = this.getParameter('sysparm_ids');
+        this.waiveCharges(ids);
+		this.addParam("sysparm_name", "result");
+		this.addParam("sysparm_value", "All charges have been successfully waived.");
+    },
+
+    waiveCharges: function(ids) {
+        ids = ids.split(',');
+        for (var i = 0; i < ids.length; i++) {
+            var gr = new GlideRecordSecure('x_89907_vehicle_to_toll_charge');
+            if (gr.get(ids[i]) && gr.amount > 0) {
+                var originalAmount = gr.amount;
+                var comment = "Admin waived charge of $" + originalAmount + " from transponder " + gr.transponder.name + ", Plate " + gr.plate_number + " with Exit date " + gr.exit_date_time; 				
+                gs.info("WaiveChargesAjaxProcessor: charge to waive " + ids[i] + ": " + originalAmount);
+                gr.amount = 0;
+                gr.disputed = false;
+                gr.update();
+                gs.info("WaiveChargesAjaxProcessor: waived charge " + ids[i] + ": " + gr.amount);
+				
+                // add a comment to the statement
+                var grStatement = new GlideRecordSecure('x_89907_vehicle_to_toll_user_statement'); 
+                if (grStatement.get(gr.user_statement)) {
+                    grStatement.status_notes = comment;
+                    grStatement.update();
+                }               
+            } else {
+                gs.info("WaiveChargesAjaxProcessor: failed to get charge " + ids[i]);
+            }
+        }
+    },
+
+    type: 'WaiveChargesAjaxProcessor'
+
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-07-29 22:32:56</sys_created_on>
+        <sys_id>8726bc9e47147110dc766241e36d4323</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>WaiveChargesAjaxProcessor</sys_name>
+        <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+        <sys_update_name>sys_script_include_8726bc9e47147110dc766241e36d4323</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-07-30 15:58:10</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_89907_vehicle_to_u_cmdb_ci_transponder" version="2" view="PortalUser">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>name</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>bd407e0e4f59bb405d57b2718110c7ac</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>install_status</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>31407e0e4f59bb405d57b2718110c7ad</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_vehicle_number</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>b1407e0e4f59bb405d57b2718110c7ad</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_plate_number</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>35407e0e4f59bb405d57b2718110c7ad</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_transponder_type</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>b5407e0e4f59bb405d57b2718110c7ad</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_pool_device</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>39407e0e4f59bb405d57b2718110c7ad</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>short_description</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>b9407e0e4f59bb405d57b2718110c7ad</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>delivery_date</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>7</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>3d407e0e4f59bb405d57b2718110c7ad</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_removed_date</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>8</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>bd407e0e4f59bb405d57b2718110c7ad</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>u_replacement_transponder</element>
+            <list_id display_value="x_89907_vehicle_to_u_cmdb_ci_transponder" element="NULL" name="x_89907_vehicle_to_u_cmdb_ci_transponder" parent="NULL" relationship="NULL" sys_domain="global" view="be9d5425db35a300f898fbefbf96191b">75407e0e4f59bb405d57b2718110c7ac</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>9</position>
+            <sum>false</sum>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_id>31407e0e4f59bb405d57b2718110c7ae</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_89907_vehicle_to_u_cmdb_ci_transponder</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2019-05-10 12:03:48</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>75407e0e4f59bb405d57b2718110c7ac</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_89907_vehicle_to_u_cmdb_ci_transponder</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_ui_list_x_89907_vehicle_to_u_cmdb_ci_transponder_PortalUser</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2019-05-10 12:03:48</sys_updated_on>
+            <sys_user/>
+            <view display_value="PortalUser" name="PortalUser">be9d5425db35a300f898fbefbf96191b</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

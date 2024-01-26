@@ -11,13 +11,10 @@
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>dan.lengyel</sys_created_by>
             <sys_created_on>2019-03-05 20:59:50</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
-            <sys_id>24508c581bfb3300dcab7596cc4bcbfc</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_name>Comments</sys_name>
             <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
             <sys_update_name>sys_documentation_x_89907_vehicle_to_toll_plan_comments_en</sys_update_name>
             <sys_updated_by>dan.lengyel</sys_updated_by>

@@ -5,11 +5,11 @@
         <auto_created>true</auto_created>
         <availability>on_desktop</availability>
         <billable>false</billable>
-        <category display_value="Hardware">a8c0ecbcdb7ea640f788f6e9af961953</category>
+        <category display_value="">a8c0ecbcdb7ea640f788f6e9af961953</category>
         <checked_out/>
         <cost>0</cost>
         <custom_cart/>
-        <delivery_plan display_value="">523da512c611228900811a37c97c2014</delivery_plan>
+        <delivery_plan display_value="DEFAULT">523da512c611228900811a37c97c2014</delivery_plan>
         <delivery_plan_script/>
         <delivery_time>1970-01-03 00:00:00</delivery_time>
         <description/>
@@ -68,13 +68,11 @@
         <sys_class_name>pc_hardware_cat_item</sys_class_name>
         <sys_created_by>Dan.Lengyel</sys_created_by>
         <sys_created_on>2018-06-18 13:59:24</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>60741455db721300f898fbefbf9619a1</sys_id>
         <sys_mod_count>3</sys_mod_count>
         <sys_name>Toll Transponder</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>pc_hardware_cat_item_60741455db721300f898fbefbf9619a1</sys_update_name>
         <sys_updated_by>SN_CHall</sys_updated_by>
@@ -85,7 +83,7 @@
         <type>item</type>
         <upc/>
         <use_sc_layout>true</use_sc_layout>
-        <vendor display_value="E-ZPass">d9bac504db6333007cf5a455ca9619c3</vendor>
+        <vendor display_value="">d9bac504db6333007cf5a455ca9619c3</vendor>
         <vendor_catalog_item/>
         <visible_bundle>true</visible_bundle>
         <visible_guide>true</visible_guide>

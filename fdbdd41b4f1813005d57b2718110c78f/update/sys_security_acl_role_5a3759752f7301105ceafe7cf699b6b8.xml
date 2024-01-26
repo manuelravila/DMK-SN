@@ -3,13 +3,11 @@
         <sys_class_name>sys_security_acl_role</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2022-05-31 22:28:58</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>5a3759752f7301105ceafe7cf699b6b8</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name>x_89907_vehicle_to_state.x_89907_vehicle_to.coordinator</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_security_acl display_value="x_89907_vehicle_to_state">5a3759752f7301105ceafe7cf699b6b5</sys_security_acl>
         <sys_update_name>sys_security_acl_role_5a3759752f7301105ceafe7cf699b6b8</sys_update_name>

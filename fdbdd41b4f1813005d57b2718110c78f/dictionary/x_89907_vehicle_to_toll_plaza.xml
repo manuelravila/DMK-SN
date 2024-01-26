@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="dd755846db7f1700f898fbefbf96196f" label="Toll Plaza" max_length="40" name="x_89907_vehicle_to_toll_plaza" type="collection">
+        <element attributes="edge_encryption_enabled=true" default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Agency" max_length="32" name="agency" reference="x_89907_vehicle_to_toll_agency" type="reference"/>
+        <element label="Code" max_length="40" name="code" type="string"/>
+        <element label="Comments" max_length="2000" name="comments" type="string"/>
+        <element display="true" label="Description" max_length="200" name="description" type="string"/>
+        <element label="Plaza ID" max_length="10" name="plaza_id" type="string"/>
+        <index name="index">
+            <element name="agency"/>
+        </index>
+    </element>
+</database>

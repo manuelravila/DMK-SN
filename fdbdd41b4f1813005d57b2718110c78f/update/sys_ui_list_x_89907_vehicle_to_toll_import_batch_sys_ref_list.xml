@@ -3,7 +3,7 @@
         <sys_ui_list_element action="INSERT_OR_UPDATE">
             <average_value>false</average_value>
             <element>name</element>
-            <list_id display_value="x_89907_vehicle_to_toll_import_batch" element="NULL" name="x_89907_vehicle_to_toll_import_batch" parent="NULL" relationship="NULL" sys_domain="global" view="6c1d2712db1022006de6fafc0f96197e">659d3c2a4f2fa7005d57b2718110c782</list_id>
+            <list_id display_value="x_89907_vehicle_to_toll_import_batch" element="NULL" name="x_89907_vehicle_to_toll_import_batch" parent="NULL" relationship="NULL" sys_domain="global" view="afd88043243021108c8bc6863d3fadac">659d3c2a4f2fa7005d57b2718110c782</list_id>
             <max_value>false</max_value>
             <min_value>false</min_value>
             <position>0</position>
@@ -28,7 +28,6 @@
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>dan.lengyel</sys_created_by>
             <sys_created_on>2019-02-13 17:09:47</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>659d3c2a4f2fa7005d57b2718110c782</sys_id>
@@ -36,13 +35,12 @@
             <sys_name>x_89907_vehicle_to_toll_import_batch</sys_name>
             <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
             <sys_update_name>sys_ui_list_x_89907_vehicle_to_toll_import_batch_sys_ref_list</sys_update_name>
             <sys_updated_by>dan.lengyel</sys_updated_by>
             <sys_updated_on>2019-02-13 17:09:47</sys_updated_on>
             <sys_user/>
-            <view display_value="Reference List" name="sys_ref_list">6c1d2712db1022006de6fafc0f96197e</view>
+            <view display_value="Reference List" name="sys_ref_list">afd88043243021108c8bc6863d3fadac</view>
             <view_name/>
         </sys_ui_list>
     </sys_ui_list>

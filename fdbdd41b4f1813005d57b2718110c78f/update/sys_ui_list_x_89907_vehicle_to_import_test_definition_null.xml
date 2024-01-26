@@ -43,7 +43,6 @@
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>chad.hall</sys_created_by>
             <sys_created_on>2019-07-02 18:34:13</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>19e581974f5eb3005d57b2718110c729</sys_id>
@@ -51,7 +50,6 @@
             <sys_name>x_89907_vehicle_to_import_test_definition</sys_name>
             <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
             <sys_update_name>sys_ui_list_x_89907_vehicle_to_import_test_definition_null</sys_update_name>
             <sys_updated_by>chad.hall</sys_updated_by>

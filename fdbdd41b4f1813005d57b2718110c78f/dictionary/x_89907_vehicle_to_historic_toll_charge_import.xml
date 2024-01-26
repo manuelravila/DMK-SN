@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="4344cba84f433f405d57b2718110c7b7" extends="sys_import_set_row" label="Historic Toll Charge Import" max_length="40" name="x_89907_vehicle_to_historic_toll_charge_import" type="collection">
+        <element attributes="import_attribute_name=Account,edge_encryption_enabled=true" label="Account" max_length="40" name="u_account" type="string"/>
+        <element attributes="import_attribute_name=Amount,edge_encryption_enabled=true" label="Amount" max_length="15" name="u_amount" type="decimal"/>
+        <element attributes="import_attribute_name=Balance,edge_encryption_enabled=true" label="Balance" max_length="15" name="u_balance" type="decimal"/>
+        <element attributes="import_attribute_name=BillDateBegin,edge_encryption_enabled=true" label="BillDateBegin" max_length="40" name="u_billdatebegin" type="string"/>
+        <element attributes="import_attribute_name=BillDateEnd,edge_encryption_enabled=true" label="BillDateEnd" max_length="40" name="u_billdateend" type="string"/>
+        <element attributes="import_attribute_name=ChargeType,edge_encryption_enabled=true" label="ChargeType" max_length="40" name="u_chargetype" type="string"/>
+        <element attributes="import_attribute_name=ChargeTypeDescription,edge_encryption_enabled=true" label="ChargeTypeDescription" max_length="40" name="u_chargetypedescription" type="string"/>
+        <element attributes="import_attribute_name=CostCenter,edge_encryption_enabled=true" label="CostCenter" max_length="40" name="u_costcenter" type="string"/>
+        <element attributes="import_attribute_name=CycleDate,edge_encryption_enabled=true" label="CycleDate" max_length="40" name="u_cycledate" type="string"/>
+        <element attributes="import_attribute_name=DerivedPlazaDescription,edge_encryption_enabled=true" label="DerivedPlazaDescription" max_length="40" name="u_derivedplazadescription" type="string"/>
+        <element attributes="import_attribute_name=EntryDate,edge_encryption_enabled=true" label="EntryDate" max_length="40" name="u_entrydate" type="string"/>
+        <element attributes="import_attribute_name=EntryDateTime,edge_encryption_enabled=true" label="EntryDateTime" max_length="40" name="u_entrydatetime" type="string"/>
+        <element attributes="import_attribute_name=EntryPlaza,edge_encryption_enabled=true" label="EntryPlaza" max_length="40" name="u_entryplaza" type="string"/>
+        <element attributes="import_attribute_name=EntryPlazaDescription,edge_encryption_enabled=true" label="EntryPlazaDescription" max_length="40" name="u_entryplazadescription" type="string"/>
+        <element attributes="import_attribute_name=EntryTime,edge_encryption_enabled=true" label="EntryTime" max_length="40" name="u_entrytime" type="string"/>
+        <element attributes="import_attribute_name=ExitDate,edge_encryption_enabled=true" label="ExitDate" max_length="40" name="u_exitdate" type="string"/>
+        <element attributes="import_attribute_name=ExitDateTime,edge_encryption_enabled=true" label="ExitDateTime" max_length="40" name="u_exitdatetime" type="string"/>
+        <element attributes="import_attribute_name=ExitPlaza,edge_encryption_enabled=true" label="ExitPlaza" max_length="40" name="u_exitplaza" type="string"/>
+        <element attributes="import_attribute_name=ExitPlazaDescription,edge_encryption_enabled=true" label="ExitPlazaDescription" max_length="40" name="u_exitplazadescription" type="string"/>
+        <element attributes="import_attribute_name=ExitTime,edge_encryption_enabled=true" label="ExitTime" max_length="40" name="u_exittime" type="string"/>
+        <element attributes="import_attribute_name=FileSequenceNumber,edge_encryption_enabled=true" label="FileSequenceNumber" max_length="40" name="u_filesequencenumber" type="integer"/>
+        <element attributes="import_attribute_name=HRA_Email_Address,edge_encryption_enabled=true" label="HRA_Email_Address" max_length="40" name="u_hra_email_address" type="string"/>
+        <element attributes="import_attribute_name=HRA_Employee_Status,edge_encryption_enabled=true" label="HRA_Employee_Status" max_length="40" name="u_hra_employee_status" type="string"/>
+        <element attributes="import_attribute_name=HRA_First_Name,edge_encryption_enabled=true" label="HRA_First_Name" max_length="40" name="u_hra_first_name" type="string"/>
+        <element attributes="import_attribute_name=HRA_Installed_Floor,edge_encryption_enabled=true" label="HRA_Installed_Floor" max_length="40" name="u_hra_installed_floor" type="string"/>
+        <element attributes="import_attribute_name=HRA_iWise_Logon_ID,edge_encryption_enabled=true" label="HRA_iWise_Logon_ID" max_length="40" name="u_hra_iwise_logon_id" type="string"/>
+        <element attributes="import_attribute_name=HRA_Last_Name,edge_encryption_enabled=true" label="HRA_Last_Name" max_length="40" name="u_hra_last_name" type="string"/>
+        <element attributes="import_attribute_name=HRA_Location_Code,edge_encryption_enabled=true" label="HRA_Location_Code" max_length="40" name="u_hra_location_code" type="string"/>
+        <element attributes="import_attribute_name=HRA_Middle_Name,edge_encryption_enabled=true" label="HRA_Middle_Name" max_length="40" name="u_hra_middle_name" type="string"/>
+        <element attributes="import_attribute_name=HRA_Object_ID,edge_encryption_enabled=true" label="HRA_Object_ID" max_length="40" name="u_hra_object_id" type="string"/>
+        <element attributes="import_attribute_name=HRA_Room_Cubicle,edge_encryption_enabled=true" label="HRA_Room_Cubicle" max_length="40" name="u_hra_room_cubicle" type="string"/>
+        <element attributes="import_attribute_name=InitialTag,edge_encryption_enabled=true" label="InitialTag" max_length="40" name="u_initialtag" type="string"/>
+        <element attributes="import_attribute_name=Key,edge_encryption_enabled=true" label="Key" max_length="40" name="u_key" type="string"/>
+        <element attributes="import_attribute_name=PersonalToll,edge_encryption_enabled=true" label="PersonalToll" max_length="40" name="u_personaltoll" type="string"/>
+        <element attributes="import_attribute_name=Plan,edge_encryption_enabled=true" label="Plan" max_length="40" name="u_plan" type="string"/>
+        <element attributes="import_attribute_name=PlateCaptured,edge_encryption_enabled=true" label="PlateCaptured" max_length="40" name="u_platecaptured" type="string"/>
+        <element attributes="import_attribute_name=PlateNumber,edge_encryption_enabled=true" label="PlateNumber" max_length="40" name="u_platenumber" type="string"/>
+        <element attributes="import_attribute_name=PostingDate,edge_encryption_enabled=true" label="PostingDate" max_length="40" name="u_postingdate" type="string"/>
+        <element attributes="import_attribute_name=PreviousTag,edge_encryption_enabled=true" label="PreviousTag" max_length="40" name="u_previoustag" type="string"/>
+        <element attributes="import_attribute_name=SequenceNumber,edge_encryption_enabled=true" label="SequenceNumber" max_length="40" name="u_sequencenumber" type="integer"/>
+        <element attributes="import_attribute_name=sn_company_sysid,edge_encryption_enabled=true" label="sn_company_sysid" max_length="40" name="u_sn_company_sysid" type="string"/>
+        <element attributes="import_attribute_name=sn_def_charge_type_sys_id,edge_encryption_enabled=true" label="sn_def_charge_type_sys_id" max_length="40" name="u_sn_def_charge_type_sys_id" type="string"/>
+        <element attributes="import_attribute_name=SummaryKey,edge_encryption_enabled=true" label="SummaryKey" max_length="40" name="u_summarykey" type="string"/>
+        <element attributes="import_attribute_name=TollProvider,edge_encryption_enabled=true" label="TollProvider" max_length="40" name="u_tollprovider" type="string"/>
+        <element attributes="import_attribute_name=TransactionDate,edge_encryption_enabled=true" label="TransactionDate" max_length="40" name="u_transactiondate" type="string"/>
+        <element attributes="import_attribute_name=TransponderNumber,edge_encryption_enabled=true" label="TransponderNumber" max_length="40" name="u_transpondernumber" type="string"/>
+        <element attributes="import_attribute_name=VehicleClass,edge_encryption_enabled=true" label="VehicleClass" max_length="40" name="u_vehicleclass" type="string"/>
+        <element attributes="import_attribute_name=VehicleNumber,edge_encryption_enabled=true" label="VehicleNumber" max_length="40" name="u_vehiclenumber" type="string"/>
+    </element>
+</database>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="10f4001c4fe277005d57b2718110c775" label="Vehicle To M2m Import Test Assertions" max_length="40" name="x_89907_vehicle_to_m2m_import_test_import_test" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Import Test Assertion" max_length="32" name="import_test_assertion" reference="x_89907_vehicle_to_import_test_assertion" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Import Test Definition" max_length="32" name="import_test_definition" reference="x_89907_vehicle_to_import_test_definition" type="reference"/>
+        <index name="index">
+            <element name="import_test_assertion"/>
+        </index>
+        <index name="index2">
+            <element name="import_test_definition"/>
+        </index>
+    </element>
+</database>

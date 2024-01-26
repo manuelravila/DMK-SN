@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="hasLabels=true" audit="true" db_object_id="0e7efc17db3bd700f898fbefbf961988" label="Toll Charge" max_length="40" name="x_89907_vehicle_to_toll_charge" type="collection">
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Amount" max_length="20" name="amount" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Balance" max_length="20" name="balance" read_only="true" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" label="Charge type" max_length="32" name="charge_type" read_only="true" reference="x_89907_vehicle_to_toll_charge_type" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Cost center" max_length="32" name="cost_center" reference="x_89907_vehicle_to_transponder_cost_center" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Dispute charge" max_length="40" name="disputed" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Entry date time" max_length="40" name="entry_date_time" read_only="true" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" label="Entry plaza" max_length="32" name="entry_plaza" read_only="true" reference="x_89907_vehicle_to_toll_plaza" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Exit date time" max_length="40" name="exit_date_time" read_only="true" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" label="Exit plaza" max_length="32" name="exit_plaza" read_only="true" reference="x_89907_vehicle_to_toll_plaza" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="File sequence number" max_length="40" name="file_sequence_number" read_only="true" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Personal toll" max_length="40" name="personal_toll" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Plan" max_length="32" name="plan" read_only="true" reference="x_89907_vehicle_to_toll_plan" type="reference"/>
+        <element label="Plate captured" max_length="32" name="plate_captured" read_only="true" type="string"/>
+        <element label="Plate number" max_length="32" name="plate_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Posting date" max_length="40" name="posting_date" read_only="true" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" label="Statement" max_length="32" name="statement" read_only="true" reference="x_89907_vehicle_to_toll_statement" reference_cascade_rule="delete" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Toll provider" max_length="32" name="toll_provider" read_only="true" reference="x_89907_vehicle_to_toll_agency" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Transaction date" max_length="40" name="transaction_date" read_only="true" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" label="Transponder" max_length="32" name="transponder" read_only="true" reference="x_89907_vehicle_to_u_cmdb_ci_transponder" type="reference"/>
+        <element label="Transponder number" max_length="32" name="transponder_number" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Usage exceptions" max_length="4000" name="usage_exceptions" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="User" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="User Statement" max_length="32" name="user_statement" read_only="true" reference="x_89907_vehicle_to_toll_user_statement" type="reference"/>
+        <element label="Vehicle class" max_length="32" name="vehicle_class" read_only="true" type="string"/>
+        <element label="Vehicle number" max_length="32" name="vehicle_number" type="string"/>
+        <index name="index">
+            <element name="charge_type"/>
+        </index>
+        <index name="index2">
+            <element name="cost_center"/>
+        </index>
+        <index name="index3">
+            <element name="entry_plaza"/>
+        </index>
+        <index name="index4">
+            <element name="exit_plaza"/>
+        </index>
+        <index name="index5">
+            <element name="plan"/>
+        </index>
+        <index name="index6">
+            <element name="statement"/>
+        </index>
+        <index name="index7">
+            <element name="toll_provider"/>
+        </index>
+        <index name="index8">
+            <element name="transponder"/>
+        </index>
+        <index name="index9">
+            <element name="user"/>
+        </index>
+        <index name="index10">
+            <element name="user_statement"/>
+        </index>
+    </element>
+</database>

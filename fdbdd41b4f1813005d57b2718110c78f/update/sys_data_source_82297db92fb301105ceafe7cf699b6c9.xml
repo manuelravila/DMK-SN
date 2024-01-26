@@ -28,7 +28,6 @@
         <jdbc_password/>
         <jdbc_server/>
         <jdbc_user_name/>
-        <jdbcprobe_result_set_rows/>
         <jpath_root_node/>
         <last_run_database_field/>
         <last_run_datetime/>
@@ -59,13 +58,11 @@
         <sys_class_name>sys_data_source</sys_class_name>
         <sys_created_by>maavila</sys_created_by>
         <sys_created_on>2022-06-01 00:57:13</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>82297db92fb301105ceafe7cf699b6c9</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name>plates.csv (Uploaded)</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_data_source_82297db92fb301105ceafe7cf699b6c9</sys_update_name>
         <sys_updated_by>maavila</sys_updated_by>

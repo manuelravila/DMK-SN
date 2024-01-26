@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="606ea9504fc3fb405d57b2718110c75a" extends="sys_import_set_row" label="Historic Toll Statement Import" max_length="40" name="x_89907_vehicle_to_historic_toll_statement_import" type="collection">
+        <element attributes="import_attribute_name=Account,edge_encryption_enabled=true" label="Account" max_length="40" name="u_account" type="string"/>
+        <element attributes="import_attribute_name=AccountPersonName,edge_encryption_enabled=true" label="AccountPersonName" max_length="40" name="u_accountpersonname" type="string"/>
+        <element attributes="import_attribute_name=Address1,edge_encryption_enabled=true" label="Address1" max_length="56" name="u_address1" type="string"/>
+        <element attributes="import_attribute_name=Address2,edge_encryption_enabled=true" label="Address2" max_length="40" name="u_address2" type="string"/>
+        <element attributes="import_attribute_name=Address3,edge_encryption_enabled=true" label="Address3" max_length="40" name="u_address3" type="string"/>
+        <element attributes="import_attribute_name=Address4,edge_encryption_enabled=true" label="Address4" max_length="40" name="u_address4" type="string"/>
+        <element attributes="import_attribute_name=Address5,edge_encryption_enabled=true" label="Address5" max_length="40" name="u_address5" type="string"/>
+        <element attributes="import_attribute_name=BeginningBalance,edge_encryption_enabled=true" label="BeginningBalance" max_length="15" name="u_beginningbalance" type="decimal"/>
+        <element attributes="import_attribute_name=BillDateBegin,edge_encryption_enabled=true" label="BillDateBegin" max_length="40" name="u_billdatebegin" type="string"/>
+        <element attributes="import_attribute_name=BillDateEnd,edge_encryption_enabled=true" label="BillDateEnd" max_length="40" name="u_billdateend" type="string"/>
+        <element attributes="import_attribute_name=CycleDate,edge_encryption_enabled=true" label="CycleDate" max_length="40" name="u_cycledate" type="string"/>
+        <element attributes="import_attribute_name=EndingBalance,edge_encryption_enabled=true" label="EndingBalance" max_length="15" name="u_endingbalance" type="decimal"/>
+        <element attributes="import_attribute_name=Key,edge_encryption_enabled=true" label="Key" max_length="40" name="u_key" type="string"/>
+        <element attributes="import_attribute_name=Method,edge_encryption_enabled=true" label="Method" max_length="40" name="u_method" type="string"/>
+        <element attributes="import_attribute_name=ReplenishAmount,edge_encryption_enabled=true" label="ReplenishAmount" max_length="40" name="u_replenishamount" type="integer"/>
+        <element attributes="import_attribute_name=ReplenishPayments,edge_encryption_enabled=true" label="ReplenishPayments" max_length="15" name="u_replenishpayments" type="decimal"/>
+        <element attributes="import_attribute_name=ReplenishThreshold,edge_encryption_enabled=true" label="ReplenishThreshold" max_length="15" name="u_replenishthreshold" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="sn_vendor_sysid" max_length="40" name="u_sn_vendor_sysid" type="string"/>
+        <element attributes="import_attribute_name=StatementDate,edge_encryption_enabled=true" label="StatementDate" max_length="40" name="u_statementdate" type="string"/>
+        <element attributes="import_attribute_name=Threshold,edge_encryption_enabled=true" label="Threshold" max_length="15" name="u_threshold" type="decimal"/>
+        <element attributes="import_attribute_name=TollsAndFees,edge_encryption_enabled=true" label="TollsAndFees" max_length="15" name="u_tollsandfees" type="decimal"/>
+        <element attributes="import_attribute_name=TransponderDeposits,edge_encryption_enabled=true" label="TransponderDeposits" max_length="40" name="u_transponderdeposits" type="integer"/>
+    </element>
+</database>

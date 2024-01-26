@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="82fbefd74fc7f3805d57b2718110c7bf" extends="sys_import_set_row" label="Toll Account Import" max_length="40" name="x_89907_vehicle_to_toll_account_import" type="collection">
+        <element attributes="import_attribute_name=Code,edge_encryption_enabled=true" label="Code" max_length="40" name="u_code" type="string"/>
+        <element attributes="import_attribute_name=Description,edge_encryption_enabled=true" label="Description" max_length="40" name="u_description" type="string"/>
+        <element attributes="import_attribute_name=Vendor,edge_encryption_enabled=true" label="Vendor" max_length="40" name="u_vendor" type="string"/>
+    </element>
+</database>

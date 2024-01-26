@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="hasLabels=true" audit="true" db_object_id="befc76844f3113005d57b2718110c7b2" extends="cmdb_ci" label="Transponder" max_length="40" name="x_89907_vehicle_to_u_cmdb_ci_transponder" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Allow out-of-area" max_length="40" name="allow_out_of_area" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Allow weekends" max_length="40" name="allow_weekends" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" hint="Allows you to define a specific start and end time for an exception shift" label="Alternate shift" max_length="40" name="alternate_shift" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false,ref_contributions=caller_incident_list,desired_state=u_license_plate_desired" choice="2" label="Plate number" max_length="40" name="license_plate" reference="x_89907_vehicle_to_license_plates" type="reference">
+            <choice/>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Shift end" max_length="40" name="shift_end" type="glide_time"/>
+        <element attributes="edge_encryption_enabled=true" label="Shift start" max_length="40" name="shift_start" type="glide_time"/>
+        <element attributes="edge_encryption_enabled=true" label="Account" max_length="32" name="u_account" reference="x_89907_vehicle_to_toll_account" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" hint="Cost center responsible for charges involving this device" label="Cost Center" max_length="32" name="u_cost_center" reference="x_89907_vehicle_to_transponder_cost_center" reference_qual="active=true^EQ" reference_qual_condition="active=true^EQ" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Create reimbursement" max_length="40" name="u_create_invoice" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" hint="First transponder in chain of replaced transponders" label="Initial transponder" max_length="32" name="u_initial_transponder" reference="x_89907_vehicle_to_u_cmdb_ci_transponder" type="reference"/>
+        <element attributes="ref_contributions=add_license_plate" hint="Vehicle's previous license plate number" label="Previous plate number" max_length="40" name="u_plate_number" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" hint="Indicates if device is shared" label="Pool vehicle" max_length="40" name="u_pool_device" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" hint="Previous transponder in chain of replaced transponders" label="Previous transponder" max_length="32" name="u_previous_transponder" reference="x_89907_vehicle_to_u_cmdb_ci_transponder" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Removed date" max_length="40" name="u_removed_date" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" hint="Transponder that replaced this one" label="Replacement transponder" max_length="32" name="u_replacement_transponder" reference="x_89907_vehicle_to_u_cmdb_ci_transponder" reference_qual="install_status=6^EQ" reference_qual_condition="install_status=6^EQ" type="reference"/>
+        <element hint="Consists of eleven (11) digits and generally begins with &quot;008&quot;" label="Transponder number" max_length="40" name="u_transponder_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Transponder type" max_length="32" name="u_transponder_type" reference="x_89907_vehicle_to_transponder_type" reference_qual="active=true^EQ" reference_qual_condition="active=true^EQ" type="reference"/>
+        <element label="Vehicle number" max_length="40" name="u_vehicle_number" type="string"/>
+    </element>
+</database>

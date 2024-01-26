@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="5b7a584adb7f1700f898fbefbf961963" label="Toll Import Exception" max_length="40" name="x_89907_vehicle_to_toll_import_exception" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Error class" max_length="40" name="error_class" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Warning" sequence="1" value="1"/>
+                <element inactive_on_update="false" label="Error" sequence="2" value="2"/>
+            </choice>
+        </element>
+        <element label="Error message" max_length="200" name="error_message" type="string"/>
+        <element label="Error type" max_length="100" name="error_type" type="string"/>
+        <element label="Field name" max_length="100" name="field_name" type="string"/>
+        <element label="Field type" max_length="40" name="field_type" type="string"/>
+        <element label="Field value" max_length="200" name="field_value" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Import batch" max_length="32" name="import_batch" reference="x_89907_vehicle_to_toll_import_batch" type="reference"/>
+        <element label="Import line" max_length="400" name="import_line" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Import line number" max_length="40" name="import_line_number" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Import statement" max_length="32" name="import_statement" reference="x_89907_vehicle_to_toll_import_statement" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" default="1" label="Occurrences" max_length="40" name="occurred_count" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" label="Status" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Active" sequence="1" value="1"/>
+                <element inactive_on_update="false" label="Inactive" sequence="2" value="2"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="import_batch"/>
+        </index>
+        <index name="index2">
+            <element name="import_statement"/>
+        </index>
+    </element>
+</database>

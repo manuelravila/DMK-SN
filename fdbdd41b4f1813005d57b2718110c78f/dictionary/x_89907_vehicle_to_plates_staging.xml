@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="822935bd2fb301105ceafe7cf699b675" extends="sys_import_set_row" label="plates_staging" max_length="40" name="x_89907_vehicle_to_plates_staging" type="collection">
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=License Plate" label="License Plate" max_length="40" name="u_license_plate" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=State" label="State" max_length="40" name="u_state" type="string"/>
+    </element>
+</database>

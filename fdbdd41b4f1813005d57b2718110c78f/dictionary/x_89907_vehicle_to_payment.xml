@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="23cce1f1db55e700f898fbefbf9619f4" label="Payment" max_length="40" name="x_89907_vehicle_to_payment" type="collection">
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Amount" max_length="20" name="amount" read_only="true" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Check amount" max_length="20" name="check_amount" type="currency"/>
+        <element label="Check number" max_length="40" name="check_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Closed" max_length="40" name="closed" read_only="true" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" label="Closed by" max_length="32" name="closed_by" read_only="true" reference="sys_user" type="reference"/>
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Company" max_length="32" name="company" read_only="true" reference="core_company" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Date of check" max_length="40" name="date_of_check" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:new GlideDate().getDisplayValue();" label="Date received" max_length="40" name="date_received" type="glide_date"/>
+        <element label="Internal Error Message" max_length="2000" name="internal_error_message" type="string"/>
+        <element label="Internal Info Message" max_length="2000" name="internal_info_message" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Internal Mark Paid" max_length="40" name="internal_mark_paid" type="boolean"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" display="true" label="Number" max_length="40" name="number" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Override amount validation" max_length="40" name="override_amount_validation" type="boolean"/>
+        <element label="Payee information" max_length="2000" name="payee_information" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="1" label="Phase" max_length="40" name="phase" read_only="true" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Payment Owed" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="Sent" sequence="1" value="2"/>
+                <element inactive_on_update="false" label="Paid" sequence="2" value="3"/>
+                <element inactive_on_update="false" label="Canceled" sequence="3" value="4"/>
+                <element inactive_on_update="false" label="Waived" sequence="4" value="5"/>
+            </choice>
+        </element>
+        <element label="Resolution comments" max_length="1000" name="resolution_comments" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="1" label="Status" max_length="40" name="status" read_only="true" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Open" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="Closed" sequence="1" value="2"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Total user statements" max_length="40" name="total_user_statements" read_only="true" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="User" max_length="32" name="user" read_only="true" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Vendor" max_length="32" name="vendor" read_only="true" reference="core_company" type="reference"/>
+        <index name="index">
+            <element name="closed_by"/>
+        </index>
+        <index name="index2">
+            <element name="company"/>
+        </index>
+        <index name="index3">
+            <element name="user"/>
+        </index>
+        <index name="index4">
+            <element name="vendor"/>
+        </index>
+    </element>
+</database>

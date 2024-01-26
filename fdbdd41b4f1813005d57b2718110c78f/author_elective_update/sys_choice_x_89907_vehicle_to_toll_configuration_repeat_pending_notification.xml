@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="repeat_pending_notification" table="x_89907_vehicle_to_toll_configuration" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>repeat_pending_notification</element>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-24 19:22:05</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>repeat_pending_notification</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_choice_x_89907_vehicle_to_toll_configuration_repeat_pending_notification</sys_update_name>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-24 19:22:05</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>repeat_pending_notification</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Every day</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-24 19:22:05</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>48873afcdbef9300f898fbefbf961914</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-24 19:22:05</sys_updated_on>
+            <value>1</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>repeat_pending_notification</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Every week</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-24 19:22:17</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c787f6fcdbef9300f898fbefbf961939</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-24 19:22:17</sys_updated_on>
+            <value>7</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>repeat_pending_notification</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Every two weeks</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>30</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-24 19:22:33</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>39973afcdbef9300f898fbefbf961917</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-24 19:22:33</sys_updated_on>
+            <value>14</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>repeat_pending_notification</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Every 3 weeks</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>35</sequence>
+            <synonyms/>
+            <sys_created_by>dan.lengyel</sys_created_by>
+            <sys_created_on>2019-05-30 19:22:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>6b7413a84fbd77005d57b2718110c7a8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>dan.lengyel</sys_updated_by>
+            <sys_updated_on>2019-05-30 19:22:46</sys_updated_on>
+            <value>21</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>repeat_pending_notification</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Every month</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>40</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-24 19:22:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>06a77afcdbef9300f898fbefbf961998</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-24 19:22:54</sys_updated_on>
+            <value>30</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

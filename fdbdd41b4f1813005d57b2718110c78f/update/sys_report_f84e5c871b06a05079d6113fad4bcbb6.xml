@@ -32,7 +32,7 @@
         <column>active</column>
         <compute_percent>aggregate</compute_percent>
         <content/>
-        <created_by_user display_value="SN_Dopdyel Tseten">0079697ddb05a6006de6fafc0f9619c1</created_by_user>
+        <created_by_user display_value="">0079697ddb05a6006de6fafc0f9619c1</created_by_user>
         <custom_chart_size>false</custom_chart_size>
         <custom_chart_title_position>false</custom_chart_title_position>
         <custom_config/>
@@ -105,13 +105,11 @@
         <sys_class_name>sys_report</sys_class_name>
         <sys_created_by>SN_dtseten</sys_created_by>
         <sys_created_on>2021-02-04 23:20:19</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>f84e5c871b06a05079d6113fad4bcbb6</sys_id>
         <sys_mod_count>2</sys_mod_count>
         <sys_name>EZPass Approval Manager Status Report</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_report_f84e5c871b06a05079d6113fad4bcbb6</sys_update_name>
         <sys_updated_by>SN_dtseten</sys_updated_by>
@@ -125,7 +123,6 @@
         <type>list</type>
         <upper_limit/>
         <use_color_heatmap>true</use_color_heatmap>
-        <use_color_palette>false</use_color_palette>
         <use_null_in_trend>false</use_null_in_trend>
         <user>0079697ddb05a6006de6fafc0f9619c1</user>
         <x_axis_allow_decimals>true</x_axis_allow_decimals>

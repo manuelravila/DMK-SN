@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="a4b102d01b737300dcab7596cc4bcbdb" extends="sys_import_set_row" label="Toll Plaza Import" max_length="40" name="x_89907_vehicle_to_toll_plaza_import" type="collection">
+        <element attributes="import_attribute_name=Bi-Directional (Yes),edge_encryption_enabled=true" label="Bi-Directional (Yes)" max_length="40" name="u_bi_directional__yes_" type="string"/>
+        <element attributes="import_attribute_name=ETC_ENTRY_PLAZA,ETC_EXIT_PLAZA=true,edge_encryption_enabled=true" label="ETC_ENTRY_PLAZA, ETC_EXIT_PLAZA" max_length="202" name="u_etc_entry_pl_etc_exit_plaza" type="string"/>
+        <element attributes="import_attribute_name=ETC_FAC_AGENCY,edge_encryption_enabled=true" label="ETC_FAC_AGENCY" max_length="40" name="u_etc_fac_agency" type="string"/>
+        <element attributes="import_attribute_name=Information Notes,edge_encryption_enabled=true" label="Information Notes" max_length="162" name="u_information_notes" type="string"/>
+        <element attributes="import_attribute_name=Latitude,edge_encryption_enabled=true" label="Latitude" max_length="40" name="u_latitude" type="string"/>
+        <element attributes="import_attribute_name=Longitude,edge_encryption_enabled=true" label="Longitude" max_length="40" name="u_longitude" type="string"/>
+        <element attributes="import_attribute_name=Notes,edge_encryption_enabled=true" label="Notes" max_length="40" name="u_notes" type="string"/>
+        <element attributes="import_attribute_name=Plaza Abbreviation for Customer Statements (3 chars max),edge_encryption_enabled=true" label="Plaza Abbreviation for Customer Statements (3 chars max)" max_length="40" name="u_plaza_abbrev___3_chars_max_" type="string"/>
+        <element attributes="ORT=true,import_attribute_name=Plaza Configuration (Traditional,EL=true,Combo)=true,edge_encryption_enabled=true" label="Plaza Configuration (Traditional, ORT, EL,  Combo)" max_length="40" name="u_plaza_config_t__el___combo_" type="string"/>
+        <element attributes="import_attribute_name=Plaza Description Length,edge_encryption_enabled=true" label="Plaza Description Length" max_length="40" name="u_plaza_description_length" type="string"/>
+        <element attributes="import_attribute_name=Plaza Description For Customer Statements (31 chars max),edge_encryption_enabled=true" label="Plaza Description For Customer Statements (31 chars max)" max_length="40" name="u_plaza_descri__31_chars_max_" type="string"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=# ORT Lanes" label="# ORT Lanes" max_length="40" name="u___ort_lanes" type="integer"/>
+        <element attributes="edge_encryption_enabled=true,import_attribute_name=# Traditional Lanes" label="# Traditional Lanes" max_length="40" name="u___traditional_lanes" type="integer"/>
+    </element>
+</database>

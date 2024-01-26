@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="fa695af8dbaf9300f898fbefbf9619f9" label="Toll Configuration" max_length="40" name="x_89907_vehicle_to_toll_configuration" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Allow weekends" max_length="40" name="allow_weekends" type="boolean"/>
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Company" mandatory="true" max_length="32" name="company" reference="core_company" type="reference"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Cost threshold" max_length="20" name="cost_threshold" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" label="Create user statements" max_length="40" name="create_user_statements" type="boolean"/>
+        <element label="Description" max_length="128" name="description" type="string"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Minimum cost threshold" max_length="20" name="minimum_cost_threshold" type="currency"/>
+        <element display="true" label="Nickname" max_length="32" name="nickname" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Payee information" max_length="2000" name="payee_information" type="html"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Repeat payment owed notification" max_length="40" name="repeat_payment_owed_notification" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Every day" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="Every week" sequence="20" value="7"/>
+                <element inactive_on_update="false" label="Every 2 weeks" sequence="30" value="14"/>
+                <element inactive_on_update="false" label="Every 3 weeks" sequence="35" value="21"/>
+                <element inactive_on_update="false" label="Every month" sequence="40" value="30"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Repeat pending notification" max_length="40" name="repeat_pending_notification" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Every day" sequence="10" value="1"/>
+                <element inactive_on_update="false" label="Every week" sequence="20" value="7"/>
+                <element inactive_on_update="false" label="Every two weeks" sequence="30" value="14"/>
+                <element inactive_on_update="false" label="Every 3 weeks" sequence="35" value="21"/>
+                <element inactive_on_update="false" label="Every month" sequence="40" value="30"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Run payment owed notification" max_length="40" name="run_payment_owed_notification" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Run pending notification" max_length="40" name="run_pending_notification" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Shift end" max_length="40" name="shift_end" type="glide_time"/>
+        <element attributes="edge_encryption_enabled=true" label="Shift start" max_length="40" name="shift_start" type="glide_time"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Time threshold" max_length="3" name="time_threshold" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Do not use" sequence="5" value="0"/>
+                <element inactive_on_update="false" label="At least a month" sequence="10" value="30"/>
+                <element inactive_on_update="false" label="At least 2 months" sequence="20" value="60"/>
+                <element inactive_on_update="false" label="At least 3 months" sequence="30" value="90"/>
+                <element inactive_on_update="false" label="At least 6 months" sequence="40" value="180"/>
+                <element inactive_on_update="false" label="At least a year" sequence="50" value="365"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="none" label="User Statement Approval" mandatory="true" max_length="40" name="user_statement_approval" type="choice">
+            <choice>
+                <element hint="All user statements require approval upon submission by user" inactive_on_update="false" label="All" sequence="1" value="all"/>
+                <element hint="User statements submitted with *no* personal use require approval" inactive_on_update="false" label="Acknowledged" sequence="2" value="acknowledged"/>
+                <element hint="User statements submitted with personal use require approval" inactive_on_update="false" label="Payment Owed" sequence="3" value="paymentOwed"/>
+                <element inactive_on_update="false" label="None" sequence="4" value="none"/>
+            </choice>
+        </element>
+        <element label="User Statement Dispute Prompt Text" max_length="600" name="user_statement_dispute_prompt_text" type="string"/>
+        <element label="User Statement Submit Prompt Text" max_length="600" name="user_statement_submit_prompt_text" type="string"/>
+        <index name="index">
+            <element name="company"/>
+        </index>
+    </element>
+</database>

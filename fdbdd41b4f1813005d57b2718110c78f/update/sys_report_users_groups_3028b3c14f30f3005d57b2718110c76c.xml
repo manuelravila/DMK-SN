@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sys_report_users_groups">
     <sys_report_users_groups action="INSERT_OR_UPDATE">
-        <group_id display_value="Toll Administrators" name="Toll Administrators">5d8c12994f5b67005d57b2718110c72e</group_id>
+        <group_id display_value="">5d8c12994f5b67005d57b2718110c72e</group_id>
         <report_id display_value="Statement status">b828b3c14f30f3005d57b2718110c76b</report_id>
         <sys_class_name>sys_report_users_groups</sys_class_name>
         <sys_created_by>dan.lengyel</sys_created_by>
         <sys_created_on>2019-04-12 18:12:27</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>3028b3c14f30f3005d57b2718110c76c</sys_id>
         <sys_mod_count>1</sys_mod_count>
         <sys_name>b828b3c14f30f3005d57b2718110c76b</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_report_users_groups_3028b3c14f30f3005d57b2718110c76c</sys_update_name>
         <sys_updated_by>chad.hall</sys_updated_by>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="404f1ed94f5b67005d57b2718110c71d" extends="sys_import_set_row" label="Transponder Type Import" max_length="40" name="x_89907_vehicle_to_transponder_type_import" type="collection">
+        <element attributes="import_attribute_name=Description,edge_encryption_enabled=true" label="Description" max_length="72" name="u_description" type="string"/>
+        <element attributes="import_attribute_name=Type,edge_encryption_enabled=true" label="Type" max_length="40" name="u_type" type="string"/>
+    </element>
+</database>

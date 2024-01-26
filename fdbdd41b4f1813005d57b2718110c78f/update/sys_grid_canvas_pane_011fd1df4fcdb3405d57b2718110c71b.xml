@@ -8,13 +8,11 @@
         <sys_class_name>sys_grid_canvas_pane</sys_class_name>
         <sys_created_by>dan.lengyel</sys_created_by>
         <sys_created_on>2019-05-01 17:05:46</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>011fd1df4fcdb3405d57b2718110c71b</sys_id>
         <sys_mod_count>12</sys_mod_count>
         <sys_name>de0f91df4fcdb3405d57b2718110c7cd</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_grid_canvas_pane_011fd1df4fcdb3405d57b2718110c71b</sys_update_name>
         <sys_updated_by>dan.lengyel</sys_updated_by>

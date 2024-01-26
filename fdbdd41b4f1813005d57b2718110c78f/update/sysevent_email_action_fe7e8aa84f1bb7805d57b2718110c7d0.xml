@@ -46,7 +46,7 @@
         <order>100</order>
         <push_message_only>false</push_message_only>
         <recipient_fields/>
-        <recipient_groups name="Toll Administrators">5d8c12994f5b67005d57b2718110c72e</recipient_groups>
+        <recipient_groups>5d8c12994f5b67005d57b2718110c72e</recipient_groups>
         <recipient_users/>
         <reply_to/>
         <send_self>false</send_self>
@@ -57,7 +57,6 @@
         <sys_class_name>sysevent_email_action</sys_class_name>
         <sys_created_by>chad.hall</sys_created_by>
         <sys_created_on>2019-08-13 03:50:51</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>fe7e8aa84f1bb7805d57b2718110c7d0</sys_id>
@@ -66,7 +65,6 @@
         <sys_overrides/>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sysevent_email_action_fe7e8aa84f1bb7805d57b2718110c7d0</sys_update_name>
         <sys_updated_by>SN_dtseten</sys_updated_by>

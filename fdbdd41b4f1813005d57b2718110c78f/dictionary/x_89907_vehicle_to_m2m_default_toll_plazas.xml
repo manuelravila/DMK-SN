@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="d063ee784f30b3005d57b2718110c724" label="Vehicle To M2m Default Toll Plazas" max_length="40" name="x_89907_vehicle_to_m2m_default_toll_plazas" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Toll Configuration" max_length="32" name="toll_configuration" reference="x_89907_vehicle_to_toll_configuration" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Toll Plaza" max_length="32" name="toll_plaza" reference="x_89907_vehicle_to_toll_plaza" type="reference"/>
+        <index name="index">
+            <element name="toll_configuration"/>
+        </index>
+        <index name="index2">
+            <element name="toll_plaza"/>
+        </index>
+    </element>
+</database>

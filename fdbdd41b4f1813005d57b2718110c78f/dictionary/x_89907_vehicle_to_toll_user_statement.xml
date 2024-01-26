@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="fcdba3e74ff323005d57b2718110c721" label="Toll User Statement" max_length="40" name="x_89907_vehicle_to_toll_user_statement" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Account" max_length="32" name="account" reference="x_89907_vehicle_to_toll_account" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" default="not requested" hint="Approval status of the statement" label="Approval" max_length="40" name="approval" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Not Yet Requested" sequence="0" value="not requested"/>
+                <element inactive_on_update="false" label="Requested" sequence="1" value="requested"/>
+                <element inactive_on_update="false" label="Approved" sequence="2" value="approved"/>
+                <element inactive_on_update="false" label="Rejected" sequence="3" value="rejected"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="4" value="cancelled"/>
+                <element inactive_on_update="false" label="No Longer Required" sequence="5" value="not_required"/>
+                <element inactive_on_update="false" label="Duplicate" sequence="6" value="duplicate"/>
+            </choice>
+        </element>
+        <element label="Approval history" max_length="4000" name="approval_history" type="journal"/>
+        <element attributes="edge_encryption_enabled=true" hint="Date the approval status was changed to approved or rejected" label="Approval set" max_length="40" name="approval_set" type="glide_date_time"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Check amount" max_length="20" name="check_amount" type="currency"/>
+        <element label="Check number" max_length="40" name="check_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Closed by" max_length="32" name="closed_by" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Closed" max_length="40" name="closed_on" type="glide_date_time"/>
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Cost center" max_length="32" name="cost_center" reference="x_89907_vehicle_to_transponder_cost_center" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Date of check" max_length="40" name="date_of_check" type="glide_date"/>
+        <element label="Internal error message" max_length="2000" name="internal_error_message" type="string"/>
+        <element label="Internal info message" max_length="2000" name="internal_info_message" type="string"/>
+        <element label="Internal personal tolls" max_length="10000" name="internal_personal_tolls" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Internal submit" max_length="40" name="internal_submit" type="boolean"/>
+        <element attributes="ignore_filter_on_new=true" default="javascript:global.getNextObjNumberPadded();" label="Number" max_length="40" name="number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Payment" max_length="32" name="payment" reference="x_89907_vehicle_to_payment" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Period begin date" max_length="40" name="period_begin_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" label="Period end date" max_length="40" name="period_end_date" type="glide_date"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" hint="Total amount in this statement marked as personal use " label="Personal amount" max_length="20" name="personal_amount" type="currency"/>
+        <element label="Plate number" max_length="40" name="plate_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" default="1" label="Phase" max_length="40" name="progress_phase" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Acknowledged" sequence="0" value="0"/>
+                <element inactive_on_update="false" label="Pending" sequence="1" value="1"/>
+                <element inactive_on_update="false" label="Payment Owed" sequence="2" value="2"/>
+                <element inactive_on_update="false" label="Canceled" sequence="3" value="3"/>
+                <element inactive_on_update="false" label="Waived" sequence="4" value="4"/>
+                <element inactive_on_update="false" label="Disputed" sequence="5" value="5"/>
+                <element inactive_on_update="false" label="Summarized" sequence="6" value="6"/>
+                <element inactive_on_update="false" label="Paid" sequence="7" value="7"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Resolution code" max_length="40" name="resolution_code" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Paid" sequence="0" value="paid"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="1" value="cancelled"/>
+                <element inactive_on_update="false" label="Waived" sequence="2" value="waived"/>
+            </choice>
+        </element>
+        <element label="Resolution comments" max_length="1000" name="resolution_comments" type="string"/>
+        <element label="Description" max_length="80" name="short_description" type="string"/>
+        <element attributes="edge_encryption_enabled=true" hint="Account number and date statement was generated" label="Statement" max_length="32" name="statement" reference="x_89907_vehicle_to_toll_statement" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="1" label="Status" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Open" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="Closed" sequence="1" value="2"/>
+            </choice>
+        </element>
+        <element label="Status notes" max_length="4000" name="status_notes" spell_check="true" type="journal"/>
+        <element attributes="edge_encryption_enabled=true" dependent="status_notes" dependent_on_field="status_notes" label="Status notes list" max_length="4000" name="status_notes_list" type="journal_list" use_dependent_field="true"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Total amount" max_length="20" name="total_amount" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" label="Transponder" max_length="32" name="transponder" reference="x_89907_vehicle_to_u_cmdb_ci_transponder" type="reference"/>
+        <element label="Transponder number" max_length="40" name="transponder_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Transponder type" max_length="32" name="transponder_type" reference="x_89907_vehicle_to_transponder_type" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" hint="Person to whom the statement belongs" label="User" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <element label="Vehicle number" max_length="40" name="vehicle_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Vendor" max_length="32" name="vendor" reference="core_company" type="reference"/>
+        <index name="index">
+            <element name="account"/>
+        </index>
+        <index name="index2">
+            <element name="closed_by"/>
+        </index>
+        <index name="index3">
+            <element name="cost_center"/>
+        </index>
+        <index name="index4">
+            <element name="payment"/>
+        </index>
+        <index name="index5">
+            <element name="statement"/>
+        </index>
+        <index name="index6">
+            <element name="transponder"/>
+        </index>
+        <index name="index7">
+            <element name="transponder_type"/>
+        </index>
+        <index name="index8">
+            <element name="user"/>
+        </index>
+        <index name="index9">
+            <element name="vendor"/>
+        </index>
+    </element>
+</database>

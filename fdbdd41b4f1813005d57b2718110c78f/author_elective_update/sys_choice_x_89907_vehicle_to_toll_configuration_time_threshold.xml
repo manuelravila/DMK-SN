@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="time_threshold" table="x_89907_vehicle_to_toll_configuration" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>time_threshold</element>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-25 13:08:53</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>time_threshold</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_choice_x_89907_vehicle_to_toll_configuration_time_threshold</sys_update_name>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-25 13:08:53</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>time_threshold</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Do not use</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-25 13:10:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>130c22c5dbe7d300f898fbefbf96193f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-25 13:10:46</sys_updated_on>
+            <value>0</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>time_threshold</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>At least a month</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-25 13:08:53</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>3dab2609dbe7d300f898fbefbf96195c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-25 13:08:53</sys_updated_on>
+            <value>30</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>time_threshold</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>At least 2 months</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-25 13:09:10</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>66bb2ac5dbe7d300f898fbefbf961919</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-25 13:09:10</sys_updated_on>
+            <value>60</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>time_threshold</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>At least 3 months</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>30</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-25 13:09:25</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>decb2ac5dbe7d300f898fbefbf96193a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-25 13:09:25</sys_updated_on>
+            <value>90</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>time_threshold</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>At least 6 months</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>40</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-25 13:09:52</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>1fdb2609dbe7d300f898fbefbf961919</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-25 13:09:52</sys_updated_on>
+            <value>180</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>time_threshold</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>At least a year</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_configuration</name>
+            <sequence>50</sequence>
+            <synonyms/>
+            <sys_created_by>Dan.Lengyel</sys_created_by>
+            <sys_created_on>2018-07-25 13:10:10</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>bcfbe6c5dbe7d300f898fbefbf9619f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Dan.Lengyel</sys_updated_by>
+            <sys_updated_on>2018-07-25 13:10:10</sys_updated_on>
+            <value>365</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

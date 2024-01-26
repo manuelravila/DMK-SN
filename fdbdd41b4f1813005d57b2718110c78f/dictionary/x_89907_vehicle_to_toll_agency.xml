@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="d9b31046db7f1700f898fbefbf961918" label="Toll Agency" max_length="40" name="x_89907_vehicle_to_toll_agency" type="collection">
+        <element attributes="edge_encryption_enabled=true" default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="Agency ID" max_length="10" name="agency_id" type="string"/>
+        <element label="Code" max_length="40" name="code" type="string"/>
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element display="true" label="Description" max_length="200" name="description" type="string"/>
+        <element label="Short description" max_length="100" name="short_description" type="string"/>
+    </element>
+</database>

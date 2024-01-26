@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="f07b9c4adb7f1700f898fbefbf961923" label="Toll Import Statement" max_length="40" name="x_89907_vehicle_to_toll_import_statement" type="collection">
+        <element label="Account number" max_length="100" name="account_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Bill period begin date" max_length="40" name="bill_period_begin_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" label="Bill period end date" max_length="40" name="bill_period_end_date" type="glide_date"/>
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Import type" max_length="32" name="import_type" reference="x_89907_vehicle_to_toll_import_type" type="reference"/>
+        <element display="true" label="Name" max_length="400" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Statement" max_length="32" name="statement" reference="x_89907_vehicle_to_toll_statement" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Statement date" max_length="40" name="statement_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" choice_field="status" choice_table="x_89907_vehicle_to_toll_import_batch" default="1" label="Status" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Initial" sequence="0" value="1"/>
+                <element inactive_on_update="false" label="Staged" sequence="1" value="2"/>
+                <element inactive_on_update="false" label="Validating" sequence="2" value="3"/>
+                <element inactive_on_update="false" label="Validated" sequence="3" value="4"/>
+                <element inactive_on_update="false" label="Importing" sequence="4" value="5"/>
+                <element inactive_on_update="false" label="Imported" sequence="5" value="6"/>
+                <element inactive_on_update="false" label="Creating user statements" sequence="6" value="7"/>
+                <element inactive_on_update="false" label="User statements created" sequence="7" value="8"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Toll import batch" max_length="32" name="toll_import_batch" reference="x_89907_vehicle_to_toll_import_batch" type="reference"/>
+        <index name="index">
+            <element name="import_type"/>
+        </index>
+        <index name="index2">
+            <element name="statement"/>
+        </index>
+        <index name="index3">
+            <element name="toll_import_batch"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="ac7e6d504fc3fb405d57b2718110c76d" extends="sys_import_set_row" label="Historic User Statement Import" max_length="40" name="x_89907_vehicle_to_historic_user_statement_import" type="collection">
+        <element attributes="import_attribute_name=Account_Number,edge_encryption_enabled=true" label="Account_Number" max_length="40" name="u_account_number" type="string"/>
+        <element attributes="import_attribute_name=Billing_Vendor,edge_encryption_enabled=true" label="Billing_Vendor" max_length="40" name="u_billing_vendor" type="string"/>
+        <element attributes="import_attribute_name=Bill_Period_Begin_Date,edge_encryption_enabled=true" label="Bill_Period_Begin_Date" max_length="40" name="u_bill_period_begin_date" type="string"/>
+        <element attributes="import_attribute_name=Bill_Period_End_Date,edge_encryption_enabled=true" label="Bill_Period_End_Date" max_length="40" name="u_bill_period_end_date" type="string"/>
+        <element attributes="import_attribute_name=Check_Number,edge_encryption_enabled=true" label="Check_Number" max_length="40" name="u_check_number" type="string"/>
+        <element attributes="import_attribute_name=Closed_By,edge_encryption_enabled=true" label="Closed_By" max_length="40" name="u_closed_by" type="string"/>
+        <element attributes="import_attribute_name=Comments_Line,edge_encryption_enabled=true" label="Comments_Line" max_length="44" name="u_comments_line" type="string"/>
+        <element attributes="import_attribute_name=Completion_Code,edge_encryption_enabled=true" label="Completion_Code" max_length="40" name="u_completion_code" type="string"/>
+        <element attributes="import_attribute_name=Cost_Center,edge_encryption_enabled=true" label="Cost_Center" max_length="40" name="u_cost_center" type="string"/>
+        <element attributes="import_attribute_name=Date_Closed,edge_encryption_enabled=true" label="Date_Closed" max_length="40" name="u_date_closed" type="string"/>
+        <element attributes="import_attribute_name=Date_Of_Check_Request,edge_encryption_enabled=true" label="Date_Of_Check_Request" max_length="40" name="u_date_of_check_request" type="string"/>
+        <element attributes="import_attribute_name=Date_Of_Invoice,edge_encryption_enabled=true" label="Date_Of_Invoice" max_length="40" name="u_date_of_invoice" type="string"/>
+        <element attributes="import_attribute_name=First_Name,edge_encryption_enabled=true" label="First_Name" max_length="40" name="u_first_name" type="string"/>
+        <element attributes="import_attribute_name=HRA_Email_Address,edge_encryption_enabled=true" label="HRA_Email_Address" max_length="40" name="u_hra_email_address" type="string"/>
+        <element attributes="import_attribute_name=HRA_Employee_Status,edge_encryption_enabled=true" label="HRA_Employee_Status" max_length="40" name="u_hra_employee_status" type="string"/>
+        <element attributes="import_attribute_name=HRA_First_Name,edge_encryption_enabled=true" label="HRA_First_Name" max_length="40" name="u_hra_first_name" type="string"/>
+        <element attributes="import_attribute_name=HRA_Installed_Floor,edge_encryption_enabled=true" label="HRA_Installed_Floor" max_length="40" name="u_hra_installed_floor" type="string"/>
+        <element attributes="import_attribute_name=HRA_iWise_Logon_ID,edge_encryption_enabled=true" label="HRA_iWise_Logon_ID" max_length="40" name="u_hra_iwise_logon_id" type="string"/>
+        <element attributes="import_attribute_name=HRA_Last_Name,edge_encryption_enabled=true" label="HRA_Last_Name" max_length="40" name="u_hra_last_name" type="string"/>
+        <element attributes="import_attribute_name=HRA_Location_Code,edge_encryption_enabled=true" label="HRA_Location_Code" max_length="40" name="u_hra_location_code" type="string"/>
+        <element attributes="import_attribute_name=HRA_Middle_Name,edge_encryption_enabled=true" label="HRA_Middle_Name" max_length="40" name="u_hra_middle_name" type="string"/>
+        <element attributes="import_attribute_name=HRA_Object_ID,edge_encryption_enabled=true" label="HRA_Object_ID" max_length="40" name="u_hra_object_id" type="string"/>
+        <element attributes="import_attribute_name=HRA_Room_Cubicle,edge_encryption_enabled=true" label="HRA_Room_Cubicle" max_length="40" name="u_hra_room_cubicle" type="string"/>
+        <element attributes="import_attribute_name=Invoice_Number,edge_encryption_enabled=true" label="Invoice_Number" max_length="40" name="u_invoice_number" type="string"/>
+        <element attributes="import_attribute_name=Invoice_Status,edge_encryption_enabled=true" label="Invoice_Status" max_length="40" name="u_invoice_status" type="string"/>
+        <element attributes="import_attribute_name=Itemized_Count,edge_encryption_enabled=true" label="Itemized_Count" max_length="40" name="u_itemized_count" type="integer"/>
+        <element attributes="import_attribute_name=Last_Name,edge_encryption_enabled=true" label="Last_Name" max_length="40" name="u_last_name" type="string"/>
+        <element attributes="import_attribute_name=Middle_Name,edge_encryption_enabled=true" label="Middle_Name" max_length="40" name="u_middle_name" type="string"/>
+        <element attributes="import_attribute_name=Personal_Usage_Amount,edge_encryption_enabled=true" label="Personal_Usage_Amount" max_length="15" name="u_personal_usage_amount" type="decimal"/>
+        <element attributes="import_attribute_name=Plate_Number,edge_encryption_enabled=true" label="Plate_Number" max_length="40" name="u_plate_number" type="string"/>
+        <element attributes="import_attribute_name=Progress_Phase,edge_encryption_enabled=true" label="Progress_Phase" max_length="40" name="u_progress_phase" type="string"/>
+        <element attributes="import_attribute_name=Resolution_Comments_Line,edge_encryption_enabled=true" label="Resolution_Comments_Line" max_length="40" name="u_resolution_comments_line" type="string"/>
+        <element attributes="import_attribute_name=Service_Identifier,edge_encryption_enabled=true" label="Service_Identifier" max_length="40" name="u_service_identifier" type="string"/>
+        <element attributes="import_attribute_name=sn_company_sysid,edge_encryption_enabled=true" label="sn_company_sysid" max_length="40" name="u_sn_company_sysid" type="string"/>
+        <element attributes="import_attribute_name=sn_vendor_sysid,edge_encryption_enabled=true" label="sn_vendor_sysid" max_length="40" name="u_sn_vendor_sysid" type="string"/>
+        <element attributes="import_attribute_name=Summary_Invoice,edge_encryption_enabled=true" label="Summary_Invoice" max_length="40" name="u_summary_invoice" type="string"/>
+        <element attributes="import_attribute_name=Summary_Invoice_ID,edge_encryption_enabled=true" label="Summary_Invoice_ID" max_length="40" name="u_summary_invoice_id" type="string"/>
+        <element attributes="import_attribute_name=Time_Closed,edge_encryption_enabled=true" label="Time_Closed" max_length="40" name="u_time_closed" type="string"/>
+        <element attributes="import_attribute_name=Total_Usage_Amount,edge_encryption_enabled=true" label="Total_Usage_Amount" max_length="15" name="u_total_usage_amount" type="decimal"/>
+        <element attributes="import_attribute_name=Transponder_Type,edge_encryption_enabled=true" label="Transponder_Type" max_length="40" name="u_transponder_type" type="string"/>
+        <element attributes="import_attribute_name=Vehicle_Number,edge_encryption_enabled=true" label="Vehicle_Number" max_length="40" name="u_vehicle_number" type="string"/>
+    </element>
+</database>

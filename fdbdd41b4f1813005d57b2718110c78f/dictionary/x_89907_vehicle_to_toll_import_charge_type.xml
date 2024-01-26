@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="bddd100edb7f1700f898fbefbf9619ad" label="Toll Import Charge Type" max_length="40" name="x_89907_vehicle_to_toll_import_charge_type" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Charge type" max_length="32" name="charge_type" reference="x_89907_vehicle_to_toll_charge_type" type="reference"/>
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Credit" max_length="40" name="credit" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Default type" max_length="40" name="default_type" type="boolean"/>
+        <element display="true" label="Display label" max_length="200" name="display_label" type="string"/>
+        <element label="Import label" max_length="200" name="import_label" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Import type" max_length="32" name="import_type" reference="x_89907_vehicle_to_toll_import_type" type="reference"/>
+        <index name="index">
+            <element name="charge_type"/>
+        </index>
+        <index name="index2">
+            <element name="import_type"/>
+        </index>
+    </element>
+</database>

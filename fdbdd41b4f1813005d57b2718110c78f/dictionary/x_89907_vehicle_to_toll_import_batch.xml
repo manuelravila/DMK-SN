@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="7749580adb7f1700f898fbefbf96194a" label="Toll Import Batch" max_length="40" name="x_89907_vehicle_to_toll_import_batch" type="collection">
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Import type" max_length="32" name="import_type" reference="x_89907_vehicle_to_toll_import_type" type="reference"/>
+        <element display="true" label="Name" max_length="200" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="1" label="Status" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Initial" sequence="1" value="1"/>
+                <element inactive_on_update="false" label="Staged" sequence="2" value="2"/>
+                <element inactive_on_update="false" label="Validating" sequence="3" value="3"/>
+                <element inactive_on_update="false" label="Validated" sequence="4" value="4"/>
+                <element inactive_on_update="false" label="Importing" sequence="5" value="5"/>
+                <element inactive_on_update="false" label="Imported" sequence="6" value="6"/>
+                <element inactive_on_update="false" label="Creating user statements" sequence="7" value="7"/>
+                <element inactive_on_update="false" label="User statements created" sequence="8" value="8"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="import_type"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="file_extension" table="x_89907_vehicle_to_toll_import_type" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>file_extension</element>
+            <name>x_89907_vehicle_to_toll_import_type</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-10 14:30:06</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>file_extension</sys_name>
+            <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
+            <sys_update_name>sys_choice_x_89907_vehicle_to_toll_import_type_file_extension</sys_update_name>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-10 14:30:06</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>file_extension</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>csv</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_type</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-10 14:30:06</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>bb97515edb3b5700f898fbefbf961925</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-10 14:30:15</sys_updated_on>
+            <value>csv</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>file_extension</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>txt</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_type</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-10 14:30:20</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>57b7511edb3b5700f898fbefbf961972</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-10 14:30:26</sys_updated_on>
+            <value>txt</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>file_extension</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>xlsx</label>
+            <language>en</language>
+            <name>x_89907_vehicle_to_toll_import_type</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>chad.hall</sys_created_by>
+            <sys_created_on>2018-08-10 14:30:33</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e6c7d51edb3b5700f898fbefbf9619a1</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>chad.hall</sys_updated_by>
+            <sys_updated_on>2018-08-10 14:30:41</sys_updated_on>
+            <value>xlsx</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

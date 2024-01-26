@@ -3,7 +3,6 @@
         <active>true</active>
         <application display_value="Tolls">a2bd501f4f1813005d57b2718110c70b</application>
         <assessment/>
-        <content_page/>
         <device_type/>
         <filter/>
         <hint/>
@@ -19,12 +18,9 @@
         <query>./$knowledge.do?sysparm_type_filter=all&amp;sysparm_kb=f4ed2db94fd97b405d57b2718110c749&amp;sysparm_category=-1&amp;browse_type=categories</query>
         <report/>
         <roles>x_89907_vehicle_to.admin,x_89907_vehicle_to.coordinator,x_89907_vehicle_to.financial</roles>
-        <survey/>
-        <survey_overwrite>false</survey_overwrite>
         <sys_class_name>sys_app_module</sys_class_name>
         <sys_created_by>chad.hall</sys_created_by>
         <sys_created_on>2019-07-31 05:27:30</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>766767d04f0bfb405d57b2718110c75c</sys_id>
@@ -33,7 +29,6 @@
         <sys_overrides/>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_app_module_766767d04f0bfb405d57b2718110c75c</sys_update_name>
         <sys_updated_by>chad.hall</sys_updated_by>

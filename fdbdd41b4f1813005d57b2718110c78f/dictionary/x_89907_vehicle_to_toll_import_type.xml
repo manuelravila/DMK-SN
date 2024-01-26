@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="e3c6d046db7f1700f898fbefbf961953" label="Toll Import Type" max_length="40" name="x_89907_vehicle_to_toll_import_type" type="collection">
+        <element attributes="edge_encryption_enabled=true" default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element default="text/plain" label="Content type" max_length="400" name="content_type" type="string"/>
+        <element choice="3" choice_field="time_zone" choice_table="sys_user" label="Default Time Zone" mandatory="true" max_length="40" name="default_time_zone" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Canada/Atlantic" sequence="0" value="Canada/Atlantic"/>
+                <element inactive_on_update="false" label="Canada/Central" sequence="1" value="Canada/Central"/>
+                <element inactive_on_update="false" label="Canada/Eastern" sequence="2" value="Canada/Eastern"/>
+                <element inactive_on_update="false" label="Canada/Mountain" sequence="3" value="Canada/Mountain"/>
+                <element inactive_on_update="false" label="Canada/Pacific" sequence="4" value="Canada/Pacific"/>
+                <element inactive_on_update="false" label="Europe/Amsterdam" sequence="5" value="Europe/Amsterdam"/>
+                <element inactive_on_update="false" label="Europe/Berlin" sequence="6" value="Europe/Berlin"/>
+                <element inactive_on_update="false" label="Europe/Brussels" sequence="7" value="Europe/Brussels"/>
+                <element inactive_on_update="false" label="Europe/Copenhagen" sequence="8" value="Europe/Copenhagen"/>
+                <element inactive_on_update="false" label="Europe/Dublin" sequence="9" value="Europe/Dublin"/>
+                <element inactive_on_update="false" label="Europe/London" sequence="10" value="Europe/London"/>
+                <element inactive_on_update="false" label="Europe/Madrid" sequence="11" value="Europe/Madrid"/>
+                <element inactive_on_update="false" label="Europe/Paris" sequence="12" value="Europe/Paris"/>
+                <element inactive_on_update="false" label="Europe/Rome" sequence="13" value="Europe/Rome"/>
+                <element inactive_on_update="false" label="Europe/Stockholm" sequence="14" value="Europe/Stockholm"/>
+                <element inactive_on_update="false" label="Europe/Zurich" sequence="15" value="Europe/Zurich"/>
+                <element inactive_on_update="false" label="GMT" sequence="16" value="GMT"/>
+                <element inactive_on_update="false" label="Hongkong" sequence="17" value="Hongkong"/>
+                <element inactive_on_update="false" label="US/Arizona" sequence="18" value="US/Arizona"/>
+                <element inactive_on_update="false" label="US/Central" sequence="19" value="US/Central"/>
+                <element inactive_on_update="false" label="US/Eastern" sequence="20" value="US/Eastern"/>
+                <element inactive_on_update="false" label="US/Hawaii" sequence="21" value="US/Hawaii"/>
+                <element inactive_on_update="false" label="US/Mountain" sequence="22" value="US/Mountain"/>
+                <element inactive_on_update="false" label="US/Pacific" sequence="23" value="US/Pacific"/>
+            </choice>
+        </element>
+        <element choice="1" label="File extension" max_length="32" name="file_extension" type="string">
+            <choice>
+                <element inactive_on_update="false" label="csv" sequence="1" value="csv"/>
+                <element inactive_on_update="false" label="txt" sequence="2" value="txt"/>
+                <element inactive_on_update="false" label="xlsx" sequence="3" value="xlsx"/>
+            </choice>
+        </element>
+        <element display="true" label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="ny_ezpass_v2" label="Parser" mandatory="true" max_length="40" name="parser" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="NY E-ZPass V1" sequence="1" value="ny_ezpass_v1"/>
+                <element inactive_on_update="false" label="NY E-ZPass V2" sequence="2" value="ny_ezpass_v2"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Vendor" mandatory="true" max_length="32" name="vendor" reference="core_company" reference_qual="vendor=true^EQ" reference_qual_condition="vendor=true^EQ" type="reference"/>
+        <index name="index">
+            <element name="vendor"/>
+        </index>
+    </element>
+</database>

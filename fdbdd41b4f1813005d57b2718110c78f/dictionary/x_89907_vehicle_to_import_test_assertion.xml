@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="524044d44fe277005d57b2718110c7f7" label="Import Test Assertion" max_length="40" name="x_89907_vehicle_to_import_test_assertion" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Assertion Type" max_length="40" name="assertion_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="To Be" sequence="0" value="tobe"/>
+                <element inactive_on_update="false" label="To Not Be" sequence="1" value="toNotBe"/>
+                <element inactive_on_update="false" label="To Equal" sequence="2" value="toEqual"/>
+                <element inactive_on_update="false" label="To Not Equal" sequence="3" value="toNotEqual"/>
+                <element inactive_on_update="false" label="To Be Defined" sequence="4" value="toBeDefined"/>
+                <element inactive_on_update="false" label="To Not Be Defined" sequence="5" value="toNotBeDefined"/>
+                <element inactive_on_update="false" label="To Be Null" sequence="6" value="toBeNull"/>
+                <element inactive_on_update="false" label="To Not Be Null" sequence="7" value="toNotBeNull"/>
+                <element inactive_on_update="false" label="To Be Truthy" sequence="8" value="toBeTruthy"/>
+                <element inactive_on_update="false" label="To Be Falsy" sequence="9" value="toBeFalsy"/>
+                <element inactive_on_update="false" label="To Contain" sequence="10" value="toContain"/>
+                <element inactive_on_update="false" label="To Not Contain" sequence="11" value="toNotContain"/>
+                <element inactive_on_update="false" label="Properties To All Equal" sequence="12" value="propsToAllEqual"/>
+                <element inactive_on_update="false" label="Array Item Properties To All Equal" sequence="13" value="arrayPropsToAllEqual"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Before" max_length="8000" name="before" type="script"/>
+        <element attributes="edge_encryption_enabled=true" label="Complete" max_length="40" name="complete" type="boolean"/>
+        <element display="true" label="Describe" max_length="200" name="describe" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Expect" max_length="8000" name="expect" type="script"/>
+        <element attributes="edge_encryption_enabled=true" label="Expected" max_length="8000" name="expected" type="script"/>
+        <element label="It" max_length="200" name="it" type="string"/>
+        <element attributes="no_sort=true,slushbucket_ref_no_expand=true,edge_encryption_enabled=true" choice="1" label="Step" max_length="1024" name="step" type="glide_list">
+            <choice>
+                <element inactive_on_update="false" label="Staged" sequence="1" value="staged"/>
+                <element inactive_on_update="false" label="Validated" sequence="2" value="validated"/>
+                <element inactive_on_update="false" label="Imported" sequence="3" value="imported"/>
+            </choice>
+        </element>
+    </element>
+</database>

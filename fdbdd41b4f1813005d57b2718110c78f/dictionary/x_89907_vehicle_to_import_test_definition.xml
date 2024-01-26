@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="4260cd534f5eb3005d57b2718110c725" label="Import Test Definition" max_length="40" name="x_89907_vehicle_to_import_test_definition" type="collection">
+        <element label="Content 1" max_length="8000" name="content_1" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Input Data" max_length="8000" name="input_data" type="script"/>
+        <element display="true" label="Spec" max_length="255" name="spec_id" type="string"/>
+        <element label="Suite" max_length="255" name="suite" type="string"/>
+    </element>
+</database>

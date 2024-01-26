@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="ed668d97db3bd700f898fbefbf961939" label="Toll Statement" max_length="40" name="x_89907_vehicle_to_toll_statement" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Account" max_length="32" name="account" reference="x_89907_vehicle_to_toll_account" type="reference"/>
+        <element label="Account person name" max_length="64" name="account_person_name" type="string"/>
+        <element label="Address 1" max_length="128" name="address_1" type="string"/>
+        <element label="Address 2" max_length="128" name="address_2" type="string"/>
+        <element label="Address 3" max_length="128" name="address_3" type="string"/>
+        <element label="Address 4" max_length="128" name="address_4" type="string"/>
+        <element label="Address 5" max_length="128" name="address_5" type="string"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Charge amt skipped (company)" max_length="20" name="alloc_charge_amt_skip_company" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Charge amt skipped (duplicate)" max_length="20" name="alloc_charge_amt_skip_dupe" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Charge amt skipped total" max_length="20" name="alloc_charge_amt_skip_total" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Charge amt skipped (transponder)" max_length="20" name="alloc_charge_amt_skip_trans" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Charge amt skipped (no user)" max_length="20" name="alloc_charge_amt_skip_user" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" label="Charges skipped (company)" max_length="40" name="alloc_charge_cnt_skip_company" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Charges skipped (duplicate)" max_length="40" name="alloc_charge_cnt_skip_dupe" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Charges skipped (no cost)" max_length="40" name="alloc_charge_cnt_skip_nocost" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Charges skipped total" max_length="40" name="alloc_charge_cnt_skip_total" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Charges skipped (transponder)" max_length="40" name="alloc_charge_cnt_skip_trans" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Charges skipped (no user)" max_length="40" name="alloc_charge_cnt_skip_user" type="integer"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Allocated charges total" max_length="20" name="alloc_charge_total_amount" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" label="Allocated charge count" max_length="40" name="alloc_charge_total_count" type="integer"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Beginning balance" max_length="20" name="beginning_balance" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" label="Bill begin date" max_length="40" name="bill_begin_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" label="Bill end date" max_length="40" name="bill_end_date" type="glide_date"/>
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element display="true" label="Display value" max_length="64" name="display_value" type="string"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Ending balance" max_length="20" name="ending_balance" type="currency"/>
+        <element label="Payment method" max_length="32" name="payment_method" type="string"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Replenish amount" max_length="20" name="replenish_amount" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Replenish payments" max_length="20" name="replenish_payments" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Replenish threshold" max_length="20" name="replenish_threshold" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" label="Statement date" max_length="40" name="statement_date" type="glide_date"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Threshold" max_length="20" name="threshold" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Tolls and fees" max_length="20" name="tolls_and_fees" type="currency"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Toll charge amount" max_length="20" name="toll_charge_amount" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" label="Toll charge count" max_length="40" name="toll_charge_count" type="integer"/>
+        <element attributes="omit_sys_original=true,edge_encryption_enabled=true" label="Transponder deposits" max_length="20" name="transponder_deposits" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" label="User statements created" max_length="40" name="user_statements_created" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="User statements skipped" max_length="40" name="user_statements_skipped" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Vendor" max_length="32" name="vendor" reference="core_company" type="reference"/>
+        <index name="index">
+            <element name="account"/>
+        </index>
+        <index name="index2">
+            <element name="vendor"/>
+        </index>
+    </element>
+</database>

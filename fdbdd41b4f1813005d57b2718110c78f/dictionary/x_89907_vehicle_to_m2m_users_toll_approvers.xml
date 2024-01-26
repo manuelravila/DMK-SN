@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="a783349d4fd13b405d57b2718110c7d9" label="Vehicle To M2m Users Toll Approvers" max_length="40" name="x_89907_vehicle_to_m2m_users_toll_approvers" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Toll Approver" max_length="32" name="toll_approver" reference="x_89907_vehicle_to_toll_approver" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="User" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <index name="index">
+            <element name="toll_approver"/>
+        </index>
+        <index name="index2">
+            <element name="user"/>
+        </index>
+    </element>
+</database>

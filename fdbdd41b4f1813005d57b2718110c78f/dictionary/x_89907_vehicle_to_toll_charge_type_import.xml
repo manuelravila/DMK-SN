@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="731afb774f9f23005d57b2718110c730" extends="sys_import_set_row" label="Toll Charge Type Import" max_length="40" name="x_89907_vehicle_to_toll_charge_type_import" type="collection">
+        <element attributes="import_attribute_name=charge_type,edge_encryption_enabled=true" label="charge_type" max_length="40" name="u_charge_type" type="string"/>
+        <element attributes="import_attribute_name=credit,edge_encryption_enabled=true" label="credit" max_length="40" name="u_credit" type="string"/>
+        <element attributes="import_attribute_name=default_type,edge_encryption_enabled=true" label="default_type" max_length="40" name="u_default_type" type="string"/>
+        <element attributes="import_attribute_name=display_label,edge_encryption_enabled=true" label="display_label" max_length="40" name="u_display_label" type="string"/>
+        <element attributes="import_attribute_name=import_label,edge_encryption_enabled=true" label="import_label" max_length="40" name="u_import_label" type="string"/>
+        <element attributes="import_attribute_name=import_type,edge_encryption_enabled=true" label="import_type" max_length="40" name="u_import_type" type="string"/>
+    </element>
+</database>

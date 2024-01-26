@@ -22,7 +22,6 @@
             <sys_class_name>sys_ui_section</sys_class_name>
             <sys_created_by>dan.lengyel</sys_created_by>
             <sys_created_on>2019-03-05 20:57:13</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>3361f8c94fc433005d57b2718110c742</sys_id>
@@ -31,7 +30,6 @@
             <sys_overrides/>
             <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
             <sys_update_name>sys_ui_section_3361f8c94fc433005d57b2718110c742</sys_update_name>
             <sys_updated_by>dan.lengyel</sys_updated_by>

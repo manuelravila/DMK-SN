@@ -108,13 +108,11 @@
         <sys_class_name>sys_report</sys_class_name>
         <sys_created_by>dan.lengyel</sys_created_by>
         <sys_created_on>2019-05-02 13:45:46</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>ddea7deb4fc9f3405d57b2718110c7dd</sys_id>
         <sys_mod_count>7</sys_mod_count>
         <sys_name>Open User Statements</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_report_ddea7deb4fc9f3405d57b2718110c7dd</sys_update_name>
         <sys_updated_by>chad.hall</sys_updated_by>
@@ -128,7 +126,6 @@
         <type>list</type>
         <upper_limit/>
         <use_color_heatmap>false</use_color_heatmap>
-        <use_color_palette>false</use_color_palette>
         <use_null_in_trend>false</use_null_in_trend>
         <user>group</user>
         <x_axis_allow_decimals>false</x_axis_allow_decimals>

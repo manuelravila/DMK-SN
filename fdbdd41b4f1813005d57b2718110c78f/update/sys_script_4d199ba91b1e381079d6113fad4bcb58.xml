@@ -78,7 +78,6 @@
         <sys_class_name>sys_script</sys_class_name>
         <sys_created_by>SN_Chall</sys_created_by>
         <sys_created_on>2021-08-31 03:32:30</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
         <sys_id>4d199ba91b1e381079d6113fad4bcb58</sys_id>
@@ -87,7 +86,6 @@
         <sys_overrides/>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_script_4d199ba91b1e381079d6113fad4bcb58</sys_update_name>
         <sys_updated_by>SN_Chall</sys_updated_by>

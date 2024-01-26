@@ -37,22 +37,19 @@ $sp-homepage-bg: #405e76;</css_variables>
         <search_results_configuration/>
         <sp_chat_queue/>
         <sp_rectangle_menu display_value="Toll Header Menu">8eb98871db4a6300f898fbefbf9619f9</sp_rectangle_menu>
-        <sqanda_knowledge_base/>
         <sys_class_name>sp_portal</sys_class_name>
         <sys_created_by>Dan.Lengyel</sys_created_by>
         <sys_created_on>2018-07-10 13:13:05</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>8d6c9d10db531300f898fbefbf961994</sys_id>
         <sys_mod_count>18</sys_mod_count>
         <sys_name>EZPass Service Portal</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sp_portal_8d6c9d10db531300f898fbefbf961994</sys_update_name>
         <sys_updated_by>SN_dtseten</sys_updated_by>
         <sys_updated_on>2020-09-08 23:08:33</sys_updated_on>
-        <theme display_value="NYCDOT">79315153cb33310000f8d856634c9c4b</theme>
+        <theme display_value="Stock">79315153cb33310000f8d856634c9c4b</theme>
         <title>EZPass Service Portal</title>
         <ts_index_group/>
         <url_suffix>toll_service_portal</url_suffix>
@@ -63,7 +60,6 @@ $sp-homepage-bg: #405e76;</css_variables>
         <chunk_size_bytes>734003</chunk_size_bytes>
         <compressed>true</compressed>
         <content_type>image/png</content_type>
-        <encryption_context/>
         <file_name>logo</file_name>
         <hash/>
         <image_height>79</image_height>

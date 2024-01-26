@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="2f8f0dfd2f3301105ceafe7cf699b697" label="License Plates" max_length="40" name="x_89907_vehicle_to_license_plates" type="collection">
+        <element display="true" label="License Number" mandatory="true" max_length="8" name="license_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" choice="3" default="New York" label="State" max_length="4000" name="state" reference="x_89907_vehicle_to_state" type="reference">
+            <choice/>
+        </element>
+    </element>
+</database>

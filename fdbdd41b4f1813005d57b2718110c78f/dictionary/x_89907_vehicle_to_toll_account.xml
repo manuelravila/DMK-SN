@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="87b250e8dbd0a300f898fbefbf96198a" label="Toll Account" max_length="40" name="x_89907_vehicle_to_toll_account" type="collection">
+        <element label="Account number" max_length="40" name="account_number" type="string"/>
+        <element attributes="edge_encryption_enabled=true" default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="Comments" max_length="4000" name="comments" type="string"/>
+        <element label="Description" max_length="64" name="description" type="string"/>
+        <element display="true" label="Display value" max_length="128" name="display_value" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Vendor" max_length="32" name="vendor" reference="core_company" reference_qual="vendor=true^EQ" reference_qual_condition="vendor=true^EQ" type="reference"/>
+        <index name="index">
+            <element name="vendor"/>
+        </index>
+    </element>
+</database>

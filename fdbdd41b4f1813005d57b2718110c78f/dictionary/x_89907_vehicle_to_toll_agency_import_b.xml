@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="d573b35f4fc7f3805d57b2718110c7d1" extends="sys_import_set_row" label="Toll Agency Import B" max_length="40" name="x_89907_vehicle_to_toll_agency_import_b" type="collection">
+        <element attributes="import_attribute_name=Agency/Facility Long Description for Customer Statements (20 chars max),edge_encryption_enabled=true" label="Agency/Facility Long Description for Customer Statements (20 chars max)" max_length="40" name="u_agency_facil__20_chars_max_" type="string"/>
+        <element attributes="import_attribute_name=Agency/ Facility Short Description for Customer Statements (8 chars max),edge_encryption_enabled=true" label="Agency/ Facility Short Description for Customer Statements (8 chars max)" max_length="40" name="u_agency__faci___8_chars_max_" type="string"/>
+        <element attributes="import_attribute_name=ETC_FAC_AGENCY,edge_encryption_enabled=true" label="ETC_FAC_AGENCY" max_length="40" name="u_etc_fac_agency" type="integer"/>
+        <element attributes="import_attribute_name=Length,edge_encryption_enabled=true" label="Length" max_length="40" name="u_length" type="string"/>
+    </element>
+</database>

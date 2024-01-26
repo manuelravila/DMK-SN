@@ -17,17 +17,15 @@
         <provider_class/>
         <read_access>true</read_access>
         <scriptable_table>false</scriptable_table>
-        <super_class display_value="Import Set Row" name="sys_import_set_row">cfdd2b52db1022006de6fafc0f96197c</super_class>
+        <super_class display_value="Import Set Row" name="sys_import_set_row">b82940c3243021108c8bc6863d3fad39</super_class>
         <sys_class_name>sys_db_object</sys_class_name>
         <sys_created_by>maavila</sys_created_by>
         <sys_created_on>2022-06-01 00:57:14</sys_created_on>
-        <sys_customer_update>false</sys_customer_update>
         <sys_id>822935bd2fb301105ceafe7cf699b675</sys_id>
         <sys_mod_count>0</sys_mod_count>
         <sys_name>Vehicle To Plates Staging</sys_name>
         <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
         <sys_policy/>
-        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
         <sys_update_name>sys_db_object_822935bd2fb301105ceafe7cf699b675</sys_update_name>
         <sys_updated_by>maavila</sys_updated_by>

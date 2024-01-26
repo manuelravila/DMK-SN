@@ -88,7 +88,6 @@
             <sys_class_name>sys_ui_list</sys_class_name>
             <sys_created_by>SN_CHall</sys_created_by>
             <sys_created_on>2020-10-11 14:44:17</sys_created_on>
-            <sys_customer_update>false</sys_customer_update>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_id>01b279584ffd37005d57b2718110c703</sys_id>
@@ -96,7 +95,6 @@
             <sys_name>x_89907_vehicle_to_toll_charge</sys_name>
             <sys_package display_value="Vehicle Tolls" source="x_89907_vehicle_to">fdbdd41b4f1813005d57b2718110c78f</sys_package>
             <sys_policy/>
-            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
             <sys_scope display_value="Vehicle Tolls">fdbdd41b4f1813005d57b2718110c78f</sys_scope>
             <sys_update_name>sys_ui_list_x_89907_vehicle_to_toll_statement_dcd8b0b7db402300f898fbefbf961903_null</sys_update_name>
             <sys_updated_by>SN_CHall</sys_updated_by>
